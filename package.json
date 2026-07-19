@@ -1,0 +1,67 @@
+{
+  "name": "schemax",
+  "version": "0.1.0",
+  "type": "module",
+  "private": true,
+  "packageManager": "pnpm@10.34.5",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "predev": "pnpm tokens:build",
+    "tokens:build": "node scripts/build-tokens.mjs",
+    "content:check": "tsx scripts/validate-content.ts",
+    "github:sync": "tsx scripts/sync-github.ts",
+    "gen:component": "node scripts/gen-component.mjs",
+    "build:site": "astro build",
+    "search:build": "pagefind --site dist",
+    "build": "pnpm tokens:build && pnpm content:check && astro check && astro build && pnpm search:build",
+    "test": "vitest run",
+    "test:e2e": "playwright test",
+    "lint": "pnpm lint:eslint && pnpm lint:css",
+    "lint:eslint": "eslint .",
+    "lint:css": "stylelint \"src/**/*.{css,astro,svelte}\"",
+    "lint:fix": "pnpm lint:eslint --fix && pnpm lint:css --fix",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "check": "pnpm lint && pnpm test && pnpm build"
+  },
+  "dependencies": {
+    "@astrojs/mdx": "^7.0.3",
+    "@astrojs/rss": "^4.0.19",
+    "@astrojs/sitemap": "^3.7.3",
+    "@astrojs/svelte": "^9.0.1",
+    "astro": "^7.1.1",
+    "astro-expressive-code": "^0.44.0",
+    "svelte": "^5.56.6"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.9",
+    "@eslint/js": "^9.39.5",
+    "eslint": "^9.39.5",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-astro": "^1.7.0",
+    "eslint-plugin-svelte": "^3.21.0",
+    "globals": "^15.15.0",
+    "gray-matter": "^4.0.3",
+    "pagefind": "^1.5.2",
+    "postcss-html": "^1.8.1",
+    "prettier": "^3.9.5",
+    "prettier-plugin-astro": "^0.14.1",
+    "prettier-plugin-svelte": "^3.5.2",
+    "style-dictionary": "^5.5.0",
+    "stylelint": "^16.26.1",
+    "stylelint-config-standard": "^37.0.0",
+    "stylelint-no-unsupported-browser-features": "^8.1.1",
+    "tsx": "^4.23.1",
+    "typescript": "^5.0.0",
+    "typescript-eslint": "^8.64.0",
+    "vitest": "^4.1.10"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "esbuild"
+    ]
+  }
+}

@@ -1,0 +1,74 @@
+/* 文章正文排版（归入 article 层）。
+   使用 :where() 保持零特异性，便于组件 / overrides 覆盖。规范 §17。 */
+.sx-article {
+  max-width: var(--sx-article-width-reading);
+  margin-inline: auto;
+  font-size: var(--sx-article-font-size);
+  line-height: var(--sx-article-line-height);
+}
+
+.sx-article :where(h2) {
+  margin-block: 4rem 1.5rem;
+  font-size: 2rem;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+}
+
+.sx-article :where(h3) {
+  margin-block: 2.5rem 1rem;
+  font-size: 1.5rem;
+  line-height: 1.25;
+}
+
+.sx-article :where(h4) {
+  margin-block: 2rem 0.75rem;
+  font-size: 1.2rem;
+}
+
+.sx-article :where(p) {
+  margin-block: 1rem;
+}
+
+.sx-article :where(a) {
+  color: var(--sx-sys-color-action-primary);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  font-weight: 600;
+}
+
+.sx-article :where(ul),
+.sx-article :where(ol) {
+  padding-left: 1.5rem;
+  margin-block: 1rem;
+}
+
+.sx-article :where(ul) {
+  list-style: disc;
+}
+
+.sx-article :where(ol) {
+  list-style: decimal;
+}
+
+.sx-article :where(li) {
+  margin-block: 0.4rem;
+}
+
+.sx-article :where(blockquote) {
+  border-left: 4px solid var(--sx-sys-color-action-primary);
+  padding-left: var(--sx-ref-space-4);
+  margin-block: 1.5rem;
+  font-style: italic;
+}
+
+.sx-article :where(:not(pre) > code) {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.9em;
+  background: var(--sx-sys-color-bg-surface);
+  border: var(--sx-sys-border-width) solid var(--sx-sys-color-border);
+  padding: 0.1em 0.35em;
+}
+
+.sx-article :where(pre) {
+  margin-block: 1.5rem;
+}

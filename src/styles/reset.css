@@ -1,0 +1,73 @@
+/* 极简现代 reset（归入 reset 层）。 */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  tab-size: 4;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizespeed;
+}
+
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+input,
+button,
+textarea,
+select {
+  font: inherit;
+  color: inherit;
+}
+
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  overflow-wrap: break-word;
+}
+
+ul,
+ol {
+  list-style: none;
+  padding: 0;
+}
+
+#skip-link {
+  position: absolute;
+  left: -9999px;
+}
+
+#skip-link:focus {
+  left: var(--sx-ref-space-4);
+  top: var(--sx-ref-space-4);
+  z-index: 100;
+  background: var(--sx-sys-color-bg-surface);
+  border: var(--sx-sys-border-width) solid var(--sx-sys-color-border);
+  padding: var(--sx-ref-space-2) var(--sx-ref-space-4);
+}

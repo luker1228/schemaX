@@ -1,0 +1,6 @@
+# Stylelint 忽略清单
+dist/
+node_modules/
+.astro/
+src/styles/generated/
+*.min.css

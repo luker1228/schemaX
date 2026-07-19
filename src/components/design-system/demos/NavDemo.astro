@@ -1,0 +1,98 @@
+---
+// Navigation 演示 —— 仅供 /design-system/components 展示页使用。
+import Nav from '../Nav.astro';
+import Demo from '../Demo.astro';
+import type { NavItem } from '../Nav.astro';
+
+const demoItems: NavItem[] = [
+  { label: '课程', href: '/courses' },
+  { label: '博客', href: '/blog' },
+  { label: '作品', href: '/projects' },
+  { label: '设计系统', href: '/design-system' },
+];
+
+const activeItems: NavItem[] = [
+  { label: '课程', href: '/courses' },
+  { label: '博客', href: '/blog', active: true },
+  { label: '作品', href: '/projects' },
+  { label: '设计系统', href: '/design-system' },
+];
+
+const disabledItems: NavItem[] = [
+  { label: '课程', href: '/courses' },
+  { label: '博客', href: '/blog' },
+  { label: '作品', href: '/projects', disabled: true },
+  { label: '设计系统', href: '/design-system' },
+];
+
+const states = [
+  { name: '默认态', attr: '—（无额外属性）', desc: '透明背景、无边框。鼠标悬停或聚焦时切换为黄底。' },
+  { name: '激活态', attr: 'aria-current="page"', desc: '黄底 + 1px 黑边 + 4px 硬阴影，标识当前所在页面。' },
+  { name: '禁用态', attr: 'aria-disabled="true"', desc: '半透明、移除指针交互，表示该入口暂不可用。' },
+  { name: 'hover / focus', attr: '—（交互态）', desc: '黄底 + 1px 黑边 + 2px 硬阴影，给即时反馈。' },
+];
+
+const usage = `<nav class="nav" aria-label="Primary">
+  <a class="nav__link" href="/courses">课程</a>
+  <a class="nav__link" href="/blog" aria-current="page">博客</a>
+  <a class="nav__link" href="/projects" aria-disabled="true">作品</a>
+</nav>`;
+---
+
+<>
+  <Demo label="默认态" attr='<a class="nav__link">'>
+    <Nav items={demoItems} ariaLabel="Demo default" />
+    <Fragment slot="note">
+      <p>所有项默认透明。把鼠标移到任一项上可体验 hover 态。</p>
+    </Fragment>
+  </Demo>
+
+  <Demo label="激活态" attr='aria-current="page"'>
+    <Nav items={activeItems} ariaLabel="Demo active" />
+    <Fragment slot="note">
+      <p>「博客」项带 <code>aria-current="page"</code>，渲染为黄底徽章。</p>
+    </Fragment>
+  </Demo>
+
+  <Demo label="hover / focus 态" attr=":hover / :focus-visible">
+    <nav class="nav" aria-label="Demo hover">
+      <a class="nav__link" href="#">课程</a>
+      <a class="nav__link nav__link--demo-hover" href="#">博客</a>
+      <a class="nav__link" href="#">作品</a>
+      <a class="nav__link" href="#">设计系统</a>
+    </nav>
+    <Fragment slot="note">
+      <p>
+        「博客」项用 <code>.nav__link--demo-hover</code> 强制保持 hover 视觉，仅用于静态展示。实际使用时由 <code>:hover</code> 触发。
+      </p>
+    </Fragment>
+  </Demo>
+
+  <Demo label="禁用态" attr='aria-disabled="true"'>
+    <Nav items={disabledItems} ariaLabel="Demo disabled" />
+    <Fragment slot="note">
+      <p>「作品」项带 <code>aria-disabled="true"</code>，半透明且不可点击。</p>
+    </Fragment>
+  </Demo>
+
+  <h3 class="sub-title">状态 API</h3>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>状态</th><th>属性</th><th>说明</th></tr>
+      </thead>
+      <tbody>
+        {states.map((s) => (
+          <tr>
+            <td class="cell-name">{s.name}</td>
+            <td><code>{s.attr}</code></td>
+            <td class="cell-desc">{s.desc}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+
+  <h3 class="sub-title">用法</h3>
+  <pre class="usage"><code>{usage}</code></pre>
+</>

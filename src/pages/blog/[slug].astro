@@ -1,0 +1,159 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection, getEntry, render } from 'astro:content';
+import type { CollectionEntry } from 'astro:content';
+
+export async function getStaticPaths() {
+  const posts = await getCollection(
+    'posts',
+    ({ data }) => data.status !== 'draft',
+  );
+  return posts.map((post) => ({
+    params: { slug: post.id },
+    props: { post },
+  }));
+}
+
+interface Props {
+  post: CollectionEntry<'posts'>;
+}
+const { post } = Astro.props;
+const { Content } = await render(post);
+const { title, description, publishedAt, updatedAt } = post.data;
+
+// post.data.topics 经注入式 ref 构造器推断为 unknown[]，这里按 id 手动解析。
+const topicIds = (post.data.topics as unknown as string[]) ?? [];
+const topicEntries = (
+  await Promise.all(topicIds.map((id) => getEntry('topics', id)))
+).filter((t): t is NonNullable<typeof t> => Boolean(t));
+
+// 上一篇 / 下一篇（按发布时间正序的相邻）
+const chron = (
+  await getCollection('posts', ({ data }) => data.status !== 'draft')
+).sort(
+  (a, b) =>
+    (a.data.publishedAt?.getTime() ?? 0) - (b.data.publishedAt?.getTime() ?? 0),
+);
+const idx = chron.findIndex((p) => p.id === post.id);
+const newer = chron[idx + 1];
+const older = chron[idx - 1];
+
+const fmt = (d?: Date) =>
+  d
+    ? d.toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric',
+      })
+    : '';
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  type="article"
+  publishedAt={publishedAt}
+>
+  <article class="sx-section">
+    <div class="sx-container sx-container--reading">
+      <header class="ahead">
+        <a class="ahead__back" href="/blog">← Blog</a>
+        <h1 class="ahead__title">{title}</h1>
+        <p class="ahead__desc">{description}</p>
+        <div class="ahead__meta">
+          {
+            publishedAt && (
+              <time datetime={publishedAt.toISOString()}>
+                {fmt(publishedAt)}
+              </time>
+            )
+          }
+          {updatedAt && <span>· 更新于 {fmt(updatedAt)}</span>}
+          {
+            topicEntries.length > 0 && (
+              <span class="ahead__topics">
+                {topicEntries.map((t) => (
+                  <span class="tag">{t.data.label}</span>
+                ))}
+              </span>
+            )
+          }
+        </div>
+      </header>
+
+      <div class="sx-article" data-pagefind-body>
+        <Content />
+      </div>
+
+      <nav class="pager" aria-label="Post navigation">
+        {
+          older && (
+            <a class="pager__link" href={`/blog/${older.id}`}>
+              ← {older.data.title}
+            </a>
+          )
+        }
+        {
+          newer && (
+            <a class="pager__link pager__link--end" href={`/blog/${newer.id}`}>
+              {newer.data.title} →
+            </a>
+          )
+        }
+      </nav>
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  .ahead {
+    margin-block-end: var(--sx-ref-space-8);
+    border-bottom: var(--sx-sys-border-width) solid var(--sx-sys-color-border);
+    padding-block-end: var(--sx-ref-space-6);
+  }
+  .ahead__back {
+    font-family: ui-monospace, monospace;
+    font-size: 0.85rem;
+  }
+  .ahead__title {
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    margin-block: var(--sx-ref-space-3);
+  }
+  .ahead__desc {
+    font-size: 1.15rem;
+    opacity: 0.85;
+  }
+  .ahead__meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--sx-ref-space-3);
+    align-items: center;
+    margin-block-start: var(--sx-ref-space-4);
+    font-size: 0.85rem;
+    font-family: ui-monospace, monospace;
+    opacity: 0.8;
+  }
+  .ahead__topics {
+    display: flex;
+    gap: var(--sx-ref-space-1);
+    flex-wrap: wrap;
+  }
+  .pager {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--sx-ref-space-4);
+    margin-block-start: var(--sx-ref-space-12);
+    padding-block-start: var(--sx-ref-space-6);
+    border-top: var(--sx-sys-border-width) solid var(--sx-sys-color-border);
+    flex-wrap: wrap;
+  }
+  .pager__link {
+    font-weight: 700;
+    text-decoration: underline;
+  }
+  .pager__link--end {
+    margin-left: auto;
+  }
+</style>

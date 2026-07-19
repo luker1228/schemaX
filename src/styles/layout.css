@@ -1,0 +1,25 @@
+/* 布局辅助：容器 / 堆叠 / 区段（归入 layout 层）。 */
+.sx-container {
+  width: 100%;
+  max-width: var(--sx-layout-width-page);
+  margin-inline: auto;
+  padding-inline: var(--sx-ref-space-4);
+}
+
+.sx-container--reading {
+  max-width: var(--sx-article-width-reading);
+}
+
+.sx-stack > * + * {
+  margin-block-start: var(--sx-ref-space-6);
+}
+
+.sx-section {
+  padding-block: var(--sx-ref-space-12);
+}
+
+.sx-grid {
+  display: grid;
+  gap: var(--sx-ref-space-6);
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 18rem), 1fr));
+}

@@ -1,0 +1,54 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ProjectCard from '../../components/site/ProjectCard.astro';
+import { getCollection } from 'astro:content';
+
+const projects = await getCollection(
+  'projects',
+  ({ data }) => data.status !== 'archived',
+);
+---
+
+<BaseLayout title="Projects" description="开源仓库、产品实验与工程作品。">
+  <section class="sx-section">
+    <div class="sx-container">
+      <header class="page-head">
+        <h1>Projects</h1>
+        <p>开源仓库、产品实验与工程作品。</p>
+      </header>
+
+      {
+        projects.length > 0 ? (
+          <div class="sx-grid">
+            {projects.map((p) => (
+              <ProjectCard project={p} />
+            ))}
+          </div>
+        ) : (
+          <p class="empty">还没有公开的作品。</p>
+        )
+      }
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .page-head {
+    margin-block-end: var(--sx-ref-space-8);
+  }
+  .page-head h1 {
+    font-size: 2.5rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+  }
+  .page-head p {
+    opacity: 0.8;
+    margin-block-start: var(--sx-ref-space-2);
+  }
+  .empty {
+    border: var(--sx-sys-border-width) dashed var(--sx-sys-color-border);
+    padding: var(--sx-ref-space-8);
+    text-align: center;
+    opacity: 0.7;
+  }
+</style>

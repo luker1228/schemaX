@@ -1,0 +1,109 @@
+---
+// Button 演示 —— 仅供 /design-system/components 展示页使用。
+import Button from '../Button.astro';
+import Demo from '../Demo.astro';
+import type { ButtonVariant, ButtonSize } from '../Button.astro';
+
+const variants: { name: string; value: ButtonVariant }[] = [
+  { name: 'Primary', value: 'primary' },
+  { name: 'Secondary', value: 'secondary' },
+  { name: 'Outline', value: 'outline' },
+  { name: 'Danger', value: 'danger' },
+  { name: 'Ghost', value: 'ghost' },
+];
+
+const sizes: { name: string; value: ButtonSize }[] = [
+  { name: 'Small', value: 'sm' },
+  { name: 'Medium', value: 'md' },
+  { name: 'Large', value: 'lg' },
+];
+
+const apiRows = [
+  { name: 'variant', type: "'primary' | 'secondary' | 'outline' | 'danger' | 'ghost'", default: "'primary'", desc: '视觉变体' },
+  { name: 'size', type: "'sm' | 'md' | 'lg'", default: "'md'", desc: '尺寸' },
+  { name: 'href', type: 'string', default: '—', desc: '提供则渲染 <a>，否则渲染 <button>' },
+  { name: 'type', type: "'button' | 'submit' | 'reset'", default: "'button'", desc: 'button 的 type（仅 button 生效）' },
+  { name: 'disabled', type: 'boolean', default: 'false', desc: '禁用：链接用 aria-disabled，按钮用 disabled' },
+];
+
+const usage = `<!-- 作为链接 -->
+<Button variant="primary" href="/projects">Explore Projects</Button>
+
+<!-- 作为按钮 -->
+<Button variant="danger" type="submit">删除</Button>
+
+<!-- 尺寸 -->
+<Button size="lg">大按钮</Button>`;
+---
+
+<>
+  <Demo label="变体 Variants" attr='variant="..."' stageClass="wrap">
+    {variants.map((v) => <Button variant={v.value}>{v.name}</Button>)}
+    <Fragment slot="note">
+      <p>
+        primary 黄底（主操作）/ secondary 黑底（次要）/ outline 白底（中性）/
+        danger 红底（危险）/ ghost 透明（Hero 场景）。
+      </p>
+    </Fragment>
+  </Demo>
+
+  <Demo label="尺寸 Sizes" attr='size="..."' stageClass="wrap align">
+    {sizes.map((s) => <Button size={s.value}>{s.name}</Button>)}
+    <Fragment slot="note">
+      <p>sm / md（默认）/ lg。所有变体都支持三种尺寸。</p>
+    </Fragment>
+  </Demo>
+
+  <Demo label="交互态 hover / active" attr=":hover / :active" stageClass="wrap">
+    <Button variant="primary">鼠标移上来</Button>
+    <Button variant="outline">点击我</Button>
+    <Fragment slot="note">
+      <p>
+        默认带硬阴影（凸起）；hover 时向右下位移 2px，阴影消失 —— 像物理按键被按下的感觉。
+      </p>
+    </Fragment>
+  </Demo>
+
+  <Demo label="禁用态 Disabled" attr="disabled" stageClass="wrap">
+    <Button variant="primary" disabled>Primary 禁用</Button>
+    <Button variant="secondary" disabled>Secondary 禁用</Button>
+    <Button variant="danger" disabled>Danger 禁用</Button>
+    <Fragment slot="note">
+      <p>
+        半透明（opacity 0.4）+ 禁用指针。链接用 <code>aria-disabled</code>，按钮用 <code>disabled</code>。
+      </p>
+    </Fragment>
+  </Demo>
+
+  <Demo label="链接 vs 按钮" attr="href 控制渲染元素" stageClass="wrap">
+    <Button variant="primary" href="/projects">链接（&lt;a&gt;）</Button>
+    <Button variant="outline" type="button">按钮（&lt;button&gt;）</Button>
+    <Fragment slot="note">
+      <p>
+        提供 <code>href</code> 渲染为 <code>&lt;a&gt;</code>（用于导航），否则渲染为 <code>&lt;button&gt;</code>（用于动作）。
+      </p>
+    </Fragment>
+  </Demo>
+
+  <h3 class="sub-title">Props</h3>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>Prop</th><th>类型</th><th>默认</th><th>说明</th></tr>
+      </thead>
+      <tbody>
+        {apiRows.map((r) => (
+          <tr>
+            <td class="cell-name"><code>{r.name}</code></td>
+            <td><code>{r.type}</code></td>
+            <td><code>{r.default}</code></td>
+            <td class="cell-desc">{r.desc}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+
+  <h3 class="sub-title">用法</h3>
+  <pre class="usage"><code>{usage}</code></pre>
+</>

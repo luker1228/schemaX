@@ -1,0 +1,56 @@
+/* 基础元素样式：背景 / 文字 / 字体栈 / focus / reduced-motion（归入 base 层）。 */
+:root {
+  color-scheme: light;
+}
+
+body {
+  background-color: var(--sx-sys-color-bg-page);
+  color: var(--sx-sys-color-text-primary);
+  font-family:
+    ui-sans-serif,
+    system-ui,
+    -apple-system,
+    'Segoe UI',
+    Roboto,
+    'Helvetica Neue',
+    Arial,
+    'PingFang SC',
+    'Hiragino Sans GB',
+    'Microsoft YaHei',
+    sans-serif;
+  font-size: 1rem;
+  line-height: 1.6;
+  min-height: 100%;
+}
+
+:focus-visible {
+  outline: var(--sx-sys-border-width) solid var(--sx-sys-color-action-primary);
+  outline-offset: 2px;
+}
+
+a {
+  color: inherit;
+}
+a:hover {
+  color: var(--sx-sys-color-action-primary);
+}
+
+strong {
+  font-weight: 700;
+}
+
+hr {
+  border: none;
+  margin-block: var(--sx-ref-space-8);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

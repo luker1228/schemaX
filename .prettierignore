@@ -1,0 +1,9 @@
+# Prettier 忽略清单
+dist/
+node_modules/
+.astro/
+src/generated/
+src/styles/generated/
+pnpm-lock.yaml
+*.min.css
+*.min.js

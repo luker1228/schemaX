@@ -1,0 +1,35 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { site } from '../config/site';
+---
+
+<BaseLayout title="About" type="profile">
+  <section class="sx-section">
+    <div class="sx-container sx-container--reading">
+      <h1>About</h1>
+      <div class="sx-article">
+        <p>
+          我是 {site.author.name}，一名 {site.author.role} 与独立构建者。
+        </p>
+        <p>
+          我关注 AI Agent、Schema 驱动的设计与后端工程。SchemaX
+          是我的个人知识与作品平台：用结构连接课程、思考、代码、设计与 AI 执行。
+        </p>
+        <h2>三个身份</h2>
+        <ul>
+          <li>
+            <strong>Builder</strong> —— 构建 AI Agent、开发平台与开源工具。
+          </li>
+          <li><strong>Writer</strong> —— 记录系统设计、工程实践与技术思考。</li>
+          <li>
+            <strong>Teacher</strong> —— 把复杂知识整理成可学习、可实践的课程。
+          </li>
+        </ul>
+        <p>
+          这是底座阶段（V1 Phase
+          1）的占位页面，完整履历与联系方式将在后续阶段补全。
+        </p>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

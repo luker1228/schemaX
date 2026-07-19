@@ -1,0 +1,27 @@
+[
+  {
+    "id": "schema",
+    "label": "Schema",
+    "description": "结构、约束与契约：连接意图与执行的共同语言。"
+  },
+  {
+    "id": "ai-agent",
+    "label": "AI Agent",
+    "description": "Agent 工程、工具调用与可靠执行。"
+  },
+  {
+    "id": "backend",
+    "label": "Backend",
+    "description": "服务端设计、API 与数据建模。"
+  },
+  {
+    "id": "frontend",
+    "label": "Frontend",
+    "description": "前端架构、组件与排版系统。"
+  },
+  {
+    "id": "system-design",
+    "label": "System Design",
+    "description": "系统设计与工程取舍。"
+  }
+]

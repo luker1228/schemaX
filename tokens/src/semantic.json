@@ -1,0 +1,32 @@
+{
+  "sys": {
+    "color": {
+      "bg": {
+        "page": { "$type": "color", "$value": "{ref.color.paper}" },
+        "surface": { "$type": "color", "$value": "{ref.color.white}" }
+      },
+      "text": {
+        "primary": { "$type": "color", "$value": "{ref.color.ink}" }
+      },
+      "action": {
+        "primary": { "$type": "color", "$value": "{ref.color.blue.500}" }
+      },
+      "accent": { "$type": "color", "$value": "{ref.color.yellow.400}" },
+      "border": { "$type": "color", "$value": "{ref.color.ink}" },
+      "danger": { "$type": "color", "$value": "{ref.color.red.500}" },
+      "success": { "$type": "color", "$value": "{ref.color.green.500}" }
+    },
+    "border": {
+      "width": { "$type": "dimension", "$value": "1px" }
+    },
+    "radius": {
+      "sm": { "$type": "dimension", "$value": "0" },
+      "md": { "$type": "dimension", "$value": "4px" }
+    },
+    "shadow": {
+      "sm": { "$type": "shadow", "$value": "2px 2px 0 #000000" },
+      "md": { "$type": "shadow", "$value": "4px 4px 0 #000000" },
+      "lg": { "$type": "shadow", "$value": "6px 6px 0 #000000" }
+    }
+  }
+}

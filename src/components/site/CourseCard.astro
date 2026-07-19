@@ -1,0 +1,41 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  course: CollectionEntry<'courses'>;
+}
+const { course } = Astro.props;
+const { title, description, level, type } = course.data;
+---
+
+<a class="card coursecard" href={`/courses/${course.id}`}>
+  <div class="coursecard__tags">
+    <span class="badge badge--accent">{type}</span>
+    <span class="badge">{level}</span>
+  </div>
+  <h3 class="coursecard__title">{title}</h3>
+  <p class="coursecard__desc">{description}</p>
+</a>
+
+<style>
+  .coursecard {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sx-ref-space-3);
+    height: 100%;
+  }
+  .coursecard__tags {
+    display: flex;
+    gap: var(--sx-ref-space-2);
+    flex-wrap: wrap;
+  }
+  .coursecard__title {
+    font-size: 1.3rem;
+    font-weight: 700;
+    line-height: 1.2;
+  }
+  .coursecard__desc {
+    flex: 1;
+    opacity: 0.85;
+  }
+</style>

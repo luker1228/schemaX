@@ -1,0 +1,110 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const areas = [
+  {
+    name: 'Foundations',
+    desc: '品牌原则、色彩、字体、网格、间距、边框、阴影。',
+    live: false,
+  },
+  {
+    name: 'Tokens',
+    desc: '真实使用的 Reference / Semantic / Article / Component Token（读取生成产物）。',
+    live: true,
+    href: '/design-system/tokens',
+  },
+  {
+    name: 'Components',
+    desc: 'Button / Card / Tag / Badge / Navigation / Tabs / Dialog / Callout 等。',
+    live: true,
+    href: '/design-system/components',
+  },
+  { name: 'Content', desc: 'Markdown 与 MDX 的真实排版规范。', live: false },
+  {
+    name: 'Patterns',
+    desc: '文章头部、课程目录、项目 Hero、代码对比等组合模式。',
+    live: false,
+  },
+];
+---
+
+<BaseLayout
+  title="Design System"
+  description="SchemaX UI —— Token、组件与内容规范。"
+>
+  <section class="sx-section">
+    <div class="sx-container">
+      <header class="page-head">
+        <p class="eyebrow">SchemaX UI</p>
+        <h1>Design System</h1>
+        <p>设计系统不是附属文档，而是 SchemaX 的重要作品。</p>
+      </header>
+
+      <div class="sx-grid">
+        {
+          areas.map((a) =>
+            a.live && a.href ? (
+              <a class="card area area--live" href={a.href}>
+                <div class="area__head">
+                  <span class="area__name">{a.name}</span>
+                  <span class="badge badge--accent">Live</span>
+                </div>
+                <p class="area__desc">{a.desc}</p>
+              </a>
+            ) : (
+              <div class="card area">
+                <div class="area__head">
+                  <span class="area__name">{a.name}</span>
+                  <span class="badge">Planned</span>
+                </div>
+                <p class="area__desc">{a.desc}</p>
+              </div>
+            ),
+          )
+        }
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .eyebrow {
+    font-family: ui-monospace, monospace;
+    color: var(--sx-sys-color-action-primary);
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+  }
+  .page-head {
+    margin-block-end: var(--sx-ref-space-8);
+  }
+  .page-head h1 {
+    font-size: 2.5rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    margin-block-start: var(--sx-ref-space-2);
+  }
+  .page-head p {
+    opacity: 0.8;
+    margin-block-start: var(--sx-ref-space-2);
+  }
+  .area {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sx-ref-space-3);
+  }
+  .area__head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--sx-ref-space-2);
+  }
+  .area__name {
+    font-size: 1.25rem;
+    font-weight: 800;
+  }
+  .area__desc {
+    opacity: 0.85;
+  }
+</style>

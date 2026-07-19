@@ -1,0 +1,56 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PostCard from '../../components/site/PostCard.astro';
+import { getCollection } from 'astro:content';
+
+const posts = (
+  await getCollection('posts', ({ data }) => data.status === 'published')
+).sort(
+  (a, b) =>
+    (b.data.publishedAt?.getTime() ?? 0) - (a.data.publishedAt?.getTime() ?? 0),
+);
+---
+
+<BaseLayout title="Blog" description="技术文章、工程总结与观点记录。">
+  <section class="sx-section">
+    <div class="sx-container">
+      <header class="page-head">
+        <h1>Blog</h1>
+        <p>技术文章、工程总结与观点记录。</p>
+      </header>
+
+      {
+        posts.length > 0 ? (
+          <div class="sx-grid">
+            {posts.map((p) => (
+              <PostCard post={p} />
+            ))}
+          </div>
+        ) : (
+          <p class="empty">还没有已发布的文章。</p>
+        )
+      }
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .page-head {
+    margin-block-end: var(--sx-ref-space-8);
+  }
+  .page-head h1 {
+    font-size: 2.5rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+  }
+  .page-head p {
+    opacity: 0.8;
+    margin-block-start: var(--sx-ref-space-2);
+  }
+  .empty {
+    border: var(--sx-sys-border-width) dashed var(--sx-sys-color-border);
+    padding: var(--sx-ref-space-8);
+    text-align: center;
+    opacity: 0.7;
+  }
+</style>

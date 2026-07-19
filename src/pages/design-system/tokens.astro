@@ -1,0 +1,179 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import tokens from '../../generated/tokens';
+
+interface Row {
+  name: string;
+  value: string;
+}
+
+// 把 tier-first 取值树展平为 { 变量名, 取值 } 行。
+// 变量名 = '--sx-' + 路径段以 '-' 连接（路径段已是 kebab，数值段原样保留）。
+function walk(node: Record<string, unknown>, path: string[], acc: Row[]) {
+  for (const [key, val] of Object.entries(node)) {
+    if (val !== null && typeof val === 'object') {
+      walk(val as Record<string, unknown>, [...path, key], acc);
+    } else {
+      acc.push({
+        name: '--sx-' + [...path, key].join('-'),
+        value: String(val),
+      });
+    }
+  }
+}
+
+const all: Row[] = [];
+walk(tokens as Record<string, unknown>, [], all);
+
+const tierOrder = ['ref', 'sys', 'layout', 'article', 'comp'];
+const groups = tierOrder
+  .map((tier) => ({
+    tier,
+    rows: all.filter((r) => r.name.startsWith(`--sx-${tier}-`)),
+  }))
+  .filter((g) => g.rows.length > 0);
+
+const tierLabel: Record<string, string> = {
+  ref: 'Reference Tokens',
+  sys: 'Semantic Tokens',
+  layout: 'Layout Tokens',
+  article: 'Article Tokens',
+  comp: 'Component Tokens',
+};
+
+const isColor = (row: Row) => row.name.includes('color');
+---
+
+<BaseLayout
+  title="Design System · Tokens"
+  description="由 Style Dictionary 从 DTCG 源自动生成的真实 Token。"
+>
+  <section class="sx-section">
+    <div class="sx-container">
+      <a class="back" href="/design-system">← Design System</a>
+      <header class="page-head">
+        <h1>Tokens</h1>
+        <p>
+          本页直接读取 <code>src/generated/tokens.ts</code>（由 <code
+            >tokens:build</code
+          > 从 DTCG 源生成），非手工拷贝。
+        </p>
+      </header>
+
+      {
+        groups.map((g) => (
+          <section class="group">
+            <h2 class="group__title">{tierLabel[g.tier] ?? g.tier}</h2>
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>变量</th>
+                    <th>取值</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {g.rows.map((row) => (
+                    <tr>
+                      <td class="cell-name">{row.name}</td>
+                      <td class="cell-value">
+                        {isColor(row) && (
+                          <span
+                            class="swatch"
+                            style={`background: ${row.value}`}
+                            aria-hidden="true"
+                          />
+                        )}
+                        <code>{row.value}</code>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </section>
+        ))
+      }
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .back {
+    font-family: ui-monospace, monospace;
+    font-size: 0.85rem;
+  }
+  .page-head {
+    margin-block: var(--sx-ref-space-4) var(--sx-ref-space-8);
+  }
+  .page-head h1 {
+    font-size: 2.5rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+  }
+  .page-head p {
+    opacity: 0.8;
+    margin-block-start: var(--sx-ref-space-2);
+  }
+  .page-head code {
+    font-family: ui-monospace, monospace;
+    background: var(--sx-sys-color-bg-surface);
+    border: var(--sx-sys-border-width) solid var(--sx-sys-color-border);
+    padding: 0.05em 0.4em;
+  }
+  .group {
+    margin-block-end: var(--sx-ref-space-12);
+  }
+  .group__title {
+    font-size: 1.4rem;
+    font-weight: 800;
+    margin-block-end: var(--sx-ref-space-3);
+    border-bottom: var(--sx-sys-border-width) solid var(--sx-sys-color-border);
+    padding-block-end: var(--sx-ref-space-2);
+  }
+  .table-wrap {
+    overflow-x: auto;
+    border: var(--sx-sys-border-width) solid var(--sx-sys-color-border);
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 32rem;
+  }
+  th,
+  td {
+    text-align: left;
+    padding: var(--sx-ref-space-2) var(--sx-ref-space-3);
+    border-bottom: 1px solid var(--sx-sys-color-border);
+    vertical-align: middle;
+  }
+  thead th {
+    background: var(--sx-sys-color-bg-page);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  tbody tr:last-child td {
+    border-bottom: none;
+  }
+  .cell-name {
+    font-family: ui-monospace, monospace;
+    font-size: 0.85rem;
+  }
+  .cell-value {
+    display: flex;
+    align-items: center;
+    gap: var(--sx-ref-space-2);
+  }
+  .cell-value code {
+    font-family: ui-monospace, monospace;
+    font-size: 0.85rem;
+  }
+  .swatch {
+    display: inline-block;
+    width: 1.25rem;
+    height: 1.25rem;
+    border: var(--sx-sys-border-width) solid var(--sx-sys-color-border);
+    flex-shrink: 0;
+  }
+</style>

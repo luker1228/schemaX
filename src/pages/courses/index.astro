@@ -1,0 +1,54 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import CourseCard from '../../components/site/CourseCard.astro';
+import { getCollection } from 'astro:content';
+
+const courses = await getCollection(
+  'courses',
+  ({ data }) => data.status !== 'archived',
+);
+---
+
+<BaseLayout title="Courses" description="体系化课程、章节与练习。">
+  <section class="sx-section">
+    <div class="sx-container">
+      <header class="page-head">
+        <h1>Courses</h1>
+        <p>体系化课程、章节与练习。</p>
+      </header>
+
+      {
+        courses.length > 0 ? (
+          <div class="sx-grid">
+            {courses.map((c) => (
+              <CourseCard course={c} />
+            ))}
+          </div>
+        ) : (
+          <p class="empty">还没有课程。</p>
+        )
+      }
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .page-head {
+    margin-block-end: var(--sx-ref-space-8);
+  }
+  .page-head h1 {
+    font-size: 2.5rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+  }
+  .page-head p {
+    opacity: 0.8;
+    margin-block-start: var(--sx-ref-space-2);
+  }
+  .empty {
+    border: var(--sx-sys-border-width) dashed var(--sx-sys-color-border);
+    padding: var(--sx-ref-space-8);
+    text-align: center;
+    opacity: 0.7;
+  }
+</style>

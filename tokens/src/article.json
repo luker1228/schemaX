@@ -1,0 +1,19 @@
+{
+  "article": {
+    "width": {
+      "reading": { "$type": "dimension", "$value": "46rem" },
+      "tutorial": { "$type": "dimension", "$value": "68rem" }
+    },
+    "font": {
+      "size": { "$type": "dimension", "$value": "1.0625rem" }
+    },
+    "line": {
+      "height": { "$type": "dimension", "$value": "1.8" }
+    }
+  },
+  "layout": {
+    "width": {
+      "page": { "$type": "dimension", "$value": "78rem" }
+    }
+  }
+}

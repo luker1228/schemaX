@@ -1,0 +1,100 @@
+{
+  "source": "https://retroui.dev/",
+  "analyzed_pages": [
+    "https://retroui.dev/",
+    "https://retroui.dev/components",
+    "https://retroui.dev/docs/components/accordion",
+    "https://retroui.dev/blog"
+  ],
+  "tokens": {
+    "spacing": {
+      "scale": [4, 8, 12, 16, 20, 24, 28, 32, 40, 48, 56, 64, 112],
+      "base_unit": 4
+    },
+    "typography": {
+      "families": ["Bricolage Grotesque", "Geist", "Geist Mono"],
+      "scale": [
+        { "role": "hero-home", "size": "72px", "weight": "700", "family": "Bricolage Grotesque", "line_height": "73.44px", "letter_spacing": "-1.8px" },
+        { "role": "hero-secondary", "size": "60px", "weight": "700", "family": "Bricolage Grotesque", "line_height": "63px", "letter_spacing": "-1.5px" },
+        { "role": "section-heading", "size": "48px", "weight": "700", "family": "Bricolage Grotesque", "line_height": "48px", "letter_spacing": "-1.2px" },
+        { "role": "article-title", "size": "36px", "weight": "700", "family": "Bricolage Grotesque", "line_height": "40px", "letter_spacing": "-0.9px" },
+        { "role": "card-title", "size": "24px", "weight": "600", "family": "Bricolage Grotesque", "line_height": "32px" },
+        { "role": "body-large", "size": "18px", "weight": "500", "family": "Geist", "line_height": "28px" },
+        { "role": "body-docs", "size": "16px", "weight": "400", "family": "Geist", "line_height": "24px" },
+        { "role": "code", "size": "14px", "weight": "400", "family": "Geist Mono" }
+      ]
+    },
+    "colors": [
+      { "role": "paper-background", "value": "#FFF7E8", "surface_share": "61.1% on home" },
+      { "role": "white-surface", "value": "#FFFFFF", "surface_share": "25.5% on home" },
+      { "role": "primary-ink", "value": "#000000" },
+      { "role": "muted-ink", "value": "#6B6355" },
+      { "role": "yellow-accent", "value": "#FFDC58" },
+      { "role": "code-surface", "value": "#EFE7D6" },
+      { "role": "decorative-mint", "value": "#01FFCC" },
+      { "role": "decorative-purple", "value": "#C4A1FF" },
+      { "role": "decorative-pink", "value": "#FF30CD" }
+    ],
+    "radius": ["4px", "9999px (pill)"],
+    "shadows": [
+      "4px 4px 0 #000000",
+      "3px 3px 0 #000000",
+      "2px 2px 0 #000000",
+      "2px 0 0 #FFF7E8 (inset/focus treatment)"
+    ],
+    "image_ratios": [
+      { "usage": "feature illustration", "ratio": "1.02:1", "rendered_width": "346px" },
+      { "usage": "feature illustration", "ratio": "1.42:1", "rendered_width": "284px" },
+      { "usage": "feature illustration", "ratio": "1.52:1", "rendered_width": "486px" },
+      { "usage": "avatar thumbnail", "ratio": "1:1", "rendered_width": "32px" }
+    ],
+    "grid": {
+      "max_width": "1400px (docs shell) / 1368px (components grid)",
+      "columns": "2 home; 4 components; 3 blog; 288px + 1136px docs",
+      "gutter": "28px components/blog; 48px home",
+      "container_padding": "16px docs shell"
+    },
+    "motion": {
+      "transitions": ["transform/translate/scale 0.15s cubic-bezier(0.4,0,0.2,1)", "transform/translate/scale 0.2s cubic-bezier(0.34,1.56,0.64,1)", "transform/translate/scale 0.6s cubic-bezier(0.34,1.56,0.64,1)", "color/background-color/border-color 0.2s cubic-bezier(0.4,0,0.2,1)"],
+      "focus_visible": true,
+      "reduced_motion": true
+    }
+  },
+  "measurements": {
+    "page_heights": { "home": "7427px", "components": "5827px", "accordion": "6134px", "blog": "3586px" },
+    "card_ratio": "524px × 150px = 3.49:1",
+    "button": "14px/500, 4px radius, 4px top × 10px left padding (primary variant)",
+    "alignment": "hero centered; component/blog content predominantly left-aligned; nav centered within full-width shell",
+    "section_gaps": "DOM reports no isolated positive gaps; visual separation comes from 28–112px padding and surface changes"
+  },
+  "taste": [
+    {
+      "name": "Warm paper as the continuous field",
+      "trigger": "When choosing a site-wide canvas for marketing, catalog, docs, and editorial pages",
+      "decision": "Chose a warm #FFF7E8 paper field over a neutral #F5F5F5 or dark canvas",
+      "reason": "The tinted field makes black rules and yellow actions read as printed marks, while the same surface can carry long docs without a theme switch",
+      "evidence": ["#FFF7E8 covers 61.1% of sampled home background area", "#6B6355 is the repeated muted text color on all four pages", "#EFE7D6 appears as a docs/code surface"]
+    },
+    {
+      "name": "Offset ink replaces soft elevation",
+      "trigger": "When a card, button, or interactive control needs to separate from the paper",
+      "decision": "Chose hard black offsets of 2px–4px with 0px blur over diffuse multi-layer shadows",
+      "reason": "The object keeps a physical cut-out edge at small sizes and remains legible against both white and paper surfaces",
+      "evidence": ["47 elements use 4px 4px 0 black; 18 use 2px 2px 0; 12 use 3px 3px 0", "Cards use 4px radius plus 4px offset", "The dominant shadow has no blur or spread"]
+    },
+    {
+      "name": "Display personality, utility body",
+      "trigger": "When headings must carry the brand while component labels and docs need fast scanning",
+      "decision": "Chose Bricolage Grotesque for display levels and Geist for body/UI over one-family typography",
+      "reason": "The display face makes section changes visible at a glance; Geist keeps 14–18px labels and 16px docs text compact without ornamental letterforms",
+      "evidence": ["Bricolage Grotesque is used for 72/60/48/36/30/24px headings", "Geist is used for 18px/28px body and 16px/24px docs", "Geist Mono is isolated to code with 14px text"]
+    },
+    {
+      "name": "Color is a signal, not wallpaper",
+      "trigger": "When adding emphasis across a large component catalog and long landing page",
+      "decision": "Chose #FFDC58 for primary emphasis and kept mint/purple/pink to small decorative zones instead of tinting every section",
+      "reason": "Readers can predict that yellow means action or focus; decorative colors remain occasional markers rather than competing navigation channels",
+      "evidence": ["#FFDC58 is the repeated accent on all four pages", "Home accent candidates show yellow 10 times versus black 57 and muted ink 24", "Mint #01FFCC, purple #C4A1FF, and pink #FF30CD each stay below 2.2% sampled area"]
+    }
+  ]
+}

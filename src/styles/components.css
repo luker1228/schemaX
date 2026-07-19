@@ -1,0 +1,222 @@
+/* 全局组件类（归入 components 层）：按钮 / 徽章 / 标签 / 卡片基底。
+   组件实例可在自身作用域内做微调，但应优先复用这些类。 */
+
+/* ── Button ────────────────────────────────────────────────
+   4 变体：primary（黄底黑字，主操作）/ secondary（黑底白字，次要操作）/
+          outline（白底黑字，默认变体）/ danger（红底白字，危险操作）
+          ghost（透明，用于 Hero 等特殊场景，outline 的无背景版本）
+   3 尺寸：sm / md（默认）/ lg
+   交互：默认凸起（带硬阴影）；hover 像被按下（向右下位移 + 阴影消失）。
+   设计语言：1px 黑边 + 2px 圆角 + 纯黑硬阴影（无模糊），物理按键感。 */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sx-ref-space-2);
+  padding: 0.5rem 1rem;
+  border: var(--sx-sys-border-width) solid var(--sx-sys-color-border);
+  border-radius: 2px;
+  font-family: inherit;
+  font-weight: 700;
+  font-size: 0.9rem;
+  line-height: 1.2;
+  background: var(--sx-sys-color-bg-surface);
+  color: var(--sx-sys-color-text-primary);
+  box-shadow: var(--sx-sys-shadow-sm);
+  transition:
+    transform 120ms ease,
+    box-shadow 120ms ease,
+    background-color 120ms ease;
+  cursor: pointer;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+/* hover：像物理按键被按下 —— 向右下位移 2px，阴影消失（贴底） */
+.btn:hover {
+  transform: translate(2px, 2px);
+  box-shadow: none;
+  color: var(--sx-sys-color-text-primary);
+}
+
+.btn:active {
+  transform: translate(2px, 2px);
+  box-shadow: none;
+}
+
+.btn:focus-visible {
+  outline: var(--sx-sys-border-width) solid var(--sx-sys-color-action-primary);
+  outline-offset: 2px;
+}
+
+.btn:disabled,
+.btn[aria-disabled='true'] {
+  opacity: 0.4;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* 变体 */
+.btn--primary {
+  background: var(--sx-sys-color-accent);
+  color: var(--sx-sys-color-text-primary);
+}
+.btn--primary:hover {
+  color: var(--sx-sys-color-text-primary);
+}
+
+.btn--secondary {
+  background: var(--sx-sys-color-text-primary);
+  color: var(--sx-sys-color-bg-surface);
+}
+.btn--secondary:hover {
+  color: var(--sx-sys-color-bg-surface);
+}
+
+.btn--outline {
+  background: var(--sx-sys-color-bg-surface);
+  color: var(--sx-sys-color-text-primary);
+}
+
+.btn--danger {
+  background: var(--sx-sys-color-danger);
+  color: var(--sx-ref-color-white);
+}
+.btn--danger:hover {
+  color: var(--sx-ref-color-white);
+}
+
+/* ghost：透明背景（Hero 等场景），默认无阴影；hover 与其他变体一致（按下） */
+.btn--ghost {
+  background: transparent;
+  box-shadow: none;
+}
+.btn--ghost:hover {
+  box-shadow: none;
+  transform: translate(2px, 2px);
+}
+
+/* 尺寸 */
+.btn--sm {
+  padding: 0.3rem 0.7rem;
+  font-size: 0.78rem;
+}
+.btn--lg {
+  padding: 0.75rem 1.4rem;
+  font-size: 1rem;
+}
+
+.badge {
+  display: inline-block;
+  padding: 0.15em 0.55em;
+  border: var(--sx-sys-border-width) solid var(--sx-sys-color-border);
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  background: var(--sx-sys-color-bg-surface);
+  line-height: 1.4;
+}
+.badge--accent {
+  background: var(--sx-sys-color-accent);
+}
+.badge--action {
+  background: var(--sx-sys-color-action-primary);
+  color: var(--sx-ref-color-white);
+}
+
+.tag {
+  display: inline-block;
+  padding: 0.1em 0.5em;
+  border: var(--sx-sys-border-width) solid var(--sx-sys-color-border);
+  font-size: 0.72rem;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  background: var(--sx-sys-color-bg-page);
+}
+
+.card {
+  display: block;
+  background: var(--sx-sys-color-bg-surface);
+  border: var(--sx-sys-border-width) solid var(--sx-sys-color-border);
+  box-shadow: var(--sx-sys-shadow-sm);
+  padding: var(--sx-comp-card-padding);
+  transition:
+    transform 120ms ease,
+    box-shadow 120ms ease;
+  text-decoration: none;
+  color: inherit;
+}
+.card:hover {
+  transform: translate(-3px, -3px);
+  box-shadow: var(--sx-sys-shadow-md);
+}
+
+/* ── Navigation ─────────────────────────────────────────────
+   水平主导航（从 site/Header.astro 提取，供 Header、设计系统展示页
+   及未来其他导航场景共用）。状态：默认 / hover / active / disabled。
+   设计语言：默认透明无框；hover 黄底+黑边+小阴影；
+   active 黄底+黑边+大阴影（command-yellow 徽章）；disabled 半透明。 */
+
+.nav {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 0.65rem;
+}
+
+.nav__link {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.5rem 0.8rem;
+  border: var(--sx-sys-border-width) solid transparent;
+  background: transparent;
+  text-decoration: none;
+  color: inherit;
+  transition:
+    transform 120ms ease,
+    box-shadow 120ms ease,
+    background-color 120ms ease,
+    color 120ms ease,
+    border-color 120ms ease;
+}
+
+.nav__link:hover,
+.nav__link:focus-visible {
+  color: var(--sx-sys-color-text-primary);
+  background: var(--sx-sys-color-accent);
+  border-color: var(--sx-sys-color-border);
+  box-shadow: 2px 2px 0 var(--sx-sys-color-border);
+}
+
+/* 激活态：command-yellow 背景 + 1px 黑边 + 4px 4px 0 硬阴影（brutalist） */
+.nav__link[aria-current='page'] {
+  background: var(--sx-sys-color-accent);
+  color: var(--sx-sys-color-text-primary);
+  border-color: var(--sx-sys-color-border);
+  box-shadow: 4px 4px 0 var(--sx-sys-color-border);
+}
+.nav__link[aria-current='page']:hover,
+.nav__link[aria-current='page']:focus-visible {
+  color: var(--sx-sys-color-text-primary);
+  transform: translate(-1px, -1px);
+  box-shadow: 5px 5px 0 var(--sx-sys-color-border);
+}
+
+/* 禁用态：半透明、禁用指针、移除交互反馈 */
+.nav__link[aria-disabled='true'] {
+  opacity: 0.4;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* 展示页专用：强制保持 hover 视觉，用于静态演示 hover 态 */
+.nav__link--demo-hover {
+  background: var(--sx-sys-color-accent);
+  border-color: var(--sx-sys-color-border);
+  box-shadow: 2px 2px 0 var(--sx-sys-color-border);
+  color: var(--sx-sys-color-text-primary);
+}

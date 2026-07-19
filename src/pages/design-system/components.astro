@@ -1,0 +1,245 @@
+---
+import type { ComponentType } from 'astro/types';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Command from '../../components/design-system/Command.astro';
+import { componentsRegistry } from '../../data/components-registry';
+
+// 用 import.meta.glob 预先收集所有 demo 文件，按组件名索引。
+// 脚手架新增 demo 文件后无需修改本页，自动被 glob 捕获。
+const demos = import.meta.glob<{ default: ComponentType }>(
+  '../../components/design-system/demos/*Demo.astro'
+);
+
+// 把 demo 路径映射到组件名：'demos/NavDemo.astro' → 'Nav'
+const demoByName = new Map<string, () => Promise<{ default: ComponentType }>>();
+for (const [path, loader] of Object.entries(demos)) {
+  const match = path.match(/\/([^/]+)Demo\.astro$/);
+  if (match) demoByName.set(match[1], loader);
+}
+
+const liveComponents = componentsRegistry.filter((c) => c.status === 'live');
+const plannedComponents = componentsRegistry.filter(
+  (c) => c.status === 'planned'
+);
+---
+
+<BaseLayout
+  title="Design System · Components"
+  description="SchemaX UI 组件库 —— 数据驱动展示。"
+>
+  <section class="sx-section">
+    <div class="sx-container">
+      <a class="back" href="/design-system">← Design System</a>
+
+      <header class="page-head">
+        <p class="eyebrow">SchemaX UI</p>
+        <h1>Components</h1>
+        <p>组件库按真实使用方式展示。新增组件：</p>
+        <div class="page-head__cmd">
+          <Command theme="light" title="bash">
+            pnpm gen:component &lt;Name&gt;
+          </Command>
+        </div>
+      </header>
+
+      {/* —— 已实现组件：渲染演示 —— */}
+      {
+        liveComponents.map(async (entry) => {
+          const loader = demoByName.get(entry.name);
+          if (!loader) {
+            return (
+              <p class="missing">
+                组件 {entry.name} 标记为 live，但未找到 demos/{entry.name}Demo.astro。
+              </p>
+            );
+          }
+          const { default: Demo } = await loader();
+          return (
+            <section class="group">
+              <h2 class="group__title">{entry.title}</h2>
+              <p class="group__lede">{entry.description}</p>
+              <Demo />
+            </section>
+          );
+        })
+      }
+
+      {/* —— 计划中组件：占位卡片 —— */}
+      {
+        plannedComponents.length > 0 && (
+          <section class="group">
+            <h2 class="group__title">Planned</h2>
+            <div class="sx-grid">
+              {plannedComponents.map((entry) => (
+                <div class="card planned">
+                  <div class="planned__head">
+                    <span class="planned__name">{entry.name}</span>
+                    <span class="badge">Planned</span>
+                  </div>
+                  <p class="planned__desc">{entry.description}</p>
+                  <code class="planned__cmd">pnpm gen:component {entry.name}</code>
+                </div>
+              ))}
+            </div>
+          </section>
+        )
+      }
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  /* 本页内容容器收窄至 960px（默认全站 --sx-layout-width-page: 78rem）。
+     用 :global() 穿透到 layout 层的 .sx-container；scoped style 处于更高层
+     自动胜出，且只影响本页。 */
+  :global(.sx-container) {
+    max-width: 60rem;
+  }
+
+  .back {
+    font-family: ui-monospace, monospace;
+    font-size: 0.85rem;
+  }
+  .page-head {
+    margin-block: var(--sx-ref-space-4) var(--sx-ref-space-8);
+  }
+  /* header 里的 Command：限制宽度，左对齐而非撑满容器。
+     不覆盖阴影 —— Command 的黄色阴影是其固有特征，永远跟随组件自身。 */
+  .page-head__cmd {
+    margin-block-start: var(--sx-ref-space-3);
+    max-width: 28rem;
+  }
+  .eyebrow {
+    font-family: ui-monospace, monospace;
+    color: var(--sx-sys-color-action-primary);
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+  }
+  .page-head h1 {
+    font-size: 2.5rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    margin-block-start: var(--sx-ref-space-2);
+  }
+  .page-head p {
+    opacity: 0.8;
+    margin-block-start: var(--sx-ref-space-2);
+  }
+  .page-head code {
+    font-family: ui-monospace, monospace;
+    background: var(--sx-sys-color-bg-surface);
+    border: var(--sx-sys-border-width) solid var(--sx-sys-color-border);
+    padding: 0.05em 0.4em;
+  }
+
+  .group {
+    margin-block-end: var(--sx-ref-space-12);
+  }
+  .group__title {
+    font-size: 1.4rem;
+    font-weight: 800;
+    margin-block-end: var(--sx-ref-space-2);
+    padding-block-end: var(--sx-ref-space-2);
+    border-bottom: var(--sx-sys-border-width) solid var(--sx-sys-color-border);
+  }
+  .group__lede {
+    opacity: 0.8;
+    margin-block-end: var(--sx-ref-space-6);
+  }
+
+  /* 演示块（.demo / .demo__head / .demo__stage / .demo__details / .demo__note）
+     的样式已封装在 src/components/design-system/Demo.astro 的 scoped style 内。
+     本页只保留各 *Demo.astro 共用、且不属于 Demo 组件的样式：
+     .sub-title / .table-wrap / .usage。 */
+
+  :global(.sub-title) {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-block: var(--sx-ref-space-8) var(--sx-ref-space-3);
+  }
+  :global(.table-wrap) {
+    overflow-x: auto;
+    border: var(--sx-sys-border-width) solid var(--sx-sys-color-border);
+  }
+  :global(.table-wrap table) {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 32rem;
+  }
+  :global(.table-wrap th),
+  :global(.table-wrap td) {
+    text-align: left;
+    padding: var(--sx-ref-space-2) var(--sx-ref-space-3);
+    border-bottom: var(--sx-sys-border-width) solid var(--sx-sys-color-border);
+    vertical-align: middle;
+  }
+  :global(.table-wrap thead th) {
+    background: var(--sx-sys-color-bg-page);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  :global(.table-wrap tbody tr:last-child td) {
+    border-bottom: none;
+  }
+  :global(.table-wrap .cell-name) {
+    font-weight: 700;
+  }
+  :global(.table-wrap td code) {
+    font-family: ui-monospace, monospace;
+    font-size: 0.82rem;
+    background: var(--sx-sys-color-bg-page);
+    padding: 0.05em 0.35em;
+  }
+  :global(.table-wrap .cell-desc) {
+    opacity: 0.85;
+  }
+  :global(.usage) {
+    margin: 0;
+    padding: var(--sx-ref-space-3);
+    background: var(--sx-sys-color-bg-page);
+    border: var(--sx-sys-border-width) solid var(--sx-sys-color-border);
+    overflow-x: auto;
+    font-family: ui-monospace, monospace;
+    font-size: 0.82rem;
+    line-height: 1.6;
+  }
+
+  /* Planned 占位卡片 */
+  .planned {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sx-ref-space-2);
+    height: 100%;
+  }
+  .planned__head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--sx-ref-space-2);
+  }
+  .planned__name {
+    font-family: ui-monospace, monospace;
+    font-weight: 700;
+  }
+  .planned__desc {
+    flex: 1;
+    opacity: 0.8;
+    font-size: 0.9rem;
+  }
+  .planned__cmd {
+    font-family: ui-monospace, monospace;
+    font-size: 0.78rem;
+    background: var(--sx-sys-color-bg-page);
+    padding: 0.05em 0.4em;
+    align-self: flex-start;
+  }
+
+  .missing {
+    opacity: 0.7;
+    font-family: ui-monospace, monospace;
+    font-size: 0.85rem;
+  }
+</style>

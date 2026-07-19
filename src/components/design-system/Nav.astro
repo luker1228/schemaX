@@ -1,0 +1,38 @@
+---
+// 水平主导航组件 —— SchemaX UI
+// 可复用的纯导航组件，样式来自全局 .nav 类（src/styles/components.css）。
+// 用于设计系统展示页及未来其他需要纯导航的场景。
+// 站点页头（site/Header.astro）同样使用全局 .nav 类，但额外组合了 brand 与 actions。
+
+export interface NavItem {
+  label: string;
+  href: string;
+  /** 是否为当前激活页（渲染为 aria-current="page"） */
+  active?: boolean;
+  /** 是否禁用（渲染为 aria-disabled="true"） */
+  disabled?: boolean;
+}
+
+interface Props {
+  items: NavItem[];
+  /** 导航的可访问性标签 */
+  ariaLabel?: string;
+}
+
+const { items, ariaLabel = 'Primary' } = Astro.props;
+---
+
+<nav class="nav" aria-label={ariaLabel}>
+  {
+    items.map((item) => (
+      <a
+        class="nav__link"
+        href={item.disabled ? undefined : item.href}
+        aria-current={item.active ? 'page' : undefined}
+        aria-disabled={item.disabled ? 'true' : undefined}
+      >
+        {item.label}
+      </a>
+    ))
+  }
+</nav>

@@ -1,0 +1,25 @@
+{
+  "comp": {
+    "card": {
+      "padding": { "$type": "dimension", "$value": "{ref.space.4}" },
+      "shadow": { "$type": "shadow", "$value": "{sys.shadow.sm}" }
+    },
+    "term": {
+      "screen-bg": { "$type": "color", "$value": "#0f1115" },
+      "text": { "$type": "color", "$value": "#e6e6e6" },
+      "light-screen-bg": { "$type": "color", "$value": "{ref.color.paper}" },
+      "light-text": { "$type": "color", "$value": "{ref.color.ink}" },
+      "shadow": {
+        "$type": "shadow",
+        "$value": "6px 6px 0 {ref.color.yellow.400}, 6px 6px 0 1px {ref.color.ink}",
+        "$description": "Command 私有：黄色偏移 + 黑色描边。尺寸与全局 sys.shadow.lg 对齐（6px）。"
+      }
+    },
+    "header": {
+      "padding-block": { "$type": "dimension", "$value": "0.9rem" },
+      "padding-inline": { "$type": "dimension", "$value": "clamp(1rem, 8vw, 6rem)" },
+      "gap": { "$type": "dimension", "$value": "{ref.space.4}" },
+      "logo-size": { "$type": "dimension", "$value": "3.5rem" }
+    }
+  }
+}

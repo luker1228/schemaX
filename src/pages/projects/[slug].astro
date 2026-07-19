@@ -1,0 +1,105 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection, render } from 'astro:content';
+import type { CollectionEntry } from 'astro:content';
+
+export async function getStaticPaths() {
+  const projects = await getCollection('projects');
+  return projects.map((project) => ({
+    params: { slug: project.id },
+    props: { project },
+  }));
+}
+
+interface Props {
+  project: CollectionEntry<'projects'>;
+}
+const { project } = Astro.props;
+const { Content } = await render(project);
+const { title, description, status, repository, demo, stack } = project.data;
+---
+
+<BaseLayout title={title} description={description} type="software">
+  <article class="sx-section">
+    <div class="sx-container">
+      <a class="back" href="/projects">← Projects</a>
+      <header class="phead">
+        <div class="phead__row">
+          <span class="badge badge--action">{status}</span>
+          {
+            demo && (
+              <a class="phead__link" href={demo} target="_blank" rel="noopener">
+                Demo ↗
+              </a>
+            )
+          }
+          {
+            repository && (
+              <a
+                class="phead__link"
+                href={repository}
+                target="_blank"
+                rel="noopener"
+              >
+                GitHub ↗
+              </a>
+            )
+          }
+        </div>
+        <h1 class="phead__title">{title}</h1>
+        <p class="phead__desc">{description}</p>
+        {
+          stack.length > 0 && (
+            <p class="phead__stack">
+              {stack.map((s) => (
+                <span class="tag">{s}</span>
+              ))}
+            </p>
+          )
+        }
+      </header>
+
+      <div class="sx-article sx-container--reading" data-pagefind-body>
+        <Content />
+      </div>
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  .back {
+    font-family: ui-monospace, monospace;
+    font-size: 0.85rem;
+  }
+  .phead {
+    margin-block: var(--sx-ref-space-4) var(--sx-ref-space-8);
+    padding-block-end: var(--sx-ref-space-6);
+    border-bottom: var(--sx-sys-border-width) solid var(--sx-sys-color-border);
+  }
+  .phead__row {
+    display: flex;
+    gap: var(--sx-ref-space-3);
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .phead__link {
+    font-weight: 700;
+    text-decoration: underline;
+  }
+  .phead__title {
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    margin-block: var(--sx-ref-space-3);
+  }
+  .phead__desc {
+    font-size: 1.15rem;
+    opacity: 0.85;
+  }
+  .phead__stack {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--sx-ref-space-1);
+    margin-block-start: var(--sx-ref-space-4);
+  }
+</style>

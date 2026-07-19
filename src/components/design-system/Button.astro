@@ -1,0 +1,74 @@
+---
+// Button 组件 —— SchemaX UI
+// 4 变体 × 3 尺寸的按钮。可作为 <a>（链接）或 <button>（按钮）渲染。
+// 样式来自全局 .btn 类（src/styles/components.css），本组件只做 props → 类名映射。
+//
+// 变体（variant）：
+//   primary   黄底黑字 —— 主操作（默认）
+//   secondary 黑底白字 —— 次要操作
+//   outline   白底黑字 —— 中性操作
+//   danger    红底白字 —— 危险操作（删除等）
+//   ghost     透明     —— Hero 等特殊场景
+//
+// 尺寸（size）：sm / md（默认）/ lg
+
+export type ButtonVariant =
+  | 'primary'
+  | 'secondary'
+  | 'outline'
+  | 'danger'
+  | 'ghost';
+
+export type ButtonSize = 'sm' | 'md' | 'lg';
+
+interface Props {
+  variant?: ButtonVariant;
+  size?: ButtonSize;
+  /** 渲染为链接时的 href；提供则渲染 <a>，否则渲染 <button> */
+  href?: string;
+  /** button 元素的 type 属性（仅在渲染 button 时生效） */
+  type?: 'button' | 'submit' | 'reset';
+  /** 禁用状态：链接渲染为 aria-disabled，按钮渲染为 disabled */
+  disabled?: boolean;
+  /** <a> 的 target 属性（仅链接渲染时生效），如 '_blank' */
+  target?: '_blank' | '_self' | '_parent' | '_top';
+  /** <a> 的 rel 属性（仅链接渲染时生效），如 'noreferrer' */
+  rel?: string;
+}
+
+const {
+  variant = 'primary',
+  size = 'md',
+  href,
+  type = 'button',
+  disabled = false,
+  target,
+  rel,
+} = Astro.props;
+
+const classes = [
+  'btn',
+  `btn--${variant}`,
+  size !== 'md' ? `btn--${size}` : '',
+].filter(Boolean).join(' ');
+
+const isLink = Boolean(href);
+---
+
+{
+  isLink ? (
+    <a
+      class={classes}
+      href={disabled ? undefined : href}
+      aria-disabled={disabled ? 'true' : undefined}
+      target={target}
+      rel={rel}
+    >
+      <slot />
+    </a>
+  ) : (
+    <button class={classes} type={type} disabled={disabled}>
+      <slot />
+    </button>
+  )
+}

@@ -1,0 +1,148 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { getCollection, getEntry, render } from 'astro:content';
+import type { CollectionEntry } from 'astro:content';
+import { courseIdOf } from '../../../lib/content';
+
+export async function getStaticPaths() {
+  const lessons = await getCollection('lessons');
+  return lessons.map((lesson) => ({
+    params: { course: courseIdOf(lesson.data.course), lesson: lesson.id },
+    props: { lesson },
+  }));
+}
+
+interface Props {
+  lesson: CollectionEntry<'lessons'>;
+}
+const { lesson } = Astro.props;
+const courseId = Astro.params.course as string;
+const course = await getEntry('courses', courseId);
+const { Content } = await render(lesson);
+const { title, description, order, durationMinutes, objectives } = lesson.data;
+
+const siblings = (await getCollection('lessons'))
+  .filter((l) => courseIdOf(l.data.course) === courseId)
+  .sort((a, b) => a.data.order - b.data.order);
+const idx = siblings.findIndex((l) => l.id === lesson.id);
+const prev = siblings[idx - 1];
+const next = siblings[idx + 1];
+---
+
+<BaseLayout title={title} description={description} type="article">
+  <article class="sx-section">
+    <div class="sx-container sx-container--reading">
+      <nav class="crumb" aria-label="Breadcrumb">
+        <a href="/courses">Courses</a>
+        <span>/</span>
+        {course && <a href={`/courses/${course.id}`}>{course.data.title}</a>}
+        <span>/</span>
+        <span>{title}</span>
+      </nav>
+
+      <header class="lhead">
+        <p class="lhead__order">
+          第 {order} 节{durationMinutes ? ` · ${durationMinutes} 分钟` : ''}
+        </p>
+        <h1 class="lhead__title">{title}</h1>
+        <p class="lhead__desc">{description}</p>
+        {
+          objectives.length > 0 && (
+            <details class="lhead__obj">
+              <summary>本节目标</summary>
+              <ul>
+                {objectives.map((o) => (
+                  <li>{o}</li>
+                ))}
+              </ul>
+            </details>
+          )
+        }
+      </header>
+
+      <div class="sx-article" data-pagefind-body>
+        <Content />
+      </div>
+
+      <nav class="pager" aria-label="Lesson navigation">
+        {
+          prev && (
+            <a class="pager__link" href={`/courses/${courseId}/${prev.id}`}>
+              ← {prev.data.title}
+            </a>
+          )
+        }
+        {
+          next && (
+            <a
+              class="pager__link pager__link--end"
+              href={`/courses/${courseId}/${next.id}`}
+            >
+              {next.data.title} →
+            </a>
+          )
+        }
+      </nav>
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  .crumb {
+    display: flex;
+    gap: var(--sx-ref-space-2);
+    flex-wrap: wrap;
+    font-family: ui-monospace, monospace;
+    font-size: 0.85rem;
+    opacity: 0.8;
+    margin-block-end: var(--sx-ref-space-6);
+  }
+  .crumb a {
+    text-decoration: underline;
+  }
+  .lhead {
+    margin-block-end: var(--sx-ref-space-8);
+    padding-block-end: var(--sx-ref-space-6);
+    border-bottom: var(--sx-sys-border-width) solid var(--sx-sys-color-border);
+  }
+  .lhead__order {
+    font-family: ui-monospace, monospace;
+    color: var(--sx-sys-color-action-primary);
+    font-weight: 700;
+    font-size: 0.85rem;
+  }
+  .lhead__title {
+    font-size: clamp(1.8rem, 4vw, 2.6rem);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    margin-block: var(--sx-ref-space-2);
+  }
+  .lhead__desc {
+    font-size: 1.1rem;
+    opacity: 0.85;
+  }
+  .lhead__obj {
+    margin-block-start: var(--sx-ref-space-4);
+  }
+  .lhead__obj ul {
+    list-style: disc;
+    padding-left: 1.25rem;
+    margin-block-start: var(--sx-ref-space-2);
+  }
+  .pager {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--sx-ref-space-4);
+    margin-block-start: var(--sx-ref-space-12);
+    padding-block-start: var(--sx-ref-space-6);
+    border-top: var(--sx-sys-border-width) solid var(--sx-sys-color-border);
+    flex-wrap: wrap;
+  }
+  .pager__link {
+    font-weight: 700;
+    text-decoration: underline;
+  }
+  .pager__link--end {
+    margin-left: auto;
+  }
+</style>

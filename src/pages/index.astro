@@ -1,0 +1,199 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import HomeHero from '../components/home/HomeHero.astro';
+import PostCard from '../components/site/PostCard.astro';
+import ProjectCard from '../components/site/ProjectCard.astro';
+import { getCollection } from 'astro:content';
+import { site } from '../config/site';
+
+const posts = (
+  await getCollection('posts', ({ data }) => data.status === 'published')
+).sort(
+  (a, b) =>
+    (b.data.publishedAt?.getTime() ?? 0) - (a.data.publishedAt?.getTime() ?? 0),
+);
+const recentPosts = posts.slice(0, 3);
+
+const featuredProjects = (
+  await getCollection('projects', ({ data }) => data.status !== 'archived')
+)
+  .filter((p) => p.data.featured)
+  .slice(0, 2);
+
+const entries = [
+  { label: 'Courses', href: '/courses', desc: '体系化课程、章节与练习。' },
+  { label: 'Blog', href: '/blog', desc: '技术文章、工程总结与观点记录。' },
+  {
+    label: 'Projects',
+    href: '/projects',
+    desc: '开源仓库、产品实验与工程作品。',
+  },
+  {
+    label: 'Design System',
+    href: '/design-system',
+    desc: 'SchemaX 的 Token、组件与内容规范。',
+  },
+];
+
+const principles = [
+  { t: 'Structure before automation', d: '先明确结构，再进行自动化。' },
+  { t: 'Contract before integration', d: '先建立契约，再连接系统。' },
+  { t: 'Constraints enable reliability', d: '合理的约束让能力被可靠使用。' },
+  {
+    t: 'Small schemas, large systems',
+    d: '复杂系统常由少量关键 Schema 建立秩序。',
+  },
+];
+---
+
+<BaseLayout title={site.name} type="profile">
+  <HomeHero />
+
+  <section class="sx-section">
+    <div class="sx-container">
+      <h2 class="section-title">四个核心入口</h2>
+      <div class="sx-grid">
+        {
+          entries.map((e) => (
+            <a class="card entry" href={e.href}>
+              <span class="entry__label">{e.label}</span>
+              <span class="entry__desc">{e.desc}</span>
+            </a>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="sx-section section--accent">
+    <div class="sx-container">
+      <h2 class="section-title">Manifesto</h2>
+      <ul class="principles">
+        {
+          principles.map((p) => (
+            <li class="principle">
+              <h3 class="principle__t">{p.t}</h3>
+              <p class="principle__d">{p.d}</p>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  {
+    recentPosts.length > 0 && (
+      <section class="sx-section">
+        <div class="sx-container">
+          <header class="block-head">
+            <h2 class="section-title">最新文章</h2>
+            <a class="block-head__link" href="/blog">
+              Read the Blog →
+            </a>
+          </header>
+          <div class="sx-grid">
+            {recentPosts.map((p) => (
+              <PostCard post={p} />
+            ))}
+          </div>
+        </div>
+      </section>
+    )
+  }
+
+  {
+    featuredProjects.length > 0 && (
+      <section class="sx-section">
+        <div class="sx-container">
+          <header class="block-head">
+            <h2 class="section-title">代表作品</h2>
+            <a class="block-head__link" href="/projects">
+              Explore Projects →
+            </a>
+          </header>
+          <div class="sx-grid">
+            {featuredProjects.map((p) => (
+              <ProjectCard project={p} />
+            ))}
+          </div>
+        </div>
+      </section>
+    )
+  }
+
+  <section class="sx-section">
+    <div class="sx-container">
+      <p class="note">
+        本站由 Astro + Svelte + MDX + TypeScript + 原生 CSS 构建，静态优先、零
+        JavaScript 优先。设计 Token 由 Style Dictionary 从 DTCG 源自动生成。
+      </p>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .section-title {
+    font-size: 1.5rem;
+    font-weight: 800;
+    margin-block-end: var(--sx-ref-space-6);
+    letter-spacing: -0.01em;
+  }
+
+  .section--accent {
+    background: var(--sx-sys-color-accent);
+  }
+
+  .entry {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sx-ref-space-2);
+  }
+  .entry__label {
+    font-size: 1.25rem;
+    font-weight: 800;
+  }
+  .entry__desc {
+    opacity: 0.85;
+  }
+
+  .principles {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 16rem), 1fr));
+    gap: var(--sx-ref-space-4);
+  }
+  .principle {
+    background: var(--sx-sys-color-bg-surface);
+    border: var(--sx-sys-border-width) solid var(--sx-sys-color-border);
+    padding: var(--sx-ref-space-4);
+  }
+  .principle__t {
+    font-size: 1.05rem;
+    font-weight: 700;
+  }
+  .principle__d {
+    margin-block-start: var(--sx-ref-space-2);
+    font-size: 0.9rem;
+  }
+
+  .block-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--sx-ref-space-4);
+    margin-block-end: var(--sx-ref-space-6);
+    flex-wrap: wrap;
+  }
+  .block-head__link {
+    font-weight: 700;
+    color: var(--sx-sys-color-action-primary);
+    text-decoration: underline;
+  }
+
+  .note {
+    border: var(--sx-sys-border-width) solid var(--sx-sys-color-border);
+    background: var(--sx-sys-color-bg-surface);
+    padding: var(--sx-ref-space-4) var(--sx-ref-space-6);
+    font-family: ui-monospace, monospace;
+    font-size: 0.9rem;
+  }
+</style>

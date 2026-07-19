@@ -1,0 +1,186 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+import type { CollectionEntry } from 'astro:content';
+import { courseIdOf } from '../../lib/content';
+
+export async function getStaticPaths() {
+  const courses = await getCollection(
+    'courses',
+    ({ data }) => data.status !== 'archived',
+  );
+  return courses.map((course) => ({
+    params: { course: course.id },
+    props: { course },
+  }));
+}
+
+interface Props {
+  course: CollectionEntry<'courses'>;
+}
+const { course } = Astro.props;
+const {
+  title,
+  description,
+  type,
+  level,
+  objectives,
+  prerequisites,
+  estimatedHours,
+} = course.data;
+
+const lessons = (await getCollection('lessons'))
+  .filter((l) => courseIdOf(l.data.course) === course.id)
+  .sort((a, b) => a.data.order - b.data.order);
+---
+
+<BaseLayout title={title} description={description} type="course">
+  <section class="sx-section">
+    <div class="sx-container">
+      <a class="back" href="/courses">← Courses</a>
+
+      <header class="chead">
+        <div class="chead__tags">
+          <span class="badge badge--accent">{type}</span>
+          <span class="badge">{level}</span>
+        </div>
+        <h1 class="chead__title">{title}</h1>
+        <p class="chead__desc">{description}</p>
+      </header>
+
+      <div class="cmeta">
+        {
+          objectives.length > 0 && (
+            <div>
+              <h3>学习目标</h3>
+              <ul>
+                {objectives.map((o) => (
+                  <li>{o}</li>
+                ))}
+              </ul>
+            </div>
+          )
+        }
+        {
+          prerequisites.length > 0 && (
+            <div>
+              <h3>前置知识</h3>
+              <ul>
+                {prerequisites.map((o) => (
+                  <li>{o}</li>
+                ))}
+              </ul>
+            </div>
+          )
+        }
+        {
+          estimatedHours && (
+            <div>
+              <>
+                <h3>预计时长</h3>
+                <p>{estimatedHours} 小时</p>
+              </>
+            </div>
+          )
+        }
+      </div>
+
+      <h2 class="lessons-title">章节</h2>
+      {
+        lessons.length > 0 ? (
+          <ol class="lessons">
+            {lessons.map((l, i) => (
+              <li>
+                <a href={`/courses/${course.id}/${l.id}`}>
+                  <span class="lessons__n">
+                    {String(i + 1).padStart(2, '0')}
+                  </span>
+                  <span class="lessons__t">{l.data.title}</span>
+                </a>
+              </li>
+            ))}
+          </ol>
+        ) : (
+          <p class="empty">章节即将上线。</p>
+        )
+      }
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .back {
+    font-family: ui-monospace, monospace;
+    font-size: 0.85rem;
+  }
+  .chead {
+    margin-block: var(--sx-ref-space-4) var(--sx-ref-space-8);
+    padding-block-end: var(--sx-ref-space-6);
+    border-bottom: var(--sx-sys-border-width) solid var(--sx-sys-color-border);
+  }
+  .chead__tags {
+    display: flex;
+    gap: var(--sx-ref-space-2);
+  }
+  .chead__title {
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    margin-block: var(--sx-ref-space-3);
+  }
+  .chead__desc {
+    font-size: 1.15rem;
+    opacity: 0.85;
+  }
+  .cmeta {
+    display: grid;
+    gap: var(--sx-ref-space-6);
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
+    margin-block-end: var(--sx-ref-space-12);
+  }
+  .cmeta h3 {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-block-end: var(--sx-ref-space-2);
+  }
+  .cmeta ul {
+    list-style: disc;
+    padding-left: 1.25rem;
+  }
+  .lessons-title {
+    font-size: 1.4rem;
+    font-weight: 800;
+    margin-block-end: var(--sx-ref-space-4);
+  }
+  .lessons {
+    border: var(--sx-sys-border-width) solid var(--sx-sys-color-border);
+  }
+  .lessons li {
+    border-bottom: var(--sx-sys-border-width) solid var(--sx-sys-color-border);
+  }
+  .lessons li:last-child {
+    border-bottom: none;
+  }
+  .lessons a {
+    display: flex;
+    gap: var(--sx-ref-space-4);
+    align-items: baseline;
+    padding: var(--sx-ref-space-3) var(--sx-ref-space-4);
+    font-weight: 600;
+  }
+  .lessons a:hover {
+    background: var(--sx-sys-color-bg-page);
+    color: var(--sx-sys-color-action-primary);
+  }
+  .lessons__n {
+    font-family: ui-monospace, monospace;
+    color: var(--sx-sys-color-action-primary);
+  }
+  .empty {
+    border: var(--sx-sys-border-width) dashed var(--sx-sys-color-border);
+    padding: var(--sx-ref-space-8);
+    text-align: center;
+    opacity: 0.7;
+  }
+</style>

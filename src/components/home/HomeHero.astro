@@ -1,0 +1,117 @@
+---
+import { site } from '../../config/site';
+import { profile } from '../../data/profile';
+
+const schemaCard = `{
+  "name": "${profile.name}",
+  "role": "${profile.role}",
+  "modes": ${JSON.stringify(profile.modes)},
+  "status": "${profile.status}"
+}`;
+---
+
+<section class="hero">
+  <div class="sx-container hero__inner">
+    <div class="hero__copy">
+      <p class="hero__eyebrow">{site.name}</p>
+      <h1 class="hero__title">{site.tagline}</h1>
+      <p class="hero__lede">用 Schema，为未知建立可执行的结构。</p>
+      <p class="hero__bio">
+        我是 Luke，一名 AI Agent
+        工程师与独立构建者。这里记录我的课程、技术思考、开源作品，以及 SchemaX
+        自身的设计过程。
+      </p>
+      <div class="hero__cta">
+        <a class="btn btn--primary" href="/projects">Explore Projects</a>
+        <a class="btn btn--ghost" href="/blog">Read the Blog</a>
+      </div>
+    </div>
+
+    <aside class="hero__card" aria-hidden="true">
+      <div class="hero__cardbar"><span></span><span></span><span></span></div>
+      <pre class="hero__code"><code>{schemaCard}</code></pre>
+    </aside>
+  </div>
+</section>
+
+<style>
+  .hero {
+    background: var(--sx-sys-color-bg-page);
+  }
+
+  .hero__inner {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: var(--sx-ref-space-12);
+    align-items: center;
+    padding-block: var(--sx-ref-space-24);
+  }
+
+  .hero__eyebrow {
+    font-family: ui-monospace, monospace;
+    color: var(--sx-sys-color-action-primary);
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+  }
+
+  .hero__title {
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    line-height: 1.02;
+    letter-spacing: -0.03em;
+    margin-block: var(--sx-ref-space-3);
+  }
+
+  .hero__lede {
+    font-size: 1.25rem;
+    font-weight: 600;
+  }
+
+  .hero__bio {
+    margin-block: var(--sx-ref-space-4);
+    max-width: 38ch;
+    line-height: 1.7;
+  }
+
+  .hero__cta {
+    display: flex;
+    gap: var(--sx-ref-space-3);
+    flex-wrap: wrap;
+  }
+
+  .hero__card {
+    background: var(--sx-sys-color-bg-surface);
+    box-shadow: var(--sx-sys-shadow-lg);
+    overflow: hidden;
+  }
+
+  .hero__cardbar {
+    display: flex;
+    gap: var(--sx-ref-space-2);
+    padding: var(--sx-ref-space-2) var(--sx-ref-space-3);
+    border-bottom: var(--sx-sys-border-width) solid var(--sx-sys-color-border);
+    background: var(--sx-sys-color-accent);
+  }
+  .hero__cardbar span {
+    width: 0.7rem;
+    height: 0.7rem;
+    background: var(--sx-sys-color-border);
+  }
+
+  .hero__code {
+    margin: 0;
+    padding: var(--sx-ref-space-6);
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 0.95rem;
+    line-height: 1.7;
+    overflow-x: auto;
+  }
+
+  @media (max-width: 48rem) {
+    .hero__inner {
+      grid-template-columns: 1fr;
+      padding-block: var(--sx-ref-space-12);
+    }
+  }
+</style>
