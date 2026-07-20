@@ -77,6 +77,16 @@ export default {
         'declaration-property-value-allowed-list': null,
       },
     },
+    // code.css：覆盖第三方 Expressive Code 的 --ec-* 变量，
+    // 必须使用第三方 --ec- 前缀 + 少量裸色值（深色代码区背景），
+    // 视为第三方系统的 escape hatch，整体豁免前缀约束。
+    {
+      files: ['**/styles/code.css'],
+      rules: {
+        'color-no-hex': null,
+        'custom-property-pattern': null,
+      },
+    },
     // .astro / .svelte 的 <style> 块用 postcss-html 解析
     {
       files: ['**/*.astro', '**/*.svelte'],

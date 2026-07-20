@@ -1,0 +1,403 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumb from '../../components/design-system/Breadcrumb.astro';
+import PageHeader from '../../components/site/PageHeader.astro';
+
+// Neo-brutalist 视觉特征（init.md §14.1）
+const brutalistTraits = [
+  '低圆角或无圆角',
+  '粗边框',
+  '实心硬阴影',
+  '蓝黄主色',
+  '高对比度',
+  '编辑感排版',
+  '模块化卡片',
+  '明显的交互反馈',
+  '少渐变',
+  '少玻璃效果',
+];
+
+// 页面视觉强度分级（init.md §14.2）
+const intensityRows = [
+  { page: '设计系统', level: '最强' },
+  { page: '首页', level: '强' },
+  { page: '项目页', level: '强' },
+  { page: '课程列表', level: '中强' },
+  { page: '课程正文', level: '中等' },
+  { page: '博客正文', level: '克制' },
+];
+
+// 4 条核心设计原则（retroui.md「Taste DNA」）
+const principles = [
+  {
+    title: '暖纸作为连续场',
+    eyebrow: 'paper field',
+    body: '选择暖色 #FFF7E8 纸面作为整站画布，而非中性灰或深色底。着色让黑色边框与黄色操作读起来像印刷痕迹，同一表面也能承载长篇文档而无需主题切换。',
+  },
+  {
+    title: '硬阴影替代柔和投影',
+    eyebrow: 'offset ink',
+    body: '卡片、按钮、控件需要与纸面分离时，用 2–4px 的纯黑偏移、零模糊，而非多层漫射阴影。物体在小尺寸下保持裁切般的物理边缘，在白底与纸底上都清晰可读。',
+  },
+  {
+    title: '显示字体配 utility 正文',
+    eyebrow: 'display × utility',
+    body: '标题用 display 字体让区块切换一目了然；正文与 UI 标签用紧凑的 utility 字体保持可扫描。等宽字体隔离在代码与技术标签上。',
+  },
+  {
+    title: '色彩是信号，不是壁纸',
+    eyebrow: 'color as signal',
+    body: '黄色用于主强调，读者能预测黄=操作或焦点；薄荷、紫、粉等装饰色保持在小范围点缀，而非竞争性的导航通道。',
+  },
+];
+
+// 基础配色（名称 + 用途，不重复 token 变量名 —— 那归 tokens 页）
+const palette = [
+  { name: 'Paper', hex: '#FFF7E8', role: '页面背景 · 暖纸连续场' },
+  { name: 'Ink', hex: '#000000', role: '文字 / 边框 / 阴影' },
+  { name: 'White', hex: '#FFFFFF', role: '卡片表面' },
+  { name: 'Yellow', hex: '#FFDC58', role: '强调 · 主操作' },
+  { name: 'Blue', hex: '#2f5bea', role: '链接 · action' },
+  { name: 'Red', hex: '#f9575c', role: '危险 · 停用' },
+  { name: 'Green', hex: '#35ad68', role: '成功 · 完成' },
+];
+
+// Schema 自身视觉母题（init.md §14.1）
+const motifs = [
+  '花括号 {}',
+  '字段名',
+  '类型标签',
+  'required 星号 *',
+  '路径表达 a.b.c',
+  '网格',
+  '节点连接',
+  '结构分组',
+];
+---
+
+<BaseLayout
+  title="Design System · Foundations"
+  description="SchemaX UI 的设计语言、原则与基础视觉取值。"
+>
+  <section class="sx-section">
+    <div class="sx-container">
+      <Breadcrumb
+        items={[
+          { label: 'Home', href: '/' },
+          { label: 'Design System', href: '/design-system' },
+          { label: 'Foundations' },
+        ]}
+      />
+
+      <PageHeader title="Foundations">
+        <p>
+          设计语言的「为什么」：视觉方向、核心原则、基础取值。
+          数据层的变量名与取值见 <a href="/design-system/tokens">Tokens</a>。
+        </p>
+      </PageHeader>
+
+      {/* ── 1. 视觉方向 ── */}
+      <section class="group">
+        <h2 class="group__title">视觉方向 Visual direction</h2>
+        <p class="group__lede">
+          SchemaX UI 以 RetroUI / Neo-brutalist 为视觉基础，并叠加 Schema
+          自身的结构化视觉母题。
+        </p>
+
+        <h3 class="sub-title">Neo-brutalist 特征</h3>
+        <div class="trait-grid">
+          {
+            brutalistTraits.map((t) => (
+              <span class="tag trait">{t}</span>
+            ))
+          }
+        </div>
+
+        <h3 class="sub-title">页面视觉强度分级</h3>
+        <p class="group__hint">
+          RetroUI 强度按页面分级 —— 设计系统最强，博客正文最克制。
+          Schema 母题不侵入长篇阅读空间。
+        </p>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr><th>页面</th><th>RetroUI 强度</th></tr>
+            </thead>
+            <tbody>
+              {
+                intensityRows.map((r) => (
+                  <tr>
+                    <td class="cell-name">{r.page}</td>
+                    <td>{r.level}</td>
+                  </tr>
+                ))
+              }
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      {/* ── 2. 设计原则 ── */}
+      <section class="group">
+        <h2 class="group__title">设计原则 Principles</h2>
+        <p class="group__lede">
+          四条贯穿全局的设计决策，每条回答一个「为什么」。
+        </p>
+        <div class="principle-grid">
+          {
+            principles.map((p) => (
+              <article class="principle">
+                <p class="principle__eyebrow">{p.eyebrow}</p>
+                <h3 class="principle__title">{p.title}</h3>
+                <p class="principle__body">{p.body}</p>
+              </article>
+            ))
+          }
+        </div>
+      </section>
+
+      {/* ── 3. 基础视觉取值 ── */}
+      <section class="group">
+        <h2 class="group__title">基础视觉取值 Foundations in use</h2>
+        <p class="group__lede">
+          实物展示，非变量表。完整 token 变量名见 <a
+            href="/design-system/tokens">Tokens</a>。
+        </p>
+
+        <h3 class="sub-title">配色 Palette</h3>
+        <div class="swatch-grid">
+          {
+            palette.map((c) => (
+              <div class="swatch-item">
+                <span
+                  class="swatch-lg"
+                  style={`background: ${c.hex}`}
+                  aria-hidden="true"
+                />
+                <span class="swatch-item__name">{c.name}</span>
+                <code class="swatch-item__hex">{c.hex}</code>
+                <span class="swatch-item__role">{c.role}</span>
+              </div>
+            ))
+          }
+        </div>
+
+        <h3 class="sub-title">阴影 Shadow</h3>
+        <p class="group__hint">纯黑硬阴影，零模糊，三档偏移。</p>
+        <div class="demo-row">
+          <div class="shadow-box" style="box-shadow: var(--sx-sys-shadow-sm)">
+            sm · 2px
+          </div>
+          <div class="shadow-box" style="box-shadow: var(--sx-sys-shadow-md)">
+            md · 4px
+          </div>
+          <div class="shadow-box" style="box-shadow: var(--sx-sys-shadow-lg)">
+            lg · 6px
+          </div>
+        </div>
+
+        <h3 class="sub-title">边框与圆角 Border &amp; radius</h3>
+        <p class="group__hint">
+          全站统一 1px 黑边。圆角仅两种：0（默认）与 2px（按钮等）。
+        </p>
+        <div class="demo-row">
+          <div class="edge-box">边框 1px · 圆角 0</div>
+          <div class="edge-box edge-box--rounded">
+            边框 1px · 圆角 2px
+          </div>
+          <div class="edge-box edge-box--borderless">
+            无边框（仅阴影）
+          </div>
+        </div>
+      </section>
+
+      {/* ── 4. Schema 视觉母题 ── */}
+      <section class="group">
+        <h2 class="group__title">Schema 视觉母题 Schema motifs</h2>
+        <p class="group__lede">
+          SchemaX 自身的结构化视觉语言。这些元素仅用于品牌与设计系统区域，
+          <strong>不侵入长篇阅读空间</strong>。
+        </p>
+        <div class="trait-grid">
+          {
+            motifs.map((m) => (
+              <span class="tag trait">{m}</span>
+            ))
+          }
+        </div>
+      </section>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  /* 与 tokens 页一致的导航 / 分组样式（各 design-system 子页各自声明 scoped 样式） */
+  .back {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 0.85rem;
+  }
+  .group {
+    margin-block-end: var(--sx-ref-space-12);
+  }
+  .group__title {
+    font-size: 1.4rem;
+    font-weight: 800;
+    margin-block-end: var(--sx-ref-space-2);
+  }
+  .group__lede {
+    opacity: 0.8;
+    margin-block-end: var(--sx-ref-space-6);
+    max-width: 46rem;
+  }
+  .group__hint {
+    font-size: 0.9rem;
+    opacity: 0.7;
+    margin-block-end: var(--sx-ref-space-4);
+  }
+  .group__lede a,
+  .group__hint a {
+    color: var(--sx-sys-color-action-primary);
+    text-decoration: underline;
+  }
+
+  /* 复用展示页通用样式（components.astro 定义了全局 .sub-title / .table-wrap，
+     但那是该页 scoped；此处为本页重新声明，保持各页隔离） */
+  .sub-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-block: var(--sx-ref-space-6) var(--sx-ref-space-3);
+  }
+  .table-wrap {
+    overflow-x: auto;
+    border: var(--sx-sys-border-width) solid var(--sx-sys-color-border);
+  }
+  .table-wrap table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 24rem;
+  }
+  .table-wrap th,
+  .table-wrap td {
+    text-align: left;
+    padding: var(--sx-ref-space-2) var(--sx-ref-space-3);
+    border-bottom: var(--sx-sys-border-width) solid var(--sx-sys-color-border);
+  }
+  .table-wrap thead th {
+    background: var(--sx-sys-color-bg-page);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .table-wrap tbody tr:last-child td {
+    border-bottom: none;
+  }
+  .cell-name {
+    font-weight: 700;
+  }
+
+  /* 特征标签网格 */
+  .trait-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--sx-ref-space-2);
+  }
+  .trait {
+    font-size: 0.8rem;
+  }
+
+  /* 设计原则卡片 */
+  .principle-grid {
+    display: grid;
+    grid-template-columns: repeat(
+      auto-fill,
+      minmax(min(100%, 20rem), 1fr)
+    );
+    gap: var(--sx-ref-space-4);
+  }
+  .principle {
+    background: var(--sx-sys-color-bg-surface);
+    border: var(--sx-sys-border-width) solid var(--sx-sys-color-border);
+    box-shadow: var(--sx-sys-shadow-sm);
+    padding: var(--sx-ref-space-4);
+  }
+  .principle__eyebrow {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--sx-sys-color-action-primary);
+  }
+  .principle__title {
+    font-size: 1.15rem;
+    font-weight: 800;
+    line-height: 1.25;
+    margin-block-start: var(--sx-ref-space-2);
+  }
+  .principle__body {
+    font-size: 0.92rem;
+    line-height: 1.7;
+    opacity: 0.82;
+    margin-block-start: var(--sx-ref-space-2);
+  }
+
+  /* 配色 swatch 网格 */
+  .swatch-grid {
+    display: grid;
+    grid-template-columns: repeat(
+      auto-fill,
+      minmax(min(100%, 11rem), 1fr)
+    );
+    gap: var(--sx-ref-space-3);
+  }
+  .swatch-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+  }
+  .swatch-lg {
+    display: block;
+    width: 100%;
+    height: 3.5rem;
+    border: var(--sx-sys-border-width) solid var(--sx-sys-color-border);
+    margin-block-end: var(--sx-ref-space-1);
+  }
+  .swatch-item__name {
+    font-weight: 800;
+    font-size: 0.9rem;
+  }
+  .swatch-item__hex {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 0.78rem;
+    opacity: 0.7;
+  }
+  .swatch-item__role {
+    font-size: 0.78rem;
+    opacity: 0.65;
+    line-height: 1.4;
+  }
+
+  /* 实物演示行（阴影 / 边框 / 圆角） */
+  .demo-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--sx-ref-space-4);
+  }
+  .shadow-box,
+  .edge-box {
+    background: var(--sx-sys-color-bg-surface);
+    border: var(--sx-sys-border-width) solid var(--sx-sys-color-border);
+    padding: var(--sx-ref-space-4) var(--sx-ref-space-3);
+    font-size: 0.82rem;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    min-width: 8rem;
+    text-align: center;
+  }
+  .edge-box--rounded {
+    border-radius: 2px;
+  }
+  .edge-box--borderless {
+    border: 0;
+    box-shadow: var(--sx-sys-shadow-sm);
+  }
+</style>

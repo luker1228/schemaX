@@ -20,6 +20,6 @@
 
 .sx-grid {
   display: grid;
-  gap: var(--sx-ref-space-6);
+  gap: var(--sx-ref-space-8);
   grid-template-columns: repeat(auto-fill, minmax(min(100%, 18rem), 1fr));
 }

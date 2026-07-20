@@ -1,5 +1,6 @@
 ---
 import type { CollectionEntry } from 'astro:content';
+import Card from '../design-system/Card.astro';
 
 interface Props {
   course: CollectionEntry<'courses'>;
@@ -8,14 +9,14 @@ const { course } = Astro.props;
 const { title, description, level, type } = course.data;
 ---
 
-<a class="card coursecard" href={`/courses/${course.id}`}>
+<Card href={`/courses/${course.id}`} class="coursecard">
   <div class="coursecard__tags">
     <span class="badge badge--accent">{type}</span>
     <span class="badge">{level}</span>
   </div>
   <h3 class="coursecard__title">{title}</h3>
   <p class="coursecard__desc">{description}</p>
-</a>
+</Card>
 
 <style>
   .coursecard {

@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumb from '../../components/design-system/Breadcrumb.astro';
 import { getCollection, render } from 'astro:content';
 import type { CollectionEntry } from 'astro:content';
 
@@ -22,7 +23,13 @@ const { title, description, status, repository, demo, stack } = project.data;
 <BaseLayout title={title} description={description} type="software">
   <article class="sx-section">
     <div class="sx-container">
-      <a class="back" href="/projects">← Projects</a>
+      <Breadcrumb
+        items={[
+          { label: 'Home', href: '/' },
+          { label: 'Projects', href: '/projects' },
+          { label: title },
+        ]}
+      />
       <header class="phead">
         <div class="phead__row">
           <span class="badge badge--action">{status}</span>

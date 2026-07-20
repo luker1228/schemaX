@@ -74,6 +74,11 @@ export default [
     files: ['**/*.svelte'],
     languageOptions: {
       globals: { ...globals.browser },
+      parserOptions: {
+        // 让 <script lang="ts"> 用 TS parser，否则 interface / 类型语法会解析失败
+        parser: tseslint.parser,
+        extraFileExtensions: ['.svelte'],
+      },
     },
   },
 

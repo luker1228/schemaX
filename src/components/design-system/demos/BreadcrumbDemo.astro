@@ -1,0 +1,104 @@
+---
+// Breadcrumb 演示 —— 仅供 /design-system/components 展示页使用。
+// 展示页通过 import.meta.glob 自动捕获本文件。
+// 共享样式（.demo / .demo__head / .demo__stage 等）由展示页用 :global() 注入。
+import Breadcrumb from '../Breadcrumb.astro';
+import Demo from '../Demo.astro';
+import type { BreadcrumbItem } from '../Breadcrumb.astro';
+
+const simpleItems: BreadcrumbItem[] = [
+  { label: 'Home', href: '/' },
+  { label: 'Design System', href: '/design-system' },
+  { label: 'Components' },
+];
+
+const deepItems: BreadcrumbItem[] = [
+  { label: 'Home', href: '/' },
+  { label: 'Courses', href: '/courses' },
+  { label: 'Astro 实战', href: '/courses/astro' },
+  { label: '内容集合', href: '/courses/astro/content-collections' },
+  { label: '定义 Schema' },
+];
+
+const apiRows = [
+  {
+    name: 'items',
+    type: 'BreadcrumbItem[]',
+    default: '—（必填）',
+    desc: '层级路径，按从根到当前页顺序。最后一项 = 当前页',
+  },
+  {
+    name: 'ariaLabel',
+    type: 'string',
+    default: "'Breadcrumb'",
+    desc: 'nav 的可访问性标签',
+  },
+  {
+    name: 'items[].label',
+    type: 'string',
+    default: '—',
+    desc: '显示文字',
+  },
+  {
+    name: 'items[].href',
+    type: 'string',
+    default: '—',
+    desc: '链接地址（最后一项忽略，当前页不可点）',
+  },
+];
+
+const usage = `---
+import Breadcrumb from '@/components/design-system/Breadcrumb.astro';
+---
+
+<Breadcrumb
+  items={[
+    { label: 'Home', href: '/' },
+    { label: 'Design System', href: '/design-system' },
+    { label: 'Components' },
+  ]}
+/>`;
+---
+
+<>
+  <Demo label="默认（三级）" attr='<Breadcrumb items={[...]} />'>
+    <Breadcrumb items={simpleItems} />
+    <Fragment slot="note">
+      <p>
+        最后一项（<code>Components</code>）自动渲染为 <code>aria-current="page"</code>，
+        不可点、略暗；其余为链接，hover 时整块黄底填充。
+      </p>
+    </Fragment>
+  </Demo>
+
+  <Demo label="深层路径" attr='items.length >= 4'>
+    <Breadcrumb items={deepItems} />
+    <Fragment slot="note">
+      <p>
+        支持任意层级。「/」分隔符比文字更暗，长路径下也不抢视觉；窄屏会自动换行。
+      </p>
+    </Fragment>
+  </Demo>
+
+  <h3 class="sub-title">Props</h3>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>Prop</th><th>类型</th><th>默认</th><th>说明</th></tr>
+      </thead>
+      <tbody>
+        {apiRows.map((r) => (
+          <tr>
+            <td class="cell-name"><code>{r.name}</code></td>
+            <td><code>{r.type}</code></td>
+            <td><code>{r.default}</code></td>
+            <td class="cell-desc">{r.desc}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+
+  <h3 class="sub-title">用法</h3>
+  <pre class="usage"><code>{usage}</code></pre>
+</>

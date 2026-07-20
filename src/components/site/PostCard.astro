@@ -1,5 +1,6 @@
 ---
 import type { CollectionEntry } from 'astro:content';
+import Card from '../design-system/Card.astro';
 
 interface Props {
   post: CollectionEntry<'posts'>;
@@ -15,12 +16,12 @@ const date = publishedAt
   : '';
 ---
 
-<a class="card postcard" href={`/blog/${post.id}`}>
+<Card href={`/blog/${post.id}`} class="postcard">
   <span class="badge">Post</span>
   <h3 class="postcard__title">{title}</h3>
   <p class="postcard__desc">{description}</p>
   {date && <p class="postcard__meta">{date}</p>}
-</a>
+</Card>
 
 <style>
   .postcard {

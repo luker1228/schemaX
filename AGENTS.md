@@ -1,8 +1,8 @@
-# CLAUDE.md
+# AGENTS.md
 
 > **语言约定（最高优先级）：始终用中文回答用户。** 无论问题用什么语言提出，所有回复、解释、计划、注释说明都必须使用中文。技术标识符（命令名、文件路径、API 名称、配置项）保留英文原文，但围绕它们的说明文字必须用中文。
 
-本文件为 Claude Code (claude.ai/code) 在本仓库中工作时提供指引。
+本文件为 Codex (Codex.ai/code) 在本仓库中工作时提供指引。
 
 ## 项目状态：脚手架已就位 / 规范驱动
 
@@ -77,14 +77,6 @@ pnpm gen:component Button 主要、次要、幽灵、强调变体。
 - `Demo` 封装了头部（label + attr 代码）+ 舞台 + 折叠说明（原生 `<details>`，零 JS）
 - `stageClass`：`'wrap'`（换行排列）/ `'align'`（底对齐）/ 不传（居中）
 - **禁止**在 Demo 文件里手写 `<div class="demo">` / `<details class="demo__details">` 等结构 —— 一律用 `<Demo>` 组件
-
-**Demo 演示约定（演示用元素不得真实跳转）：**
-
-设计系统 demo 是纯视觉演示，其中的链接型组件（`<Button href>`、`<Card href>` 等）**不得使用真实路由**（如 `href="/projects"`）—— 点击会离开展示页、打断演示体验。处理方式：
-
-- 演示「抬起 / interactive」等**交互效果**时，优先用组件的 `interactive` prop（如 `interactive={true}`），不传 `href`，渲染为非跳转元素。
-- 必须**演示 `<a>` 元素本身**（如「链接 vs 按钮」「链接 vs 容器」对比）时，用 `href="javascript:void(0)"` —— 点击不跳转、不刷新、不改 URL，且保留 hover 与焦点行为，符合零 JS 优先约束。
-- 用法**代码示例**（`<pre class="usage">` 里的文本）保持真实 href（如 `/projects`），因为它示范的是正确写法，不会被渲染成可点击元素。
 
 ## 架构：承重原则
 

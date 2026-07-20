@@ -1,0 +1,569 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumb from '../../components/design-system/Breadcrumb.astro';
+import PageHeader from '../../components/site/PageHeader.astro';
+import Card from '../../components/design-system/Card.astro';
+import { Code } from 'astro-expressive-code/components';
+
+// 标题层级规范数据
+const headingSpec = [
+  { el: 'h1', size: '2.5rem', weight: '800', spacing: '-0.02em', lh: '1.1', mb: '4rem 1.5rem' },
+  { el: 'h2', size: '2rem', weight: '800', spacing: '-0.01em', lh: '1.2', mb: '4rem 1.5rem' },
+  { el: 'h3', size: '1.5rem', weight: '800', spacing: '0', lh: '1.25', mb: '2.5rem 1rem' },
+  { el: 'h4', size: '1.2rem', weight: '800', spacing: '0', lh: '1.3', mb: '2rem 0.75rem' },
+  { el: 'h5', size: '1rem', weight: '700', spacing: '0.05em', lh: '1.3', mb: '2rem 0.5rem', note: 'uppercase' },
+  { el: 'h6', size: '0.9rem', weight: '700', spacing: '0.08em', lh: '1.3', mb: '2rem 0.5rem', note: 'uppercase · 70% opacity' },
+];
+
+// 行内元素规范数据
+const inlineSpec = [
+  { el: '<strong>', desc: 'font-weight: 700', render: '这是 <strong>加粗</strong> 文本' },
+  { el: '<em>', desc: 'font-style: italic', render: '这是 <em>斜体</em> 文本' },
+  { el: '<a>', desc: 'color: --sx-sys-color-action-primary · underline · 600', render: '这是<a href="#">链接文本</a>' },
+  { el: '<mark>', desc: 'background: --sx-sys-color-accent', render: '这是 <mark>高亮标记</mark> 文本' },
+  { el: '<code>', desc: 'monospace · border · surface bg', render: '这是 <code>行内代码</code> 文本' },
+  { el: '<kbd>', desc: 'monospace · border + 1px shadow · 2px radius', render: '按下 <kbd>Ctrl</kbd> + <kbd>S</kbd> 保存' },
+];
+
+// MDX 白名单组件（规范 §11）
+const mdxComponents = [
+  { name: 'Callout', desc: '提示框：idea / warning / danger / note 四种类型' },
+  { name: 'Steps', desc: '步骤列表：有序流程编排' },
+  { name: 'Figure', desc: '带标题的图片/代码插图容器' },
+  { name: 'CodeCompare', desc: '左右对比：Before / After · 输入 / 输出' },
+  { name: 'CodePreview', desc: '代码 + 实时效果并排展示' },
+  { name: 'Playground', desc: 'sandbox iframe 中运行用户 HTML/CSS/JS' },
+  { name: 'Exercise', desc: '课程练习题交互组件' },
+  { name: 'KnowledgeCheck', desc: '知识点测验组件' },
+  { name: 'Tabs', desc: '标签切换，桌面端左右、移动端上下' },
+  { name: 'Video', desc: '视频嵌入容器' },
+];
+---
+
+<BaseLayout
+  title="Design System · Content"
+  description="SchemaX 的 Markdown 与 MDX 排版规范，涵盖标题、正文、列表、引用、代码、表格等全部排版元素。"
+>
+  <section class="sx-section">
+    <div class="sx-container">
+      <Breadcrumb
+        items={[
+          { label: 'Home', href: '/' },
+          { label: 'Design System', href: '/design-system' },
+          { label: 'Content' },
+        ]}
+      />
+
+      <PageHeader title="Content">
+        <p>
+          Markdown 与 MDX 的真实排版规范。每个区块展示规范参数与
+          <code>.sx-article</code> 内的实际渲染效果。
+        </p>
+      </PageHeader>
+
+      {/* ── 1. 排版容器 ── */}
+      <section class="group">
+        <h2 class="group__title">排版容器 Typography container</h2>
+        <p class="group__lede">
+          所有文章正文内容统一包裹在 <code>.sx-article</code> 中。它定义了阅读宽度、字号与行高，
+          由 <code>--sx-article-*</code> token 驱动。使用 <code>:where()</code> 零特异性选择器，
+          确保组件与 overrides 能干净地覆盖。
+        </p>
+
+        <div class="spec-table">
+          <table>
+            <thead>
+              <tr><th>Token</th><th>值</th><th>用途</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><code>--sx-article-width-reading</code></td><td>46rem</td><td>阅读宽度</td></tr>
+              <tr><td><code>--sx-article-width-tutorial</code></td><td>68rem</td><td>教程宽度（代码 + 文字并排）</td></tr>
+              <tr><td><code>--sx-article-font-size</code></td><td>1.0625rem</td><td>正文字号</td></tr>
+              <tr><td><code>--sx-article-line-height</code></td><td>1.8</td><td>正文行高</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="demo-article">
+          <div class="demo-article__body">
+            <div class="sx-article">
+              <p>SchemaX 是一个 Schema 驱动的静态内容平台。它用 Schema 定义站点自身的内容、设计令牌、组件契约和消息格式，并在构建时校验。</p>
+              <p>这段文字展示了 <code>.sx-article</code> 容器的默认排版效果：46rem 阅读宽度、1.0625rem 字号、1.8 行高。所有排版元素都在这个容器内被样式化。</p>
+            </div>
+          </div>
+          <p class="demo-article__label">.sx-article 默认渲染</p>
+        </div>
+      </section>
+
+      {/* ── 2. 标题层级 ── */}
+      <section class="group">
+        <h2 class="group__title">标题层级 Heading hierarchy</h2>
+        <p class="group__lede">
+          <code>.sx-article</code> 内定义 h1–h6 六个级别的排版。h1 通常出现在文章头部（
+          <code>.sx-article</code> 外），h2–h4 是正文最常用的标题层级，h5/h6 为小节标注。
+        </p>
+
+        <div class="spec-table">
+          <table>
+            <thead>
+              <tr><th>元素</th><th>font-size</th><th>weight</th><th>line-height</th><th>letter-spacing</th><th>margin-block</th></tr>
+            </thead>
+            <tbody>
+              {headingSpec.map((h) => (
+                <tr>
+                  <td><code>&lt;{h.el}&gt;</code>{h.note && <span class="spec-note">{h.note}</span>}</td>
+                  <td>{h.size}</td>
+                  <td>{h.weight}</td>
+                  <td>{h.lh}</td>
+                  <td>{h.spacing}</td>
+                  <td>{h.mb}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+
+        <div class="demo-article">
+          <div class="demo-article__body">
+            <div class="sx-article">
+              <h1>h1 · 一级标题 Level 1</h1>
+              <p>一级标题通常出现在文章头部，正文内较少使用。最大字号 2.5rem，极粗字重 800。</p>
+              <h2>h2 · 二级标题 Level 2</h2>
+              <p>二级标题是正文中最常用的章节标题。2rem 字号，与 h1 同样的极粗字重。</p>
+              <h3>h3 · 三级标题 Level 3</h3>
+              <p>三级标题用于子章节。1.5rem 字号，仍然保持极粗字重以确保层级清晰。</p>
+              <h4>h4 · 四级标题 Level 4</h4>
+              <p>四级标题用于更细的分区。1.2rem 字号。</p>
+              <h5>h5 · 五级标题 Level 5</h5>
+              <p>五级标题为大写小节标注，uppercase + letter-spacing。</p>
+              <h6>h6 · 六级标题 Level 6</h6>
+              <p>六级标题为最小标注，uppercase + 更大 letter-spacing + 降低透明度。</p>
+            </div>
+          </div>
+          <p class="demo-article__label">h1–h6 实际渲染</p>
+        </div>
+      </section>
+
+      {/* ── 3. 正文元素 ── */}
+      <section class="group">
+        <h2 class="group__title">正文元素 Inline &amp; body</h2>
+        <p class="group__lede">
+          段落与行内元素的排版。链接使用 action-primary 蓝，行内代码使用等宽字体 + 边框，
+          <code>&lt;kbd&gt;</code> 模拟物理按键，<code>&lt;mark&gt;</code> 使用品牌黄色高亮。
+        </p>
+
+        <div class="spec-table">
+          <table>
+            <thead>
+              <tr><th>元素</th><th>关键样式</th><th>示例</th></tr>
+            </thead>
+            <tbody>
+              {inlineSpec.map((item) => (
+                <tr>
+                  <td><code>{item.el}</code></td>
+                  <td>{item.desc}</td>
+                  <td>{item.el === '<kbd>' ? 'Ctrl + S' : item.el === '<mark>' ? '高亮标记' : item.el === '<code>' ? '行内代码' : item.el === '<a>' ? '链接文本' : item.el === '<strong>' ? '加粗' : '斜体'}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+
+        <div class="demo-article">
+          <div class="demo-article__body">
+            <div class="sx-article">
+              <p>Schema 是连接<strong>意图与执行</strong>的结构化桥梁。它让<em>不确定性</em>的系统输出，变成可验证、可依赖的输入。</p>
+              <p>了解 <a href="#">设计令牌系统</a> 如何驱动整站的视觉一致性。当你在代码中写入 <code>--sx-sys-color-accent</code>，它将在构建时被替换为真实的颜色值。</p>
+              <p>在编辑器中按下 <kbd>Ctrl</kbd> + <kbd>S</kbd> 保存文件。这是 SchemaX 强调的 <mark>确定性</mark>：每一处取值都有明确来源。</p>
+            </div>
+          </div>
+          <p class="demo-article__label">行内元素实际渲染</p>
+        </div>
+      </section>
+
+      {/* ── 4. 列表 ── */}
+      <section class="group">
+        <h2 class="group__title">列表 Lists</h2>
+        <p class="group__lede">
+          无序列表（<code>disc</code>）、有序列表（<code>decimal</code>）和嵌套列表。
+          列表项间距 <code>margin-block: 0.4rem</code>，左侧缩进 <code>1.5rem</code>。
+        </p>
+
+        <div class="demo-article">
+          <div class="demo-article__body">
+            <div class="sx-article">
+              <h3>无序列表 Unordered</h3>
+              <ul>
+                <li>Schema 定义数据结构</li>
+                <li>Validator 校验输入是否符合 Schema</li>
+                <li>Parser 将原始数据转换为结构化对象
+                  <ul>
+                    <li>JSON Schema 是最通用的描述语言</li>
+                    <li>TypeScript 类型是编译期的 Schema</li>
+                    <li>Zod 在运行时提供类型安全的校验</li>
+                  </ul>
+                </li>
+                <li>Runtime 根据校验结果决定执行路径</li>
+              </ul>
+
+              <h3>有序列表 Ordered</h3>
+              <ol>
+                <li>用户发出自然语言请求</li>
+                <li>模型根据 Tool Schema 生成结构化参数</li>
+                <li>运行时校验参数是否符合 Schema</li>
+                <li>校验通过 → 调用工具执行</li>
+                <li>返回结果给模型，进入下一轮</li>
+              </ol>
+            </div>
+          </div>
+          <p class="demo-article__label">列表实际渲染</p>
+        </div>
+      </section>
+
+      {/* ── 5. 引用 ── */}
+      <section class="group">
+        <h2 class="group__title">引用 Blockquotes</h2>
+        <p class="group__lede">
+          左侧 <code>4px solid --sx-sys-color-action-primary</code> 蓝色竖线 + 斜体。
+          适用于引用、注释、重要摘录等场景。
+        </p>
+
+        <div class="demo-article">
+          <div class="demo-article__body">
+            <div class="sx-article">
+              <blockquote>
+                Schema 看起来很小，但它处在多个系统的关键连接处：提示词与工具、模型与 API、前端与后端、人类意图与机器执行之间。
+              </blockquote>
+              <p>引用块左侧有蓝色竖线标识，正文使用斜体以区别于普通段落。上下的 <code>margin-block: 1.5rem</code> 提供足够的呼吸空间。</p>
+            </div>
+          </div>
+          <p class="demo-article__label">blockquote 实际渲染</p>
+        </div>
+      </section>
+
+      {/* ── 6. 代码 ── */}
+      <section class="group">
+        <h2 class="group__title">代码 Code</h2>
+        <p class="group__lede">
+          行内代码与代码块。代码块由 <a href="https://expressive-code.com/" target="_blank" rel="noopener">Expressive Code</a>
+          处理，自带 Shiki 语法高亮、文件名、行号、行高亮、复制按钮。
+        </p>
+
+        <h3 class="sub-title">行内代码 Inline code</h3>
+        <p class="group__hint">
+          等宽字体 <code>ui-monospace</code>，<code>font-size: 0.9em</code>，
+          surface 背景色 + 1px 边框。
+        </p>
+
+        <h3 class="sub-title">代码块 Code block</h3>
+        <p class="group__hint">
+          以下代码块由 Expressive Code 渲染，展示 Shiki 语法高亮、文件名、行高亮等能力。
+          在实际 MDX 文件中使用三反引号语法即可触发。
+        </p>
+
+        <div class="demo-article">
+          <div class="demo-article__body">
+            <div class="sx-article">
+              <p>在 TypeScript 中，Zod 的 <code>z.object()</code> 可以定义一个工具参数的 Schema：</p>
+              <Code
+                code={`import { z } from 'zod';
+
+const weatherSchema = z.object({
+  city: z.string().describe('城市名称'),
+  unit: z.enum(['celsius', 'fahrenheit']).default('celsius'),
+});`}
+                lang="ts"
+                title="tool-schema.ts"
+                meta=" ins={3}"
+              />
+              <p>代码块自带 Shiki 语法高亮、文件名标签、行高亮（<code>ins</code> 标记新增行）和复制按钮。在 MDX 内容中，三反引号语法会自动触发同样的渲染。</p>
+            </div>
+          </div>
+          <p class="demo-article__label">代码块实际渲染（Expressive Code）</p>
+        </div>
+      </section>
+
+      {/* ── 7. 表格 ── */}
+      <section class="group">
+        <h2 class="group__title">表格 Tables</h2>
+        <p class="group__lede">
+          全框线 <code>border-collapse: collapse</code>，表头使用 page 背景色 + 大写小号字。
+          所有单元格 1px 黑边框，<code>--sx-ref-space-2 × --sx-ref-space-3</code> 内边距。
+        </p>
+
+        <div class="demo-article">
+          <div class="demo-article__body">
+            <div class="sx-article">
+              <h3>页面视觉强度分级</h3>
+              <table>
+                <thead>
+                  <tr>
+                    <th>页面</th>
+                    <th>RetroUI 强度</th>
+                    <th>说明</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>设计系统</td>
+                    <td>最强</td>
+                    <td>完整展示视觉语言与组件</td>
+                  </tr>
+                  <tr>
+                    <td>首页</td>
+                    <td>强</td>
+                    <td>Hero 区强表现力</td>
+                  </tr>
+                  <tr>
+                    <td>课程正文</td>
+                    <td>中等</td>
+                    <td>保留结构感，降低装饰</td>
+                  </tr>
+                  <tr>
+                    <td>博客正文</td>
+                    <td>克制</td>
+                    <td>以阅读为中心，最小视觉干扰</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <p class="demo-article__label">table 实际渲染</p>
+        </div>
+      </section>
+
+      {/* ── 8. 图片与媒体 ── */}
+      <section class="group">
+        <h2 class="group__title">图片与媒体 Images &amp; media</h2>
+        <p class="group__lede">
+          <code>&lt;img&gt;</code> 自带 1px 黑边框 + <code>max-width: 100%</code>。
+          <code>&lt;figure&gt;</code> 提供外边距，<code>&lt;figcaption&gt;</code> 居中 + 降低透明度。
+        </p>
+
+        <div class="demo-article">
+          <div class="demo-article__body">
+            <div class="sx-article">
+              <figure>
+                <img src="/images/placeholder.svg" alt="占位图示例" width="600" height="240" />
+                <figcaption>图 1：占位图示例。实际图片自动继承 1px 黑边框与 max-width: 100%。</figcaption>
+              </figure>
+              <p>图片使用 <code>&lt;figure&gt;</code> + <code>&lt;figcaption&gt;</code> 语义包裹。figcaption 使用 0.85rem 字号 + 70% 透明度居中显示。</p>
+            </div>
+          </div>
+          <p class="demo-article__label">figure + img + figcaption 实际渲染</p>
+        </div>
+      </section>
+
+      {/* ── 9. 分隔线与折叠 ── */}
+      <section class="group">
+        <h2 class="group__title">分隔线与折叠 Rules &amp; disclosure</h2>
+        <p class="group__lede">
+          <code>&lt;hr&gt;</code> 渲染为 1px 黑色上边框，<code>margin-block: 2rem</code>。
+          <code>&lt;details&gt;</code> + <code>&lt;summary&gt;</code> 渲染为可折叠区块，
+          1px 黑边框 + 内边距，summary 加粗 + pointer 光标。零 JS 实现。
+        </p>
+
+        <div class="demo-article">
+          <div class="demo-article__body">
+            <div class="sx-article">
+              <p>段落之间的分隔线：</p>
+              <hr />
+              <p>分隔线使用纯 CSS <code>border-top</code>，无额外元素。</p>
+
+              <h3>折叠区块 Details</h3>
+              <details>
+                <summary>点击展开：什么是 Schema？</summary>
+                <p>Schema 是一种描述数据结构的形式化语言。它可以定义字段类型、必填规则、取值范围和嵌套关系。</p>
+                <p>在 AI Agent 场景中，Schema 告诉模型「工具需要什么参数、什么格式、什么约束」，从而将自由文本转换为可执行的结构化输入。</p>
+              </details>
+              <details>
+                <summary>点击展开：为什么用 :where() 选择器？</summary>
+                <p><code>:where()</code> 的特异性为 0，这意味着组件层的样式（如 <code>.btn</code>、<code>.card</code>）和 overrides 层的样式可以干净地覆盖文章排版样式，无需关心优先级竞争。</p>
+              </details>
+            </div>
+          </div>
+          <p class="demo-article__label">hr + details/summary 实际渲染</p>
+        </div>
+      </section>
+
+      {/* ── 10. 定义列表 ── */}
+      <section class="group">
+        <h2 class="group__title">定义列表 Definition lists</h2>
+        <p class="group__lede">
+          <code>&lt;dl&gt;</code> / <code>&lt;dt&gt;</code> / <code>&lt;dd&gt;</code> 用于术语定义。
+          <code>&lt;dt&gt;</code> 加粗，<code>&lt;dd&gt;</code> 左侧缩进 1.5rem + 85% 透明度。
+        </p>
+
+        <div class="demo-article">
+          <div class="demo-article__body">
+            <div class="sx-article">
+              <dl>
+                <dt>Schema</dt>
+                <dd>描述数据结构的形式化语言，定义字段、类型、约束与嵌套关系。</dd>
+
+                <dt>Token</dt>
+                <dd>设计令牌。以 DTCG JSON 格式定义的视觉变量（颜色、间距、阴影等），由 Style Dictionary 构建为 CSS 自定义属性。</dd>
+
+                <dt>:where()</dt>
+                <dd>CSS 选择器函数，特异性为 0。用于 article 层，确保组件和 overrides 层能干净地覆盖排版样式。</dd>
+
+                <dt>Neo-brutalism</dt>
+                <dd>新粗野主义设计风格。特征为低圆角、粗边框、实心硬阴影、高对比度，追求物理裁切般的视觉质感。</dd>
+              </dl>
+            </div>
+          </div>
+          <p class="demo-article__label">dl / dt / dd 实际渲染</p>
+        </div>
+      </section>
+
+      {/* ── 11. MDX 组件（Planned） ── */}
+      <section class="group">
+        <h2 class="group__title">MDX 组件 MDX components</h2>
+        <p class="group__lede">
+          以下组件在规范 §11 中定义，允许在 MDX 内容中使用。它们目前处于规划阶段，
+          尚未实现。每个组件的排版样式将在实现后同步更新到本页。
+        </p>
+
+        <div class="planned-grid">
+          {mdxComponents.map((comp) => (
+            <Card status="planned" class="planned-card">
+              <div class="planned-card__head">
+                <code class="planned-card__name">{comp.name}</code>
+                <span class="badge">Planned</span>
+              </div>
+              <p class="planned-card__desc">{comp.desc}</p>
+            </Card>
+          ))}
+        </div>
+      </section>
+
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  /* ── 导航 / 分组（与 foundations.astro 保持一致的 scoped 声明） ── */
+  .group {
+    margin-block-end: var(--sx-ref-space-12);
+  }
+  .group__title {
+    font-size: 1.4rem;
+    font-weight: 800;
+    margin-block-end: var(--sx-ref-space-2);
+  }
+  .group__lede {
+    opacity: 0.8;
+    margin-block-end: var(--sx-ref-space-6);
+    max-width: 46rem;
+  }
+  .group__hint {
+    font-size: 0.9rem;
+    opacity: 0.7;
+    margin-block-end: var(--sx-ref-space-4);
+  }
+  .group__lede a,
+  .group__hint a {
+    color: var(--sx-sys-color-action-primary);
+    text-decoration: underline;
+  }
+  .sub-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-block: var(--sx-ref-space-6) var(--sx-ref-space-3);
+  }
+
+  /* ── 规范参数表格 ── */
+  .spec-table {
+    overflow-x: auto;
+    border: var(--sx-sys-border-width) solid var(--sx-sys-color-border);
+    margin-block-end: var(--sx-ref-space-6);
+  }
+  .spec-table table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 24rem;
+    font-size: 0.9rem;
+  }
+  .spec-table th,
+  .spec-table td {
+    text-align: left;
+    padding: var(--sx-ref-space-2) var(--sx-ref-space-3);
+    border-bottom: var(--sx-sys-border-width) solid var(--sx-sys-color-border);
+  }
+  .spec-table thead th {
+    background: var(--sx-sys-color-bg-page);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-weight: 700;
+  }
+  .spec-table tbody tr:last-child td {
+    border-bottom: none;
+  }
+  .spec-table code {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 0.85em;
+    background: var(--sx-sys-color-bg-surface);
+    border: var(--sx-sys-border-width) solid var(--sx-sys-color-border);
+    padding: 0.05em 0.4em;
+  }
+  .spec-note {
+    display: block;
+    font-size: 0.72rem;
+    opacity: 0.6;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  }
+
+  /* ── 演示区：包裹 .sx-article 的边框容器 ── */
+  .demo-article {
+    border: var(--sx-sys-border-width) solid var(--sx-sys-color-border);
+    background: var(--sx-sys-color-bg-surface);
+  }
+  .demo-article__body {
+    padding: var(--sx-ref-space-6) var(--sx-ref-space-4);
+    overflow-x: auto;
+    /* 演示舞台填充暖纸色（bg-page），让代码块的深色 pre 浮于暖纸之上，
+       还原 .sx-article 在正文页（暖纸底）中的真实观感 */
+    background: var(--sx-sys-color-bg-page);
+  }
+  .demo-article__label {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    padding: var(--sx-ref-space-2) var(--sx-ref-space-3);
+    background: var(--sx-sys-color-bg-page);
+    border-top: var(--sx-sys-border-width) solid var(--sx-sys-color-border);
+    opacity: 0.6;
+    margin: 0;
+  }
+
+  /* ── Planned 组件卡片网格 ── */
+  .planned-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 18rem), 1fr));
+    gap: var(--sx-ref-space-3);
+  }
+  .planned-card {
+    opacity: 0.7;
+  }
+  .planned-card__head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--sx-ref-space-2);
+    margin-block-end: var(--sx-ref-space-2);
+  }
+  .planned-card__name {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 0.85rem;
+    font-weight: 700;
+  }
+  .planned-card__desc {
+    font-size: 0.85rem;
+    line-height: 1.5;
+    opacity: 0.8;
+    margin: 0;
+  }
+</style>

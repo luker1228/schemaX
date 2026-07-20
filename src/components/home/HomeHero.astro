@@ -1,13 +1,36 @@
 ---
 import { site } from '../../config/site';
 import { profile } from '../../data/profile';
+import HeroTerminal from './HeroTerminal.svelte';
 
-const schemaCard = `{
+// 首页 hero 终端轮播内容（示例，待替换为真实内容）。
+const heroSlides = [
+  {
+    title: 'profile.json',
+    code: `{
   "name": "${profile.name}",
   "role": "${profile.role}",
   "modes": ${JSON.stringify(profile.modes)},
   "status": "${profile.status}"
-}`;
+}`,
+  },
+  {
+    title: 'site.json',
+    code: `{
+  "site": "${site.name}",
+  "pillars": ["courses", "blog", "projects"],
+  "built": "2026"
+}`,
+  },
+  {
+    title: 'now.json',
+    code: `{
+  "now": "shipping design system",
+  "mood": "focused",
+  "next": "course: schema-first"
+}`,
+  },
+];
 ---
 
 <section class="hero">
@@ -27,10 +50,7 @@ const schemaCard = `{
       </div>
     </div>
 
-    <aside class="hero__card" aria-hidden="true">
-      <div class="hero__cardbar"><span></span><span></span><span></span></div>
-      <pre class="hero__code"><code>{schemaCard}</code></pre>
-    </aside>
+    <HeroTerminal client:visible slides={heroSlides} />
   </div>
 </section>
 
@@ -78,34 +98,6 @@ const schemaCard = `{
     display: flex;
     gap: var(--sx-ref-space-3);
     flex-wrap: wrap;
-  }
-
-  .hero__card {
-    background: var(--sx-sys-color-bg-surface);
-    box-shadow: var(--sx-sys-shadow-lg);
-    overflow: hidden;
-  }
-
-  .hero__cardbar {
-    display: flex;
-    gap: var(--sx-ref-space-2);
-    padding: var(--sx-ref-space-2) var(--sx-ref-space-3);
-    border-bottom: var(--sx-sys-border-width) solid var(--sx-sys-color-border);
-    background: var(--sx-sys-color-accent);
-  }
-  .hero__cardbar span {
-    width: 0.7rem;
-    height: 0.7rem;
-    background: var(--sx-sys-color-border);
-  }
-
-  .hero__code {
-    margin: 0;
-    padding: var(--sx-ref-space-6);
-    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-    font-size: 0.95rem;
-    line-height: 1.7;
-    overflow-x: auto;
   }
 
   @media (max-width: 48rem) {

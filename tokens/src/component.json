@@ -2,7 +2,24 @@
   "comp": {
     "card": {
       "padding": { "$type": "dimension", "$value": "{ref.space.4}" },
-      "shadow": { "$type": "shadow", "$value": "{sys.shadow.sm}" }
+      "shadow": { "$type": "shadow", "$value": "{sys.shadow.sm}" },
+      "radius": {
+        "$type": "dimension",
+        "$value": "2px",
+        "$description": "圆角卡片半径。none 变体为 0。"
+      },
+      "hover-shadow": {
+        "$type": "shadow",
+        "$value": "{sys.shadow.md}",
+        "$description": "interactive 卡片 hover 时的阴影。"
+      }
+    },
+    "demo": {
+      "shadow": {
+        "$type": "shadow",
+        "$value": "{sys.shadow.lg}",
+        "$description": "演示块阴影，对齐全局 sys.shadow.lg（6px）。"
+      }
     },
     "term": {
       "screen-bg": { "$type": "color", "$value": "#0f1115" },
@@ -19,7 +36,33 @@
       "padding-block": { "$type": "dimension", "$value": "0.9rem" },
       "padding-inline": { "$type": "dimension", "$value": "clamp(1rem, 8vw, 6rem)" },
       "gap": { "$type": "dimension", "$value": "{ref.space.4}" },
-      "logo-size": { "$type": "dimension", "$value": "3.5rem" }
+      "logo-size": { "$type": "dimension", "$value": "3.5rem" },
+      "logo-bg": {
+        "$type": "color",
+        "$value": "{ref.color.ink}",
+        "$description": "Header logo 容器背景（黑底暖纸配色：ink 背景 + paper 前景）。"
+      },
+      "logo-fg": {
+        "$type": "color",
+        "$value": "{ref.color.paper}",
+        "$description": "Header logo mark 前景色，配合 logo-bg 形成反白。"
+      }
+    },
+    "page-head": {
+      "margin-block-start": { "$type": "dimension", "$value": "{ref.space.6}" },
+      "margin-block-end": {
+        "$type": "dimension",
+        "$value": "{ref.space.12}",
+        "$description": "与下方内容（卡片网格等）的间距。"
+      },
+      "max-width": { "$type": "dimension", "$value": "42rem" },
+      "title-size": {
+        "$type": "dimension",
+        "$value": "clamp(2.5rem, 6vw, 4rem)",
+        "$description": "hero 级标题字号。"
+      },
+      "desc-size": { "$type": "dimension", "$value": "1.05rem" },
+      "gap": { "$type": "dimension", "$value": "{ref.space.3}", "$description": "标题与描述之间的间距。" }
     }
   }
 }

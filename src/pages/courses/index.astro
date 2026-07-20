@@ -1,6 +1,8 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import CourseCard from '../../components/site/CourseCard.astro';
+import PageHeader from '../../components/site/PageHeader.astro';
+import Breadcrumb from '../../components/design-system/Breadcrumb.astro';
 import { getCollection } from 'astro:content';
 
 const courses = await getCollection(
@@ -12,10 +14,14 @@ const courses = await getCollection(
 <BaseLayout title="Courses" description="体系化课程、章节与练习。">
   <section class="sx-section">
     <div class="sx-container">
-      <header class="page-head">
-        <h1>Courses</h1>
-        <p>体系化课程、章节与练习。</p>
-      </header>
+      <Breadcrumb
+        items={[
+          { label: 'Home', href: '/' },
+          { label: 'Courses' },
+        ]}
+      />
+
+      <PageHeader title="Courses" description="体系化课程、章节与练习。" />
 
       {
         courses.length > 0 ? (
@@ -33,18 +39,6 @@ const courses = await getCollection(
 </BaseLayout>
 
 <style>
-  .page-head {
-    margin-block-end: var(--sx-ref-space-8);
-  }
-  .page-head h1 {
-    font-size: 2.5rem;
-    font-weight: 800;
-    letter-spacing: -0.02em;
-  }
-  .page-head p {
-    opacity: 0.8;
-    margin-block-start: var(--sx-ref-space-2);
-  }
   .empty {
     border: var(--sx-sys-border-width) dashed var(--sx-sys-color-border);
     padding: var(--sx-ref-space-8);

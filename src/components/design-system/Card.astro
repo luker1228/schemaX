@@ -1,0 +1,84 @@
+---
+// Card 组件 —— SchemaX UI
+// 内容容器。样式来自全局 .card 类（src/styles/components.css），
+// 本组件只做 props → 类名映射 + 元素类型选择（<a> vs <div>）。
+//
+// 维度：
+//   radius       none（默认 0）/ rounded（2px）
+//   bordered     true（默认，1px 黑边）/ false（无边框）
+//   shadow       none / sm（默认）/ md / lg —— 硬阴影档位（偏移量）
+//   shadowColor  阴影颜色（CSS 颜色字符串）。默认黑色（ink）。
+//                传 'yellow' 等可做彩色偏移阴影。
+//   href         有则渲染 <a>（默认 interactive）/ 无则渲染 <div>（默认 static）
+//   interactive  hover 抬起 + 阴影升级。默认随 href（有则 true），
+//                可显式覆盖（如静态卡强制 false，可点击卡强制 true）
+//
+// 关键：hover 抬起只作用于 .card--interactive，静态卡片不会跳。
+// 这修复了旧行为里无 href 的 <div> 卡片也被 .card:hover 抬起的问题。
+
+export type CardRadius = 'none' | 'rounded';
+export type CardShadow = 'none' | 'sm' | 'md' | 'lg';
+
+interface Props {
+  /** 圆角：none（0）/ rounded（2px） */
+  radius?: CardRadius;
+  /** 是否有 1px 黑边 */
+  bordered?: boolean;
+  /** 阴影档位（偏移量） */
+  shadow?: CardShadow;
+  /** 阴影颜色（任意 CSS 颜色）。默认黑色。例：'var(--sx-sys-color-accent)' */
+  shadowColor?: string;
+  /** 提供则渲染为 <a>（链接卡片），否则渲染为 <div>（容器卡片） */
+  href?: string;
+  /** <a> 的 target 属性 */
+  target?: '_blank' | '_self' | '_parent' | '_top';
+  /** <a> 的 rel 属性 */
+  rel?: string;
+  /** hover 抬起。默认随 href（有则 true）。显式传入可覆盖 */
+  interactive?: boolean;
+  /** 透传到根元素的额外类名（用于组合 site 组件的 scoped 子类） */
+  class?: string;
+}
+
+const {
+  radius = 'none',
+  bordered = true,
+  shadow = 'sm',
+  shadowColor,
+  href,
+  target,
+  rel,
+  interactive,
+  class: extraClass,
+} = Astro.props;
+
+// interactive 默认值：未显式传入时，有 href 即 interactive
+const isInteractive = interactive ?? Boolean(href);
+const isLink = Boolean(href);
+
+const classes = [
+  'card',
+  radius === 'rounded' ? 'card--rounded' : '',
+  !bordered ? 'card--borderless' : '',
+  shadow !== 'sm' ? `card--shadow-${shadow}` : '',
+  isInteractive ? 'card--interactive' : '',
+  extraClass,
+]
+  .filter(Boolean)
+  .join(' ');
+
+// 阴影颜色通过 inline style 注入局部 CSS 变量，仅在有传值时生效
+const style = shadowColor ? `--sx-card-shadow-color: ${shadowColor}` : undefined;
+---
+
+{
+  isLink ? (
+    <a class={classes} href={href} target={target} rel={rel} style={style}>
+      <slot />
+    </a>
+  ) : (
+    <div class={classes} style={style}>
+      <slot />
+    </div>
+  )
+}

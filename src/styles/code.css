@@ -1,0 +1,123 @@
+/* Expressive Code 主题改造（Neo-brutalist 风格）──────────────────
+   参考 rehype-pretty-code + Tailwind 的代码块视觉：深色代码区 + 无缝
+   深色标题栏 + 常驻黑边方形复制按钮。
+
+   核心策略：
+     - 0 圆角（Neo-brutalist）
+     - 文件名 tab bar 与代码区「深色融合」—— tab bar 用与代码区协调的
+       深色（#1f2428），黄色 chip 浮于其上，与代码区（#24292e）无缝衔接，
+       无锐利分割线
+     - 复制按钮常驻显示（不靠 hover frame 才出现），方形 + 1px 黑边 ghost
+       风格；idle 浅色图标（在深色代码区可见），hover 黄底
+     - 代码区背景 / 前景 / Shiki 高亮保留 EC 默认（GitHub Dark / Light 双主题，
+       随系统 prefers-color-scheme 切换）
+     - 行标记 ins / del / mark 颜色保留 EC 默认语义色
+
+   承重约束：
+     - code.css 位于 @layer overrides，EC 默认 CSS 是 unlayered。覆盖 EC
+       硬编码属性（非变量）必须用 !important——特异性无法跨 layer 边界。
+       --ec-* 变量赋值不受 layer 影响，正常覆盖即可。
+     - EC DOM：figure.frame > figcaption.header(tab bar) > .title(chip)
+       + pre + .copy button。.header 始终占布局空间。
+
+   规范 §15-17：颜色优先引用 --sx-* token；少量裸 hex（#1f2428、#e1e4e8）
+   属于 EC 第三方 GitHub Dark 主题色，本文件已豁免 color-no-hex。
+   第三方 --ec-* 变量前缀由本文件整体豁免 custom-property-pattern
+   规则（见 stylelint.config.mjs）。 */
+
+/* ── 外壳结构 + 文件名 tab + 复制按钮 ────────────────────────── */
+
+.expressive-code {
+  /* 边框 / 圆角 —— 全部去掉描边，只保留 0 圆角 */
+  --ec-brdRad: 0;
+  --ec-brdWd: 0;
+  --ec-brdCol: transparent;
+
+  /* Frame 阴影：去掉，外壳无线无影 */
+  --ec-frm-shdCol: transparent;
+  --ec-frm-frameBoxShdCssVal: none;
+
+  /* Editor frame：文件名 tab bar 作为「窗口标题栏」
+     - tab bar 容器背景跟随系统 color-scheme（与代码区融合，无断层）：
+       默认（dark）#1f2428 配 GitHub Dark 代码区；light 模式 #f6f8fa 配
+       GitHub Light 代码区（见下方 @media 规则）
+     - tab bar 无任何边框 / 分隔线（上下左右全透明）
+     - tab chip 本身：黄底 + 黑字，无描边，浮于 tab bar 之上 */
+  --ec-frm-edTabBarBg: #1f2428;
+  --ec-frm-edTabBarBrdCol: transparent;
+  --ec-frm-edTabBarBrdBtmCol: transparent;
+  --ec-frm-edTabBrdRad: 0;
+  --ec-frm-edActTabBg: var(--sx-sys-color-accent);
+  --ec-frm-edActTabFg: var(--sx-sys-color-text-primary);
+  --ec-frm-edActTabBrdCol: transparent;
+  --ec-frm-edActTabIndHt: 0;
+  --ec-frm-edActTabIndTopCol: transparent;
+  --ec-frm-edActTabIndBtmCol: transparent;
+
+  /* 复制按钮：常驻黑边 ghost，hover 黄底
+     - 图标颜色与 idle 底色跟随 color-scheme（见下方 @media 规则）：
+       默认（dark）浅灰图标 + 微弱深色 idle 底；light 模式深色图标 + 浅色 idle 底
+     - 黑边常显（idle 即显示 ghost 边框） */
+  --ec-frm-inlBtnBg: var(--sx-sys-color-accent);
+  --ec-frm-inlBtnFg: #e1e4e8;
+  --ec-frm-inlBtnBrd: var(--sx-ref-color-ink);
+  --ec-frm-inlBtnBgIdleOpa: 0.1;
+  --ec-frm-inlBtnBgHoverOrFocusOpa: 1;
+  --ec-frm-inlBtnBgActOpa: 1;
+  --ec-frm-inlBtnBrdOpa: 1;
+
+  /* 复制成功提示：黄色背景 + 黑字 */
+  --ec-frm-tooltipSuccessBg: var(--sx-sys-color-accent);
+  --ec-frm-tooltipSuccessFg: var(--sx-sys-color-text-primary);
+
+  /* 焦点描边：蓝色（与交互元素一致） */
+  --ec-focusBrd: var(--sx-sys-color-action-primary);
+}
+
+/* light 模式（配 GitHub Light 代码区 #fff）：
+   tab bar 浅色 #f6f8fa 融合；复制按钮深色图标 + 微弱浅色 idle 底。
+   仅当系统为 light 且未强制 dark 时生效（与 EC 主题切换条件一致）。 */
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme='github-dark']) .expressive-code {
+    --ec-frm-edTabBarBg: #f6f8fa;
+    --ec-frm-inlBtnFg: #24292e;
+    --ec-frm-inlBtnBgIdleOpa: 0.05;
+  }
+}
+
+/* ── 复制按钮：常驻 + 方形 + 固定尺寸 ──────────────────────────
+   EC 硬编码了 .copy button 的尺寸（2.5rem / 2rem）与 hover 媒体查询下的
+   opacity:0（hover frame 才显现）。这些是非变量属性，必须用 !important 覆盖
+   （unlayered EC 规则 vs layered 本文件，特异性无法跨越）。 */
+
+.expressive-code .copy button {
+  width: 1.75rem !important;
+  height: 1.75rem !important;
+  border-radius: 0 !important;
+  opacity: 1 !important;
+}
+
+/* hover frame 时未悬停的按钮也保持常驻（覆盖 EC 默认的 opacity:0.75） */
+.expressive-code .frame:hover .copy button:not(:hover) {
+  opacity: 1 !important;
+}
+
+/* ── 细节调整（字体 + 间距）──────────────────────────────────── */
+
+/* 文件名 tab chip：等宽字体（与代码呼应）+ chip 节奏，无描边。
+   黄底黑字浮于深色 tab bar 之上，作为代码块的「窗口标题」。 */
+.expressive-code .frame.has-title:not(.is-terminal) .title {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  /* 让文件名像一颗有呼吸感的 chip，而非顶满标题栏的色块 */
+  padding-block: 0.28em;
+  padding-inline: 0.7em;
+}
+
+/* 文章正文中代码块的上下外边距，与 blockquote / figure 对齐 */
+.sx-article :where(.expressive-code),
+:where(.demo-article) :where(.expressive-code) {
+  margin-block: 1.5rem;
+}

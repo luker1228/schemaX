@@ -1,0 +1,110 @@
+---
+// Breadcrumb 组件 —— SchemaX UI
+// 层级路径导航。等宽字体 + 「/」分隔符，最后一项为当前页（不可点）。
+// 用于在设计系统 / 博客 / 课程等页面显示「Home / Section / Current」层级。
+//
+// 数据驱动：通过 items 数组描述每一级。最后一项自动渲染为 aria-current="page"
+// （不可点、无 href），其余渲染为链接。
+
+export interface BreadcrumbItem {
+  /** 显示文字 */
+  label: string;
+  /** 链接地址；最后一项会忽略此字段（当前页不可点） */
+  href?: string;
+}
+
+interface Props {
+  /** 层级路径，按从根到当前页顺序。最后一项 = 当前页 */
+  items: BreadcrumbItem[];
+  /** nav 的可访问性标签，默认 'Breadcrumb' */
+  ariaLabel?: string;
+}
+
+const { items, ariaLabel = 'Breadcrumb' } = Astro.props;
+---
+
+<nav class="breadcrumb" aria-label={ariaLabel}>
+  <ol class="breadcrumb__list">
+    {
+      items.map((item, i) => {
+        const isLast = i === items.length - 1;
+        return (
+          <li class="breadcrumb__item">
+            {isLast ? (
+              <span class="breadcrumb__current" aria-current="page">
+                {item.label}
+              </span>
+            ) : (
+              <a class="breadcrumb__link" href={item.href}>
+                {item.label}
+              </a>
+            )}
+            {!isLast && <span class="breadcrumb__sep" aria-hidden="true">/</span>}
+          </li>
+        );
+      })
+    }
+  </ol>
+</nav>
+
+<style>
+  /* nav 容器：让内部 ol 水平居中 */
+  .breadcrumb {
+    display: flex;
+    justify-content: center;
+  }
+  .breadcrumb__list {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .breadcrumb__item {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .breadcrumb__link,
+  .breadcrumb__current {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 0.82rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-decoration: none;
+    color: inherit;
+    padding: 0.15rem 0.4rem;
+    border-radius: 2px;
+    transition:
+      background-color 120ms ease,
+      color 120ms ease,
+      opacity 120ms ease;
+  }
+
+  /* 未激活链接：默认半透明（淡），hover 时整块黄底填充变强 */
+  .breadcrumb__link {
+    opacity: 0.6;
+  }
+  .breadcrumb__link:hover,
+  .breadcrumb__link:focus-visible {
+    opacity: 1;
+    color: var(--sx-sys-color-text-primary);
+    background: var(--sx-sys-color-accent);
+  }
+
+  /* 当前页（激活态）：满色强对比，作为视觉锚点 */
+  .breadcrumb__current {
+    opacity: 1;
+  }
+
+  /* 分隔符：比文字更暗，不抢视觉 */
+  .breadcrumb__sep {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 0.82rem;
+    opacity: 0.4;
+    user-select: none;
+  }
+</style>

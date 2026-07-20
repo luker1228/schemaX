@@ -2,6 +2,8 @@
 import type { ComponentType } from 'astro/types';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Command from '../../components/design-system/Command.astro';
+import Breadcrumb from '../../components/design-system/Breadcrumb.astro';
+import Card from '../../components/design-system/Card.astro';
 import { componentsRegistry } from '../../data/components-registry';
 
 // 用 import.meta.glob 预先收集所有 demo 文件，按组件名索引。
@@ -29,7 +31,13 @@ const plannedComponents = componentsRegistry.filter(
 >
   <section class="sx-section">
     <div class="sx-container">
-      <a class="back" href="/design-system">← Design System</a>
+      <Breadcrumb
+        items={[
+          { label: 'Home', href: '/' },
+          { label: 'Design System', href: '/design-system' },
+          { label: 'Components' },
+        ]}
+      />
 
       <header class="page-head">
         <p class="eyebrow">SchemaX UI</p>
@@ -71,14 +79,14 @@ const plannedComponents = componentsRegistry.filter(
             <h2 class="group__title">Planned</h2>
             <div class="sx-grid">
               {plannedComponents.map((entry) => (
-                <div class="card planned">
+                <Card class="planned">
                   <div class="planned__head">
                     <span class="planned__name">{entry.name}</span>
                     <span class="badge">Planned</span>
                   </div>
                   <p class="planned__desc">{entry.description}</p>
                   <code class="planned__cmd">pnpm gen:component {entry.name}</code>
-                </div>
+                </Card>
               ))}
             </div>
           </section>
@@ -96,10 +104,6 @@ const plannedComponents = componentsRegistry.filter(
     max-width: 60rem;
   }
 
-  .back {
-    font-family: ui-monospace, monospace;
-    font-size: 0.85rem;
-  }
   .page-head {
     margin-block: var(--sx-ref-space-4) var(--sx-ref-space-8);
   }
@@ -141,8 +145,6 @@ const plannedComponents = componentsRegistry.filter(
     font-size: 1.4rem;
     font-weight: 800;
     margin-block-end: var(--sx-ref-space-2);
-    padding-block-end: var(--sx-ref-space-2);
-    border-bottom: var(--sx-sys-border-width) solid var(--sx-sys-color-border);
   }
   .group__lede {
     opacity: 0.8;

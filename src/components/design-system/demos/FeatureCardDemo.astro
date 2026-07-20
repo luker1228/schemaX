@@ -1,0 +1,211 @@
+---
+// FeatureCard 演示 —— 仅供 /design-system/components 展示页使用。
+import FeatureCard from '../FeatureCard.astro';
+import Demo from '../Demo.astro';
+
+// 占位缩略图 SVG —— 三种风格示例（几何 / 色板 / 字符装饰）
+const geometricSvg = `<svg viewBox="0 0 64 36" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+  <rect x="6" y="6" width="20" height="20" fill="#000"/>
+  <rect x="38" y="6" width="20" height="20" fill="none" stroke="#000" stroke-width="2"/>
+  <circle cx="48" cy="26" r="6" fill="#000"/>
+</svg>`;
+
+const swatchSvg = `<svg viewBox="0 0 64 36" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+  <rect x="4" y="4" width="16" height="28" fill="#000"/>
+  <rect x="24" y="4" width="16" height="28" fill="#FFF7E8" stroke="#000"/>
+  <rect x="44" y="4" width="16" height="28" fill="none" stroke="#000" stroke-width="2" stroke-dasharray="3 2"/>
+</svg>`;
+
+const typeSvg = `<svg viewBox="0 0 64 36" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+  <text x="32" y="24" text-anchor="middle" font-family="ui-monospace, monospace" font-size="20" font-weight="800" fill="#000">{ }</text>
+</svg>`;
+
+const apiRows = [
+  {
+    name: 'title',
+    type: 'string',
+    default: '—',
+    desc: '卡片标题（必填）',
+  },
+  {
+    name: 'description',
+    type: 'string',
+    default: '—',
+    desc: '描述文字。可选；命名 slot "description" 会覆盖它',
+  },
+  {
+    name: 'status',
+    type: "'live' | 'planned'",
+    default: "'live'",
+    desc: 'live → 黄底 Live 徽章 + 链接卡（interactive）；planned → 普通 Planned 徽章 + 强制静态',
+  },
+  {
+    name: 'href',
+    type: 'string',
+    default: '—',
+    desc: 'live 卡片跳转地址。planned 时忽略',
+  },
+  {
+    name: 'radius / bordered / shadow / shadowColor',
+    type: 'Card 维度',
+    default: '随 Card',
+    desc: '透传给内部 <Card>，参见 Card 组件',
+  },
+];
+
+const slots = [
+  { name: '默认 slot', desc: 'media 区：SVG / 图 / 色块，aspect-ratio 16/9，黄底兜底' },
+  { name: 'description', desc: '可选；覆盖 description prop，做富文本或更复杂的描述区' },
+];
+
+const usage = `<!-- Live：可点击跳转，黄底 Live 徽章，hover 抬起 -->
+<FeatureCard
+  title="Tokens"
+  description="Reference / Semantic / Article / Component Token。"
+  status="live"
+  href="/design-system/tokens"
+>
+  <svg>...</svg>
+</FeatureCard>
+
+<!-- Planned：静态占位，普通 Planned 徽章，media 半透明，不可点 -->
+<FeatureCard
+  title="Content"
+  description="Markdown 与 MDX 的真实排版规范。"
+  status="planned"
+>
+  <svg>...</svg>
+</FeatureCard>
+
+<!-- 描述用命名 slot 做富文本 -->
+<FeatureCard title="Foundations" status="live" href="/design-system/foundations">
+  <svg>...</svg>
+  <Fragment slot="description">
+    <p>设计语言的<strong>为什么</strong>。</p>
+  </Fragment>
+</FeatureCard>`;
+---
+
+<>
+  <Demo label="Live（可点击）" attr='status="live"' stageClass="wrap">
+    <FeatureCard
+      title="Tokens"
+      description="Reference / Semantic / Article / Component Token（读取生成产物）。"
+      status="live"
+      href="javascript:void(0)"
+    >
+      <Fragment set:html={swatchSvg} />
+    </FeatureCard>
+    <FeatureCard
+      title="Components"
+      description="Button / Card / Tag / Badge / Navigation 等。"
+      status="live"
+      href="javascript:void(0)"
+    >
+      <Fragment set:html={geometricSvg} />
+    </FeatureCard>
+    <Fragment slot="note">
+      <p>
+        <code>status="live"</code>：黄底 Live 徽章，渲染为 <code>&lt;a&gt;</code>（提供 href 时），
+        hover 抬起 + 阴影升级，行为同全局 <code>.card--interactive</code>。
+      </p>
+    </Fragment>
+  </Demo>
+
+  <Demo label="Planned（静态占位）" attr='status="planned"' stageClass="wrap">
+    <FeatureCard
+      title="Content"
+      description="Markdown 与 MDX 的真实排版规范。"
+      status="planned"
+    >
+      <Fragment set:html={typeSvg} />
+    </FeatureCard>
+    <FeatureCard
+      title="Patterns"
+      description="文章头部、课程目录、项目 Hero 等组合模式。"
+      status="planned"
+    >
+      <Fragment set:html={geometricSvg} />
+    </FeatureCard>
+    <Fragment slot="note">
+      <p>
+        <code>status="planned"</code>：普通 Planned 徽章，强制渲染为 <code>&lt;div&gt;</code>（即便传了 href 也不生效），
+        media 区半透明，不可点击、hover 不抬起 —— 强化「未开放」语义。
+      </p>
+    </Fragment>
+  </Demo>
+
+  <Demo label="Media 可放任意内容" attr="默认 slot" stageClass="wrap">
+    <FeatureCard
+      title="纯色块"
+      description="默认 slot 不传时，media 区就是黄底兜底。"
+      status="live"
+      href="javascript:void(0)"
+    />
+    <FeatureCard
+      title="{} 字符"
+      description="呼应 Schema 主题母题，用 SVG 文字做装饰。"
+      status="live"
+      href="javascript:void(0)"
+    >
+      <Fragment set:html={typeSvg} />
+    </FeatureCard>
+    <Fragment slot="note">
+      <p>
+        默认 slot 可以是任意内容：SVG、<code>&lt;img&gt;</code>、色块、mini-demo。
+        留空则 media 区呈现品牌黄底兜底。SVG / img 会自动撑满 16:9 区域。
+      </p>
+    </Fragment>
+  </Demo>
+
+  <h3 class="sub-title">Props</h3>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>Prop</th><th>类型</th><th>默认</th><th>说明</th></tr>
+      </thead>
+      <tbody>
+        {
+          apiRows.map((r) => (
+            <tr>
+              <td class="cell-name"><code>{r.name}</code></td>
+              <td><code>{r.type}</code></td>
+              <td><code>{r.default}</code></td>
+              <td class="cell-desc">{r.desc}</td>
+            </tr>
+          ))
+        }
+      </tbody>
+    </table>
+  </div>
+
+  <h3 class="sub-title">Slots</h3>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>Slot</th><th>说明</th></tr>
+      </thead>
+      <tbody>
+        {
+          slots.map((s) => (
+            <tr>
+              <td class="cell-name"><code>{s.name}</code></td>
+              <td class="cell-desc">{s.desc}</td>
+            </tr>
+          ))
+        }
+      </tbody>
+    </table>
+  </div>
+
+  <h3 class="sub-title">用法</h3>
+  <pre class="usage"><code>{usage}</code></pre>
+</>
+
+<style>
+  /* demo 卡片统一宽度，便于横向对比 */
+  .demo__stage :global(.featurecard) {
+    min-width: 13rem;
+    max-width: 15rem;
+  }
+</style>

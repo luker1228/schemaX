@@ -1,0 +1,161 @@
+---
+// Badge 演示 —— 仅供 /design-system/components 展示页使用。
+import Badge from '../Badge.astro';
+import Demo from '../Demo.astro';
+import type { BadgeVariant } from '../Badge.astro';
+
+const variants: { name: string; value: BadgeVariant; desc: string }[] = [
+  { name: 'Default', value: 'default', desc: '中性标签' },
+  { name: 'Accent', value: 'accent', desc: '强调 / 活跃' },
+  { name: 'Action', value: 'action', desc: '计划中 / 进行中' },
+  { name: 'Danger', value: 'danger', desc: '危险 / 停用' },
+  { name: 'Success', value: 'success', desc: '成功 / 完成' },
+];
+
+// 状态→颜色映射：按内容 schema 里的真实状态值分组，
+// 让访客一眼看到「哪个状态该用哪个色」。
+const statusGroups: {
+  variant: BadgeVariant;
+  label: string;
+  statuses: string[];
+}[] = [
+  {
+    variant: 'action',
+    label: '蓝 · 计划 / 进行中',
+    statuses: ['planned', 'planning', 'writing', 'experimental', 'draft'],
+  },
+  {
+    variant: 'accent',
+    label: '黄 · 活跃',
+    statuses: ['active'],
+  },
+  {
+    variant: 'danger',
+    label: '红 · 停用 / 归档',
+    statuses: ['archived', 'paused'],
+  },
+  {
+    variant: 'success',
+    label: '绿 · 完成 / 已发布',
+    statuses: ['completed', 'published', 'maintained'],
+  },
+];
+
+const apiRows = [
+  {
+    name: 'variant',
+    type: "'default' | 'accent' | 'action' | 'danger' | 'success'",
+    default: "'default'",
+    desc: '视觉变体，决定底色',
+  },
+];
+
+const usage = `<!-- 中性标签 -->
+<Badge>Beginner</Badge>
+
+<!-- 状态标记 -->
+<Badge variant="action">Planned</Badge>
+<Badge variant="accent">Active</Badge>
+<Badge variant="danger">Archived</Badge>
+<Badge variant="success">Published</Badge>`;
+---
+
+<>
+  <Demo label="变体 Variants" attr='variant="..."' stageClass="wrap">
+    {
+      variants.map((v) => (
+        <Badge variant={v.value}>
+          {v.name} · {v.desc}
+        </Badge>
+      ))
+    }
+    <Fragment slot="note">
+      <p>
+        5 个变体。<code>default</code> 白底（中性标签，如 type/level）/
+        <code>accent</code> 黄底（强调、活跃）/
+        <code>action</code> 蓝底（计划中、进行中）/
+        <code>danger</code> 红底（危险、停用）/
+        <code>success</code> 绿底（成功、完成）。
+      </p>
+    </Fragment>
+  </Demo>
+
+  <Demo
+    label="状态映射 Status mapping"
+    attr="内容 schema 的状态值 → 颜色"
+    stageClass="wrap"
+  >
+    {
+      statusGroups.map((group) => (
+        <div class="status-row">
+          <Badge variant={group.variant}>{group.label}</Badge>
+          <span class="status-values">
+            {group.statuses.map((s) => (
+              <code>{s}</code>
+            ))}
+          </span>
+        </div>
+      ))
+    }
+    <Fragment slot="note">
+      <p>
+        状态色遵循 <code>danger</code> / <code>success</code> token 的语义约定：
+        绿 = 完成 / 已发布（completed、published、maintained），
+        红 = 停用 / 归档（archived、paused）。
+        蓝 / 黄区分「计划进行中」与「活跃」。中性 default 用于 type、level 等无状态语义的标签。
+      </p>
+    </Fragment>
+  </Demo>
+
+  <h3 class="sub-title">Props</h3>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>Prop</th><th>类型</th><th>默认</th><th>说明</th></tr>
+      </thead>
+      <tbody>
+        {
+          apiRows.map((r) => (
+            <tr>
+              <td class="cell-name"><code>{r.name}</code></td>
+              <td><code>{r.type}</code></td>
+              <td><code>{r.default}</code></td>
+              <td class="cell-desc">{r.desc}</td>
+            </tr>
+          ))
+        }
+      </tbody>
+    </table>
+  </div>
+
+  <h3 class="sub-title">用法</h3>
+  <pre class="usage"><code>{usage}</code></pre>
+</>
+
+<style>
+  /* 状态映射演示行：badge + 状态值列表横排 */
+  .status-row {
+    /* 每行占满 stage 宽度，强制纵向堆叠（蓝/黄/红/绿各占一行） */
+    flex: 0 0 100%;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: var(--sx-ref-space-3);
+  }
+  /* badge 列等宽对齐，让右侧状态值列表纵向成列 */
+  .status-row :global(.badge) {
+    flex: 0 0 9.5rem;
+  }
+  .status-values {
+    display: inline-flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+  }
+  .status-values :global(code) {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 0.78rem;
+    background: var(--sx-sys-color-bg-page);
+    border: var(--sx-sys-border-width) solid var(--sx-sys-color-border);
+    padding: 0.05em 0.4em;
+  }
+</style>

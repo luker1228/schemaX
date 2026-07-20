@@ -1,5 +1,6 @@
 ---
 import type { CollectionEntry } from 'astro:content';
+import Card from '../design-system/Card.astro';
 
 interface Props {
   project: CollectionEntry<'projects'>;
@@ -8,7 +9,7 @@ const { project } = Astro.props;
 const { title, description, status, stack } = project.data;
 ---
 
-<a class="card projectcard" href={`/projects/${project.id}`}>
+<Card href={`/projects/${project.id}`} class="projectcard">
   <div class="projectcard__head">
     <span class="badge badge--action">{status}</span>
   </div>
@@ -23,7 +24,7 @@ const { title, description, status, stack } = project.data;
       </p>
     )
   }
-</a>
+</Card>
 
 <style>
   .projectcard {

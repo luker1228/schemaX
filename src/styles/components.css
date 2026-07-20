@@ -125,6 +125,14 @@
   background: var(--sx-sys-color-action-primary);
   color: var(--sx-ref-color-white);
 }
+.badge--danger {
+  background: var(--sx-sys-color-danger);
+  color: var(--sx-ref-color-white);
+}
+.badge--success {
+  background: var(--sx-sys-color-success);
+  color: var(--sx-ref-color-white);
+}
 
 .tag {
   display: inline-block;
@@ -135,11 +143,23 @@
   background: var(--sx-sys-color-bg-page);
 }
 
+/* ── Card ──────────────────────────────────────────────────
+   内容容器基底。维度：圆角（none/rounded）/ 边框（有/无）/
+   阴影（none/sm/md/lg + 可选颜色）/ 交互（interactive 抬起 vs static 静止）。
+   设计语言：1px 黑边 + 纯黑硬阴影（无模糊），与按钮一致的物理感。
+   hover 只对 .card--interactive 生效 —— 静态卡片（无 href）不抬起。
+
+   阴影颜色通过 --sx-card-shadow-color 局部变量覆盖（默认 ink/黑），
+   由 Card 组件按 shadowColor prop 用 inline style 注入。
+   这样档位（偏移量）仍走 token，颜色可在组件级定制（如黄色偏移）。 */
+
 .card {
+  --sx-card-shadow-color: var(--sx-sys-color-border);
+
   display: block;
   background: var(--sx-sys-color-bg-surface);
   border: var(--sx-sys-border-width) solid var(--sx-sys-color-border);
-  box-shadow: var(--sx-sys-shadow-sm);
+  box-shadow: 2px 2px 0 var(--sx-card-shadow-color);
   padding: var(--sx-comp-card-padding);
   transition:
     transform 120ms ease,
@@ -147,9 +167,34 @@
   text-decoration: none;
   color: inherit;
 }
-.card:hover {
+
+/* 圆角：none（默认 0）/ rounded（2px） */
+.card--rounded {
+  border-radius: var(--sx-comp-card-radius);
+}
+
+/* 边框：borderless 移除边框（保留 padding） */
+.card--borderless {
+  border: 0;
+}
+
+/* 阴影档位：默认 sm（2px，来自 .card），其余覆盖偏移量；
+   颜色统一引用 --sx-card-shadow-color，可被组件 inline 覆盖 */
+.card--shadow-none {
+  box-shadow: none;
+}
+.card--shadow-md {
+  box-shadow: 4px 4px 0 var(--sx-card-shadow-color);
+}
+.card--shadow-lg {
+  box-shadow: 6px 6px 0 var(--sx-card-shadow-color);
+}
+
+/* 交互：只有 interactive 卡片 hover 时抬起 + 阴影升级。
+   无 href 的静态卡片默认不抬起，避免误导（不可点却跳一下）。 */
+.card--interactive:hover {
   transform: translate(-3px, -3px);
-  box-shadow: var(--sx-sys-shadow-md);
+  box-shadow: 4px 4px 0 var(--sx-card-shadow-color);
 }
 
 /* ── Navigation ─────────────────────────────────────────────
@@ -172,38 +217,26 @@
   letter-spacing: 0.08em;
   text-transform: uppercase;
   padding: 0.5rem 0.8rem;
-  border: var(--sx-sys-border-width) solid transparent;
+  border-radius: 2px;
   background: transparent;
   text-decoration: none;
   color: inherit;
   transition:
-    transform 120ms ease,
-    box-shadow 120ms ease,
     background-color 120ms ease,
-    color 120ms ease,
-    border-color 120ms ease;
+    color 120ms ease;
 }
 
+/* hover：整块背景填充（黄色色块），无边框无阴影 */
 .nav__link:hover,
 .nav__link:focus-visible {
   color: var(--sx-sys-color-text-primary);
   background: var(--sx-sys-color-accent);
-  border-color: var(--sx-sys-color-border);
-  box-shadow: 2px 2px 0 var(--sx-sys-color-border);
 }
 
-/* 激活态：command-yellow 背景 + 1px 黑边 + 4px 4px 0 硬阴影（brutalist） */
+/* 激活态：常驻整块背景填充（与 hover 一致，仅持续显示） */
 .nav__link[aria-current='page'] {
+  color: var(--sx-sys-color-text-primary);
   background: var(--sx-sys-color-accent);
-  color: var(--sx-sys-color-text-primary);
-  border-color: var(--sx-sys-color-border);
-  box-shadow: 4px 4px 0 var(--sx-sys-color-border);
-}
-.nav__link[aria-current='page']:hover,
-.nav__link[aria-current='page']:focus-visible {
-  color: var(--sx-sys-color-text-primary);
-  transform: translate(-1px, -1px);
-  box-shadow: 5px 5px 0 var(--sx-sys-color-border);
 }
 
 /* 禁用态：半透明、禁用指针、移除交互反馈 */
@@ -215,8 +248,6 @@
 
 /* 展示页专用：强制保持 hover 视觉，用于静态演示 hover 态 */
 .nav__link--demo-hover {
-  background: var(--sx-sys-color-accent);
-  border-color: var(--sx-sys-color-border);
-  box-shadow: 2px 2px 0 var(--sx-sys-color-border);
   color: var(--sx-sys-color-text-primary);
+  background: var(--sx-sys-color-accent);
 }

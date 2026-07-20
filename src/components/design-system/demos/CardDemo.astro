@@ -1,0 +1,231 @@
+---
+// Card 演示 —— 仅供 /design-system/components 展示页使用。
+import Card from '../Card.astro';
+import Demo from '../Demo.astro';
+import type { CardRadius, CardShadow } from '../Card.astro';
+
+const radii: { name: string; value: CardRadius }[] = [
+  { name: 'None (0)', value: 'none' },
+  { name: 'Rounded (2px)', value: 'rounded' },
+];
+
+const shadows: { name: string; value: CardShadow }[] = [
+  { name: 'None', value: 'none' },
+  { name: 'Small (2px)', value: 'sm' },
+  { name: 'Medium (4px)', value: 'md' },
+  { name: 'Large (6px)', value: 'lg' },
+];
+
+const apiRows = [
+  {
+    name: 'radius',
+    type: "'none' | 'rounded'",
+    default: "'none'",
+    desc: '圆角。none=0 / rounded=2px',
+  },
+  {
+    name: 'bordered',
+    type: 'boolean',
+    default: 'true',
+    desc: '是否有 1px 黑边',
+  },
+  {
+    name: 'shadow',
+    type: "'none' | 'sm' | 'md' | 'lg'",
+    default: "'sm'",
+    desc: '硬阴影档位（偏移量）',
+  },
+  {
+    name: 'shadowColor',
+    type: 'string (CSS color)',
+    default: '黑 (ink)',
+    desc: '阴影颜色。任意 CSS 颜色，如 var(--sx-sys-color-accent)',
+  },
+  {
+    name: 'href',
+    type: 'string',
+    default: '—',
+    desc: '有则渲染 <a>（默认 interactive），无则渲染 <div>（默认 static）',
+  },
+  {
+    name: 'interactive',
+    type: 'boolean',
+    default: '随 href',
+    desc: 'hover 抬起 + 阴影升级。默认有 href 即 true，可显式覆盖',
+  },
+];
+
+const usage = `<!-- 链接卡片（自动 interactive，hover 抬起） -->
+<Card href="/blog">
+  <h3>标题</h3>
+  <p>描述</p>
+</Card>
+
+<!-- 静态容器（无 href，不抬起） -->
+<Card>
+  <h3>信息块</h3>
+  <p>不可点击的内容</p>
+</Card>
+
+<!-- 圆角 + 无边框 + 大阴影 -->
+<Card radius="rounded" bordered={false} shadow="lg">
+  特殊样式
+</Card>
+
+<!-- 彩色阴影 -->
+<Card shadow="md" shadowColor="var(--sx-sys-color-accent)">
+  黄色偏移阴影
+</Card>`;
+---
+
+<>
+  <Demo label="圆角 Radius" attr='radius="..."' stageClass="wrap">
+    {
+      radii.map((r) => (
+        <Card radius={r.value}>
+          <strong>{r.name}</strong>
+        </Card>
+      ))
+    }
+    <Fragment slot="note">
+      <p>
+        只有两种：<code>none</code>（0，默认）和 <code>rounded</code>（2px）。
+        圆角值由 <code>--sx-comp-card-radius</code> token 控制。
+      </p>
+    </Fragment>
+  </Demo>
+
+  <Demo label="边框 Border" attr="bordered" stageClass="wrap">
+    <Card bordered={true}>
+      <strong>有边框</strong>
+      <p>默认 1px 黑边。</p>
+    </Card>
+    <Card bordered={false}>
+      <strong>无边框</strong>
+      <p>bordered={'{false}'}，仅靠阴影区分。</p>
+    </Card>
+    <Fragment slot="note">
+      <p>
+        <code>bordered</code> 默认 true。<code>false</code> 时移除边框，保留 padding 与阴影。
+      </p>
+    </Fragment>
+  </Demo>
+
+  <Demo label="阴影 Shadow" attr='shadow="..."' stageClass="wrap">
+    {
+      shadows.map((s) => (
+        <Card shadow={s.value} interactive={false}>
+          <strong>{s.name}</strong>
+        </Card>
+      ))
+    }
+    <Fragment slot="note">
+      <p>
+        纯黑硬阴影（无模糊），四档：<code>none</code> / <code>sm</code>（2px，默认）/
+        <code>md</code>（4px）/ <code>lg</code>（6px）。
+      </p>
+    </Fragment>
+  </Demo>
+
+  <Demo label="阴影颜色 Shadow color" attr='shadowColor="..."' stageClass="wrap">
+    <Card shadow="md" interactive={false}>
+      <strong>黑（默认）</strong>
+    </Card>
+    <Card
+      shadow="md"
+      shadowColor="var(--sx-sys-color-accent)"
+      interactive={false}
+    >
+      <strong>黄</strong>
+    </Card>
+    <Card
+      shadow="md"
+      shadowColor="var(--sx-sys-color-action-primary)"
+      interactive={false}
+    >
+      <strong>蓝</strong>
+    </Card>
+    <Fragment slot="note">
+      <p>
+        <code>shadowColor</code> 接收任意 CSS 颜色，通过 inline 覆盖
+        <code>--sx-card-shadow-color</code>。默认黑色。可做彩色偏移阴影（如黄色，呼应 Command 的视觉）。
+      </p>
+    </Fragment>
+  </Demo>
+
+  <Demo
+    label="交互 Interactive vs Static"
+    attr="interactive（hover 抬起）"
+    stageClass="wrap"
+  >
+    <Card interactive={true}>
+      <strong>Interactive</strong>
+      <p>鼠标移上来 → 抬起 + 阴影升级。</p>
+    </Card>
+    <Card interactive={false}>
+      <strong>Static</strong>
+      <p>静态容器，hover 不动。</p>
+    </Card>
+    <Fragment slot="note">
+      <p>
+        hover 抬起只作用于 <code>.card--interactive</code>。
+        默认行为：有 <code>href</code> 即 interactive（链接卡片），
+        无 <code>href</code> 即 static（容器卡片）—— 避免不可点的卡片误导性地跳一下。
+      </p>
+    </Fragment>
+  </Demo>
+
+  <Demo label="链接 vs 容器" attr="href 控制渲染元素" stageClass="wrap">
+    <Card href="javascript:void(0)">
+      <strong>链接（&lt;a&gt;）</strong>
+      <p>提供 href 渲染为可点击链接。</p>
+    </Card>
+    <Card>
+      <strong>容器（&lt;div&gt;）</strong>
+      <p>无 href 渲染为纯容器。</p>
+    </Card>
+    <Fragment slot="note">
+      <p>
+        <code>href</code> 决定元素类型：<code>&lt;a&gt;</code>（导航）或 <code>&lt;div&gt;</code>（内容容器）。
+        同时也决定默认的 interactive 行为。
+      </p>
+    </Fragment>
+  </Demo>
+
+  <h3 class="sub-title">Props</h3>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>Prop</th><th>类型</th><th>默认</th><th>说明</th></tr>
+      </thead>
+      <tbody>
+        {
+          apiRows.map((r) => (
+            <tr>
+              <td class="cell-name"><code>{r.name}</code></td>
+              <td><code>{r.type}</code></td>
+              <td><code>{r.default}</code></td>
+              <td class="cell-desc">{r.desc}</td>
+            </tr>
+          ))
+        }
+      </tbody>
+    </table>
+  </div>
+
+  <h3 class="sub-title">用法</h3>
+  <pre class="usage"><code>{usage}</code></pre>
+</>
+
+<style>
+  /* demo 卡片统一宽度，便于横向对比 */
+  .demo__stage :global(.card) {
+    min-width: 11rem;
+    max-width: 14rem;
+  }
+  .demo__stage :global(.card p) {
+    margin-block-start: 0.25rem;
+    font-size: 0.85rem;
+    opacity: 0.8;
+  }
+</style>

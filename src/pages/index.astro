@@ -3,6 +3,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import HomeHero from '../components/home/HomeHero.astro';
 import PostCard from '../components/site/PostCard.astro';
 import ProjectCard from '../components/site/ProjectCard.astro';
+import Card from '../components/design-system/Card.astro';
 import { getCollection } from 'astro:content';
 import { site } from '../config/site';
 
@@ -55,10 +56,10 @@ const principles = [
       <div class="sx-grid">
         {
           entries.map((e) => (
-            <a class="card entry" href={e.href}>
+            <Card href={e.href} class="entry">
               <span class="entry__label">{e.label}</span>
               <span class="entry__desc">{e.desc}</span>
-            </a>
+            </Card>
           ))
         }
       </div>
@@ -67,13 +68,22 @@ const principles = [
 
   <section class="sx-section section--accent">
     <div class="sx-container">
-      <h2 class="section-title">Manifesto</h2>
+      <header class="manifesto-head">
+        <p class="manifesto-eyebrow">// principles</p>
+        <h2 class="section-title manifesto-title">Manifesto</h2>
+        <p class="manifesto-lede">
+          构建系统时坚持的四条原则 —— 结构先于自动化，契约先于集成。
+        </p>
+      </header>
       <ul class="principles">
         {
-          principles.map((p) => (
+          principles.map((p, i) => (
             <li class="principle">
-              <h3 class="principle__t">{p.t}</h3>
-              <p class="principle__d">{p.d}</p>
+              <span class="principle__index">{String(i + 1).padStart(2, '0')}</span>
+              <div class="principle__body">
+                <h3 class="principle__t">{p.t}</h3>
+                <p class="principle__d">{p.d}</p>
+              </div>
             </li>
           ))
         }
@@ -143,6 +153,91 @@ const principles = [
     background: var(--sx-sys-color-accent);
   }
 
+  /* ── Manifesto header ───────────────────────────────────── */
+  .manifesto-head {
+    max-width: 42rem;
+    margin-block-end: var(--sx-ref-space-8);
+  }
+  .manifesto-eyebrow {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--sx-sys-color-text-primary);
+    opacity: 0.7;
+  }
+  .manifesto-title {
+    font-size: clamp(2rem, 5vw, 3rem);
+    line-height: 1.02;
+    letter-spacing: -0.03em;
+    margin-block: var(--sx-ref-space-2) var(--sx-ref-space-3);
+  }
+  .manifesto-lede {
+    font-size: 1.05rem;
+    line-height: 1.6;
+    max-width: 38ch;
+  }
+
+  /* ── Principle cards ──────────────────────────────────────
+     Brutalist feature block：1px 黑边 + 硬阴影（无模糊）+ 顶部黄色色条。
+     hover 像被托起 —— 向左上位移，阴影加大。 */
+  .principles {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 17rem), 1fr));
+    gap: var(--sx-ref-space-4);
+  }
+  .principle {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: var(--sx-ref-space-3);
+    background: var(--sx-sys-color-bg-surface);
+    border: var(--sx-sys-border-width) solid var(--sx-sys-color-border);
+    box-shadow: var(--sx-sys-shadow-md);
+    padding: var(--sx-ref-space-6) var(--sx-ref-space-4) var(--sx-ref-space-4);
+    transition:
+      transform 140ms ease,
+      box-shadow 140ms ease;
+  }
+  .principle::before {
+    /* 顶部装饰色条：复用强调黄，与 section 背景形成层次 */
+    content: '';
+    position: absolute;
+    inset-block-start: 0;
+    inset-inline: 0;
+    height: 0.4rem;
+    background: var(--sx-sys-color-text-primary);
+  }
+  .principle:hover {
+    transform: translate(-3px, -3px);
+    box-shadow: var(--sx-sys-shadow-lg);
+  }
+  .principle__index {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 0.8rem;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    color: var(--sx-sys-color-action-primary);
+  }
+  .principle__body {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sx-ref-space-2);
+    flex: 1;
+  }
+  .principle__t {
+    font-size: 1.15rem;
+    font-weight: 800;
+    line-height: 1.25;
+    letter-spacing: -0.01em;
+  }
+  .principle__d {
+    font-size: 0.92rem;
+    line-height: 1.6;
+    opacity: 0.82;
+  }
+
   .entry {
     display: flex;
     flex-direction: column;
@@ -154,25 +249,6 @@ const principles = [
   }
   .entry__desc {
     opacity: 0.85;
-  }
-
-  .principles {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(min(100%, 16rem), 1fr));
-    gap: var(--sx-ref-space-4);
-  }
-  .principle {
-    background: var(--sx-sys-color-bg-surface);
-    border: var(--sx-sys-border-width) solid var(--sx-sys-color-border);
-    padding: var(--sx-ref-space-4);
-  }
-  .principle__t {
-    font-size: 1.05rem;
-    font-weight: 700;
-  }
-  .principle__d {
-    margin-block-start: var(--sx-ref-space-2);
-    font-size: 0.9rem;
   }
 
   .block-head {

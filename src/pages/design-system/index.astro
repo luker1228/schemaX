@@ -1,29 +1,72 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumb from '../../components/design-system/Breadcrumb.astro';
+import PageHeader from '../../components/site/PageHeader.astro';
+import FeatureCard from '../../components/design-system/FeatureCard.astro';
 
+// 设计系统区域清单。每个 area 配一个抽象 SVG 作为 FeatureCard 的缩略图。
+// SVG 风格统一：黄底（由 FeatureCard 兜底）+ 黑线条 / 黑色块，
+// 呼应 Neo-brutalism 与 Schema 主题母题。
 const areas = [
   {
     name: 'Foundations',
-    desc: '品牌原则、色彩、字体、网格、间距、边框、阴影。',
-    live: false,
+    desc: '设计语言的「为什么」：视觉方向、核心原则、基础取值。',
+    live: true,
+    href: '/design-system/foundations',
+    // 三色板网格：色彩基础
+    svg: `<svg viewBox="0 0 64 36" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+      <rect x="6" y="6" width="14" height="24" fill="#000"/>
+      <rect x="25" y="6" width="14" height="24" fill="none" stroke="#000" stroke-width="2"/>
+      <rect x="44" y="6" width="14" height="24" fill="#000" opacity="0.15"/>
+    </svg>`,
   },
   {
     name: 'Tokens',
     desc: '真实使用的 Reference / Semantic / Article / Component Token（读取生成产物）。',
     live: true,
     href: '/design-system/tokens',
+    // 色板 + 变量符号：令牌系统
+    svg: `<svg viewBox="0 0 64 36" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+      <text x="32" y="25" text-anchor="middle" font-family="ui-monospace, monospace" font-size="18" font-weight="800" fill="#000">{token}</text>
+    </svg>`,
   },
   {
     name: 'Components',
     desc: 'Button / Card / Tag / Badge / Navigation / Tabs / Dialog / Callout 等。',
     live: true,
     href: '/design-system/components',
+    // 方块堆叠：组件拼装
+    svg: `<svg viewBox="0 0 64 36" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+      <rect x="8" y="8" width="16" height="16" fill="#000"/>
+      <rect x="26" y="12" width="16" height="16" fill="none" stroke="#000" stroke-width="2"/>
+      <rect x="44" y="8" width="12" height="20" fill="#000" opacity="0.3"/>
+    </svg>`,
   },
-  { name: 'Content', desc: 'Markdown 与 MDX 的真实排版规范。', live: false },
+  {
+    name: 'Content',
+    desc: 'Markdown 与 MDX 的真实排版规范。',
+    live: true,
+    href: '/design-system/content',
+    // 排版线条：正文层级
+    svg: `<svg viewBox="0 0 64 36" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+      <rect x="6" y="9" width="40" height="3" fill="#000"/>
+      <rect x="6" y="16" width="52" height="2" fill="#000" opacity="0.6"/>
+      <rect x="6" y="21" width="52" height="2" fill="#000" opacity="0.6"/>
+      <rect x="6" y="26" width="32" height="2" fill="#000" opacity="0.6"/>
+    </svg>`,
+  },
   {
     name: 'Patterns',
     desc: '文章头部、课程目录、项目 Hero、代码对比等组合模式。',
     live: false,
+    // 节点连接器：组合模式
+    svg: `<svg viewBox="0 0 64 36" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+      <circle cx="14" cy="18" r="6" fill="#000"/>
+      <circle cx="50" cy="10" r="5" fill="none" stroke="#000" stroke-width="2"/>
+      <circle cx="50" cy="26" r="5" fill="none" stroke="#000" stroke-width="2"/>
+      <path d="M19 16 L45 11" stroke="#000" stroke-width="2" fill="none"/>
+      <path d="M19 20 L45 24" stroke="#000" stroke-width="2" fill="none"/>
+    </svg>`,
   },
 ];
 ---
@@ -34,77 +77,32 @@ const areas = [
 >
   <section class="sx-section">
     <div class="sx-container">
-      <header class="page-head">
-        <p class="eyebrow">SchemaX UI</p>
-        <h1>Design System</h1>
-        <p>设计系统不是附属文档，而是 SchemaX 的重要作品。</p>
-      </header>
+      <Breadcrumb
+        items={[
+          { label: 'Home', href: '/' },
+          { label: 'Design System' },
+        ]}
+      />
+
+      <PageHeader
+        title="Design System"
+        description="设计系统不是附属文档，而是 SchemaX 的重要作品。"
+      />
 
       <div class="sx-grid">
         {
-          areas.map((a) =>
-            a.live && a.href ? (
-              <a class="card area area--live" href={a.href}>
-                <div class="area__head">
-                  <span class="area__name">{a.name}</span>
-                  <span class="badge badge--accent">Live</span>
-                </div>
-                <p class="area__desc">{a.desc}</p>
-              </a>
-            ) : (
-              <div class="card area">
-                <div class="area__head">
-                  <span class="area__name">{a.name}</span>
-                  <span class="badge">Planned</span>
-                </div>
-                <p class="area__desc">{a.desc}</p>
-              </div>
-            ),
-          )
+          areas.map((a) => (
+            <FeatureCard
+              title={a.name}
+              description={a.desc}
+              status={a.live ? 'live' : 'planned'}
+              href={a.href}
+            >
+              <Fragment set:html={a.svg} />
+            </FeatureCard>
+          ))
         }
       </div>
     </div>
   </section>
 </BaseLayout>
-
-<style>
-  .eyebrow {
-    font-family: ui-monospace, monospace;
-    color: var(--sx-sys-color-action-primary);
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    font-size: 0.8rem;
-  }
-  .page-head {
-    margin-block-end: var(--sx-ref-space-8);
-  }
-  .page-head h1 {
-    font-size: 2.5rem;
-    font-weight: 800;
-    letter-spacing: -0.02em;
-    margin-block-start: var(--sx-ref-space-2);
-  }
-  .page-head p {
-    opacity: 0.8;
-    margin-block-start: var(--sx-ref-space-2);
-  }
-  .area {
-    display: flex;
-    flex-direction: column;
-    gap: var(--sx-ref-space-3);
-  }
-  .area__head {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: var(--sx-ref-space-2);
-  }
-  .area__name {
-    font-size: 1.25rem;
-    font-weight: 800;
-  }
-  .area__desc {
-    opacity: 0.85;
-  }
-</style>

@@ -55,8 +55,8 @@
 }
 
 .sx-article :where(blockquote) {
-  border-left: 4px solid var(--sx-sys-color-action-primary);
-  padding-left: var(--sx-ref-space-4);
+  border-left: 6px solid var(--sx-sys-color-action-primary);
+  padding: var(--sx-ref-space-2) var(--sx-ref-space-4);
   margin-block: 1.5rem;
   font-style: italic;
 }
@@ -66,9 +66,188 @@
   font-size: 0.9em;
   background: var(--sx-sys-color-bg-surface);
   border: var(--sx-sys-border-width) solid var(--sx-sys-color-border);
+  box-shadow: var(--sx-sys-shadow-sm);
   padding: 0.1em 0.35em;
 }
 
 .sx-article :where(pre) {
   margin-block: 1.5rem;
+}
+
+/* ── 标题补全 ── */
+
+.sx-article :where(h1) {
+  margin-block: 4rem 1.5rem;
+  font-size: 2.5rem;
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+.sx-article :where(h5) {
+  margin-block: 2rem 0.5rem;
+  font-size: 1rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  line-height: 1.3;
+}
+
+.sx-article :where(h6) {
+  margin-block: 2rem 0.5rem;
+  font-size: 0.9rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  line-height: 1.3;
+  opacity: 0.7;
+}
+
+/* ── 行内元素 ── */
+
+.sx-article :where(strong) {
+  font-weight: 700;
+}
+
+.sx-article :where(em) {
+  font-style: italic;
+}
+
+.sx-article :where(mark) {
+  background: var(--sx-sys-color-accent);
+  padding: 0.1em 0.3em;
+}
+
+.sx-article :where(kbd) {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.85em;
+  border: var(--sx-sys-border-width) solid var(--sx-sys-color-border);
+  box-shadow: var(--sx-sys-shadow-sm);
+  padding: 0.1em 0.4em;
+  border-radius: 2px;
+  background: var(--sx-sys-color-bg-surface);
+}
+
+/* ── 分隔线 ── */
+
+.sx-article :where(hr) {
+  border: none;
+  border-top: 2px solid var(--sx-sys-color-border);
+  margin-block: 2rem;
+}
+
+/* ── 图片与 figure ── */
+
+.sx-article :where(img) {
+  max-width: 100%;
+  height: auto;
+  border: var(--sx-sys-border-width) solid var(--sx-sys-color-border);
+  box-shadow: var(--sx-sys-shadow-sm);
+}
+
+/* figure 内的 img 不重复边框 / 阴影，由 figure 统一承担外框 */
+.sx-article :where(figure) :where(img) {
+  border: none;
+  box-shadow: none;
+}
+
+.sx-article :where(figure) {
+  margin-block: 1.5rem;
+  background: var(--sx-sys-color-bg-surface);
+  border: var(--sx-sys-border-width) solid var(--sx-sys-color-border);
+  box-shadow: var(--sx-sys-shadow-sm);
+  padding: var(--sx-ref-space-3);
+}
+
+.sx-article :where(figcaption) {
+  font-size: 0.85rem;
+  opacity: 0.7;
+  text-align: center;
+  margin-block-start: 0.5rem;
+}
+
+/* ── 表格 ── */
+
+.sx-article :where(table) {
+  width: 100%;
+  border-collapse: collapse;
+  margin-block: 1.5rem;
+  font-size: 0.95rem;
+  background: var(--sx-sys-color-bg-surface);
+  box-shadow: var(--sx-sys-shadow-md);
+}
+
+.sx-article :where(th),
+.sx-article :where(td) {
+  text-align: left;
+  padding: var(--sx-ref-space-2) var(--sx-ref-space-3);
+  border: var(--sx-sys-border-width) solid var(--sx-sys-color-border);
+}
+
+.sx-article :where(thead th) {
+  background: var(--sx-sys-color-accent);
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* ── 折叠（details / summary） ── */
+
+.sx-article :where(details) {
+  border: var(--sx-sys-border-width) solid var(--sx-sys-color-border);
+  box-shadow: var(--sx-sys-shadow-sm);
+  padding: var(--sx-ref-space-3) var(--sx-ref-space-4);
+  margin-block: 1.5rem;
+  background: var(--sx-sys-color-bg-surface);
+}
+
+.sx-article :where(summary) {
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 0.95rem;
+}
+
+.sx-article :where(details[open] > :not(summary)) {
+  margin-block-start: var(--sx-ref-space-3);
+}
+
+/* ── 定义列表 ── */
+
+.sx-article :where(dl) {
+  margin-block: 1.5rem;
+}
+
+.sx-article :where(dt) {
+  font-weight: 700;
+  margin-block-start: var(--sx-ref-space-3);
+}
+
+.sx-article :where(dt:first-child) {
+  margin-block-start: 0;
+}
+
+.sx-article :where(dd) {
+  padding-left: 1.5rem;
+  margin-block-end: var(--sx-ref-space-3);
+  opacity: 0.85;
+}
+
+/* ── 脚注区 ── */
+
+.sx-article :where(.footnotes) {
+  margin-block-start: 3rem;
+  padding-block-start: 1rem;
+  border-top: var(--sx-sys-border-width) solid var(--sx-sys-color-border);
+  font-size: 0.85rem;
+  opacity: 0.75;
+}
+
+/* ── 嵌套列表缩进 ── */
+
+.sx-article :where(ul ul),
+.sx-article :where(ol ol),
+.sx-article :where(ul ol),
+.sx-article :where(ol ul) {
+  margin-block: 0.25rem;
 }
