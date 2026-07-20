@@ -1,5 +1,4 @@
 ---
-import type { AstroComponentFactory } from 'astro/runtime/server';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Command from '../../components/design-system/Command.astro';
 import Breadcrumb from '../../components/design-system/Breadcrumb.astro';
@@ -8,14 +7,16 @@ import { componentsRegistry } from '../../data/components-registry';
 
 // 用 import.meta.glob 预先收集所有 demo 文件，按组件名索引。
 // 脚手架新增 demo 文件后无需修改本页，自动被 glob 捕获。
-const demos = import.meta.glob<{ default: AstroComponentFactory }>(
+// astro 未把组件工厂类型作为公共导出，demo 无 props 透传，用 any 承载 default。
+type DemoComponent = any; // eslint-disable-line @typescript-eslint/no-explicit-any
+const demos = import.meta.glob<{ default: DemoComponent }>(
   '../../components/design-system/demos/*Demo.astro',
 );
 
 // 把 demo 路径映射到组件名：'demos/NavDemo.astro' → 'Nav'
 const demoByName = new Map<
   string,
-  () => Promise<{ default: AstroComponentFactory }>
+  () => Promise<{ default: DemoComponent }>
 >();
 for (const [path, loader] of Object.entries(demos)) {
   const match = path.match(/\/([^/]+)Demo\.astro$/);
