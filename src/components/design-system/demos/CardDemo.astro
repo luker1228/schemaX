@@ -106,7 +106,8 @@ const usage = `<!-- 链接卡片（自动 interactive，hover 抬起） -->
     </Card>
     <Fragment slot="note">
       <p>
-        <code>bordered</code> 默认 true。<code>false</code> 时移除边框，保留 padding 与阴影。
+        <code>bordered</code> 默认 true。<code>false</code> 时移除边框，保留 padding
+        与阴影。
       </p>
     </Fragment>
   </Demo>
@@ -121,13 +122,18 @@ const usage = `<!-- 链接卡片（自动 interactive，hover 抬起） -->
     }
     <Fragment slot="note">
       <p>
-        纯黑硬阴影（无模糊），四档：<code>none</code> / <code>sm</code>（2px，默认）/
+        纯黑硬阴影（无模糊），四档：<code>none</code> / <code>sm</code
+        >（2px，默认）/
         <code>md</code>（4px）/ <code>lg</code>（6px）。
       </p>
     </Fragment>
   </Demo>
 
-  <Demo label="阴影颜色 Shadow color" attr='shadowColor="..."' stageClass="wrap">
+  <Demo
+    label="阴影颜色 Shadow color"
+    attr='shadowColor="..."'
+    stageClass="wrap"
+  >
     <Card shadow="md" interactive={false}>
       <strong>黑（默认）</strong>
     </Card>
@@ -148,7 +154,8 @@ const usage = `<!-- 链接卡片（自动 interactive，hover 抬起） -->
     <Fragment slot="note">
       <p>
         <code>shadowColor</code> 接收任意 CSS 颜色，通过 inline 覆盖
-        <code>--sx-card-shadow-color</code>。默认黑色。可做彩色偏移阴影（如黄色，呼应 Command 的视觉）。
+        <code>--sx-card-shadow-color</code
+        >。默认黑色。可做彩色偏移阴影（如黄色，呼应 Command 的视觉）。
       </p>
     </Fragment>
   </Demo>
@@ -168,9 +175,10 @@ const usage = `<!-- 链接卡片（自动 interactive，hover 抬起） -->
     </Card>
     <Fragment slot="note">
       <p>
-        hover 抬起只作用于 <code>.card--interactive</code>。
-        默认行为：有 <code>href</code> 即 interactive（链接卡片），
-        无 <code>href</code> 即 static（容器卡片）—— 避免不可点的卡片误导性地跳一下。
+        hover 抬起只作用于 <code>.card--interactive</code>。 默认行为：有 <code
+          >href</code
+        > 即 interactive（链接卡片）， 无 <code>href</code> 即 static（容器卡片）——
+        避免不可点的卡片误导性地跳一下。
       </p>
     </Fragment>
   </Demo>
@@ -186,8 +194,9 @@ const usage = `<!-- 链接卡片（自动 interactive，hover 抬起） -->
     </Card>
     <Fragment slot="note">
       <p>
-        <code>href</code> 决定元素类型：<code>&lt;a&gt;</code>（导航）或 <code>&lt;div&gt;</code>（内容容器）。
-        同时也决定默认的 interactive 行为。
+        <code>href</code> 决定元素类型：<code>&lt;a&gt;</code>（导航）或 <code
+          >&lt;div&gt;</code
+        >（内容容器）。 同时也决定默认的 interactive 行为。
       </p>
     </Fragment>
   </Demo>
@@ -202,9 +211,15 @@ const usage = `<!-- 链接卡片（自动 interactive，hover 抬起） -->
         {
           apiRows.map((r) => (
             <tr>
-              <td class="cell-name"><code>{r.name}</code></td>
-              <td><code>{r.type}</code></td>
-              <td><code>{r.default}</code></td>
+              <td class="cell-name">
+                <code>{r.name}</code>
+              </td>
+              <td>
+                <code>{r.type}</code>
+              </td>
+              <td>
+                <code>{r.default}</code>
+              </td>
               <td class="cell-desc">{r.desc}</td>
             </tr>
           ))

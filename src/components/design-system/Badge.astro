@@ -11,11 +11,7 @@
 //   success  绿底白字 —— 成功 / 完成（completed / published / maintained）
 
 export type BadgeVariant =
-  | 'default'
-  | 'accent'
-  | 'action'
-  | 'danger'
-  | 'success';
+  'default' | 'accent' | 'action' | 'danger' | 'success';
 
 interface Props {
   variant?: BadgeVariant;
@@ -23,10 +19,7 @@ interface Props {
 
 const { variant = 'default' } = Astro.props;
 
-const classes = [
-  'badge',
-  variant !== 'default' ? `badge--${variant}` : '',
-]
+const classes = ['badge', variant !== 'default' ? `badge--${variant}` : '']
   .filter(Boolean)
   .join(' ');
 ---

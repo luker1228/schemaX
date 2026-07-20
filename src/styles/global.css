@@ -1,9 +1,12 @@
 /* SchemaX 全局样式入口（仅由 BaseLayout 导入一次）。
-   layer 顺序依规范 §17：reset → tokens → base → layout → article →
-   components → utilities → overrides。生成令牌归入 tokens 层。 */
-@layer reset, tokens, base, layout, article, components, utilities, overrides;
+   layer 顺序依规范 §17：reset → tokens → theme → base → layout → article →
+   components → utilities → overrides。生成令牌归入 tokens 层；Tailwind 主题
+   （@theme 桥接 --sx-* → Tailwind 命名空间）归入 theme 层，必须在 tokens 之后
+   才能引用 --sx-*。 */
+@layer reset, tokens, theme, base, layout, article, components, utilities, overrides;
 
 @import './generated/tokens.css' layer(tokens);
+@import './tailwind.css';
 @import './reset.css' layer(reset);
 @import './base.css' layer(base);
 @import './layout.css' layer(layout);

@@ -14,6 +14,10 @@
 //   - registry 里 status=live 的条目会自动渲染对应 demo
 //   - 新增 demo 文件会被 import.meta.glob 自动捕获
 //   - 因此本脚本无需修改展示页本身。
+//
+// 分层约定：本脚本面向静态展示组件（.astro，零 JS）。
+// 交互型组件（需要浏览器状态，如 Command / Dialog / Tabs / 搜索 / 主题切换 /
+// Playground）用 React island（.tsx + client:*），不在本脚本范围。
 
 import { readFileSync, writeFileSync, existsSync } from 'node:fs';
 import { createInterface } from 'node:readline/promises';
@@ -106,14 +110,14 @@ async function main() {
       args[0] || (rl ? await ask(rl, '组件名（PascalCase）') : '');
     if (!rawName) {
       console.error(
-        '✗ 必须提供组件名。用法：pnpm gen:component <Name> [描述...]'
+        '✗ 必须提供组件名。用法：pnpm gen:component <Name> [描述...]',
       );
       process.exit(1);
     }
     const name = toPascal(rawName);
     if (!/^[A-Z][a-zA-Z0-9]+$/.test(name)) {
       console.error(
-        `✗ 组件名 "${name}" 不合法，需为 PascalCase（如 Button、NavBar）`
+        `✗ 组件名 "${name}" 不合法，需为 PascalCase（如 Button、NavBar）`,
       );
       process.exit(1);
     }
@@ -156,7 +160,9 @@ async function main() {
 
     console.log('');
     console.log('完成！访问 /design-system/components 查看演示。');
-    console.log(`下一步：编辑 ${name}.astro 实现组件逻辑，编辑 ${name}Demo.astro 完善演示。`);
+    console.log(
+      `下一步：编辑 ${name}.astro 实现组件逻辑，编辑 ${name}Demo.astro 完善演示。`,
+    );
   } finally {
     rl?.close();
   }
@@ -177,37 +183,31 @@ function updateRegistry(name, title, description) {
   // 尝试匹配已存在的条目（status 可为 planned/live）
   // 匹配形如：{ name: 'Button', ... status: 'planned' }
   const entryRegex = new RegExp(
-    `(\\{\\s*name:\\s*'${name}'\\s*,[\\s\\S]*?status:\\s*)'(?:planned|live)'(\\s*,?\\s*\\})`
+    `(\\{\\s*name:\\s*'${name}'\\s*,[\\s\\S]*?status:\\s*)'(?:planned|live)'(\\s*,?\\s*\\})`,
   );
 
   if (entryRegex.test(content)) {
     // 已存在：替换 status 为 live，同时更新 title 和 description
-    const updated = content.replace(
-      entryRegex,
-      (match, prefix, suffix) => {
-        // 进一步替换 title 与 description
-        let rebuilt = `${prefix}'live'${suffix}`;
-        rebuilt = rebuilt.replace(/title:\s*'[^']*'/, `title: '${title}'`);
-        rebuilt = rebuilt.replace(
-          /description:\s*'[^']*'/,
-          `description: '${descEsc}'`
-        );
-        return rebuilt;
-      }
-    );
+    const updated = content.replace(entryRegex, (_match, prefix, suffix) => {
+      // 进一步替换 title 与 description
+      let rebuilt = `${prefix}'live'${suffix}`;
+      rebuilt = rebuilt.replace(/title:\s*'[^']*'/, `title: '${title}'`);
+      rebuilt = rebuilt.replace(
+        /description:\s*'[^']*'/,
+        `description: '${descEsc}'`,
+      );
+      return rebuilt;
+    });
     writeFileSync(REGISTRY_PATH, updated, 'utf8');
     return;
   }
 
   // 不存在：在数组闭合 ] 之前追加新条目
   const newEntry = `  {\n    name: '${name}',\n    title: '${title}',\n    description: '${descEsc}',\n    status: 'live',\n  },\n`;
-  const updated = content.replace(
-    /(\n\];\s*)$/,
-    `${newEntry}$1`
-  );
+  const updated = content.replace(/(\n\];\s*)$/, `${newEntry}$1`);
   if (updated === content) {
     console.warn(
-      '⚠ 未找到 registry 数组闭合位置，请手动在 components-registry.ts 追加条目'
+      '⚠ 未找到 registry 数组闭合位置，请手动在 components-registry.ts 追加条目',
     );
     return;
   }

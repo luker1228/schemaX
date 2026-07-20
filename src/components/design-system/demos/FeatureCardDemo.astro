@@ -54,8 +54,14 @@ const apiRows = [
 ];
 
 const slots = [
-  { name: '默认 slot', desc: 'media 区：SVG / 图 / 色块，aspect-ratio 16/9，黄底兜底' },
-  { name: 'description', desc: '可选；覆盖 description prop，做富文本或更复杂的描述区' },
+  {
+    name: '默认 slot',
+    desc: 'media 区：SVG / 图 / 色块，aspect-ratio 16/9，黄底兜底',
+  },
+  {
+    name: 'description',
+    desc: '可选；覆盖 description prop，做富文本或更复杂的描述区',
+  },
 ];
 
 const usage = `<!-- Live：可点击跳转，黄底 Live 徽章，hover 抬起 -->
@@ -106,8 +112,10 @@ const usage = `<!-- Live：可点击跳转，黄底 Live 徽章，hover 抬起 -
     </FeatureCard>
     <Fragment slot="note">
       <p>
-        <code>status="live"</code>：黄底 Live 徽章，渲染为 <code>&lt;a&gt;</code>（提供 href 时），
-        hover 抬起 + 阴影升级，行为同全局 <code>.card--interactive</code>。
+        <code>status="live"</code>：黄底 Live 徽章，渲染为 <code>&lt;a&gt;</code
+        >（提供 href 时）， hover 抬起 + 阴影升级，行为同全局 <code
+          >.card--interactive</code
+        >。
       </p>
     </Fragment>
   </Demo>
@@ -129,8 +137,10 @@ const usage = `<!-- Live：可点击跳转，黄底 Live 徽章，hover 抬起 -
     </FeatureCard>
     <Fragment slot="note">
       <p>
-        <code>status="planned"</code>：普通 Planned 徽章，强制渲染为 <code>&lt;div&gt;</code>（即便传了 href 也不生效），
-        media 区半透明，不可点击、hover 不抬起 —— 强化「未开放」语义。
+        <code>status="planned"</code>：普通 Planned 徽章，强制渲染为 <code
+          >&lt;div&gt;</code
+        >（即便传了 href 也不生效）， media 区半透明，不可点击、hover 不抬起 ——
+        强化「未开放」语义。
       </p>
     </Fragment>
   </Demo>
@@ -152,8 +162,9 @@ const usage = `<!-- Live：可点击跳转，黄底 Live 徽章，hover 抬起 -
     </FeatureCard>
     <Fragment slot="note">
       <p>
-        默认 slot 可以是任意内容：SVG、<code>&lt;img&gt;</code>、色块、mini-demo。
-        留空则 media 区呈现品牌黄底兜底。SVG / img 会自动撑满 16:9 区域。
+        默认 slot 可以是任意内容：SVG、<code>&lt;img&gt;</code
+        >、色块、mini-demo。 留空则 media 区呈现品牌黄底兜底。SVG / img
+        会自动撑满 16:9 区域。
       </p>
     </Fragment>
   </Demo>
@@ -168,9 +179,15 @@ const usage = `<!-- Live：可点击跳转，黄底 Live 徽章，hover 抬起 -
         {
           apiRows.map((r) => (
             <tr>
-              <td class="cell-name"><code>{r.name}</code></td>
-              <td><code>{r.type}</code></td>
-              <td><code>{r.default}</code></td>
+              <td class="cell-name">
+                <code>{r.name}</code>
+              </td>
+              <td>
+                <code>{r.type}</code>
+              </td>
+              <td>
+                <code>{r.default}</code>
+              </td>
               <td class="cell-desc">{r.desc}</td>
             </tr>
           ))
@@ -189,7 +206,9 @@ const usage = `<!-- Live：可点击跳转，黄底 Live 徽章，hover 抬起 -
         {
           slots.map((s) => (
             <tr>
-              <td class="cell-name"><code>{s.name}</code></td>
+              <td class="cell-name">
+                <code>{s.name}</code>
+              </td>
               <td class="cell-desc">{s.desc}</td>
             </tr>
           ))

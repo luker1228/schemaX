@@ -566,13 +566,13 @@ h1—h4
 
 ```text
 Astro 7.x
-Svelte 5
+React 19
 TypeScript strict
 MDX
 Astro Content Collections
 Expressive Code
 Pagefind
-原生 CSS
+原生 CSS + Tailwind v4
 Style Dictionary
 pnpm
 静态输出
@@ -580,7 +580,7 @@ pnpm
 
 Astro 当前定位为面向内容型网站的 Server-first 框架，默认尽量输出 HTML；其 Islands 架构只在需要交互的位置发送客户端 JavaScript。Content Collections 可以通过 loader 和 schema 管理、校验并类型化 Markdown、MDX、JSON 及远程内容。
 
-Astro 的官方 MDX 集成允许在 `.mdx` 中使用 Astro 或 UI 框架组件；官方 Svelte 集成支持渲染和客户端水合 Svelte 5 组件。
+Astro 的官方 MDX 集成允许在 `.mdx` 中使用 Astro 或 UI 框架组件；官方 React 集成（@astrojs/react）支持渲染和客户端水合 React 19 组件。
 
 ## 2. 架构职责
 
@@ -598,7 +598,7 @@ MDX
 ├── 课程正文
 └── 特殊内容组件
 
-Svelte
+React
 ├── 搜索
 ├── 主题切换
 ├── 代码 Tab
@@ -624,7 +624,7 @@ CSS
 
 判断规则：
 
-> 只负责展示，使用 Astro；需要在浏览器内改变状态，使用 Svelte Island。
+> 只负责展示，使用 Astro；需要在浏览器内改变状态，使用 React Island。
 
 ---
 
@@ -1071,7 +1071,7 @@ Before 与 After
 
 ## 4. Playground
 
-Playground 使用 Svelte 实现：
+Playground 使用 React 实现：
 
 ```text
 HTML 编辑器
@@ -1138,17 +1138,17 @@ TokenTable.astro
 Callout.astro
 ```
 
-## Svelte Islands
+## React Islands
 
 ```text
-ThemeSwitch.svelte
-MobileMenu.svelte
-SearchDialog.svelte
-CodeTabs.svelte
-CopyButton.svelte
-CodePreview.svelte
-Playground.svelte
-ComponentConfigurator.svelte
+ThemeSwitch.tsx
+MobileMenu.tsx
+SearchDialog.tsx
+CodeTabs.tsx
+CopyButton.tsx
+CodePreview.tsx
+Playground.tsx
+ComponentConfigurator.tsx
 ```
 
 使用方式：
@@ -1437,7 +1437,7 @@ Pagefind 扫描 dist
     ↓
 生成静态搜索索引
     ↓
-SearchDialog.svelte 按需加载
+SearchDialog.tsx 按需加载
 ```
 
 Pagefind 在静态站构建完成后扫描 HTML，并生成不需要独立搜索服务器的静态索引；其扩展发行版还包含中文和日文索引支持。
@@ -1712,7 +1712,7 @@ iframe title
 
 ```text
 普通博客页
-→ 不加载 Svelte 框架代码，或仅加载很小的复制按钮
+→ 不加载 React 框架代码，或仅加载很小的复制按钮
 
 主页初始客户端 JS
 → 35 KB gzip 以内
@@ -1732,7 +1732,7 @@ Playground
 
 关键原则：
 
-- 不把整个页面做成 Svelte 应用；
+- 不把整个页面做成 React 应用；
 - 不让所有代码块都变成 Playground；
 - 搜索按需加载；
 - 编辑器按组件拆包；
@@ -1789,7 +1789,7 @@ Production Deploy
     "build": "pnpm tokens:build && pnpm content:check && astro check && astro build && pnpm search:build",
     "test": "vitest run",
     "test:e2e": "playwright test",
-    "lint:css": "stylelint \"src/**/*.{css,astro,svelte}\"",
+    "lint:css": "stylelint \"src/**/*.{css,astro,tsx}\"",
     "check": "pnpm lint:css && pnpm test && pnpm build"
   }
 }
@@ -1818,10 +1818,10 @@ Production Deploy
 
 ```text
 Astro
-Svelte
+React
 MDX
 TypeScript
-原生 CSS
+原生 CSS + Tailwind v4
 ```
 
 ---
@@ -1916,7 +1916,7 @@ SchemaX V1 完成时应满足：
 4. Token Source 是唯一视觉事实来源。
 5. 设计系统页面读取真实 Token 和组件。
 6. 普通文章默认不加载多余客户端 JavaScript。
-7. 交互组件使用 Svelte Islands 按需加载。
+7. 交互组件使用 React Islands 按需加载。
 8. 静态代码由 Expressive Code 构建期渲染。
 9. Playground 在隔离 iframe 中运行。
 10. 搜索不依赖后端服务。

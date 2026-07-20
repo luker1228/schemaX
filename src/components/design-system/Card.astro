@@ -68,7 +68,9 @@ const classes = [
   .join(' ');
 
 // 阴影颜色通过 inline style 注入局部 CSS 变量，仅在有传值时生效
-const style = shadowColor ? `--sx-card-shadow-color: ${shadowColor}` : undefined;
+const style = shadowColor
+  ? `--sx-card-shadow-color: ${shadowColor}`
+  : undefined;
 ---
 
 {

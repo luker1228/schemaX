@@ -13,11 +13,7 @@
 // 尺寸（size）：sm / md（默认）/ lg
 
 export type ButtonVariant =
-  | 'primary'
-  | 'secondary'
-  | 'outline'
-  | 'danger'
-  | 'ghost';
+  'primary' | 'secondary' | 'outline' | 'danger' | 'ghost';
 
 export type ButtonSize = 'sm' | 'md' | 'lg';
 
@@ -46,11 +42,9 @@ const {
   rel,
 } = Astro.props;
 
-const classes = [
-  'btn',
-  `btn--${variant}`,
-  size !== 'md' ? `btn--${size}` : '',
-].filter(Boolean).join(' ');
+const classes = ['btn', `btn--${variant}`, size !== 'md' ? `btn--${size}` : '']
+  .filter(Boolean)
+  .join(' ');
 
 const isLink = Boolean(href);
 ---

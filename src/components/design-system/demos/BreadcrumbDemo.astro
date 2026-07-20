@@ -61,17 +61,18 @@ import Breadcrumb from '@/components/design-system/Breadcrumb.astro';
 ---
 
 <>
-  <Demo label="默认（三级）" attr='<Breadcrumb items={[...]} />'>
+  <Demo label="默认（三级）" attr="<Breadcrumb items={[...]} />">
     <Breadcrumb items={simpleItems} />
     <Fragment slot="note">
       <p>
-        最后一项（<code>Components</code>）自动渲染为 <code>aria-current="page"</code>，
-        不可点、略暗；其余为链接，hover 时整块黄底填充。
+        最后一项（<code>Components</code>）自动渲染为 <code
+          >aria-current="page"</code
+        >， 不可点、略暗；其余为链接，hover 时整块黄底填充。
       </p>
     </Fragment>
   </Demo>
 
-  <Demo label="深层路径" attr='items.length >= 4'>
+  <Demo label="深层路径" attr="items.length >= 4">
     <Breadcrumb items={deepItems} />
     <Fragment slot="note">
       <p>
@@ -87,14 +88,22 @@ import Breadcrumb from '@/components/design-system/Breadcrumb.astro';
         <tr><th>Prop</th><th>类型</th><th>默认</th><th>说明</th></tr>
       </thead>
       <tbody>
-        {apiRows.map((r) => (
-          <tr>
-            <td class="cell-name"><code>{r.name}</code></td>
-            <td><code>{r.type}</code></td>
-            <td><code>{r.default}</code></td>
-            <td class="cell-desc">{r.desc}</td>
-          </tr>
-        ))}
+        {
+          apiRows.map((r) => (
+            <tr>
+              <td class="cell-name">
+                <code>{r.name}</code>
+              </td>
+              <td>
+                <code>{r.type}</code>
+              </td>
+              <td>
+                <code>{r.default}</code>
+              </td>
+              <td class="cell-desc">{r.desc}</td>
+            </tr>
+          ))
+        }
       </tbody>
     </table>
   </div>

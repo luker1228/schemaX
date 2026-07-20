@@ -106,17 +106,13 @@ const motifs = [
 
         <h3 class="sub-title">Neo-brutalist 特征</h3>
         <div class="trait-grid">
-          {
-            brutalistTraits.map((t) => (
-              <span class="tag trait">{t}</span>
-            ))
-          }
+          {brutalistTraits.map((t) => <span class="tag trait">{t}</span>)}
         </div>
 
         <h3 class="sub-title">页面视觉强度分级</h3>
         <p class="group__hint">
-          RetroUI 强度按页面分级 —— 设计系统最强，博客正文最克制。
-          Schema 母题不侵入长篇阅读空间。
+          RetroUI 强度按页面分级 —— 设计系统最强，博客正文最克制。 Schema
+          母题不侵入长篇阅读空间。
         </p>
         <div class="table-wrap">
           <table>
@@ -161,7 +157,8 @@ const motifs = [
         <h2 class="group__title">基础视觉取值 Foundations in use</h2>
         <p class="group__lede">
           实物展示，非变量表。完整 token 变量名见 <a
-            href="/design-system/tokens">Tokens</a>。
+            href="/design-system/tokens">Tokens</a
+          >。
         </p>
 
         <h3 class="sub-title">配色 Palette</h3>
@@ -202,12 +199,8 @@ const motifs = [
         </p>
         <div class="demo-row">
           <div class="edge-box">边框 1px · 圆角 0</div>
-          <div class="edge-box edge-box--rounded">
-            边框 1px · 圆角 2px
-          </div>
-          <div class="edge-box edge-box--borderless">
-            无边框（仅阴影）
-          </div>
+          <div class="edge-box edge-box--rounded">边框 1px · 圆角 2px</div>
+          <div class="edge-box edge-box--borderless">无边框（仅阴影）</div>
         </div>
       </section>
 
@@ -219,11 +212,7 @@ const motifs = [
           <strong>不侵入长篇阅读空间</strong>。
         </p>
         <div class="trait-grid">
-          {
-            motifs.map((m) => (
-              <span class="tag trait">{m}</span>
-            ))
-          }
+          {motifs.map((m) => <span class="tag trait">{m}</span>)}
         </div>
       </section>
     </div>
@@ -308,10 +297,7 @@ const motifs = [
   /* 设计原则卡片 */
   .principle-grid {
     display: grid;
-    grid-template-columns: repeat(
-      auto-fill,
-      minmax(min(100%, 20rem), 1fr)
-    );
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 20rem), 1fr));
     gap: var(--sx-ref-space-4);
   }
   .principle {
@@ -344,10 +330,7 @@ const motifs = [
   /* 配色 swatch 网格 */
   .swatch-grid {
     display: grid;
-    grid-template-columns: repeat(
-      auto-fill,
-      minmax(min(100%, 11rem), 1fr)
-    );
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 11rem), 1fr));
     gap: var(--sx-ref-space-3);
   }
   .swatch-item {

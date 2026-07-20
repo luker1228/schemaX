@@ -87,9 +87,36 @@ export default {
         'custom-property-pattern': null,
       },
     },
-    // .astro / .svelte 的 <style> 块用 postcss-html 解析
+    // tailwind.css：Tailwind v4 @theme 桥接层，把 --sx-* token 映射到
+    // Tailwind/shadcn 标准命名空间（--color-background / --color-primary 等），
+    // 供 shadcn/ui（React）组件消费。桥接变量必须用 Tailwind 约定名，不以 sx-
+    // 开头，视为桥接层 escape hatch，豁免前缀约束。
     {
-      files: ['**/*.astro', '**/*.svelte'],
+      files: ['**/styles/tailwind.css'],
+      rules: {
+        'custom-property-pattern': null,
+        // Tailwind v4 特有 at-rules（@theme / @apply / @variant 等），stylelint 默认不识别
+        'at-rule-no-unknown': [
+          true,
+          {
+            ignoreAtRules: [
+              'theme',
+              'apply',
+              'variant',
+              'custom-variant',
+              'utility',
+              'plugin',
+              'config',
+              'reference',
+              'tailwindcss',
+            ],
+          },
+        ],
+      },
+    },
+    // .astro 的 <style> 块用 postcss-html 解析（React .tsx 无 style 块，不扫）
+    {
+      files: ['**/*.astro'],
       customSyntax: 'postcss-html',
     },
   ],

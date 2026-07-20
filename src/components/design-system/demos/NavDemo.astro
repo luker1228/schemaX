@@ -26,10 +26,26 @@ const disabledItems: NavItem[] = [
 ];
 
 const states = [
-  { name: '默认态', attr: '—（无额外属性）', desc: '透明背景、无边框。鼠标悬停或聚焦时切换为黄底。' },
-  { name: '激活态', attr: 'aria-current="page"', desc: '黄底 + 1px 黑边 + 4px 硬阴影，标识当前所在页面。' },
-  { name: '禁用态', attr: 'aria-disabled="true"', desc: '半透明、移除指针交互，表示该入口暂不可用。' },
-  { name: 'hover / focus', attr: '—（交互态）', desc: '黄底 + 1px 黑边 + 2px 硬阴影，给即时反馈。' },
+  {
+    name: '默认态',
+    attr: '—（无额外属性）',
+    desc: '透明背景、无边框。鼠标悬停或聚焦时切换为黄底。',
+  },
+  {
+    name: '激活态',
+    attr: 'aria-current="page"',
+    desc: '黄底 + 1px 黑边 + 4px 硬阴影，标识当前所在页面。',
+  },
+  {
+    name: '禁用态',
+    attr: 'aria-disabled="true"',
+    desc: '半透明、移除指针交互，表示该入口暂不可用。',
+  },
+  {
+    name: 'hover / focus',
+    attr: '—（交互态）',
+    desc: '黄底 + 1px 黑边 + 2px 硬阴影，给即时反馈。',
+  },
 ];
 
 const usage = `<nav class="nav" aria-label="Primary">
@@ -63,7 +79,8 @@ const usage = `<nav class="nav" aria-label="Primary">
     </nav>
     <Fragment slot="note">
       <p>
-        「博客」项用 <code>.nav__link--demo-hover</code> 强制保持 hover 视觉，仅用于静态展示。实际使用时由 <code>:hover</code> 触发。
+        「博客」项用 <code>.nav__link--demo-hover</code> 强制保持 hover 视觉，仅用于静态展示。实际使用时由
+        <code>:hover</code> 触发。
       </p>
     </Fragment>
   </Demo>
@@ -82,13 +99,17 @@ const usage = `<nav class="nav" aria-label="Primary">
         <tr><th>状态</th><th>属性</th><th>说明</th></tr>
       </thead>
       <tbody>
-        {states.map((s) => (
-          <tr>
-            <td class="cell-name">{s.name}</td>
-            <td><code>{s.attr}</code></td>
-            <td class="cell-desc">{s.desc}</td>
-          </tr>
-        ))}
+        {
+          states.map((s) => (
+            <tr>
+              <td class="cell-name">{s.name}</td>
+              <td>
+                <code>{s.attr}</code>
+              </td>
+              <td class="cell-desc">{s.desc}</td>
+            </tr>
+          ))
+        }
       </tbody>
     </table>
   </div>

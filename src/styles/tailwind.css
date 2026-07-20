@@ -1,0 +1,61 @@
+/* Tailwind v4 入口 —— SchemaX 视觉真相仍由 style-dictionary 生成的 --sx-* token
+   提供（见 generated/tokens.css）。本文件把 --sx-* 桥接到 Tailwind 命名空间，
+   让 shadcn/ui（React）组件能通过 bg-paper / text-ink / shadow-brutal-sm 等
+   Tailwind 类消费同一套 token，避免双真相源（规范 §15–17）。
+
+   不引入 Tailwind preflight —— 现有 reset.css 已承担 reset 职责，preflight 的
+   h1-h6 / button / ul 等重置会与 article.css / components.css 冲突。仅取
+   utilities + theme。
+
+   关键：显式声明 @layer 顺序，Tailwind v4 据此判定 layer 已被外部管理，
+   不会隐式注入 preflight 到 base 层。layer 名与 global.css 保持一致。 */
+@layer reset, tokens, theme, base, layout, article, components, utilities, overrides;
+
+@import 'tailwindcss/theme' layer(theme);
+@import 'tailwindcss/utilities' layer(utilities);
+
+/* 桥接 --sx-* → Tailwind 命名空间。
+   所有取值都是 var(--sx-*) 引用，绝不写死字面量。 */
+@theme {
+  /* —— shadcn/ui 标准命名（必需，shadcn 组件默认引用这些） —— */
+  --color-background: var(--sx-sys-color-bg-page);
+  --color-foreground: var(--sx-sys-color-text-primary);
+  --color-card: var(--sx-sys-color-bg-surface);
+  --color-card-foreground: var(--sx-sys-color-text-primary);
+  --color-popover: var(--sx-sys-color-bg-surface);
+  --color-popover-foreground: var(--sx-sys-color-text-primary);
+  --color-primary: var(--sx-sys-color-accent);
+  --color-primary-foreground: var(--sx-sys-color-text-primary);
+  --color-secondary: var(--sx-sys-color-bg-surface);
+  --color-secondary-foreground: var(--sx-sys-color-text-primary);
+  --color-muted: var(--sx-sys-color-bg-surface);
+  --color-muted-foreground: var(--sx-sys-color-text-primary);
+  --color-accent: var(--sx-sys-color-accent);
+  --color-accent-foreground: var(--sx-sys-color-text-primary);
+  --color-destructive: var(--sx-sys-color-danger);
+  --color-destructive-foreground: var(--sx-sys-color-bg-surface);
+  --color-border: var(--sx-sys-color-border);
+  --color-input: var(--sx-sys-color-border);
+  --color-ring: var(--sx-sys-color-action-primary);
+
+  /* —— SchemaX 业务命名（更直观，业务代码可用 bg-paper / text-ink 等） —— */
+  --color-paper: var(--sx-sys-color-bg-page);
+  --color-surface: var(--sx-sys-color-bg-surface);
+  --color-ink: var(--sx-sys-color-text-primary);
+  --color-action: var(--sx-sys-color-action-primary);
+  --color-success: var(--sx-sys-color-success);
+  --color-danger: var(--sx-sys-color-danger);
+
+  /* —— 圆角：新粗野主义绝大多数容器是 0，仅按钮用 2px —— */
+  --radius-none: 0;
+  --radius-sm: var(--sx-sys-radius-sm);
+  --radius-md: var(--sx-sys-radius-md);
+
+  /* —— 阴影：纯黑硬阴影无模糊（新粗野主义核心） —— */
+  --shadow-brutal-sm: var(--sx-sys-shadow-sm);
+  --shadow-brutal-md: var(--sx-sys-shadow-md);
+  --shadow-brutal-lg: var(--sx-sys-shadow-lg);
+
+  /* —— 边框宽度 —— */
+  --border-width-sx: var(--sx-sys-border-width);
+}

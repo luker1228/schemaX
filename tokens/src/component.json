@@ -34,7 +34,10 @@
     },
     "header": {
       "padding-block": { "$type": "dimension", "$value": "0.9rem" },
-      "padding-inline": { "$type": "dimension", "$value": "clamp(1rem, 8vw, 6rem)" },
+      "padding-inline": {
+        "$type": "dimension",
+        "$value": "clamp(1rem, 8vw, 6rem)"
+      },
       "gap": { "$type": "dimension", "$value": "{ref.space.4}" },
       "logo-size": { "$type": "dimension", "$value": "3.5rem" },
       "logo-bg": {
@@ -62,7 +65,11 @@
         "$description": "hero 级标题字号。"
       },
       "desc-size": { "$type": "dimension", "$value": "1.05rem" },
-      "gap": { "$type": "dimension", "$value": "{ref.space.3}", "$description": "标题与描述之间的间距。" }
+      "gap": {
+        "$type": "dimension",
+        "$value": "{ref.space.3}",
+        "$description": "标题与描述之间的间距。"
+      }
     }
   }
 }

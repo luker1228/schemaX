@@ -46,24 +46,28 @@ Analyzed 4 pages: `/`, `/components`, `/docs/components/accordion`, `/blog`.
 # Taste DNA
 
 ### Warm paper as the continuous field
+
 - **Trigger**: When choosing a site-wide canvas for marketing, catalog, docs, and editorial pages.
 - **Decision**: Chose a warm `#FFF7E8` paper field over neutral gray or a dark canvas.
 - **Reason**: The tinted field makes black rules and yellow actions read as printed marks, while the same surface carries long docs without a theme switch.
 - **Evidence**: `#FFF7E8` covers 61.1% of sampled home background area; `#6B6355` recurs on all four pages; `#EFE7D6` is reserved for docs/code surfaces.
 
 ### Offset ink replaces soft elevation
+
 - **Trigger**: When a card, button, or interactive control needs separation from the paper.
 - **Decision**: Chose hard black offsets of 2–4px with 0px blur over diffuse multi-layer shadows.
 - **Reason**: The object keeps a physical cut-out edge at small sizes and remains legible on both white and paper surfaces.
 - **Evidence**: 47 elements use `4px 4px 0 #000`; 18 use `2px 2px 0 #000`; cards pair a 4px radius with the offset.
 
 ### Display personality, utility body
+
 - **Trigger**: When headings must carry the brand while component labels and docs need fast scanning.
 - **Decision**: Chose Bricolage Grotesque for display levels and Geist for body/UI over a one-family system.
 - **Reason**: The display face makes section changes visible at a glance; Geist keeps 14–18px labels and 16px docs text compact.
 - **Evidence**: Bricolage spans 72/60/48/36/30/24px headings; Geist spans 18/28px marketing and 16/24px docs; Geist Mono is isolated to 14px code.
 
 ### Color is a signal, not wallpaper
+
 - **Trigger**: When adding emphasis across a large component catalog and long landing page.
 - **Decision**: Chose `#FFDC58` for primary emphasis and kept mint, purple, and pink to small decorative zones.
 - **Reason**: Readers can predict that yellow means action or focus; decorative colors remain occasional markers instead of competing navigation channels.

@@ -15,13 +15,13 @@ const projects = await getCollection(
   <section class="sx-section">
     <div class="sx-container">
       <Breadcrumb
-        items={[
-          { label: 'Home', href: '/' },
-          { label: 'Projects' },
-        ]}
+        items={[{ label: 'Home', href: '/' }, { label: 'Projects' }]}
       />
 
-      <PageHeader title="Projects" description="开源仓库、产品实验与工程作品。" />
+      <PageHeader
+        title="Projects"
+        description="开源仓库、产品实验与工程作品。"
+      />
 
       {
         projects.length > 0 ? (

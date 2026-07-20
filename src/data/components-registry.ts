@@ -25,10 +25,33 @@ export const componentsRegistry: ComponentEntry[] = [
     status: 'live',
   },
   // —— 以下为计划中组件，用 gen:component 脚手架生成后改为 live ——
-  { name: 'Card', title: '卡片', description: '内容容器。维度：圆角 / 边框 / 阴影 / 交互（链接 vs 静态容器）。', status: 'live' },
-  { name: 'Tag', title: '标签', description: '等宽字体的轻量标记。', status: 'planned' },
-  { name: 'Badge', title: '徽章', description: '状态标记，含 default / accent / action / danger / success 五个变体，按内容状态语义映射颜色。', status: 'live' },
-  { name: 'Callout', title: '提示框', description: '引用 / 警告 / 想法等内容提示。', status: 'planned' },  {
+  {
+    name: 'Card',
+    title: '卡片',
+    description:
+      '内容容器。维度：圆角 / 边框 / 阴影 / 交互（链接 vs 静态容器）。',
+    status: 'live',
+  },
+  {
+    name: 'Tag',
+    title: '标签',
+    description: '等宽字体的轻量标记。',
+    status: 'planned',
+  },
+  {
+    name: 'Badge',
+    title: '徽章',
+    description:
+      '状态标记，含 default / accent / action / danger / success 五个变体，按内容状态语义映射颜色。',
+    status: 'live',
+  },
+  {
+    name: 'Callout',
+    title: '提示框',
+    description: '引用 / 警告 / 想法等内容提示。',
+    status: 'planned',
+  },
+  {
     name: 'Button',
     title: 'Button',
     description: '主要、次要、幽灵、强调变体。',
@@ -44,7 +67,8 @@ export const componentsRegistry: ComponentEntry[] = [
   {
     name: 'Breadcrumb',
     title: 'Breadcrumb',
-    description: '层级路径导航，等宽字体 + / 分隔符，最后一项为当前页（不可点）。',
+    description:
+      '层级路径导航，等宽字体 + / 分隔符，最后一项为当前页（不可点）。',
     status: 'live',
   },
   {
@@ -53,5 +77,4 @@ export const componentsRegistry: ComponentEntry[] = [
     description: '缩略图+标题+描述+状态徽章的介绍卡片，可链接或静态。',
     status: 'live',
   },
-
 ];

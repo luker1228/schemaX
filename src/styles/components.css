@@ -251,3 +251,99 @@
   color: var(--sx-sys-color-text-primary);
   background: var(--sx-sys-color-accent);
 }
+
+/* ── Terminal ──────────────────────────────────────────────
+   仿终端窗口：标题栏（红黄绿圆点 + 标题）+ 屏幕主体。被两处复用：
+   - Command（.astro 纯展示容器，slot 自由内容，dark 为默认主题，屏幕 overflow-x auto）
+   - HeroTerminal（React island，light 主题打字机，加 .term--hero 拿主视觉尺寸 + 光标）
+   设计语言：1px 黑边 + 黄色硬阴影（--sx-comp-term-shadow，区别于站点默认纯黑阴影）。 */
+
+.term {
+  margin: 0;
+  border: var(--sx-sys-border-width) solid var(--sx-sys-color-border);
+  /* 黄色硬阴影（组件级令牌，区别于站点默认的纯黑阴影） */
+  box-shadow: var(--sx-comp-term-shadow);
+  background: var(--sx-sys-color-bg-surface);
+  overflow: hidden;
+  max-width: 100%;
+}
+
+/* 标题栏：暖纸背景 + 底部 1px 分隔线 */
+.term__bar {
+  display: flex;
+  align-items: center;
+  gap: var(--sx-ref-space-3);
+  padding: 0.45rem var(--sx-ref-space-3);
+  background: var(--sx-sys-color-bg-page);
+  border-bottom: var(--sx-sys-border-width) solid var(--sx-sys-color-border);
+}
+.term__dots {
+  display: inline-flex;
+  gap: 0.35rem;
+}
+.term__dot {
+  display: inline-block;
+  width: 0.7rem;
+  height: 0.7rem;
+  border: var(--sx-sys-border-width) solid var(--sx-sys-color-border);
+  border-radius: 50%;
+}
+.term__dot--red {
+  background: var(--sx-sys-color-danger);
+}
+.term__dot--yellow {
+  background: var(--sx-sys-color-accent);
+}
+.term__dot--green {
+  background: var(--sx-sys-color-success);
+}
+.term__title {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.78rem;
+  font-weight: 700;
+  opacity: 0.7;
+}
+
+/* 屏幕主体：等宽字体；颜色由主题切换；默认横向滚动以容纳宽命令（Command） */
+.term__screen {
+  padding: var(--sx-ref-space-3) var(--sx-ref-space-4);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.85rem;
+  line-height: 1.65;
+  overflow-x: auto;
+}
+
+/* light 主题：浅色屏幕，黑字（组件级令牌） */
+.term--light .term__screen {
+  background: var(--sx-comp-term-light-screen-bg);
+  color: var(--sx-comp-term-light-text);
+}
+
+/* dark 主题：黑色屏幕，浅字（组件级令牌） */
+.term--dark .term__screen {
+  background: var(--sx-comp-term-screen-bg);
+  color: var(--sx-comp-term-text);
+}
+
+/* HeroTerminal 主视觉：固定最小高度 + 加大字号行距；内容受控（短 JSON）不滚动，
+   故覆盖 overflow 为 hidden，并配合 .term__code 换行与 .term__cursor 光标。 */
+.term--hero .term__screen {
+  min-height: 11rem;
+  font-size: 0.95rem;
+  line-height: 1.7;
+  overflow: hidden;
+}
+.term__code {
+  margin: 0;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
+}
+.term__cursor {
+  display: inline-block;
+  margin-left: 1px;
+  transform: translateY(1px);
+}
+.term__cursor.hidden {
+  visibility: hidden;
+}

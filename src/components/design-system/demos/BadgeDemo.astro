@@ -99,9 +99,8 @@ const usage = `<!-- 中性标签 -->
     }
     <Fragment slot="note">
       <p>
-        状态色遵循 <code>danger</code> / <code>success</code> token 的语义约定：
-        绿 = 完成 / 已发布（completed、published、maintained），
-        红 = 停用 / 归档（archived、paused）。
+        状态色遵循 <code>danger</code> / <code>success</code> token 的语义约定： 绿
+        = 完成 / 已发布（completed、published、maintained）， 红 = 停用 / 归档（archived、paused）。
         蓝 / 黄区分「计划进行中」与「活跃」。中性 default 用于 type、level 等无状态语义的标签。
       </p>
     </Fragment>
@@ -117,9 +116,15 @@ const usage = `<!-- 中性标签 -->
         {
           apiRows.map((r) => (
             <tr>
-              <td class="cell-name"><code>{r.name}</code></td>
-              <td><code>{r.type}</code></td>
-              <td><code>{r.default}</code></td>
+              <td class="cell-name">
+                <code>{r.name}</code>
+              </td>
+              <td>
+                <code>{r.type}</code>
+              </td>
+              <td>
+                <code>{r.default}</code>
+              </td>
               <td class="cell-desc">{r.desc}</td>
             </tr>
           ))

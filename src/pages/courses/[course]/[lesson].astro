@@ -1,7 +1,6 @@
 ---
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import { getCollection, getEntry, render } from 'astro:content';
-import type { CollectionEntry } from 'astro:content';
 import { courseIdOf } from '../../../lib/content';
 
 export async function getStaticPaths() {
@@ -12,9 +11,6 @@ export async function getStaticPaths() {
   }));
 }
 
-interface Props {
-  lesson: CollectionEntry<'lessons'>;
-}
 const { lesson } = Astro.props;
 const courseId = Astro.params.course as string;
 const course = await getEntry('courses', courseId);

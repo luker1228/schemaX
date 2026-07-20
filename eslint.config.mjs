@@ -1,12 +1,13 @@
 // ESLint 9 flat config —— SchemaX
-// 覆盖 .ts / .astro / .svelte。Prettier 负责 formatting，此处用
+// 覆盖 .ts / .astro / .tsx（React island）。Prettier 负责 formatting，此处用
 // eslint-config-prettier 关闭所有与 Prettier 冲突的格式化规则。
 // 详见 init.md §24（CI 脚本契约）。
 
 import js from '@eslint/js';
 import tseslint from 'typescript-eslint';
 import astro from 'eslint-plugin-astro';
-import svelte from 'eslint-plugin-svelte';
+import react from 'eslint-plugin-react';
+import reactHooks from 'eslint-plugin-react-hooks';
 import prettier from 'eslint-config-prettier';
 import globals from 'globals';
 
@@ -68,17 +69,28 @@ export default [
     },
   },
 
-  // ── Svelte 组件 ───────────────────────────────────────────
-  ...svelte.configs['flat/recommended'],
+  // ── React 组件 / island（.tsx） ───────────────────────────
+  // 仅交互组件用 React island；静态展示组件仍是 .astro（零 JS）。
   {
-    files: ['**/*.svelte'],
+    files: ['**/*.tsx'],
+    plugins: {
+      react,
+      'react-hooks': reactHooks,
+    },
     languageOptions: {
       globals: { ...globals.browser },
-      parserOptions: {
-        // 让 <script lang="ts"> 用 TS parser，否则 interface / 类型语法会解析失败
-        parser: tseslint.parser,
-        extraFileExtensions: ['.svelte'],
-      },
+    },
+    settings: {
+      react: { version: 'detect' },
+    },
+    rules: {
+      // React 19 + jsx: react-jsx runtime，无需手动 import React
+      'react/react-in-jsx-scope': 'off',
+      // 用 TypeScript 做类型检查，不需要 propTypes
+      'react/prop-types': 'off',
+      // Hooks 规则是 React 代码质量的核心
+      'react-hooks/rules-of-hooks': 'error',
+      'react-hooks/exhaustive-deps': 'warn',
     },
   },
 

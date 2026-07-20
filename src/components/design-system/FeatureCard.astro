@@ -78,7 +78,9 @@ const classes = [
       <div class="featurecard__body">
         <div class="featurecard__head">
           <h3 class="featurecard__title">{title}</h3>
-          <span class={`badge${isLive ? ' badge--accent' : ''}`}>{statusLabel}</span>
+          <span class={`badge${isLive ? ' badge--accent' : ''}`}>
+            {statusLabel}
+          </span>
         </div>
         <div class="featurecard__desc">
           <slot name="description">{description}</slot>
@@ -93,7 +95,9 @@ const classes = [
       <div class="featurecard__body">
         <div class="featurecard__head">
           <h3 class="featurecard__title">{title}</h3>
-          <span class={`badge${isLive ? ' badge--accent' : ''}`}>{statusLabel}</span>
+          <span class={`badge${isLive ? ' badge--accent' : ''}`}>
+            {statusLabel}
+          </span>
         </div>
         <div class="featurecard__desc">
           <slot name="description">{description}</slot>

@@ -7,7 +7,7 @@ repository: https://github.com/
 demo: https://schemax.dev
 stack:
   - Astro
-  - Svelte
+  - React
   - MDX
   - TypeScript
 featured: true

@@ -6,15 +6,15 @@
 
 ## 项目状态：脚手架已就位 / 规范驱动
 
-本仓库的 `init.md`（以中文撰写）是整站**权威、完整的规范**。在做任何实现工作之前，**务必先阅读它**；下文所有内容均派生自该规范，章节号也指向它。Astro 7 + Svelte 5 + TS + 原生 CSS 的工程脚手架已搭建完成（见 `package.json`），基础令牌系统、首页、设计系统展示页均已可运行。
+本仓库的 `init.md`（以中文撰写）是整站**权威、完整的规范**。在做任何实现工作之前，**务必先阅读它**；下文所有内容均派生自该规范，章节号也指向它。Astro 7 + React 19 + TS + Tailwind 的工程脚手架已搭建完成（见 `package.json`），基础令牌系统、首页、设计系统展示页均已可运行。
 
 SchemaX 是一个静态的、内容优先的个人知识与作品平台（首页、课程、博客、项目、设计系统）。它是 **Schema 驱动（Schema-driven）** 的：站点自身的内容、设计令牌（design tokens）、组件契约以及消息格式都由 schema 定义，并在构建时校验。
 
 ## 目标技术栈（规范 §6）
 
-Astro 7.x · Svelte 5 · TypeScript（严格模式）· MDX · Astro Content Collections（使用 Content Layer 的 `glob`/`file` 加载器）· Expressive Code · Pagefind · Style Dictionary（DTCG JSON 令牌）· 原生 CSS · pnpm · 静态输出。
+Astro 7.x · React 19 · TypeScript（严格模式）· MDX · Astro Content Collections（使用 Content Layer 的 `glob`/`file` 加载器）· Expressive Code · Pagefind · Style Dictionary（DTCG JSON 令牌）· 原生 CSS + Tailwind v4（token 桥接）· pnpm · 静态输出。
 
-V1 **只使用** Astro + Svelte + MDX + TS + 原生 CSS，单仓库（非 monorepo）。**不要**引入第二个 UI 框架、数据库、鉴权、CMS、运行时远程 MDX 或评论系统 —— 见规范 §25 非目标。
+V1 **只使用** Astro + React + MDX + TS + 原生 CSS/Tailwind，单仓库（非 monorepo）。**单一 island 框架固定为 React**（不引入第二个 UI 框架）、数据库、鉴权、CMS、运行时远程 MDX 或评论系统 —— 见规范 §25 非目标。
 
 ## 命令（规范 §24 —— 脚手架已实现）
 
@@ -29,13 +29,13 @@ V1 **只使用** Astro + Svelte + MDX + TS + 原生 CSS，单仓库（非 monore
 - `pnpm test` / `pnpm test:e2e` —— Vitest / Playwright
 - `pnpm lint` —— `lint:eslint && lint:css`（ESLint 9 flat config + Stylelint 16，含 §17 token 约束）
 - `pnpm lint:fix` —— 自动修复可修的 lint 问题
-- `pnpm format` / `pnpm format:check` —— Prettier（含 astro/svelte 插件）
+- `pnpm format` / `pnpm format:check` —— Prettier（含 astro 插件）
 - `pnpm gen:component <Name>` —— **设计系统组件脚手架**（详见下文「设计系统组件工作流」）
 - `pnpm check` —— `lint && test && build`
 
 **构建顺序是承重设计（load-bearing）**：令牌 → 内容校验 → `astro check` → `astro build` → Pagefind 索引。令牌 CSS 与内容校验必须在 Astro 构建之前成功完成；Pagefind 仅对已构建的 `dist/` 建立索引。GitHub 同步写入的是构建期消费的缓存 JSON，绝不在运行时被请求。
 
-**lint 三层体系已就位**：ESLint 9（flat config，覆盖 .ts/.astro/.svelte）+ Stylelint 16（含 §17 token 约束：禁裸 hex、强制 `--sx-*` 前缀、color/background 只能用 `var()`，生成产物豁免）+ Prettier 3。三者协作：Prettier 管格式，ESLint/Stylelint 管代码质量与 token 约束，由 `eslint-config-prettier` 解耦冲突规则。
+**lint 三层体系已就位**：ESLint 9（flat config，覆盖 .ts/.astro/.tsx）+ Stylelint 16（含 §17 token 约束：禁裸 hex、强制 `--sx-*` 前缀、color/background 只能用 `var()`，生成产物豁免）+ Prettier 3。三者协作：Prettier 管格式，ESLint/Stylelint 管代码质量与 token 约束，由 `eslint-config-prettier` 解耦冲突规则。
 
 ## 设计系统组件工作流（承重约定）
 
@@ -90,7 +90,7 @@ pnpm gen:component Button 主要、次要、幽灵、强调变体。
 
 以下贯穿全局的决策约束着每一个实现选择：
 
-**渲染 —— 静态 / 零 JS 优先（§6.3、§23）。** 默认服务器渲染为 HTML。**仅当**某个组件必须在浏览器中改变状态时（搜索、主题切换、代码标签页、复制按钮、Playground、配置器），才使用 Svelte Island。规则是：_展示 → Astro；浏览器状态 → Svelte `client:*` island。_ 博客 / 课程的阅读页必须近乎零客户端 JS。
+**渲染 —— 静态 / 零 JS 优先（§6.3、§23）。** 默认服务器渲染为 HTML。**仅当**某个组件必须在浏览器中改变状态时（搜索、主题切换、代码标签页、复制按钮、Playground、配置器），才使用 React Island。规则是：_展示 → Astro；浏览器状态 → React `client:*` island。_ 博客 / 课程的阅读页必须近乎零客户端 JS。
 
 **Schema 优先，而非 Schema 泛滥（§7）。** 仅在系统边界处添加 schema：
 

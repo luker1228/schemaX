@@ -1,7 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getCollection, getEntry, render } from 'astro:content';
-import type { CollectionEntry } from 'astro:content';
 
 export async function getStaticPaths() {
   const posts = await getCollection(
@@ -14,17 +13,19 @@ export async function getStaticPaths() {
   }));
 }
 
-interface Props {
-  post: CollectionEntry<'posts'>;
-}
 const { post } = Astro.props;
 const { Content } = await render(post);
 const { title, description, publishedAt, updatedAt } = post.data;
 
-// post.data.topics 经注入式 ref 构造器推断为 unknown[]，这里按 id 手动解析。
-const topicIds = (post.data.topics as unknown as string[]) ?? [];
+// post.data.topics 字段在 schema 里用 reference('topics') 定义，Astro Content
+// Layer 已在运行时把每条引用解析为 { collection, id } 对象。直接用单参数
+// getEntry(entry) 解析为完整 entry（reference 字段不会自动 hydrate 成完整数据）。
+const topicRefs = (post.data.topics ?? []) as Array<{
+  collection: 'topics';
+  id: string;
+}>;
 const topicEntries = (
-  await Promise.all(topicIds.map((id) => getEntry('topics', id)))
+  await Promise.all(topicRefs.map((ref) => getEntry(ref)))
 ).filter((t): t is NonNullable<typeof t> => Boolean(t));
 
 // 上一篇 / 下一篇（按发布时间正序的相邻）

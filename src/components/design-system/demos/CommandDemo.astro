@@ -65,14 +65,22 @@ import Command from '@/components/design-system/Command.astro';
         <tr><th>Prop</th><th>类型</th><th>默认</th><th>说明</th></tr>
       </thead>
       <tbody>
-        {apiRows.map((r) => (
-          <tr>
-            <td class="cell-name"><code>{r.name}</code></td>
-            <td><code>{r.type}</code></td>
-            <td><code>{r.default}</code></td>
-            <td class="cell-desc">{r.desc}</td>
-          </tr>
-        ))}
+        {
+          apiRows.map((r) => (
+            <tr>
+              <td class="cell-name">
+                <code>{r.name}</code>
+              </td>
+              <td>
+                <code>{r.type}</code>
+              </td>
+              <td>
+                <code>{r.default}</code>
+              </td>
+              <td class="cell-desc">{r.desc}</td>
+            </tr>
+          ))
+        }
       </tbody>
     </table>
   </div>

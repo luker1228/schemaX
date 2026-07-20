@@ -19,11 +19,31 @@ const sizes: { name: string; value: ButtonSize }[] = [
 ];
 
 const apiRows = [
-  { name: 'variant', type: "'primary' | 'secondary' | 'outline' | 'danger' | 'ghost'", default: "'primary'", desc: '视觉变体' },
+  {
+    name: 'variant',
+    type: "'primary' | 'secondary' | 'outline' | 'danger' | 'ghost'",
+    default: "'primary'",
+    desc: '视觉变体',
+  },
   { name: 'size', type: "'sm' | 'md' | 'lg'", default: "'md'", desc: '尺寸' },
-  { name: 'href', type: 'string', default: '—', desc: '提供则渲染 <a>，否则渲染 <button>' },
-  { name: 'type', type: "'button' | 'submit' | 'reset'", default: "'button'", desc: 'button 的 type（仅 button 生效）' },
-  { name: 'disabled', type: 'boolean', default: 'false', desc: '禁用：链接用 aria-disabled，按钮用 disabled' },
+  {
+    name: 'href',
+    type: 'string',
+    default: '—',
+    desc: '提供则渲染 <a>，否则渲染 <button>',
+  },
+  {
+    name: 'type',
+    type: "'button' | 'submit' | 'reset'",
+    default: "'button'",
+    desc: 'button 的 type（仅 button 生效）',
+  },
+  {
+    name: 'disabled',
+    type: 'boolean',
+    default: 'false',
+    desc: '禁用：链接用 aria-disabled，按钮用 disabled',
+  },
 ];
 
 const usage = `<!-- 作为链接 -->
@@ -47,7 +67,7 @@ const usage = `<!-- 作为链接 -->
     </Fragment>
   </Demo>
 
-  <Demo label="尺寸 Sizes" attr='size="..."' stageClass="wrap align">
+  <Demo label="尺寸 Sizes" attr='size="..."' stageClass="wrap">
     {sizes.map((s) => <Button size={s.value}>{s.name}</Button>)}
     <Fragment slot="note">
       <p>sm / md（默认）/ lg。所有变体都支持三种尺寸。</p>
@@ -59,7 +79,8 @@ const usage = `<!-- 作为链接 -->
     <Button variant="outline">点击我</Button>
     <Fragment slot="note">
       <p>
-        默认带硬阴影（凸起）；hover 时向右下位移 2px，阴影消失 —— 像物理按键被按下的感觉。
+        默认带硬阴影（凸起）；hover 时向右下位移 2px，阴影消失 ——
+        像物理按键被按下的感觉。
       </p>
     </Fragment>
   </Demo>
@@ -70,17 +91,21 @@ const usage = `<!-- 作为链接 -->
     <Button variant="danger" disabled>Danger 禁用</Button>
     <Fragment slot="note">
       <p>
-        半透明（opacity 0.4）+ 禁用指针。链接用 <code>aria-disabled</code>，按钮用 <code>disabled</code>。
+        半透明（opacity 0.4）+ 禁用指针。链接用 <code>aria-disabled</code
+        >，按钮用 <code>disabled</code>。
       </p>
     </Fragment>
   </Demo>
 
   <Demo label="链接 vs 按钮" attr="href 控制渲染元素" stageClass="wrap">
-    <Button variant="primary" href="javascript:void(0)">链接（&lt;a&gt;）</Button>
+    <Button variant="primary" href="javascript:void(0)"
+      >链接（&lt;a&gt;）</Button
+    >
     <Button variant="outline" type="button">按钮（&lt;button&gt;）</Button>
     <Fragment slot="note">
       <p>
-        提供 <code>href</code> 渲染为 <code>&lt;a&gt;</code>（用于导航），否则渲染为 <code>&lt;button&gt;</code>（用于动作）。
+        提供 <code>href</code> 渲染为 <code>&lt;a&gt;</code
+        >（用于导航），否则渲染为 <code>&lt;button&gt;</code>（用于动作）。
       </p>
     </Fragment>
   </Demo>
@@ -92,14 +117,22 @@ const usage = `<!-- 作为链接 -->
         <tr><th>Prop</th><th>类型</th><th>默认</th><th>说明</th></tr>
       </thead>
       <tbody>
-        {apiRows.map((r) => (
-          <tr>
-            <td class="cell-name"><code>{r.name}</code></td>
-            <td><code>{r.type}</code></td>
-            <td><code>{r.default}</code></td>
-            <td class="cell-desc">{r.desc}</td>
-          </tr>
-        ))}
+        {
+          apiRows.map((r) => (
+            <tr>
+              <td class="cell-name">
+                <code>{r.name}</code>
+              </td>
+              <td>
+                <code>{r.type}</code>
+              </td>
+              <td>
+                <code>{r.default}</code>
+              </td>
+              <td class="cell-desc">{r.desc}</td>
+            </tr>
+          ))
+        }
       </tbody>
     </table>
   </div>

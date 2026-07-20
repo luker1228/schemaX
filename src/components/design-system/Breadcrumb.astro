@@ -39,7 +39,11 @@ const { items, ariaLabel = 'Breadcrumb' } = Astro.props;
                 {item.label}
               </a>
             )}
-            {!isLast && <span class="breadcrumb__sep" aria-hidden="true">/</span>}
+            {!isLast && (
+              <span class="breadcrumb__sep" aria-hidden="true">
+                /
+              </span>
+            )}
           </li>
         );
       })
