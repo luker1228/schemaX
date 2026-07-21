@@ -1,6 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import Breadcrumb from '../../components/design-system/Breadcrumb.astro';
+import Crumb from '../../components/design-system/Crumb.astro';
 import PageHeader from '../../components/site/PageHeader.astro';
 import tokens from '../../generated/tokens';
 
@@ -52,7 +52,7 @@ const isColor = (row: Row) => row.name.includes('color');
 >
   <section class="sx-section">
     <div class="sx-container">
-      <Breadcrumb
+      <Crumb
         items={[
           { label: 'Home', href: '/' },
           { label: 'Design System', href: '/design-system' },

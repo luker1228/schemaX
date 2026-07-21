@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Crumb from '../../../components/design-system/Crumb.astro';
 import { getCollection, getEntry, render } from 'astro:content';
 import { courseIdOf } from '../../../lib/content';
 
@@ -17,6 +18,15 @@ const course = await getEntry('courses', courseId);
 const { Content } = await render(lesson);
 const { title, description, order, durationMinutes, objectives } = lesson.data;
 
+const crumbItems = [
+  { label: 'Home', href: '/' },
+  { label: 'Courses', href: '/courses' },
+  ...(course
+    ? [{ label: course.data.title, href: `/courses/${course.id}` }]
+    : []),
+  { label: title },
+];
+
 const siblings = (await getCollection('lessons'))
   .filter((l) => courseIdOf(l.data.course) === courseId)
   .sort((a, b) => a.data.order - b.data.order);
@@ -28,13 +38,7 @@ const next = siblings[idx + 1];
 <BaseLayout title={title} description={description} type="article">
   <article class="sx-section">
     <div class="sx-container sx-container--reading">
-      <nav class="crumb" aria-label="Breadcrumb">
-        <a href="/courses">Courses</a>
-        <span>/</span>
-        {course && <a href={`/courses/${course.id}`}>{course.data.title}</a>}
-        <span>/</span>
-        <span>{title}</span>
-      </nav>
+      <Crumb items={crumbItems} />
 
       <header class="lhead">
         <p class="lhead__order">

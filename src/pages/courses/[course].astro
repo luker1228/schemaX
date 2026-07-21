@@ -1,6 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import Breadcrumb from '../../components/design-system/Breadcrumb.astro';
+import Crumb from '../../components/design-system/Crumb.astro';
 import { getCollection } from 'astro:content';
 import type { CollectionEntry } from 'astro:content';
 import { courseIdOf } from '../../lib/content';
@@ -38,7 +38,7 @@ const lessons = (await getCollection('lessons'))
 <BaseLayout title={title} description={description} type="course">
   <section class="sx-section">
     <div class="sx-container">
-      <Breadcrumb
+      <Crumb
         items={[
           { label: 'Home', href: '/' },
           { label: 'Courses', href: '/courses' },

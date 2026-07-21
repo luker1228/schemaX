@@ -26,7 +26,8 @@
       "family": {
         "display": { "$type": "fontFamily", "$value": "{ref.font.family.display}" },
         "body": { "$type": "fontFamily", "$value": "{ref.font.family.body}" },
-        "mono": { "$type": "fontFamily", "$value": "{ref.font.family.mono}" }
+        "mono": { "$type": "fontFamily", "$value": "{ref.font.family.mono}" },
+        "terminal": { "$type": "fontFamily", "$value": "{ref.font.family.ibm-plex-mono}" }
       }
     },
     "border": {

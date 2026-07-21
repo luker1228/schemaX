@@ -1,0 +1,184 @@
+---
+import { contact } from '../../data/about';
+---
+
+<section class="contact">
+  <div class="contact__inner">
+    <div class="contact__card">
+      <div class="contact__head">
+        <span class="contact__eyebrow">CONNECT</span>
+        <h2 class="contact__title">保持联系</h2>
+        <p class="contact__lede">
+          欢迎在下面任意渠道找到我 —— 聊工程、聊 AI Agent、聊设计系统，或者只是打个招呼。
+        </p>
+      </div>
+
+      <div class="contact__grid">
+        {contact.map((channel) => (
+          <a
+            class="channel"
+            href={channel.href}
+            rel={channel.external ? 'me noopener' : undefined}
+            target={channel.external ? '_blank' : undefined}
+          >
+            <span class="channel__icon" aria-hidden="true">{channel.emoji}</span>
+            <span class="channel__body">
+              <span class="channel__label">{channel.label}</span>
+              <span class="channel__handle">{channel.handle}</span>
+            </span>
+            <span class="channel__note">{channel.note}</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .contact {
+    background: var(--sx-sys-color-bg-page);
+    padding-block: clamp(3rem, 7vw, 5rem);
+    padding-inline: var(--sx-ref-space-6);
+    border-top: var(--sx-sys-border-width) solid var(--sx-sys-color-border);
+  }
+
+  .contact__inner {
+    max-width: 64rem;
+    margin-inline: auto;
+  }
+
+  /* —— 容器卡片 —— */
+  .contact__card {
+    padding: clamp(1.75rem, 4vw, 2.5rem);
+    border: var(--sx-sys-border-width-strong) solid var(--sx-sys-color-border);
+    border-radius: var(--sx-sys-radius-md);
+    background: var(--sx-sys-color-beige);
+    box-shadow: var(--sx-sys-shadow-lg);
+  }
+
+  .contact__head {
+    display: flex;
+    flex-direction: column;
+    gap: 0.625rem;
+    margin-bottom: var(--sx-ref-space-8);
+  }
+
+  .contact__eyebrow {
+    align-self: flex-start;
+    display: inline-flex;
+    align-items: center;
+    padding: 0.3rem 0.7rem;
+    border: var(--sx-sys-border-width-strong) solid var(--sx-sys-color-border);
+    border-radius: 9999px;
+    background: var(--sx-sys-color-accent);
+    font-family: var(--sx-sys-font-family-mono), ui-monospace, monospace;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--sx-sys-color-text-primary);
+  }
+
+  .contact__title {
+    margin: 0;
+    font-family: var(--sx-sys-font-family-display), system-ui, sans-serif;
+    font-size: clamp(1.75rem, 4vw, 2.5rem);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: var(--sx-sys-color-text-primary);
+  }
+
+  .contact__lede {
+    margin: 0;
+    max-width: 52ch;
+    font-size: 1.0625rem;
+    line-height: 1.6;
+    color: var(--sx-sys-color-text-soft);
+  }
+
+  /* —— 渠道网格 —— */
+  .contact__grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--sx-ref-space-4);
+  }
+
+  .channel {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    grid-template-areas:
+      'icon body'
+      'note note';
+    align-items: center;
+    gap: 0.5rem 0.875rem;
+    padding: 1rem 1.125rem;
+    border: var(--sx-sys-border-width) solid var(--sx-sys-color-border);
+    border-radius: var(--sx-sys-radius-md);
+    background: var(--sx-sys-color-bg-page);
+    box-shadow: var(--sx-sys-shadow-sm);
+    color: inherit;
+    transition:
+      transform 140ms ease,
+      box-shadow 140ms ease;
+  }
+
+  .channel:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: var(--sx-sys-shadow-md);
+    color: inherit;
+  }
+
+  .channel:active {
+    transform: translate(1px, 1px);
+    box-shadow: none;
+  }
+
+  .channel__icon {
+    grid-area: icon;
+    width: 2.5rem;
+    height: 2.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.35rem;
+    background: var(--sx-sys-color-bg-surface);
+    border: var(--sx-sys-border-width) solid var(--sx-sys-color-border);
+    border-radius: var(--sx-sys-radius-sm);
+  }
+
+  .channel__body {
+    grid-area: body;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
+
+  .channel__label {
+    font-family: var(--sx-sys-font-family-mono), ui-monospace, monospace;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--sx-sys-color-text-primary);
+  }
+
+  .channel__handle {
+    font-family: var(--sx-sys-font-family-mono), ui-monospace, monospace;
+    font-size: 0.8125rem;
+    color: var(--sx-sys-color-text-muted);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .channel__note {
+    grid-area: note;
+    margin-top: 0.25rem;
+    padding-top: 0.5rem;
+    border-top: var(--sx-sys-border-width) solid var(--sx-sys-color-border);
+    font-size: 0.8125rem;
+    color: var(--sx-sys-color-text-soft);
+  }
+
+  @media (max-width: 40rem) {
+    .contact__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

@@ -193,14 +193,25 @@ const heroSlides = [
     background: var(--sx-sys-color-beige);
   }
 
-  /* —— 终端：覆盖全局 .term 的 1px 边 / 黄阴影，按设计稿用 2px 边 + 纯黑 4px 阴影 —— */
+  /* —— 终端：按 Terminal Card 设计稿 —— 2px 边 + 4px 纯黄阴影 + IBM Plex Mono —— */
   .hero__terminal :global(.term) {
     border-width: var(--sx-sys-border-width-strong);
-    box-shadow: var(--sx-sys-shadow-md);
+    box-shadow: 4px 4px 0 var(--sx-sys-color-accent);
     width: 100%;
+    font-family: var(--sx-sys-font-family-terminal), ui-monospace, monospace;
+  }
+  .hero__terminal :global(.term__title),
+  .hero__terminal :global(.term__screen),
+  .hero__terminal :global(.term__code) {
+    font-family: var(--sx-sys-font-family-terminal), ui-monospace, monospace;
+  }
+  .hero__terminal :global(.term__title) {
+    font-weight: 400;
   }
   .hero__terminal :global(.term--hero .term__screen) {
     min-height: 13rem;
+    font-size: 0.9375rem;
+    line-height: 1.533;
   }
 
   @media (max-width: 48rem) {

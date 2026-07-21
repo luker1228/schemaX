@@ -5,6 +5,7 @@ export interface NavItem {
 }
 
 export const navigation: NavItem[] = [
+  { label: '关于', href: '/about' },
   { label: '课程', href: '/courses' },
   { label: '博客', href: '/blog' },
   { label: '作品', href: '/projects' },

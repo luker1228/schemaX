@@ -44,7 +44,8 @@
           "$value": "'Bricolage Grotesque'"
         },
         "body": { "$type": "fontFamily", "$value": "'Geist'" },
-        "mono": { "$type": "fontFamily", "$value": "'Geist Mono'" }
+        "mono": { "$type": "fontFamily", "$value": "'Geist Mono'" },
+        "ibm-plex-mono": { "$type": "fontFamily", "$value": "'IBM Plex Mono'" }
       }
     }
   }

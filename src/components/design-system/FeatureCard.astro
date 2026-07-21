@@ -1,28 +1,29 @@
 ---
 // FeatureCard 组件 —— SchemaX UI
-// 介绍卡片：缩略图（media slot）+ 标题 + 描述 + 状态徽章，可链接或静态。
+// 设计系统区域介绍卡：彩色媒体条（含图标）+ 标题 + 描述 + 状态胶囊。
+// 视觉真相：tokens/design_system.pen 中的 DS Feature Card 节点。
 //
-// 结构（标准 Card 模式）：
+// 结构：
 //   <a|div class="featurecard">
-//     <div class="featurecard__media">…默认 slot…</div>
+//     <div class="featurecard__media" style="background: mediaColor">…默认 slot（图标 / SVG）…</div>
 //     <div class="featurecard__body">
-//       <h3 + badge>
-//       <description>
+//       <div class="featurecard__head">
+//         <h3 + 状态胶囊>
+//       </div>
+//       <p description>
 //     </div>
 //   </a|div>
-//
-// 关键：featurecard 自身就是 flex column + overflow:hidden，
-// 边框 / 阴影 / padding 全部由本组件直接控制（不复用 <Card>）。
-// 原因：media 需要贴到卡片四边（让 border-bottom 贯穿），
-// 若复用全局 <Card> 的 padding，media 永远到不了边。
 //
 // 维度：
 //   title       必填，卡片标题
 //   description 描述文字（可选；命名 slot "description" 覆盖它）
 //   status      'live'（默认）/ 'planned'
-//                  live    → 黄底 Live 徽章 + href 透传 → interactive 链接卡
-//                  planned → 普通 Planned 徽章 + 强制静态（不可点）
+//                  live    → 黄底 Live 胶囊 + href 透传 → interactive 链接卡
+//                  planned → 米底 Planned 胶囊 + 强制静态（不可点）
 //   href        live 卡片跳转地址。planned 时忽略
+//   mediaColor  媒体条背景，传 --sx-* token（如 'var(--sx-sys-color-accent)'）。
+//               默认品牌强调黄。
+//   target / rel / class 透传
 
 type FeatureStatus = 'live' | 'planned';
 
@@ -39,6 +40,8 @@ interface Props {
   target?: '_blank' | '_self' | '_parent' | '_top';
   /** <a> 的 rel */
   rel?: string;
+  /** 媒体条背景（--sx-* token 字符串）。默认品牌强调黄 */
+  mediaColor?: string;
   /** 透传到根元素的额外类名 */
   class?: string;
 }
@@ -50,6 +53,7 @@ const {
   href,
   target,
   rel,
+  mediaColor = 'var(--sx-sys-color-accent)',
   class: extraClass,
 } = Astro.props;
 
@@ -72,13 +76,13 @@ const classes = [
 {
   isLink ? (
     <a class={classes} href={resolvedHref} target={target} rel={rel}>
-      <div class="featurecard__media">
+      <div class="featurecard__media" style={`background:${mediaColor}`}>
         <slot />
       </div>
       <div class="featurecard__body">
         <div class="featurecard__head">
           <h3 class="featurecard__title">{title}</h3>
-          <span class={`badge${isLive ? ' badge--accent' : ''}`}>
+          <span class={`featurecard__status featurecard__status--${status}`}>
             {statusLabel}
           </span>
         </div>
@@ -89,13 +93,13 @@ const classes = [
     </a>
   ) : (
     <div class={classes}>
-      <div class="featurecard__media">
+      <div class="featurecard__media" style={`background:${mediaColor}`}>
         <slot />
       </div>
       <div class="featurecard__body">
         <div class="featurecard__head">
           <h3 class="featurecard__title">{title}</h3>
-          <span class={`badge${isLive ? ' badge--accent' : ''}`}>
+          <span class={`featurecard__status featurecard__status--${status}`}>
             {statusLabel}
           </span>
         </div>
@@ -110,16 +114,15 @@ const classes = [
 <style>
   /* Card 容器：自身掌握边框 / 阴影 / overflow。
      display:flex + column 让 media/body 上下排列；
-     overflow:hidden 让 media 沿卡片边缘裁剪（圆角场景也适用）。
-     注意：不给 padding —— padding 移到 body 内部，
-     这样 media 能贴到卡片四边，border-bottom 才能贯穿。 */
+     overflow:hidden 让 media 沿卡片边缘裁剪。
+     不给 padding —— padding 移到 body 内部，media 才能贴到卡片四边。 */
   .featurecard {
     display: flex;
     flex-direction: column;
     height: 100%;
     background: var(--sx-sys-color-bg-surface);
-    border: var(--sx-sys-border-width) solid var(--sx-sys-color-border);
-    border-radius: var(--sx-comp-card-radius);
+    border: var(--sx-sys-border-width-strong) solid var(--sx-sys-color-border);
+    border-radius: var(--sx-sys-radius-md);
     box-shadow: var(--sx-sys-shadow-lg);
     overflow: hidden;
     text-decoration: none;
@@ -129,40 +132,37 @@ const classes = [
       box-shadow 120ms ease;
   }
 
-  /* interactive 卡片：hover 抬起（向左上位移 3px）。
-     默认已是 lg（6px）最大档位，阴影不再升级，仅靠位移产生抬起感。 */
+  /* interactive 卡片：hover 抬起（向左上位移 3px） */
   .featurecard--interactive:hover {
     transform: translate(-3px, -3px);
   }
 
-  /* Media 区：16:9 比例，纸色背景兜底。
-     border-bottom 就是上下两区的分割线，天然贯穿卡片整个宽度。 */
+  /* Media 条：固定高度彩色区，居中放图标 / 装饰内容。
+     border-bottom 是上下两区的分割线，贯穿卡片整个宽度。
+     color 设为墨黑，让 currentColor 的图标自动呈黑色。 */
   .featurecard__media {
-    aspect-ratio: 16 / 9;
+    height: 8.25rem;
     width: 100%;
-    background: var(--sx-sys-color-bg-page);
-    border-bottom: var(--sx-sys-border-width) solid var(--sx-sys-color-border);
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: var(--sx-ref-space-4);
-    overflow: hidden;
+    border-bottom: var(--sx-sys-border-width-strong) solid
+      var(--sx-sys-color-border);
+    color: var(--sx-sys-color-text-primary);
   }
-  /* media 内 SVG / img：限制尺寸、居中、留白 */
+  /* media 内 SVG / img：统一图标尺寸，居中 */
   .featurecard__media :global(svg),
   .featurecard__media :global(img) {
-    width: auto;
-    height: auto;
-    max-width: 60%;
-    max-height: 100%;
+    width: 4rem;
+    height: 4rem;
     display: block;
   }
 
-  /* Body 区：padding 在这里，不在外层卡片 */
+  /* Body 区：padding 在这里 */
   .featurecard__body {
     display: flex;
     flex-direction: column;
-    gap: var(--sx-ref-space-2);
+    gap: 0.75rem;
     padding: var(--sx-comp-card-padding);
     flex: 1;
   }
@@ -171,30 +171,44 @@ const classes = [
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: var(--sx-ref-space-2);
+    gap: 0.5rem;
   }
 
   .featurecard__title {
     margin: 0;
-    font-size: 1.3rem;
-    font-weight: 800;
-    line-height: 1.2;
+    font-family: var(--sx-sys-font-family-display);
+    font-size: 1.625rem;
+    font-weight: 700;
+    line-height: 1.1;
+  }
+
+  /* 状态胶囊：pill 形（9999px），2px 黑边，等宽小字。
+     live = 品牌强调黄；planned = 米色（未开放）。 */
+  .featurecard__status {
+    flex-shrink: 0;
+    display: inline-block;
+    padding: 0.35rem 0.55rem;
+    border: var(--sx-sys-border-width-strong) solid var(--sx-sys-color-border);
+    border-radius: 9999px;
+    background: var(--sx-sys-color-accent);
+    color: var(--sx-sys-color-text-primary);
+    font-family: var(--sx-sys-font-family-mono);
+    font-size: 0.6875rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    line-height: 1;
+  }
+  .featurecard__status--planned {
+    background: var(--sx-sys-color-beige);
   }
 
   .featurecard__desc {
     flex: 1;
-    opacity: 0.85;
-    font-size: 0.95rem;
+    color: var(--sx-sys-color-text-soft);
+    font-size: 0.9375rem;
     line-height: 1.5;
   }
   .featurecard__desc :global(p) {
     margin: 0;
-  }
-
-  /* planned 卡片：SVG 降透明度，强化「未开放」视觉。
-     背景（纸色）不变，靠图形本身变淡区分。 */
-  .featurecard--planned .featurecard__media :global(svg),
-  .featurecard--planned .featurecard__media :global(img) {
-    opacity: 0.5;
   }
 </style>

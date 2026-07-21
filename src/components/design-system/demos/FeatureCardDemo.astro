@@ -3,21 +3,50 @@
 import FeatureCard from '../FeatureCard.astro';
 import Demo from '../Demo.astro';
 
-// 占位缩略图 SVG —— 三种风格示例（几何 / 色板 / 字符装饰）
-const geometricSvg = `<svg viewBox="0 0 64 36" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
-  <rect x="6" y="6" width="20" height="20" fill="#000"/>
-  <rect x="38" y="6" width="20" height="20" fill="none" stroke="#000" stroke-width="2"/>
-  <circle cx="48" cy="26" r="6" fill="#000"/>
+// lucide 风格图标（内联 SVG，currentColor，尺寸由 FeatureCard 媒体区统一控制）
+const iconAttrs = {
+  viewBox: '0 0 24 24',
+  fill: 'none',
+  stroke: 'currentColor',
+  'stroke-width': 2,
+  'stroke-linecap': 'round',
+  'stroke-linejoin': 'round',
+};
+
+const iconBraces = `<svg ${Object.entries(iconAttrs)
+  .map(([k, v]) => `${k}="${v}"`)
+  .join(' ')} xmlns="http://www.w3.org/2000/svg">
+  <path d="M8 3H7a2 2 0 0 0-2 2v5a2 2 0 0 1-2 2 2 2 0 0 1 2 2v5c0 1.1.9 2 2 2h1"/>
+  <path d="M16 21h1a2 2 0 0 0 2-2v-5c0-1.1.9-2 2-2a2 2 0 0 1-2-2V5a2 2 0 0 0-2-2h-1"/>
 </svg>`;
 
-const swatchSvg = `<svg viewBox="0 0 64 36" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
-  <rect x="4" y="4" width="16" height="28" fill="#000"/>
-  <rect x="24" y="4" width="16" height="28" fill="#FFF7E8" stroke="#000"/>
-  <rect x="44" y="4" width="16" height="28" fill="none" stroke="#000" stroke-width="2" stroke-dasharray="3 2"/>
+const iconComponent = `<svg ${Object.entries(iconAttrs)
+  .map(([k, v]) => `${k}="${v}"`)
+  .join(' ')} xmlns="http://www.w3.org/2000/svg">
+  <path d="M5.5 8.5 9 12l-3.5 3.5L2 12l3.5-3.5Z"/>
+  <path d="m12 2 3.5 3.5L12 9 8.5 5.5 12 2Z"/>
+  <path d="M18.5 8.5 22 12l-3.5 3.5L15 12l3.5-3.5Z"/>
+  <path d="M12 15l3.5 3.5L12 22l-3.5-3.5L12 15Z"/>
 </svg>`;
 
-const typeSvg = `<svg viewBox="0 0 64 36" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
-  <text x="32" y="24" text-anchor="middle" font-family="ui-monospace, monospace" font-size="20" font-weight="800" fill="#000">{ }</text>
+const iconFileText = `<svg ${Object.entries(iconAttrs)
+  .map(([k, v]) => `${k}="${v}"`)
+  .join(' ')} xmlns="http://www.w3.org/2000/svg">
+  <path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/>
+  <path d="M14 2v4a2 2 0 0 0 2 2h4"/>
+  <path d="M16 13H8"/>
+  <path d="M16 17H8"/>
+  <path d="M10 9H8"/>
+</svg>`;
+
+const iconNetwork = `<svg ${Object.entries(iconAttrs)
+  .map(([k, v]) => `${k}="${v}"`)
+  .join(' ')} xmlns="http://www.w3.org/2000/svg">
+  <rect x="16" y="16" width="6" height="6" rx="1"/>
+  <rect x="2" y="16" width="6" height="6" rx="1"/>
+  <rect x="9" y="2" width="6" height="6" rx="1"/>
+  <path d="M5 16v-3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3"/>
+  <path d="M12 12V8"/>
 </svg>`;
 
 const apiRows = [
@@ -37,7 +66,7 @@ const apiRows = [
     name: 'status',
     type: "'live' | 'planned'",
     default: "'live'",
-    desc: 'live → 黄底 Live 徽章 + 链接卡（interactive）；planned → 普通 Planned 徽章 + 强制静态',
+    desc: 'live → 黄底 Live 胶囊 + 链接卡（interactive）；planned → 米底 Planned 胶囊 + 强制静态',
   },
   {
     name: 'href',
@@ -46,17 +75,23 @@ const apiRows = [
     desc: 'live 卡片跳转地址。planned 时忽略',
   },
   {
-    name: 'radius / bordered / shadow / shadowColor',
-    type: 'Card 维度',
-    default: '随 Card',
-    desc: '透传给内部 <Card>，参见 Card 组件',
+    name: 'mediaColor',
+    type: 'string (--sx-* token)',
+    default: 'var(--sx-sys-color-accent)',
+    desc: '媒体条背景色。传 --sx-* token 字符串，如品牌黄 / 米色 / 装饰色',
+  },
+  {
+    name: 'target / rel / class',
+    type: '透传',
+    default: '—',
+    desc: '分别透传到根 <a> 的 target / rel 与根元素额外类名',
   },
 ];
 
 const slots = [
   {
     name: '默认 slot',
-    desc: 'media 区：SVG / 图 / 色块，aspect-ratio 16/9，黄底兜底',
+    desc: '媒体条内容：图标 / SVG / 图。媒体条固定高度（8.25rem），内容居中，图标自动以墨黑呈现',
   },
   {
     name: 'description',
@@ -64,31 +99,25 @@ const slots = [
   },
 ];
 
-const usage = `<!-- Live：可点击跳转，黄底 Live 徽章，hover 抬起 -->
+const usage = `<!-- Live：可点击跳转，黄底 Live 胶囊，hover 抬起 -->
 <FeatureCard
   title="Tokens"
   description="Reference / Semantic / Article / Component Token。"
   status="live"
   href="/design-system/tokens"
+  mediaColor="var(--sx-sys-color-accent)"
 >
-  <svg>...</svg>
+  <svg>…图标…</svg>
 </FeatureCard>
 
-<!-- Planned：静态占位，普通 Planned 徽章，media 半透明，不可点 -->
+<!-- Planned：静态占位，米底 Planned 胶囊，不可点 -->
 <FeatureCard
-  title="Content"
-  description="Markdown 与 MDX 的真实排版规范。"
+  title="Patterns"
+  description="文章头部、课程目录、项目 Hero 等组合模式。"
   status="planned"
+  mediaColor="var(--sx-sys-color-beige)"
 >
-  <svg>...</svg>
-</FeatureCard>
-
-<!-- 描述用命名 slot 做富文本 -->
-<FeatureCard title="Foundations" status="live" href="/design-system/foundations">
-  <svg>...</svg>
-  <Fragment slot="description">
-    <p>设计语言的<strong>为什么</strong>。</p>
-  </Fragment>
+  <svg>…图标…</svg>
 </FeatureCard>`;
 ---
 
@@ -99,23 +128,23 @@ const usage = `<!-- Live：可点击跳转，黄底 Live 徽章，hover 抬起 -
       description="Reference / Semantic / Article / Component Token（读取生成产物）。"
       status="live"
       href="javascript:void(0)"
+      mediaColor="var(--sx-sys-color-accent)"
     >
-      <Fragment set:html={swatchSvg} />
+      <Fragment set:html={iconBraces} />
     </FeatureCard>
     <FeatureCard
       title="Components"
       description="Button / Card / Tag / Badge / Navigation 等。"
       status="live"
       href="javascript:void(0)"
+      mediaColor="var(--sx-sys-color-accent)"
     >
-      <Fragment set:html={geometricSvg} />
+      <Fragment set:html={iconComponent} />
     </FeatureCard>
     <Fragment slot="note">
       <p>
-        <code>status="live"</code>：黄底 Live 徽章，渲染为 <code>&lt;a&gt;</code
-        >（提供 href 时）， hover 抬起 + 阴影升级，行为同全局 <code
-          >.card--interactive</code
-        >。
+        <code>status="live"</code>：黄底 Live 胶囊，渲染为 <code>&lt;a&gt;</code
+        >（提供 href 时）， hover 抬起，行为同全局 <code>.card--interactive</code>。
       </p>
     </Fragment>
   </Demo>
@@ -125,46 +154,49 @@ const usage = `<!-- Live：可点击跳转，黄底 Live 徽章，hover 抬起 -
       title="Content"
       description="Markdown 与 MDX 的真实排版规范。"
       status="planned"
+      mediaColor="var(--sx-sys-color-beige)"
     >
-      <Fragment set:html={typeSvg} />
+      <Fragment set:html={iconFileText} />
     </FeatureCard>
     <FeatureCard
       title="Patterns"
       description="文章头部、课程目录、项目 Hero 等组合模式。"
       status="planned"
+      mediaColor="var(--sx-sys-color-beige)"
     >
-      <Fragment set:html={geometricSvg} />
+      <Fragment set:html={iconNetwork} />
     </FeatureCard>
     <Fragment slot="note">
       <p>
-        <code>status="planned"</code>：普通 Planned 徽章，强制渲染为 <code
+        <code>status="planned"</code>：米底 Planned 胶囊，强制渲染为 <code
           >&lt;div&gt;</code
-        >（即便传了 href 也不生效）， media 区半透明，不可点击、hover 不抬起 ——
-        强化「未开放」语义。
+        >（即便传了 href 也不生效），不可点击、hover 不抬起 —— 强化「未开放」语义。
       </p>
     </Fragment>
   </Demo>
 
   <Demo label="Media 可放任意内容" attr="默认 slot" stageClass="wrap">
     <FeatureCard
-      title="纯色块"
-      description="默认 slot 不传时，media 区就是黄底兜底。"
-      status="live"
-      href="javascript:void(0)"
-    />
-    <FeatureCard
-      title="{} 字符"
-      description="呼应 Schema 主题母题，用 SVG 文字做装饰。"
+      title="默认色"
+      description="不传 mediaColor 时，媒体条兜底为品牌强调黄。"
       status="live"
       href="javascript:void(0)"
     >
-      <Fragment set:html={typeSvg} />
+      <Fragment set:html={iconComponent} />
+    </FeatureCard>
+    <FeatureCard
+      title="自定义色"
+      description="mediaColor 传任意 --sx-* token，如薄荷装饰色。"
+      status="live"
+      href="javascript:void(0)"
+      mediaColor="var(--sx-sys-color-mint)"
+    >
+      <Fragment set:html={iconBraces} />
     </FeatureCard>
     <Fragment slot="note">
       <p>
-        默认 slot 可以是任意内容：SVG、<code>&lt;img&gt;</code
-        >、色块、mini-demo。 留空则 media 区呈现品牌黄底兜底。SVG / img
-        会自动撑满 16:9 区域。
+        默认 slot 可放图标 / SVG / <code>&lt;img&gt;</code> 等。留空则媒体条仅呈现纯色背景。
+        <code>mediaColor</code> 传 <code>--sx-*</code> token 字符串即可换色。
       </p>
     </Fragment>
   </Demo>

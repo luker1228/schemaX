@@ -1,105 +1,206 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import Breadcrumb from '../../components/design-system/Breadcrumb.astro';
-import PageHeader from '../../components/site/PageHeader.astro';
 import FeatureCard from '../../components/design-system/FeatureCard.astro';
+import Crumb from '../../components/design-system/Crumb.astro';
 
-// 设计系统区域清单。每个 area 配一个抽象 SVG 作为 FeatureCard 的缩略图。
-// SVG 风格统一：黄底（由 FeatureCard 兜底）+ 黑线条 / 黑色块，
-// 呼应 Neo-brutalism 与 Schema 主题母题。
-const areas = [
+// lucide 风格图标（内联 SVG，currentColor，尺寸由 FeatureCard 媒体条统一控制）。
+// 项目无 lucide 依赖，沿用 HomeManifesto 的内联 SVG 约定。
+const svgWrap = (inner: string) =>
+  `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">${inner}</svg>`;
+
+const icons = {
+  palette: svgWrap(
+    '<circle cx="13.5" cy="6.5" r=".5" fill="currentColor"/><circle cx="17.5" cy="10.5" r=".5" fill="currentColor"/><circle cx="8.5" cy="7.5" r=".5" fill="currentColor"/><circle cx="6.5" cy="12.5" r=".5" fill="currentColor"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"/>',
+  ),
+  braces: svgWrap(
+    '<path d="M8 3H7a2 2 0 0 0-2 2v5a2 2 0 0 1-2 2 2 2 0 0 1 2 2v5c0 1.1.9 2 2 2h1"/><path d="M16 21h1a2 2 0 0 0 2-2v-5c0-1.1.9-2 2-2a2 2 0 0 1-2-2V5a2 2 0 0 0-2-2h-1"/>',
+  ),
+  component: svgWrap(
+    '<path d="M5.5 8.5 9 12l-3.5 3.5L2 12l3.5-3.5Z"/><path d="m12 2 3.5 3.5L12 9 8.5 5.5 12 2Z"/><path d="M18.5 8.5 22 12l-3.5 3.5L15 12l3.5-3.5Z"/><path d="M12 15l3.5 3.5L12 22l-3.5-3.5L12 15Z"/>',
+  ),
+  fileText: svgWrap(
+    '<path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M16 13H8"/><path d="M16 17H8"/><path d="M10 9H8"/>',
+  ),
+  network: svgWrap(
+    '<rect x="16" y="16" width="6" height="6" rx="1"/><rect x="2" y="16" width="6" height="6" rx="1"/><rect x="9" y="2" width="6" height="6" rx="1"/><path d="M5 16v-3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3"/><path d="M12 12V8"/>',
+  ),
+};
+
+// Hero 彩色徽章（薄荷 / 灰 / 红）—— 呼应三大区域，纯装饰
+const heroBadges = [
+  { label: 'Tokens', color: 'var(--sx-sys-color-mint)' },
+  { label: 'Components', color: 'var(--sx-sys-color-gray-light)' },
+  { label: 'Content', color: 'var(--sx-ref-color-red-500)' },
+];
+
+// 第一行：三张 Live 卡（Foundations / Tokens / Components）
+const rowOne = [
   {
-    name: 'Foundations',
+    title: 'Foundations',
     desc: '设计语言的「为什么」：视觉方向、核心原则、基础取值。',
-    live: true,
     href: '/design-system/foundations',
-    // 三色板网格：色彩基础
-    svg: `<svg viewBox="0 0 64 36" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
-      <rect x="6" y="6" width="14" height="24" fill="#000"/>
-      <rect x="25" y="6" width="14" height="24" fill="none" stroke="#000" stroke-width="2"/>
-      <rect x="44" y="6" width="14" height="24" fill="#000" opacity="0.15"/>
-    </svg>`,
+    icon: icons.palette,
   },
   {
-    name: 'Tokens',
-    desc: '真实使用的 Reference / Semantic / Article / Component Token（读取生成产物）。',
-    live: true,
+    title: 'Tokens',
+    desc: '真实使用的 Reference / Semantic / Article / Component Token，读取生成产物。',
     href: '/design-system/tokens',
-    // 色板 + 变量符号：令牌系统
-    svg: `<svg viewBox="0 0 64 36" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
-      <text x="32" y="25" text-anchor="middle" font-family="ui-monospace, monospace" font-size="18" font-weight="800" fill="#000">{token}</text>
-    </svg>`,
+    icon: icons.braces,
   },
   {
-    name: 'Components',
+    title: 'Components',
     desc: 'Button / Card / Tag / Badge / Navigation / Tabs / Dialog / Callout 等。',
-    live: true,
     href: '/design-system/components',
-    // 方块堆叠：组件拼装
-    svg: `<svg viewBox="0 0 64 36" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
-      <rect x="8" y="8" width="16" height="16" fill="#000"/>
-      <rect x="26" y="12" width="16" height="16" fill="none" stroke="#000" stroke-width="2"/>
-      <rect x="44" y="8" width="12" height="20" fill="#000" opacity="0.3"/>
-    </svg>`,
-  },
-  {
-    name: 'Content',
-    desc: 'Markdown 与 MDX 的真实排版规范。',
-    live: true,
-    href: '/design-system/content',
-    // 排版线条：正文层级
-    svg: `<svg viewBox="0 0 64 36" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
-      <rect x="6" y="9" width="40" height="3" fill="#000"/>
-      <rect x="6" y="16" width="52" height="2" fill="#000" opacity="0.6"/>
-      <rect x="6" y="21" width="52" height="2" fill="#000" opacity="0.6"/>
-      <rect x="6" y="26" width="32" height="2" fill="#000" opacity="0.6"/>
-    </svg>`,
-  },
-  {
-    name: 'Patterns',
-    desc: '文章头部、课程目录、项目 Hero、代码对比等组合模式。',
-    live: false,
-    // 节点连接器：组合模式
-    svg: `<svg viewBox="0 0 64 36" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
-      <circle cx="14" cy="18" r="6" fill="#000"/>
-      <circle cx="50" cy="10" r="5" fill="none" stroke="#000" stroke-width="2"/>
-      <circle cx="50" cy="26" r="5" fill="none" stroke="#000" stroke-width="2"/>
-      <path d="M19 16 L45 11" stroke="#000" stroke-width="2" fill="none"/>
-      <path d="M19 20 L45 24" stroke="#000" stroke-width="2" fill="none"/>
-    </svg>`,
+    icon: icons.component,
   },
 ];
+
+const accent = 'var(--sx-sys-color-accent)';
 ---
 
 <BaseLayout
   title="Design System"
   description="SchemaX UI —— Token、组件与内容规范。"
 >
-  <section class="sx-section">
+  <section class="sx-section ds">
     <div class="sx-container">
-      <Breadcrumb
-        items={[{ label: 'Home', href: '/' }, { label: 'Design System' }]}
-      />
+      {/* —— Hero —— */}
+      <header class="ds-hero">
+        <Crumb
+          items={[{ label: 'Home', href: '/' }, { label: 'Design System' }]}
+        />
 
-      <PageHeader
-        title="Design System"
-        description="设计系统不是附属文档，而是 SchemaX 的重要作品。"
-      />
+        <h1 class="ds-hero__title">Design System</h1>
+        <p class="ds-hero__desc">
+          设计系统不是附属文档，而是 SchemaX 的重要作品。
+        </p>
 
-      <div class="sx-grid">
+        <div class="ds-hero__badges">
+          {
+            heroBadges.map((b) => (
+              <span class="ds-badge" style={`background:${b.color}`}>
+                {b.label}
+              </span>
+            ))
+          }
+        </div>
+      </header>
+
+      {/* —— 第一行：三张 Live 卡 —— */}
+      <div class="ds-cards ds-cards--three">
         {
-          areas.map((a) => (
+          rowOne.map((c) => (
             <FeatureCard
-              title={a.name}
-              description={a.desc}
-              status={a.live ? 'live' : 'planned'}
-              href={a.href}
+              title={c.title}
+              description={c.desc}
+              status="live"
+              href={c.href}
+              mediaColor={accent}
             >
-              <Fragment set:html={a.svg} />
+              <Fragment set:html={c.icon} />
             </FeatureCard>
           ))
         }
       </div>
+
+      {/* —— 第二行：两张卡居中（Content Live / Patterns Planned）—— */}
+      <div class="ds-cards ds-cards--two">
+        <FeatureCard
+          title="Content"
+          description="Markdown 与 MDX 的真实排版规范。"
+          status="live"
+          href="/design-system/content"
+          mediaColor={accent}
+        >
+          <Fragment set:html={icons.fileText} />
+        </FeatureCard>
+        <FeatureCard
+          title="Patterns"
+          description="文章头部、课程目录、项目 Hero、代码对比等组合模式。"
+          status="planned"
+          mediaColor="var(--sx-sys-color-beige)"
+        >
+          <Fragment set:html={icons.network} />
+        </FeatureCard>
+      </div>
     </div>
   </section>
 </BaseLayout>
+
+<style>
+  /* —— Hero —— 左对齐：面包屑胶囊 + 大标题 + 描述 + 彩色徽章 */
+  .ds-hero {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 1.375rem;
+    padding-block-end: 3rem;
+  }
+
+  .ds-hero__title {
+    margin: 0;
+    font-family: var(--sx-sys-font-family-display);
+    font-size: clamp(2.5rem, 8vw, 4.5rem);
+    font-weight: 700;
+    line-height: 1.02;
+    letter-spacing: -0.02em;
+    color: var(--sx-sys-color-text-primary);
+  }
+
+  .ds-hero__desc {
+    margin: 0;
+    max-width: 40rem;
+    color: var(--sx-sys-color-text-soft);
+    font-size: 1.1875rem;
+    font-weight: 500;
+    line-height: 1.55;
+  }
+
+  .ds-hero__badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+  /* 彩色徽章：pill，2px 黑边，等宽小字，黑字 */
+  .ds-badge {
+    display: inline-block;
+    padding: 0.5rem 0.75rem;
+    border: var(--sx-sys-border-width-strong) solid var(--sx-sys-color-border);
+    border-radius: 9999px;
+    color: var(--sx-sys-color-text-primary);
+    font-family: var(--sx-sys-font-family-mono);
+    font-size: 0.75rem;
+    font-weight: 700;
+  }
+
+  /* —— 卡片网格 —— 默认（移动端）单列堆叠 */
+  .ds-cards {
+    display: grid;
+    gap: 1.5rem;
+    grid-template-columns: 1fr;
+  }
+
+  /* 第二行：两张卡居中，各约 1/3 宽（与第一行单卡等宽） */
+  .ds-cards--two {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-block-start: 1.75rem;
+  }
+  .ds-cards--two > :global(*) {
+    flex: 0 0 100%;
+    max-width: 26rem;
+  }
+
+  @media (min-width: 48rem) {
+    /* 第一行：三等分；第二行：两卡居中、各取 1/3 宽 */
+    .ds-cards--three {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+    .ds-cards--two > :global(*) {
+      flex: 0 0 calc((100% - 3rem) / 3);
+      max-width: none;
+    }
+  }
+</style>

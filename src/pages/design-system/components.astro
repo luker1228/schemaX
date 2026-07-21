@@ -1,7 +1,7 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Command from '../../components/design-system/Command.astro';
-import Breadcrumb from '../../components/design-system/Breadcrumb.astro';
+import Crumb from '../../components/design-system/Crumb.astro';
 import Card from '../../components/design-system/Card.astro';
 import { componentsRegistry } from '../../data/components-registry';
 
@@ -35,7 +35,7 @@ const plannedComponents = componentsRegistry.filter(
 >
   <section class="sx-section">
     <div class="sx-container">
-      <Breadcrumb
+      <Crumb
         items={[
           { label: 'Home', href: '/' },
           { label: 'Design System', href: '/design-system' },

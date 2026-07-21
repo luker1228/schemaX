@@ -1,0 +1,36 @@
+<svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Go">
+  <defs>
+    <linearGradient id="bgGo" x1="17" y1="14" x2="48" y2="52" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#7AF4FF"/>
+      <stop offset="0.55" stop-color="#31C7F3"/>
+      <stop offset="1" stop-color="#1296D4"/>
+    </linearGradient>
+    <filter id="badgeShadow" x="4" y="5" width="56" height="56" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="3" stdDeviation="2.2" flood-color="#000000" flood-opacity="0.45"/>
+    </filter>
+  </defs>
+
+  <g filter="url(#badgeShadow)">
+    <circle cx="32" cy="32" r="24" fill="#0E0E0E"/>
+    <circle cx="32" cy="32" r="20.4" fill="url(#bgGo)"/>
+    <circle cx="32" cy="32" r="20.4" stroke="#ECFDFF" stroke-width="2" stroke-opacity="0.55"/>
+
+    <!-- retro sticker highlight -->
+    <path d="M21.2 17.8C25 15.5 29.8 14.6 34.5 15.4" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" opacity="0.32"/>
+
+    <!-- Go speed marks -->
+    <path d="M11.8 26.1H24.7" stroke="#0B0B0B" stroke-width="3.2" stroke-linecap="round" opacity="0.82"/>
+    <path d="M9.5 31.7H23.3" stroke="#0B0B0B" stroke-width="3.2" stroke-linecap="round" opacity="0.82"/>
+    <path d="M13.2 37.3H24.4" stroke="#0B0B0B" stroke-width="3.2" stroke-linecap="round" opacity="0.82"/>
+
+    <!-- G -->
+    <path d="M34.2 24.7C32.7 23.5 30.8 22.8 28.5 22.8C23.8 22.8 20.5 26.4 20.5 31.8C20.5 37.2 23.9 40.8 28.7 40.8C31.2 40.8 33.3 40 35 38.7V31.1H28.2V34.5H31.3V36.5C30.7 36.8 29.8 37 28.8 37C26 37 24.4 35 24.4 31.8C24.4 28.5 26.1 26.6 28.8 26.6C30.2 26.6 31.4 27 32.4 27.9L34.2 24.7Z" fill="#0B0B0B"/>
+
+    <!-- O / gopher face -->
+    <circle cx="43" cy="31.9" r="8.8" fill="#0B0B0B"/>
+    <circle cx="43" cy="31.9" r="5.4" fill="#55D8F5"/>
+    <circle cx="40.8" cy="31.4" r="1.15" fill="#0B0B0B"/>
+    <circle cx="45.2" cy="31.4" r="1.15" fill="#0B0B0B"/>
+    <path d="M40.4 35.1C42.1 36.2 43.9 36.2 45.6 35.1" stroke="#0B0B0B" stroke-width="1.35" stroke-linecap="round"/>
+  </g>
+</svg>

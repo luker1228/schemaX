@@ -2,7 +2,7 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import ProjectCard from '../../components/site/ProjectCard.astro';
 import PageHeader from '../../components/site/PageHeader.astro';
-import Breadcrumb from '../../components/design-system/Breadcrumb.astro';
+import Crumb from '../../components/design-system/Crumb.astro';
 import { getCollection } from 'astro:content';
 
 const projects = await getCollection(
@@ -14,7 +14,7 @@ const projects = await getCollection(
 <BaseLayout title="Projects" description="开源仓库、产品实验与工程作品。">
   <section class="sx-section">
     <div class="sx-container">
-      <Breadcrumb
+      <Crumb
         items={[{ label: 'Home', href: '/' }, { label: 'Projects' }]}
       />
 

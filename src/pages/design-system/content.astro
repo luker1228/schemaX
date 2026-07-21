@@ -1,6 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import Breadcrumb from '../../components/design-system/Breadcrumb.astro';
+import Crumb from '../../components/design-system/Crumb.astro';
 import PageHeader from '../../components/site/PageHeader.astro';
 import Card from '../../components/design-system/Card.astro';
 import { Code } from 'astro-expressive-code/components';
@@ -110,7 +110,7 @@ const mdxComponents = [
 >
   <section class="sx-section">
     <div class="sx-container">
-      <Breadcrumb
+      <Crumb
         items={[
           { label: 'Home', href: '/' },
           { label: 'Design System', href: '/design-system' },
