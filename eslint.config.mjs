@@ -22,6 +22,8 @@ export default [
       'src/styles/generated/**', // Style Dictionary 输出的 tokens.css
       'scripts/**', // 构建脚本，独立环境
       'pnpm-lock.yaml',
+      '.agents/**', // Claude Code skill 缓存（vendored，非项目源码）
+      'tokens/ui/**', // 设计稿导出的参考 HTML，非源码
     ],
   },
 

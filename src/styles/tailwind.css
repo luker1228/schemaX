@@ -46,6 +46,16 @@
   --color-success: var(--sx-sys-color-success);
   --color-danger: var(--sx-sys-color-danger);
 
+  /* —— 装饰色（设计稿扩展：mint / lavender / beige） —— */
+  --color-mint: var(--sx-sys-color-mint);
+  --color-lavender: var(--sx-sys-color-lavender);
+  --color-beige: var(--sx-sys-color-beige);
+
+  /* —— 字体族（display 大标题 / body 正文 / mono 等宽） —— */
+  --font-display: var(--sx-sys-font-family-display);
+  --font-body: var(--sx-sys-font-family-body);
+  --font-mono: var(--sx-sys-font-family-mono);
+
   /* —— 圆角：新粗野主义绝大多数容器是 0，仅按钮用 2px —— */
   --radius-none: 0;
   --radius-sm: var(--sx-sys-radius-sm);

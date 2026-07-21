@@ -13,6 +13,12 @@
       "skillPath": "skills/brandkit/SKILL.md",
       "computedHash": "b63012f3c3d21197e0185d3e9cc7ec40c589fb10e0b5a32a561739de31aa3f20"
     },
+    "guizang-ppt-skill": {
+      "source": "op7418/guizang-ppt-skill",
+      "sourceType": "github",
+      "skillPath": "SKILL.md",
+      "computedHash": "ad696d69fe2f7f120e6e739168751f9f39c69b9fdb2ed14f40ec1e1066a2cfe0"
+    },
     "react-patterns": {
       "source": "affaan-m/ECC",
       "sourceType": "github",

@@ -118,11 +118,11 @@ pnpm gen:component Button 主要、次要、幽灵、强调变体。
 
 SchemaX 的 UI 是 RetroUI / 新粗野主义（Neo-brutalist）风格。当前已锁定的视觉基线（参考 `retroui.dev.md` / `retroui.dev.json`）：
 
-- **配色**：暖纸背景 `#FFF7E8`（paper）+ 纯黑墨 `#000000`（ink/border）+ 亮黄强调 `#FFDC58`（accent，唯一主操作色）+ 蓝 `#2f5bea`（action，仅用于链接 hover/focus）+ 红 `#f9575c`（danger）+ 绿 `#35ad68`（success）
-- **边框**：全站统一 `1px`（`--sx-sys-border-width`，业务代码必须引用此 token）
+- **配色**：暖纸背景 `#FFF7E8`（paper）+ 纯黑墨 `#000000`（ink/border）+ 亮黄强调 `#FFDC58`（accent，唯一主操作色）+ 蓝 `#2f5bea`（action，仅用于链接 hover/focus）+ 红 `#f9575c`（danger）+ 绿 `#35ad68`（success）。装饰色（首页 bento / 分区强调用）：青 `#01FFCC`（mint）、紫 `#C7B7FF`（lavender）、浅奶油 `#EFE7D6`（beige）、棕灰 `#6B6355`（text-soft 次要正文）、中灰 `#666666`（text-muted）、浅灰 `#CBCCC9`（gray-light）—— 均经 `--sx-sys-color-*` token 定义
+- **边框**：全站统一 `1px`（`--sx-sys-border-width`，业务代码必须引用此 token）；Neo-brutalist 强调元素（首页大卡 / pill / 终端）用 `2px`（`--sx-sys-border-width-strong`）
 - **圆角**：卡片/容器默认 `0`（`--sx-sys-radius-sm`）；按钮 `2px`；仅 pill 用 `9999px`
 - **阴影**：纯黑硬阴影无模糊，三档 `2px / 3px / 4px 0 #000`（`--sx-sys-shadow-sm/md/lg`）
-- **字体**：系统字体栈（暂不加载网络字体）
+- **字体**：Bricolage Grotesque（display，大标题）/ Geist（body，正文）/ Geist Mono（mono，等宽）—— `@fontsource` 自托管（仅引入实际字重，无运行时外部请求），通过 `--sx-sys-font-family-*` token 落地，系统字体栈作为 fallback
 - **交互**：按钮 hover 是「按下」感（向右下位移 2px + 阴影消失），非「飘起」
 
 Schema 主题的视觉母题（花括号、字段名、类型标签、`required` 星号、网格 / 节点连接器）属于品牌和设计系统区域，**不得侵入长篇阅读空间**。视觉强度按页面分级（设计系统 = 最强；博客正文 = 最克制）。

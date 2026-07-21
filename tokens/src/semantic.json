@@ -6,7 +6,9 @@
         "surface": { "$type": "color", "$value": "{ref.color.white}" }
       },
       "text": {
-        "primary": { "$type": "color", "$value": "{ref.color.ink}" }
+        "primary": { "$type": "color", "$value": "{ref.color.ink}" },
+        "soft": { "$type": "color", "$value": "{ref.color.warm-gray}" },
+        "muted": { "$type": "color", "$value": "{ref.color.gray.500}" }
       },
       "action": {
         "primary": { "$type": "color", "$value": "{ref.color.blue.500}" }
@@ -14,10 +16,26 @@
       "accent": { "$type": "color", "$value": "{ref.color.yellow.400}" },
       "border": { "$type": "color", "$value": "{ref.color.ink}" },
       "danger": { "$type": "color", "$value": "{ref.color.red.500}" },
-      "success": { "$type": "color", "$value": "{ref.color.green.500}" }
+      "success": { "$type": "color", "$value": "{ref.color.green.500}" },
+      "mint": { "$type": "color", "$value": "{ref.color.mint}" },
+      "lavender": { "$type": "color", "$value": "{ref.color.lavender}" },
+      "beige": { "$type": "color", "$value": "{ref.color.beige}" },
+      "gray-light": { "$type": "color", "$value": "{ref.color.gray.200}" }
+    },
+    "font": {
+      "family": {
+        "display": { "$type": "fontFamily", "$value": "{ref.font.family.display}" },
+        "body": { "$type": "fontFamily", "$value": "{ref.font.family.body}" },
+        "mono": { "$type": "fontFamily", "$value": "{ref.font.family.mono}" }
+      }
     },
     "border": {
-      "width": { "$type": "dimension", "$value": "1px" }
+      "width": { "$type": "dimension", "$value": "1px" },
+      "width-strong": {
+        "$type": "dimension",
+        "$value": "2px",
+        "$description": "粗边框（Neo-brutalist 强调元素：首页大卡 / pill / 终端）。"
+      }
     },
     "radius": {
       "sm": { "$type": "dimension", "$value": "0" },

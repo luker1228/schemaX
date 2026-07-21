@@ -1,0 +1,198 @@
+---
+// Manifesto：不对称 bento（黄 Intro / 青 Structure / 红 Contract 大块 / 白 Reliability）。
+// 用「容器黑底 + 2px gap」技巧还原 panel 间的分割线，避免相邻 border 双线。
+// 三原则：Structure / Contract / Reliability；"Small schemas" 并入 Intro 总述。
+const iconProps = {
+  viewBox: '0 0 24 24',
+  fill: 'none',
+  stroke: 'currentColor',
+  'stroke-width': 2,
+  'stroke-linecap': 'round',
+  'stroke-linejoin': 'round',
+} as const;
+---
+
+<section class="manifesto">
+  <div class="manifesto__grid">
+    <!-- Intro（黄，左上） -->
+    <div class="panel panel--intro">
+      <h2 class="panel__cn">构建原则</h2>
+      <span class="panel__en panel__en--soft">MANIFESTO</span>
+      <p class="panel__body panel__body--ink">
+        结构先于自动化，契约先于集成。用小 Schema 组织大系统。
+      </p>
+    </div>
+
+    <!-- Structure（青，右上） -->
+    <div class="panel panel--structure">
+      <h3 class="panel__cn">先结构，后自动化</h3>
+      <span class="panel__en">Structure before automation</span>
+      <p class="panel__body panel__body--ink">
+        先把意图、字段、边界和约束描述清楚，再让工具与 Agent 执行。
+      </p>
+    </div>
+
+    <!-- Contract（红，左下大块，含三图标） -->
+    <div class="panel panel--contract">
+      <div class="contract__icons">
+        <span class="contract__icon">
+          <svg {...iconProps}>
+            <path
+              d="M7 3H6a2 2 0 0 0-2 2v4a2 2 0 0 1-2 2 2 2 0 0 1 2 2v4a2 2 0 0 0 2 2h1M17 21h1a2 2 0 0 0 2-2v-4a2 2 0 0 1 2-2 2 2 0 0 1-2-2V5a2 2 0 0 0-2-2h-1"></path>
+            </svg>
+          </span>
+        <span class="contract__icon">
+          <svg {...iconProps}>
+            <path
+              d="M18 21a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM6 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM6 3v12M18 9a9 9 0 0 1-9 9"></path>
+            </svg>
+          </span>
+        <span class="contract__icon">
+          <svg {...iconProps}>
+            <path
+              d="M3 3h6v6H3zM15 15h6v6h-6zM6 9v3a3 3 0 0 0 3 3h3"></path>
+            </svg>
+          </span>
+      </div>
+      <h3 class="panel__cn panel__cn--lg">先契约，后集成</h3>
+      <span class="panel__en">Contract before integration</span>
+      <p class="panel__body panel__body--ink">
+        API、组件、内容和工具调用都先建立可验证契约，再进入系统连接。
+      </p>
+    </div>
+
+    <!-- Reliability（白，右下） -->
+    <div class="panel panel--reliability">
+      <h3 class="panel__cn">约束带来可靠性</h3>
+      <span class="panel__en panel__en--action">Constraints enable reliability</span>
+      <p class="panel__body panel__body--soft">
+        合理约束不是限制能力，而是让 AI、API 与 UI 的执行结果可以检查、复现和维护。
+      </p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .manifesto {
+    background: var(--sx-sys-color-bg-page);
+    padding-block: clamp(2rem, 5vw, 3.5rem);
+    padding-inline: var(--sx-ref-space-6);
+  }
+
+  /* 容器黑底 + 2px gap = panel 间分割线；外框 2px。避免相邻 border 双线。 */
+  .manifesto__grid {
+    max-width: 81rem;
+    margin-inline: auto;
+    background: var(--sx-sys-color-border);
+    border: var(--sx-sys-border-width-strong) solid var(--sx-sys-color-border);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 10.625rem 5.625rem 16.25rem;
+    gap: var(--sx-sys-border-width-strong);
+  }
+
+  .panel {
+    display: flex;
+    flex-direction: column;
+    gap: 0.625rem;
+    padding: 2.25rem 2.5rem;
+  }
+
+  .panel--intro {
+    grid-column: 1;
+    grid-row: 1;
+    background: var(--sx-sys-color-accent);
+  }
+  .panel--structure {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+    background: var(--sx-sys-color-mint);
+  }
+  .panel--contract {
+    grid-column: 1;
+    grid-row: 2 / span 2;
+    background: var(--sx-sys-color-danger);
+    padding: 3rem 2.5rem;
+  }
+  .panel--reliability {
+    grid-column: 2;
+    grid-row: 3;
+    background: var(--sx-sys-color-bg-surface);
+  }
+
+  .panel__cn {
+    margin: 0;
+    font-family: var(--sx-sys-font-family-display), system-ui, sans-serif;
+    font-size: clamp(1.5rem, 2.6vw, 2.125rem);
+    font-weight: 700;
+    line-height: 1.05;
+    color: var(--sx-sys-color-text-primary);
+  }
+  .panel__cn--lg {
+    font-size: clamp(1.625rem, 2.8vw, 2.25rem);
+  }
+
+  .panel__en {
+    font-family: var(--sx-sys-font-family-mono), ui-monospace, monospace;
+    font-size: 0.8125rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    color: var(--sx-sys-color-text-primary);
+  }
+  .panel__en--soft {
+    color: var(--sx-sys-color-text-soft);
+  }
+  .panel__en--action {
+    color: var(--sx-sys-color-action-primary);
+  }
+
+  .panel__body {
+    margin: 0;
+    font-size: 1.0625rem;
+    line-height: 1.5;
+  }
+  .panel__body--ink {
+    color: var(--sx-sys-color-text-primary);
+  }
+  .panel__body--soft {
+    color: var(--sx-sys-color-text-soft);
+  }
+
+  /* —— Contract 三图标：白圆 + lucide glyph —— */
+  .contract__icons {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.75rem;
+  }
+  .contract__icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 3.625rem;
+    height: 3.625rem;
+    border: var(--sx-sys-border-width-strong) solid var(--sx-sys-color-border);
+    border-radius: 9999px;
+    background: var(--sx-sys-color-bg-surface);
+    color: var(--sx-sys-color-text-primary);
+    box-shadow: var(--sx-sys-shadow-md);
+  }
+  .contract__icon svg {
+    width: 1.75rem;
+    height: 1.75rem;
+  }
+
+  @media (max-width: 56rem) {
+    .manifesto__grid {
+      grid-template-columns: 1fr;
+      grid-template-rows: none;
+    }
+    .panel--intro,
+    .panel--structure,
+    .panel--contract,
+    .panel--reliability {
+      grid-column: auto;
+      grid-row: auto;
+      min-height: 11rem;
+    }
+  }
+</style>

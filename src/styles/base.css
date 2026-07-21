@@ -7,13 +7,12 @@ body {
   background-color: var(--sx-sys-color-bg-page);
   color: var(--sx-sys-color-text-primary);
   font-family:
+    var(--sx-sys-font-family-body),
     ui-sans-serif,
     system-ui,
     -apple-system,
     'Segoe UI',
     Roboto,
-    'Helvetica Neue',
-    Arial,
     'PingFang SC',
     'Hiragino Sans GB',
     'Microsoft YaHei',

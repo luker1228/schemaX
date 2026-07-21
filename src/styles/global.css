@@ -5,6 +5,16 @@
    才能引用 --sx-*。 */
 @layer reset, tokens, theme, base, layout, article, components, utilities, overrides;
 
+/* 字体（@fontsource 自托管 @font-face，全局生效，不入 layer）。
+   仅引入实际使用的字重，避免打包全量。 */
+@import '@fontsource/geist/400.css';
+@import '@fontsource/geist/600.css';
+@import '@fontsource/geist/700.css';
+@import '@fontsource/geist-mono/400.css';
+@import '@fontsource/geist-mono/700.css';
+@import '@fontsource/bricolage-grotesque/700.css';
+@import '@fontsource/bricolage-grotesque/800.css';
+
 @import './generated/tokens.css' layer(tokens);
 @import './tailwind.css';
 @import './reset.css' layer(reset);

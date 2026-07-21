@@ -1,0 +1,239 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { getCollection } from 'astro:content';
+
+interface Props {
+  /** 已按发布时间倒序的已发布文章（取前 N 篇：第 1 篇大卡，其余归档行）。 */
+  posts: CollectionEntry<'posts'>[];
+}
+const { posts } = Astro.props;
+
+const [latest, ...archive] = posts;
+
+// 解析最新文章的首个 topic 标签（设计稿 "TOOLING" 位）。
+// post.data.topics 是 reference 数组（运行时为 { collection, id }），但因 ref 泛型
+// 推断为 unknown[]，无法直接 getEntry；改用 getCollection + id 匹配。
+const topics = await getCollection('topics');
+const topicRef = latest?.data.topics[0] as { id: string } | undefined;
+const latestTopic = topicRef
+  ? topics.find((t) => t.id === topicRef.id)
+  : undefined;
+const latestTopicLabel = latestTopic?.data.label ?? null;
+
+const formatDate = (d?: Date) =>
+  d
+    ? `${d.getFullYear()}.${String(d.getMonth() + 1).padStart(2, '0')}.${String(
+        d.getDate(),
+      ).padStart(2, '0')}`
+    : '';
+
+const latestDate = formatDate(latest?.data.publishedAt);
+const latestMeta = [latestDate, latestTopicLabel].filter(Boolean).join(' / ');
+---
+
+{
+  latest && (
+    <section class="latest">
+      <div class="latest__inner">
+        <header class="block-head">
+          <h2 class="block-head__title">最新文章</h2>
+          <a class="block-head__link" href="/blog">
+            READ THE BLOG &rarr;
+          </a>
+        </header>
+
+        <a class="latest-card" href={`/blog/${latest.id}`}>
+          <div class="latest-card__meta">
+            <span class="post-badge">POST</span>
+            {latestMeta && <span class="latest-card__date">{latestMeta}</span>}
+          </div>
+          <h3 class="latest-card__title">{latest.data.title}</h3>
+          <p class="latest-card__desc">{latest.data.description}</p>
+        </a>
+
+        {archive.length > 0 && (
+          <div class="archive">
+            <div class="archive__head">
+              <span>ARTICLE INDEX</span>
+              <span>{String(archive.length).padStart(2, '0')} MORE</span>
+            </div>
+            {archive.map((p, i) => (
+              <a class="archive__row" href={`/blog/${p.id}`}>
+                <div class="archive__copy">
+                  <span class="archive__index">
+                    [{String(i + 2).padStart(2, '0')}]
+                  </span>
+                  <span class="archive__title">{p.data.title}</span>
+                  <span class="archive__desc">{p.data.description}</span>
+                </div>
+                <span class="archive__action">READ &gt;</span>
+              </a>
+            ))}
+          </div>
+        )}
+      </div>
+    </section>
+  )
+}
+
+<style>
+  .latest {
+    padding-block: var(--sx-ref-space-16);
+    padding-inline: var(--sx-ref-space-6);
+  }
+
+  .latest__inner {
+    max-width: 80rem;
+    margin-inline: auto;
+    display: flex;
+    flex-direction: column;
+    gap: var(--sx-ref-space-6);
+  }
+
+  .block-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--sx-ref-space-4);
+    flex-wrap: wrap;
+  }
+  .block-head__title {
+    margin: 0;
+    font-family: var(--sx-sys-font-family-display), system-ui, sans-serif;
+    font-size: clamp(1.75rem, 3.5vw, 2.125rem);
+    font-weight: 800;
+    color: var(--sx-sys-color-text-primary);
+  }
+  .block-head__link {
+    font-family: var(--sx-sys-font-family-mono), ui-monospace, monospace;
+    font-size: 0.8125rem;
+    font-weight: 700;
+    color: var(--sx-sys-color-text-primary);
+    text-decoration: none;
+  }
+  .block-head__link:hover {
+    color: var(--sx-sys-color-action-primary);
+  }
+
+  /* —— 最新文章大卡：6px 硬阴影 —— */
+  .latest-card {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1.75rem;
+    border: var(--sx-sys-border-width) solid var(--sx-sys-color-border);
+    border-radius: var(--sx-sys-radius-md);
+    background: var(--sx-sys-color-bg-surface);
+    box-shadow: var(--sx-sys-shadow-lg);
+    text-decoration: none;
+    color: inherit;
+    transition:
+      transform 140ms ease,
+      box-shadow 140ms ease;
+  }
+  .latest-card:hover {
+    transform: translate(-3px, -3px);
+    box-shadow: 9px 9px 0 var(--sx-sys-color-border);
+  }
+
+  .latest-card__meta {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+  .post-badge {
+    padding: 0.4rem 0.7rem;
+    border: var(--sx-sys-border-width) solid var(--sx-sys-color-border);
+    border-radius: var(--sx-sys-radius-md);
+    background: var(--sx-sys-color-accent);
+    font-family: var(--sx-sys-font-family-mono), ui-monospace, monospace;
+    font-size: 0.75rem;
+    font-weight: 700;
+    box-shadow: var(--sx-sys-shadow-sm);
+  }
+  .latest-card__date {
+    font-family: var(--sx-sys-font-family-mono), ui-monospace, monospace;
+    font-size: 0.75rem;
+    color: var(--sx-sys-color-text-primary);
+  }
+  .latest-card__title {
+    margin: 0;
+    font-family: var(--sx-sys-font-family-display), system-ui, sans-serif;
+    font-size: clamp(1.75rem, 4vw, 2.625rem);
+    font-weight: 800;
+    line-height: 1.05;
+    color: var(--sx-sys-color-text-primary);
+  }
+  .latest-card__desc {
+    margin: 0;
+    font-size: 1.0625rem;
+    line-height: 1.55;
+    color: var(--sx-sys-color-text-primary);
+  }
+
+  /* —— 文章归档列表 —— */
+  .archive {
+    border: var(--sx-sys-border-width) solid var(--sx-sys-color-border);
+    border-radius: var(--sx-sys-radius-md);
+    background: var(--sx-sys-color-bg-surface);
+    box-shadow: var(--sx-sys-shadow-md);
+    overflow: hidden;
+  }
+  .archive__head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.85rem 1.25rem;
+    background: var(--sx-sys-color-accent);
+    border-bottom: var(--sx-sys-border-width) solid var(--sx-sys-color-border);
+    font-family: var(--sx-sys-font-family-mono), ui-monospace, monospace;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+  }
+  .archive__row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.125rem;
+    padding: 1.125rem 1.25rem;
+    border-bottom: var(--sx-sys-border-width) solid var(--sx-sys-color-border);
+    text-decoration: none;
+    color: inherit;
+    transition: background-color 120ms ease;
+  }
+  .archive__row:last-child {
+    border-bottom: 0;
+  }
+  .archive__row:hover {
+    background: var(--sx-sys-color-bg-page);
+  }
+  .archive__copy {
+    display: flex;
+    flex-direction: column;
+    gap: 0.375rem;
+    min-width: 0;
+  }
+  .archive__index {
+    font-family: var(--sx-sys-font-family-mono), ui-monospace, monospace;
+    font-size: 0.7rem;
+    font-weight: 700;
+  }
+  .archive__title {
+    font-family: var(--sx-sys-font-family-display), system-ui, sans-serif;
+    font-size: 1.4375rem;
+    font-weight: 800;
+    line-height: 1.15;
+  }
+  .archive__desc {
+    font-size: 0.875rem;
+    line-height: 1.5;
+    color: var(--sx-sys-color-text-muted);
+  }
+  .archive__action {
+    flex-shrink: 0;
+    font-family: var(--sx-sys-font-family-mono), ui-monospace, monospace;
+    font-size: 0.75rem;
+    font-weight: 700;
+  }
+</style>

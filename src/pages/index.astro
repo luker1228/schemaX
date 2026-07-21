@@ -1,277 +1,36 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import HomeHero from '../components/home/HomeHero.astro';
-import PostCard from '../components/site/PostCard.astro';
-import ProjectCard from '../components/site/ProjectCard.astro';
-import Card from '../components/design-system/Card.astro';
+import HomeEntries from '../components/home/HomeEntries.astro';
+import HomeManifesto from '../components/home/HomeManifesto.astro';
+import HomeLatestPosts from '../components/home/HomeLatestPosts.astro';
+import HomeProjects from '../components/home/HomeProjects.astro';
+import HomeTechNote from '../components/home/HomeTechNote.astro';
 import { getCollection } from 'astro:content';
 import { site } from '../config/site';
 
+// 已发布文章，按发布时间倒序。前 4 篇：第 1 篇进最新文章大卡，其余进归档列表。
 const posts = (
   await getCollection('posts', ({ data }) => data.status === 'published')
 ).sort(
   (a, b) =>
     (b.data.publishedAt?.getTime() ?? 0) - (a.data.publishedAt?.getTime() ?? 0),
 );
-const recentPosts = posts.slice(0, 3);
+const recentPosts = posts.slice(0, 4);
 
-const featuredProjects = (
-  await getCollection('projects', ({ data }) => data.status !== 'archived')
-)
-  .filter((p) => p.data.featured)
-  .slice(0, 2);
-
-const entries = [
-  { label: 'Courses', href: '/courses', desc: '体系化课程、章节与练习。' },
-  { label: 'Blog', href: '/blog', desc: '技术文章、工程总结与观点记录。' },
-  {
-    label: 'Projects',
-    href: '/projects',
-    desc: '开源仓库、产品实验与工程作品。',
-  },
-  {
-    label: 'Design System',
-    href: '/design-system',
-    desc: 'SchemaX 的 Token、组件与内容规范。',
-  },
-];
-
-const principles = [
-  { t: 'Structure before automation', d: '先明确结构，再进行自动化。' },
-  { t: 'Contract before integration', d: '先建立契约，再连接系统。' },
-  { t: 'Constraints enable reliability', d: '合理的约束让能力被可靠使用。' },
-  {
-    t: 'Small schemas, large systems',
-    d: '复杂系统常由少量关键 Schema 建立秩序。',
-  },
-];
+// 非归档项目：优先 featured，否则取第一个作为代表作大卡。
+const projects = await getCollection(
+  'projects',
+  ({ data }) => data.status !== 'archived',
+);
+const featuredProject = projects.find((p) => p.data.featured) ?? projects[0];
 ---
 
 <BaseLayout title={site.name} type="profile">
   <HomeHero />
-
-  <section class="sx-section">
-    <div class="sx-container">
-      <h2 class="section-title">四个核心入口</h2>
-      <div class="sx-grid">
-        {
-          entries.map((e) => (
-            <Card href={e.href} class="entry">
-              <span class="entry__label">{e.label}</span>
-              <span class="entry__desc">{e.desc}</span>
-            </Card>
-          ))
-        }
-      </div>
-    </div>
-  </section>
-
-  <section class="sx-section section--accent">
-    <div class="sx-container">
-      <header class="manifesto-head">
-        <p class="manifesto-eyebrow">// principles</p>
-        <h2 class="section-title manifesto-title">Manifesto</h2>
-        <p class="manifesto-lede">
-          构建系统时坚持的四条原则 —— 结构先于自动化，契约先于集成。
-        </p>
-      </header>
-      <ul class="principles">
-        {
-          principles.map((p, i) => (
-            <li class="principle">
-              <span class="principle__index">
-                {String(i + 1).padStart(2, '0')}
-              </span>
-              <div class="principle__body">
-                <h3 class="principle__t">{p.t}</h3>
-                <p class="principle__d">{p.d}</p>
-              </div>
-            </li>
-          ))
-        }
-      </ul>
-    </div>
-  </section>
-
-  {
-    recentPosts.length > 0 && (
-      <section class="sx-section">
-        <div class="sx-container">
-          <header class="block-head">
-            <h2 class="section-title">最新文章</h2>
-            <a class="block-head__link" href="/blog">
-              Read the Blog →
-            </a>
-          </header>
-          <div class="sx-grid">
-            {recentPosts.map((p) => (
-              <PostCard post={p} />
-            ))}
-          </div>
-        </div>
-      </section>
-    )
-  }
-
-  {
-    featuredProjects.length > 0 && (
-      <section class="sx-section">
-        <div class="sx-container">
-          <header class="block-head">
-            <h2 class="section-title">代表作品</h2>
-            <a class="block-head__link" href="/projects">
-              Explore Projects →
-            </a>
-          </header>
-          <div class="sx-grid">
-            {featuredProjects.map((p) => (
-              <ProjectCard project={p} />
-            ))}
-          </div>
-        </div>
-      </section>
-    )
-  }
-
-  <section class="sx-section">
-    <div class="sx-container">
-      <p class="note">
-        本站由 Astro + React + MDX + TypeScript + Tailwind 构建，静态优先、零
-        JavaScript 优先。设计 Token 由 Style Dictionary 从 DTCG 源自动生成。
-      </p>
-    </div>
-  </section>
+  <HomeEntries />
+  <HomeManifesto />
+  <HomeLatestPosts posts={recentPosts} />
+  <HomeProjects project={featuredProject} />
+  <HomeTechNote />
 </BaseLayout>
-
-<style>
-  .section-title {
-    font-size: 1.5rem;
-    font-weight: 800;
-    margin-block-end: var(--sx-ref-space-6);
-    letter-spacing: -0.01em;
-  }
-
-  .section--accent {
-    background: var(--sx-sys-color-accent);
-  }
-
-  /* ── Manifesto header ───────────────────────────────────── */
-  .manifesto-head {
-    max-width: 42rem;
-    margin-block-end: var(--sx-ref-space-8);
-  }
-  .manifesto-eyebrow {
-    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-    font-size: 0.78rem;
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--sx-sys-color-text-primary);
-    opacity: 0.7;
-  }
-  .manifesto-title {
-    font-size: clamp(2rem, 5vw, 3rem);
-    line-height: 1.02;
-    letter-spacing: -0.03em;
-    margin-block: var(--sx-ref-space-2) var(--sx-ref-space-3);
-  }
-  .manifesto-lede {
-    font-size: 1.05rem;
-    line-height: 1.6;
-    max-width: 38ch;
-  }
-
-  /* ── Principle cards ──────────────────────────────────────
-     Brutalist feature block：1px 黑边 + 硬阴影（无模糊）+ 顶部黄色色条。
-     hover 像被托起 —— 向左上位移，阴影加大。 */
-  .principles {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(min(100%, 17rem), 1fr));
-    gap: var(--sx-ref-space-4);
-  }
-  .principle {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    gap: var(--sx-ref-space-3);
-    background: var(--sx-sys-color-bg-surface);
-    border: var(--sx-sys-border-width) solid var(--sx-sys-color-border);
-    box-shadow: var(--sx-sys-shadow-md);
-    padding: var(--sx-ref-space-6) var(--sx-ref-space-4) var(--sx-ref-space-4);
-    transition:
-      transform 140ms ease,
-      box-shadow 140ms ease;
-  }
-  .principle::before {
-    /* 顶部装饰色条：复用强调黄，与 section 背景形成层次 */
-    content: '';
-    position: absolute;
-    inset-block-start: 0;
-    inset-inline: 0;
-    height: 0.4rem;
-    background: var(--sx-sys-color-text-primary);
-  }
-  .principle:hover {
-    transform: translate(-3px, -3px);
-    box-shadow: var(--sx-sys-shadow-lg);
-  }
-  .principle__index {
-    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-    font-size: 0.8rem;
-    font-weight: 800;
-    letter-spacing: 0.1em;
-    color: var(--sx-sys-color-action-primary);
-  }
-  .principle__body {
-    display: flex;
-    flex-direction: column;
-    gap: var(--sx-ref-space-2);
-    flex: 1;
-  }
-  .principle__t {
-    font-size: 1.15rem;
-    font-weight: 800;
-    line-height: 1.25;
-    letter-spacing: -0.01em;
-  }
-  .principle__d {
-    font-size: 0.92rem;
-    line-height: 1.6;
-    opacity: 0.82;
-  }
-
-  .entry {
-    display: flex;
-    flex-direction: column;
-    gap: var(--sx-ref-space-2);
-  }
-  .entry__label {
-    font-size: 1.25rem;
-    font-weight: 800;
-  }
-  .entry__desc {
-    opacity: 0.85;
-  }
-
-  .block-head {
-    display: flex;
-    align-items: baseline;
-    justify-content: space-between;
-    gap: var(--sx-ref-space-4);
-    margin-block-end: var(--sx-ref-space-6);
-    flex-wrap: wrap;
-  }
-  .block-head__link {
-    font-weight: 700;
-    color: var(--sx-sys-color-action-primary);
-    text-decoration: underline;
-  }
-
-  .note {
-    border: var(--sx-sys-border-width) solid var(--sx-sys-color-border);
-    background: var(--sx-sys-color-bg-surface);
-    padding: var(--sx-ref-space-4) var(--sx-ref-space-6);
-    font-family: ui-monospace, monospace;
-    font-size: 0.9rem;
-  }
-</style>

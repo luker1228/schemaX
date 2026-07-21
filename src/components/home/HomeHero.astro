@@ -3,7 +3,7 @@ import { site } from '../../config/site';
 import { profile } from '../../data/profile';
 import HeroTerminal from './HeroTerminal.tsx';
 
-// 首页 hero 终端轮播内容（示例，待替换为真实内容）。
+// 首页 hero 终端轮播内容（规范 §4.1）。纯视觉语言呈现，非真实 JSON 契约。
 const heroSlides = [
   {
     title: 'profile.json',
@@ -34,76 +34,179 @@ const heroSlides = [
 ---
 
 <section class="hero">
-  <div class="sx-container hero__inner">
+  <div class="hero__inner">
     <div class="hero__copy">
-      <p class="hero__eyebrow">{site.name}</p>
-      <h1 class="hero__title">{site.tagline}</h1>
+      <span class="hero__badge">Schema-Driven</span>
+
+      <h1 class="hero__title">
+        Structure<br />
+        <span class="hero__title-hl">the Unknown.</span>
+      </h1>
+
       <p class="hero__lede">用 Schema，为未知建立可执行的结构。</p>
       <p class="hero__bio">
-        我是 Luke，一名 AI Agent
-        工程师与独立构建者。这里记录我的课程、技术思考、开源作品，以及 SchemaX
-        自身的设计过程。
+        我是 Luke，一名 AI Agent 工程师与独立构建者。这里记录我的课程、技术思考、开源作品，以及
+        SchemaX 自身的设计过程。
       </p>
+
+      <div class="hero__command" aria-hidden="true">
+        <span class="hero__command-label">Copy</span>
+        <code class="hero__command-code">schema &rarr; contract &rarr; tool call</code>
+      </div>
+
       <div class="hero__cta">
-        <a class="btn btn--primary" href="/projects">Explore Projects</a>
-        <a class="btn btn--ghost" href="/blog">Read the Blog</a>
+        <a class="hero__btn hero__btn--primary" href="/projects">Explore Projects</a>
+        <a class="hero__btn hero__btn--ghost" href="/blog">Read the Blog</a>
       </div>
     </div>
 
-    <HeroTerminal client:visible slides={heroSlides} />
+    <div class="hero__terminal">
+      <HeroTerminal client:visible slides={heroSlides} />
+    </div>
   </div>
 </section>
 
 <style>
   .hero {
     background: var(--sx-sys-color-bg-page);
+    padding-block: clamp(2.5rem, 6vw, 3.5rem);
+    padding-inline: var(--sx-ref-space-6);
   }
 
   .hero__inner {
+    max-width: 80rem;
+    margin-inline: auto;
     display: grid;
-    grid-template-columns: 1.2fr 1fr;
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
     gap: var(--sx-ref-space-12);
     align-items: center;
-    padding-block: var(--sx-ref-space-24);
   }
 
-  .hero__eyebrow {
-    font-family: ui-monospace, monospace;
-    color: var(--sx-sys-color-action-primary);
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
+  .hero__copy {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--sx-ref-space-6);
+  }
+
+  /* —— Schema-Driven 蓝色 pill —— */
+  .hero__badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.5rem 0.75rem;
+    border: var(--sx-sys-border-width-strong) solid var(--sx-sys-color-border);
+    border-radius: 9999px;
+    background: var(--sx-sys-color-action-primary);
+    color: var(--sx-sys-color-bg-page);
+    font-family: var(--sx-sys-font-family-mono), ui-monospace, monospace;
     font-size: 0.8rem;
+    font-weight: 700;
+    box-shadow: var(--sx-sys-shadow-sm);
   }
 
+  /* —— 巨标题：第二行黄底高亮 —— */
   .hero__title {
-    font-size: clamp(2.5rem, 6vw, 4.5rem);
-    line-height: 1.02;
-    letter-spacing: -0.03em;
-    margin-block: var(--sx-ref-space-3);
+    margin: 0;
+    font-family: var(--sx-sys-font-family-display), system-ui, sans-serif;
+    font-size: clamp(2.75rem, 7vw, 4.5rem);
+    font-weight: 700;
+    line-height: 0.98;
+    letter-spacing: -0.02em;
+    color: var(--sx-sys-color-text-primary);
+  }
+  .hero__title-hl {
+    background: var(--sx-sys-color-accent);
+    padding: 0 0.12em;
   }
 
   .hero__lede {
-    font-size: 1.25rem;
-    font-weight: 600;
+    margin: 0;
+    font-family: var(--sx-sys-font-family-body), system-ui, sans-serif;
+    font-size: clamp(1.2rem, 2.4vw, 1.5rem);
+    font-weight: 700;
+    line-height: 1.25;
+    color: var(--sx-sys-color-text-soft);
   }
 
   .hero__bio {
-    margin-block: var(--sx-ref-space-4);
-    max-width: 38ch;
-    line-height: 1.7;
+    margin: 0;
+    max-width: 36ch;
+    font-size: 1.125rem;
+    line-height: 1.65;
+    color: var(--sx-sys-color-text-soft);
   }
 
+  /* —— 命令胶囊（静态展示，零 JS） —— */
+  .hero__command {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem 1rem;
+    border: var(--sx-sys-border-width-strong) solid var(--sx-sys-color-border);
+    border-radius: var(--sx-sys-radius-md);
+    background: var(--sx-sys-color-beige);
+    box-shadow: var(--sx-sys-shadow-md);
+  }
+  .hero__command-label {
+    font-family: var(--sx-sys-font-family-mono), ui-monospace, monospace;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--sx-sys-color-text-soft);
+  }
+  .hero__command-code {
+    font-family: var(--sx-sys-font-family-mono), ui-monospace, monospace;
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: var(--sx-sys-color-text-primary);
+  }
+
+  /* —— 双 CTA：黄 primary / 米色 ghost，2px 边 + 4px 硬阴影，hover 按下 —— */
   .hero__cta {
     display: flex;
-    gap: var(--sx-ref-space-3);
     flex-wrap: wrap;
+    gap: 1rem;
+  }
+  .hero__btn {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.85rem 1.1rem;
+    border: var(--sx-sys-border-width-strong) solid var(--sx-sys-color-border);
+    border-radius: var(--sx-sys-radius-md);
+    font-family: var(--sx-sys-font-family-mono), ui-monospace, monospace;
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: var(--sx-sys-color-text-primary);
+    box-shadow: var(--sx-sys-shadow-md);
+    transition:
+      transform 120ms ease,
+      box-shadow 120ms ease;
+  }
+  .hero__btn:hover {
+    transform: translate(2px, 2px);
+    box-shadow: none;
+    color: var(--sx-sys-color-text-primary);
+  }
+  .hero__btn--primary {
+    background: var(--sx-sys-color-accent);
+  }
+  .hero__btn--ghost {
+    background: var(--sx-sys-color-beige);
+  }
+
+  /* —— 终端：覆盖全局 .term 的 1px 边 / 黄阴影，按设计稿用 2px 边 + 纯黑 4px 阴影 —— */
+  .hero__terminal :global(.term) {
+    border-width: var(--sx-sys-border-width-strong);
+    box-shadow: var(--sx-sys-shadow-md);
+    width: 100%;
+  }
+  .hero__terminal :global(.term--hero .term__screen) {
+    min-height: 13rem;
   }
 
   @media (max-width: 48rem) {
     .hero__inner {
       grid-template-columns: 1fr;
-      padding-block: var(--sx-ref-space-12);
+      gap: var(--sx-ref-space-8);
     }
   }
 </style>

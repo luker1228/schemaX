@@ -1,0 +1,322 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  /** featured 项目（大卡）。无则省略大卡，仅展示双特性小卡。 */
+  project?: CollectionEntry<'projects'>;
+}
+const { project } = Astro.props;
+
+const statusLabel = project?.data.status.toUpperCase();
+
+// 双特性小卡：SchemaX 自身的构建特性（固定事实，硬编码）。
+const labFlow = [
+  { label: 'SCHEMA', bg: 'var(--sx-sys-color-bg-surface)' },
+  { label: 'SLUG', bg: 'var(--sx-sys-color-mint)' },
+  { label: 'REDIRECT', bg: 'var(--sx-sys-color-action-primary)' },
+];
+const stackList = [
+  'expressive code -> static highlighting',
+  'pagefind -> dist-only indexing',
+  'style dictionary -> generated tokens',
+];
+---
+
+<section class="projects">
+  <div class="projects__inner">
+    <header class="block-head">
+      <h2 class="block-head__title">代表作品</h2>
+      <a class="block-head__link" href="/projects">EXPLORE PROJECTS &rarr;</a>
+    </header>
+
+    {
+      project && (
+        <a class="project-card" href={`/projects/${project.id}`}>
+          <div class="project-card__side">
+            {statusLabel && (
+              <span class="project-card__status">{statusLabel} / V1</span>
+            )}
+            <span class="project-card__line" />
+            <span class="project-card__line project-card__line--b" />
+            <span class="project-card__line project-card__line--c" />
+          </div>
+          <div class="project-card__copy">
+            <h3 class="project-card__name">{project.data.title}</h3>
+            <p class="project-card__desc">{project.data.description}</p>
+            {project.data.stack.length > 0 && (
+              <div class="project-card__tags">
+                {project.data.stack.map((s) => (
+                  <span class="project-card__tag">{s}</span>
+                ))}
+              </div>
+            )}
+          </div>
+        </a>
+      )
+    }
+
+    <div class="project-archive">
+      <div class="feature-card feature-card--lab">
+        <span class="feature-card__eyebrow">SYSTEM LAB</span>
+        <h3 class="feature-card__title">
+          Content Collections / Redirect Governance
+        </h3>
+        <p class="feature-card__desc feature-card__desc--ink">
+          围绕 posts、courses、lessons、projects、topics
+          五个集合组织内容，并用永久 id 与 slug 分离治理 URL。
+        </p>
+        <div class="feature-card__flow">
+          {labFlow.map((f) => (
+            <span class="flow-chip" style={`--sx-flow-bg: ${f.bg}`}>
+              {f.label}
+            </span>
+          ))}
+        </div>
+      </div>
+
+      <div class="feature-card feature-card--stack">
+        <span class="feature-card__eyebrow">TOOLCHAIN</span>
+        <h3 class="feature-card__title">Build Chain / Search / Code Blocks</h3>
+        <p class="feature-card__desc">
+          Expressive Code、Pagefind 与生成式 token 桥接共同承担阅读体验、检索与界面一致性。
+        </p>
+        <ul class="feature-card__list">
+          {stackList.map((item) => (
+            <li class="stack-item">
+              <span class="stack-item__text">{item}</span>
+              <span class="stack-item__mark">+</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .projects {
+    padding-block: var(--sx-ref-space-16);
+    padding-inline: var(--sx-ref-space-6);
+  }
+  .projects__inner {
+    max-width: 80rem;
+    margin-inline: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .block-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--sx-ref-space-4);
+    flex-wrap: wrap;
+  }
+  .block-head__title {
+    margin: 0;
+    font-family: var(--sx-sys-font-family-display), system-ui, sans-serif;
+    font-size: clamp(1.75rem, 3.5vw, 2.125rem);
+    font-weight: 800;
+    color: var(--sx-sys-color-text-primary);
+  }
+  .block-head__link {
+    font-family: var(--sx-sys-font-family-mono), ui-monospace, monospace;
+    font-size: 0.8125rem;
+    font-weight: 700;
+    color: var(--sx-sys-color-text-primary);
+    text-decoration: none;
+  }
+  .block-head__link:hover {
+    color: var(--sx-sys-color-action-primary);
+  }
+
+  /* —— 大项目卡：紫色占位块 + 右侧文案/tags —— */
+  .project-card {
+    display: flex;
+    align-items: center;
+    gap: 1.75rem;
+    padding: 1.75rem;
+    border: var(--sx-sys-border-width) solid var(--sx-sys-color-border);
+    border-radius: var(--sx-sys-radius-md);
+    background: var(--sx-sys-color-bg-surface);
+    box-shadow: var(--sx-sys-shadow-lg);
+    text-decoration: none;
+    color: inherit;
+    transition:
+      transform 140ms ease,
+      box-shadow 140ms ease;
+  }
+  .project-card:hover {
+    transform: translate(-3px, -3px);
+    box-shadow: 9px 9px 0 var(--sx-sys-color-border);
+  }
+
+  .project-card__side {
+    position: relative;
+    flex: 0 0 18rem;
+    height: 9.125rem;
+    padding: 0.75rem 0.875rem;
+    border: var(--sx-sys-border-width) solid var(--sx-sys-color-border);
+    border-radius: var(--sx-sys-radius-md);
+    background: var(--sx-sys-color-lavender);
+    box-shadow: var(--sx-sys-shadow-md);
+  }
+  .project-card__status {
+    position: absolute;
+    top: 0.75rem;
+    left: 0.875rem;
+    font-family: var(--sx-sys-font-family-mono), ui-monospace, monospace;
+    font-size: 0.75rem;
+    font-weight: 700;
+  }
+  .project-card__line {
+    position: absolute;
+    left: 0.875rem;
+    top: 2.625rem;
+    width: 11.75rem;
+    height: 2px;
+    background: var(--sx-sys-color-text-primary);
+    border-radius: var(--sx-sys-radius-md);
+  }
+  .project-card__line--b {
+    top: 4.875rem;
+    width: 8.25rem;
+  }
+  .project-card__line--c {
+    top: 7.125rem;
+    width: 10.5rem;
+  }
+
+  .project-card__copy {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    min-width: 0;
+  }
+  .project-card__name {
+    margin: 0;
+    font-family: var(--sx-sys-font-family-display), system-ui, sans-serif;
+    font-size: clamp(2rem, 4vw, 2.75rem);
+    font-weight: 800;
+    line-height: 1;
+    color: var(--sx-sys-color-text-primary);
+  }
+  .project-card__desc {
+    margin: 0;
+    font-size: 1.0625rem;
+    line-height: 1.55;
+    color: var(--sx-sys-color-text-primary);
+  }
+  .project-card__tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.625rem;
+  }
+  .project-card__tag {
+    padding: 0.35rem 0.625rem;
+    border: var(--sx-sys-border-width) solid var(--sx-sys-color-border);
+    border-radius: var(--sx-sys-radius-md);
+    background: var(--sx-sys-color-bg-page);
+    font-family: var(--sx-sys-font-family-mono), ui-monospace, monospace;
+    font-size: 0.75rem;
+    font-weight: 700;
+    box-shadow: var(--sx-sys-shadow-sm);
+  }
+
+  /* —— 双特性小卡 —— */
+  .project-archive {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.125rem;
+  }
+  .feature-card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.875rem;
+    padding: 1.25rem;
+    border: var(--sx-sys-border-width) solid var(--sx-sys-color-border);
+    border-radius: var(--sx-sys-radius-md);
+    box-shadow: var(--sx-sys-shadow-md);
+  }
+  .feature-card--lab {
+    background: var(--sx-sys-color-accent);
+  }
+  .feature-card--stack {
+    background: var(--sx-sys-color-bg-surface);
+  }
+  .feature-card__eyebrow {
+    font-family: var(--sx-sys-font-family-mono), ui-monospace, monospace;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+  }
+  .feature-card__title {
+    margin: 0;
+    font-family: var(--sx-sys-font-family-display), system-ui, sans-serif;
+    font-size: 1.5rem;
+    font-weight: 800;
+    line-height: 1.1;
+    color: var(--sx-sys-color-text-primary);
+  }
+  .feature-card__desc {
+    margin: 0;
+    font-size: 0.875rem;
+    line-height: 1.5;
+    color: var(--sx-sys-color-text-muted);
+  }
+  .feature-card__desc--ink {
+    color: var(--sx-sys-color-text-primary);
+  }
+
+  .feature-card__flow {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: auto;
+  }
+  .flow-chip {
+    flex: 1;
+    padding: 0.6rem 0.5rem;
+    border: var(--sx-sys-border-width) solid var(--sx-sys-color-border);
+    border-radius: var(--sx-sys-radius-md);
+    background: var(--sx-flow-bg);
+    font-family: var(--sx-sys-font-family-mono), ui-monospace, monospace;
+    font-size: 0.625rem;
+    text-align: center;
+    box-shadow: var(--sx-sys-shadow-sm);
+  }
+
+  .feature-card__list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+  }
+  .stack-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.55rem 0;
+    border-bottom: var(--sx-sys-border-width) solid var(--sx-sys-color-border);
+    font-family: var(--sx-sys-font-family-mono), ui-monospace, monospace;
+    font-size: 0.75rem;
+  }
+  .stack-item:last-child {
+    border-bottom: 0;
+  }
+
+  @media (max-width: 48rem) {
+    .project-card {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    .project-card__side {
+      flex-basis: auto;
+      width: 100%;
+    }
+    .project-archive {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
