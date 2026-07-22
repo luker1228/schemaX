@@ -83,6 +83,20 @@ export function lessonFields(opts: CommonFieldOptions) {
     lessonType: z
       .enum(['lesson', 'practice', 'project', 'review'])
       .default('lesson'),
+    /**
+     * 可选大标题 Hero（设计稿级课时页）。
+     * 有值时用 LessonHero 替代默认 lhead；无值时走传统标题区。
+     */
+    hero: z
+      .object({
+        line1: z.string().min(1),
+        /** 第二行前缀；可省略，仅 line1 + badge 时使用 */
+        line2: z.string().optional(),
+        badge: z.string().optional(),
+        pillFill: z.string().optional(),
+        pillOutline: z.string().optional(),
+      })
+      .optional(),
   });
 }
 

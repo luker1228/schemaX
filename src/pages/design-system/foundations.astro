@@ -89,7 +89,7 @@ const motifs = [
         ]}
       />
 
-      <PageHeader title="Foundations">
+      <PageHeader title="基础 Foundations">
         <p>
           设计语言的「为什么」：视觉方向、核心原则、基础取值。
           数据层的变量名与取值见 <a href="/design-system/tokens">Tokens</a>。
@@ -114,8 +114,8 @@ const motifs = [
           RetroUI 强度按页面分级 —— 设计系统最强，博客正文最克制。 Schema
           母题不侵入长篇阅读空间。
         </p>
-        <div class="table-wrap">
-          <table>
+        <div class="doc-table-scroll">
+          <table class="doc-props">
             <thead>
               <tr><th>页面</th><th>RetroUI 强度</th></tr>
             </thead>
@@ -123,8 +123,8 @@ const motifs = [
               {
                 intensityRows.map((r) => (
                   <tr>
-                    <td class="cell-name">{r.page}</td>
-                    <td>{r.level}</td>
+                    <td class="doc-props__name">{r.page}</td>
+                    <td class="doc-props__desc">{r.level}</td>
                   </tr>
                 ))
               }
@@ -249,39 +249,14 @@ const motifs = [
     text-decoration: underline;
   }
 
-  /* 复用展示页通用样式（components.astro 定义了全局 .sub-title / .table-wrap，
-     但那是该页 scoped；此处为本页重新声明，保持各页隔离） */
+  /* 复用展示页通用样式（sub-title 为本页区块小标题；表格外观由全局 .doc-props 接管） */
   .sub-title {
     font-size: 1.1rem;
     font-weight: 700;
     margin-block: var(--sx-ref-space-6) var(--sx-ref-space-3);
   }
-  .table-wrap {
+  .doc-table-scroll {
     overflow-x: auto;
-    border: var(--sx-sys-border-width) solid var(--sx-sys-color-border);
-  }
-  .table-wrap table {
-    width: 100%;
-    border-collapse: collapse;
-    min-width: 24rem;
-  }
-  .table-wrap th,
-  .table-wrap td {
-    text-align: left;
-    padding: var(--sx-ref-space-2) var(--sx-ref-space-3);
-    border-bottom: var(--sx-sys-border-width) solid var(--sx-sys-color-border);
-  }
-  .table-wrap thead th {
-    background: var(--sx-sys-color-bg-page);
-    font-size: 0.75rem;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-  }
-  .table-wrap tbody tr:last-child td {
-    border-bottom: none;
-  }
-  .cell-name {
-    font-weight: 700;
   }
 
   /* 特征标签网格 */

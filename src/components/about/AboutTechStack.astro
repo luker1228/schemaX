@@ -1,0 +1,153 @@
+---
+import { stackRows, accentToken, type Accent } from '../../data/about';
+
+// action(蓝) 底配白字，其余底配黑字。
+const labelColor = (accent: Accent) =>
+  accent === 'action'
+    ? 'var(--sx-sys-color-bg-page)'
+    : 'var(--sx-sys-color-text-primary)';
+---
+
+<section class="stack">
+  <div class="stack__inner">
+    <div class="stack__head">
+      <div class="stack__head-left">
+        <h2 class="stack__title">我的技术栈</h2>
+        <p class="stack__sub">
+          每天在用的工具与语言。偏爱静态优先、契约驱动、可复现的链路。
+        </p>
+      </div>
+    </div>
+
+    <div class="stack__matrix">
+      {stackRows.map((row) => (
+        <div class="stack__row">
+          <span
+            class="stack__category"
+            style={`--sx-accent: ${accentToken[row.accent]}; --sx-label: ${labelColor(row.accent)}`}
+          >
+            {row.label}
+          </span>
+          <div class="stack__chips">
+            {row.items.map((item) => (
+              <span class="stack__chip">{item}</span>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .stack {
+    background: var(--sx-sys-color-bg-page);
+    padding-block: clamp(2.5rem, 5vw, 4rem) clamp(3rem, 5vw, 4.5rem);
+    padding-inline: clamp(1.5rem, 5vw, 4.5rem);
+  }
+
+  .stack__inner {
+    max-width: 80rem;
+    margin-inline: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .stack__head {
+    display: flex;
+    align-items: flex-end;
+  }
+
+  .stack__head-left {
+    display: flex;
+    flex-direction: column;
+    gap: 0.875rem;
+  }
+
+  .stack__title {
+    margin: 0;
+    font-family: var(--sx-sys-font-family-display), system-ui, sans-serif;
+    font-size: clamp(1.75rem, 3.5vw, 2.5rem);
+    font-weight: 900;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    color: var(--sx-sys-color-text-primary);
+  }
+
+  .stack__sub {
+    margin: 0;
+    max-width: 38.75rem;
+    font-family: var(--sx-sys-font-family-body), system-ui, sans-serif;
+    font-size: 1.0625rem;
+    line-height: 1.55;
+    color: var(--sx-sys-color-text-soft);
+  }
+
+  .stack__matrix {
+    background: var(--sx-sys-color-bg-surface);
+    border: var(--sx-sys-border-width-strong) solid var(--sx-sys-color-border);
+    border-radius: var(--sx-sys-radius-md);
+    box-shadow: 6px 6px 0 var(--sx-sys-color-border);
+    padding-block: 0.625rem;
+    padding-inline: 1.75rem;
+  }
+
+  .stack__row {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    padding-block: 1.125rem;
+    border-bottom: var(--sx-sys-border-width) solid var(--sx-sys-color-border);
+  }
+
+  .stack__row:last-child {
+    border-bottom: none;
+  }
+
+  .stack__category {
+    flex: 0 0 12.5rem;
+    padding: 0.5625rem 0.875rem;
+    background: var(--sx-accent, var(--sx-sys-color-accent));
+    border: var(--sx-sys-border-width) solid var(--sx-sys-color-border);
+    border-radius: 2px;
+    font-family: var(--sx-sys-font-family-mono), ui-monospace, monospace;
+    font-size: 0.8125rem;
+    font-weight: 800;
+    letter-spacing: 0.0375em;
+    color: var(--sx-label, var(--sx-sys-color-text-primary));
+  }
+
+  .stack__chips {
+    flex: 1 1 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.625rem;
+  }
+
+  .stack__chip {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.4375rem 0.75rem;
+    background: var(--sx-sys-color-bg-surface);
+    border: var(--sx-sys-border-width) solid var(--sx-sys-color-border);
+    border-radius: var(--sx-sys-radius-md);
+    box-shadow: var(--sx-sys-shadow-sm);
+    font-family: var(--sx-sys-font-family-mono), ui-monospace, monospace;
+    font-size: 0.8125rem;
+    font-weight: 700;
+    color: var(--sx-sys-color-text-primary);
+  }
+
+  @media (max-width: 40rem) {
+    .stack__row {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.875rem;
+    }
+
+    .stack__category {
+      flex-basis: auto;
+    }
+  }
+</style>

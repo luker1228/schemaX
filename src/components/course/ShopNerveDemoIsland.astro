@@ -1,0 +1,7 @@
+---
+// 课程 MDX 里用此 Astro 包装挂载 React island。
+// MDX 直接写 client:* 有时会 hydrate 失败；由 .astro 固定 client:load 更稳。
+import ShopNerveDemo from './ShopNerveDemo.tsx';
+---
+
+<ShopNerveDemo client:load />

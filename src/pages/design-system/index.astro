@@ -30,7 +30,33 @@ const icons = {
 const heroBadges = [
   { label: 'Tokens', color: 'var(--sx-sys-color-mint)' },
   { label: 'Components', color: 'var(--sx-sys-color-gray-light)' },
-  { label: 'Content', color: 'var(--sx-ref-color-red-500)' },
+  { label: 'Content', color: 'var(--sx-sys-color-danger)' },
+];
+
+// Hero 文案（对齐设计稿）—— 叙述行 + 技术栈行（mono 呼应「协议是一等公民」）
+const heroLead = '设计系统即是设计唯一真相，也是 SchemaX 的重要作品。';
+const heroStack = [
+  'Expressive Code · Pagefind · Style Dictionary（DTCG JSON 令牌）',
+  '原生 CSS + Tailwind v4（token 桥接）· pnpm · 静态输出',
+];
+
+// Figma Variables 装饰面板 —— 模拟设计工具的 color primitives 面板，
+// 强化「token 是设计真相」主题（呼应 SchemaX 协议一等公民）。
+// 纯装饰、aria-hidden；色块跟随真实 token，hex 标注真实取值。
+const figmaVars = [
+  { name: 'bg', value: '#FFF7E8', token: 'var(--sx-sys-color-bg-page)' },
+  {
+    name: 'ink',
+    value: '#000000',
+    token: 'var(--sx-sys-color-text-primary)',
+  },
+  { name: 'accent', value: '#FFDC58', token: 'var(--sx-sys-color-accent)' },
+  {
+    name: 'action',
+    value: '#2F5BEA',
+    token: 'var(--sx-sys-color-action-primary)',
+  },
+  { name: 'mint', value: '#01FFCC', token: 'var(--sx-sys-color-mint)' },
 ];
 
 // 第一行：三张 Live 卡（Foundations / Tokens / Components）
@@ -66,14 +92,46 @@ const accent = 'var(--sx-sys-color-accent)';
     <div class="sx-container">
       {/* —— Hero —— */}
       <header class="ds-hero">
+        {/* 倾斜的 Figma Variables 装饰面板（纯装饰，仅大屏显示） */}
+        <div class="ds-vars" aria-hidden="true">
+          <div class="ds-vars__panel">
+            <div class="ds-vars__head">
+              <span class="ds-vars__title">◆ VARIABLES</span>
+              <span class="ds-vars__add">+</span>
+            </div>
+            <span class="ds-vars__divider"></span>
+            <span class="ds-vars__collection">color / primitives</span>
+            {
+              figmaVars.map((v) => (
+                <div class="ds-vars__row">
+                  <span class="ds-vars__rowleft">
+                    <span
+                      class="ds-vars__chip"
+                      style={`background:${v.token}`}
+                    />
+                    <span class="ds-vars__name">{v.name}</span>
+                  </span>
+                  <span class="ds-vars__value">{v.value}</span>
+                </div>
+              ))
+            }
+            <span class="ds-vars__divider"></span>
+            <div class="ds-vars__mode">
+              <span class="ds-vars__modeicon">◐</span>
+              <span class="ds-vars__modelabel">Mode · Light</span>
+            </div>
+          </div>
+        </div>
+
         <Crumb
           items={[{ label: 'Home', href: '/' }, { label: 'Design System' }]}
         />
 
-        <h1 class="ds-hero__title">Design System</h1>
-        <p class="ds-hero__desc">
-          设计系统不是附属文档，而是 SchemaX 的重要作品。
-        </p>
+        <h1 class="ds-hero__title">设计系统</h1>
+        <div class="ds-hero__desc">
+          <p class="ds-hero__lead">{heroLead}</p>
+          {heroStack.map((line) => <p class="ds-hero__stack">{line}</p>)}
+        </div>
 
         <div class="ds-hero__badges">
           {
@@ -128,8 +186,10 @@ const accent = 'var(--sx-sys-color-accent)';
 </BaseLayout>
 
 <style>
-  /* —— Hero —— 左对齐：面包屑胶囊 + 大标题 + 描述 + 彩色徽章 */
+  /* —— Hero —— 居中：面包屑胶囊 + 大标题 + 描述（叙述 + 技术栈）+ 彩色徽章。
+     position:relative 承载右侧倾斜的 Figma Variables 装饰面板。 */
   .ds-hero {
+    position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -148,13 +208,28 @@ const accent = 'var(--sx-sys-color-accent)';
     color: var(--sx-sys-color-text-primary);
   }
 
+  /* 描述区：叙述行（正文体）+ 技术栈行（mono）两档层次 */
   .ds-hero__desc {
-    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.375rem;
     max-width: 40rem;
+  }
+  .ds-hero__lead {
+    margin: 0;
     color: var(--sx-sys-color-text-soft);
     font-size: 1.1875rem;
     font-weight: 500;
     line-height: 1.55;
+  }
+  .ds-hero__stack {
+    margin: 0;
+    color: var(--sx-sys-color-text-muted);
+    font-family: var(--sx-sys-font-family-mono);
+    font-size: 0.875rem;
+    line-height: 1.7;
+    letter-spacing: 0.005em;
   }
 
   .ds-hero__badges {
@@ -172,6 +247,110 @@ const accent = 'var(--sx-sys-color-accent)';
     font-family: var(--sx-sys-font-family-mono);
     font-size: 0.75rem;
     font-weight: 700;
+  }
+
+  /* —— Figma Variables 装饰面板 —— 模拟设计工具的 color primitives 面板，
+     倾斜浮于 hero 右侧，强化「token 是设计真相」主题。纯装饰，仅大屏显示。 */
+  .ds-vars {
+    position: absolute;
+    top: 0;
+    right: 0;
+    display: none;
+    pointer-events: none;
+  }
+  .ds-vars__panel {
+    display: flex;
+    flex-direction: column;
+    gap: 0.625rem;
+    width: 13.5rem;
+    padding: 0.75rem;
+    background: var(--sx-sys-color-bg-surface);
+    border: var(--sx-sys-border-width-strong) solid var(--sx-sys-color-border);
+    border-radius: 0.375rem;
+    box-shadow: var(--sx-sys-shadow-md);
+    transform: rotate(-10deg);
+    transform-origin: top right;
+  }
+  .ds-vars__head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .ds-vars__title {
+    font-family: var(--sx-sys-font-family-mono);
+    font-size: 0.6875rem;
+    font-weight: 800;
+    letter-spacing: 0.05em;
+    color: var(--sx-sys-color-text-primary);
+  }
+  .ds-vars__add {
+    font-family: var(--sx-sys-font-family-mono);
+    font-size: 0.9375rem;
+    font-weight: 800;
+    line-height: 1;
+    color: var(--sx-sys-color-text-soft);
+  }
+  .ds-vars__divider {
+    height: 1px;
+    background: var(--sx-sys-color-border);
+  }
+  .ds-vars__collection {
+    font-family: var(--sx-sys-font-family-mono);
+    font-size: 0.625rem;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    color: var(--sx-sys-color-text-soft);
+  }
+  .ds-vars__row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .ds-vars__rowleft {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .ds-vars__chip {
+    width: 1rem;
+    height: 1rem;
+    border: var(--sx-sys-border-width) solid var(--sx-sys-color-border);
+    border-radius: 0.25rem;
+  }
+  .ds-vars__name {
+    font-family: var(--sx-sys-font-family-mono);
+    font-size: 0.6875rem;
+    font-weight: 800;
+    color: var(--sx-sys-color-text-primary);
+  }
+  .ds-vars__value {
+    font-family: var(--sx-sys-font-family-mono);
+    font-size: 0.625rem;
+    font-weight: 700;
+    color: var(--sx-sys-color-text-soft);
+  }
+  .ds-vars__mode {
+    display: flex;
+    align-items: center;
+    gap: 0.375rem;
+  }
+  .ds-vars__modeicon {
+    font-size: 0.6875rem;
+    line-height: 1;
+    color: var(--sx-sys-color-text-soft);
+  }
+  .ds-vars__modelabel {
+    font-family: var(--sx-sys-font-family-mono);
+    font-size: 0.625rem;
+    font-weight: 800;
+    letter-spacing: 0.03em;
+    color: var(--sx-sys-color-text-soft);
+  }
+
+  @media (min-width: 75rem) {
+    .ds-vars {
+      display: block;
+    }
   }
 
   /* —— 卡片网格 —— 默认（移动端）单列堆叠 */

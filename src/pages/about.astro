@@ -1,14 +1,20 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import AboutHero from '../components/about/AboutHero.astro';
+import AboutSkills from '../components/about/AboutSkills.astro';
+import AboutTechStack from '../components/about/AboutTechStack.astro';
 import AboutJourney from '../components/about/AboutJourney.astro';
-import TechStackGrid from '../components/about/TechStackGrid.astro';
+import AboutValues from '../components/about/AboutValues.astro';
+import AboutNow from '../components/about/AboutNow.astro';
 import AboutContact from '../components/about/AboutContact.astro';
 ---
 
 <BaseLayout title="关于" type="profile">
   <AboutHero />
+  <AboutSkills />
+  <AboutTechStack />
   <AboutJourney />
-  <TechStackGrid />
+  <AboutValues />
+  <AboutNow />
   <AboutContact />
 </BaseLayout>

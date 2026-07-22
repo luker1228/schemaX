@@ -1,0 +1,111 @@
+---
+import { principleValues, accentToken } from '../../data/about';
+---
+
+<section class="values">
+  <div class="values__inner">
+    <div class="values__head">
+      <h2 class="values__title">个人追求</h2>
+    </div>
+
+    <div class="values__grid">
+      {principleValues.map((p) => (
+        <article
+          class="value-card"
+          style={`--sx-accent: ${accentToken[p.accent]}`}
+        >
+          <span class="value-card__num">{p.num}</span>
+          <h3 class="value-card__cn">{p.cn}</h3>
+          <span class="value-card__en">{p.en}</span>
+          <p class="value-card__body">{p.body}</p>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .values {
+    background: var(--sx-sys-color-bg-surface);
+    padding-block: clamp(2.5rem, 5vw, 3.5rem);
+    padding-inline: clamp(1.5rem, 5vw, 4.5rem);
+  }
+
+  .values__inner {
+    max-width: 80rem;
+    margin-inline: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1.75rem;
+  }
+
+  .values__head {
+    display: flex;
+    align-items: flex-end;
+  }
+
+  .values__title {
+    margin: 0;
+    font-family: var(--sx-sys-font-family-display), system-ui, sans-serif;
+    font-size: clamp(1.75rem, 4vw, 2.75rem);
+    font-weight: 800;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    color: var(--sx-sys-color-text-primary);
+  }
+
+  .values__grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.5rem;
+  }
+
+  .value-card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    min-height: 15.5rem;
+    padding: 1.75rem;
+    background: var(--sx-accent, var(--sx-sys-color-accent));
+    border: var(--sx-sys-border-width-strong) solid var(--sx-sys-color-border);
+    box-shadow: var(--sx-sys-shadow-lg);
+  }
+
+  .value-card__num {
+    font-family: var(--sx-sys-font-family-mono), ui-monospace, monospace;
+    font-size: 0.875rem;
+    font-weight: 800;
+    letter-spacing: 0.0625em;
+    color: var(--sx-sys-color-text-primary);
+  }
+
+  .value-card__cn {
+    margin: 0;
+    font-family: var(--sx-sys-font-family-display), system-ui, sans-serif;
+    font-size: 1.875rem;
+    font-weight: 800;
+    line-height: 1.1;
+    color: var(--sx-sys-color-text-primary);
+  }
+
+  .value-card__en {
+    font-family: var(--sx-sys-font-family-mono), ui-monospace, monospace;
+    font-size: 0.8125rem;
+    font-weight: 700;
+    color: var(--sx-sys-color-text-primary);
+  }
+
+  .value-card__body {
+    margin: auto 0 0;
+    font-family: var(--sx-sys-font-family-body), system-ui, sans-serif;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: var(--sx-sys-color-text-primary);
+  }
+
+  @media (max-width: 40rem) {
+    .values__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

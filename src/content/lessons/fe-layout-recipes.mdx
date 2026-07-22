@@ -1,0 +1,132 @@
+---
+title: 布局课·常见页面骨架
+description: 先看页面骨架，再看怎么排——三种最常见的页面布局配方：传统门户、后台管理、博客详情。学会用「分区」描述页面。
+slug: fe-layout-recipes
+status: published
+course: frontend-handbook
+order: 8
+durationMinutes: 12
+lessonType: lesson
+hero:
+  line1: 先拆区域
+  line2: 再谈
+  badge: 布局
+  pillFill: 页面骨架 · 三种配方
+  pillOutline: 第 8 节 · 分区描述
+---
+
+import StepCard from '../../components/course/StepCard.astro';
+import SectionHead from '../../components/course/SectionHead.astro';
+import Note from '../../components/course/Note.astro';
+import Preview from '../../components/course/Preview.astro';
+import Takeaway from '../../components/course/Takeaway.astro';
+
+<StepCard num="LAY-01" label="核心">
+  <SectionHead line1="布局决定元素彼此的位置关系" line2="先拆区域，再看怎么排" />
+  <Note tag="核心">
+    字号、颜色、边框，是在管「长什么样」；这一课先看<strong>页面怎么拆成几个区域</strong>——谁在上面，谁在左边，谁占主体。布局的核心不是背 CSS 属性，而是先把页面「分区」想清楚。下面三种是最常见的骨架。
+  </Note>
+</StepCard>
+
+<StepCard num="LAY-02" label="传统门户/官网">
+  <SectionHead line1="传统门户 / 官网骨架" line2="header + nav + banner + main + footer" />
+  <p>典型结构是 <code>header + nav + banner + main + footer</code>。适合首页、活动页、产品官网，重点是先把入口、主视觉和内容区分开。</p>
+  <Preview label="骨架预览">
+    <div style={{ width: '100%', maxWidth: '420px', border: '1px solid #000' }}>
+      <div style={{ padding: '12px', borderBottom: '1px solid #000', background: 'var(--sx-sys-color-beige)', fontWeight: 600, textAlign: 'center' }}>header · 导航 / Logo</div>
+      <div style={{ padding: '32px 16px', borderBottom: '1px solid #000', background: 'var(--sx-sys-color-bg-surface)', textAlign: 'center', fontWeight: 700, fontSize: '1.1rem' }}>banner · 主视觉</div>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '8px', padding: '12px', borderBottom: '1px solid #000' }}>
+        <div style={{ padding: '20px 8px', border: '1px solid #000', textAlign: 'center', fontSize: '0.8rem' }}>卡片 1</div>
+        <div style={{ padding: '20px 8px', border: '1px solid #000', textAlign: 'center', fontSize: '0.8rem' }}>卡片 2</div>
+        <div style={{ padding: '20px 8px', border: '1px solid #000', textAlign: 'center', fontSize: '0.8rem' }}>卡片 3</div>
+      </div>
+      <div style={{ padding: '10px', textAlign: 'center', fontSize: '0.8rem', opacity: 0.7 }}>footer</div>
+    </div>
+  </Preview>
+  <details style="margin-top: 8px;">
+    <summary style="cursor: pointer; font-weight: 600;">可以这样描述给 AI</summary>
+    <p style={{ margin: '8px 0 0', color: 'var(--sx-sys-color-text-soft)' }}>做一个门户首页：顶部是 header，里面放 Logo 和导航；中间是大 banner 和三块功能卡片；下方是 footer。桌面端三列卡片，移动端收成单列。<br/><strong>关键词</strong>：<code>header</code>、<code>nav</code>、<code>banner</code>、<code>main</code>、<code>footer</code></p>
+  </details>
+</StepCard>
+
+<StepCard num="LAY-03" label="后台管理系统">
+  <SectionHead line1="后台管理系统骨架" line2="header + aside + main" />
+  <p>结构上通常是 <code>header + aside + main</code>，其中 <code>aside</code> 贴最左并铺满高度，<code>main</code> 吃掉剩余空间。</p>
+  <Preview label="骨架预览">
+    <div style={{ width: '100%', maxWidth: '420px', border: '1px solid #000' }}>
+      <div style={{ padding: '12px', borderBottom: '1px solid #000', background: 'var(--sx-sys-color-beige)', fontWeight: 600, textAlign: 'center' }}>header</div>
+      <div style={{ display: 'flex', minHeight: '200px' }}>
+        <div style={{ width: '100px', padding: '12px 8px', borderRight: '1px solid #000', fontSize: '0.8rem', lineHeight: '2' }}>
+          <div>aside</div><div>导航 1</div><div>导航 2</div><div>导航 3</div>
+        </div>
+        <div style={{ flex: 1, padding: '12px' }}>
+          <div style={{ padding: '8px', border: '1px solid #000', marginBottom: '8px', fontSize: '0.8rem' }}>筛选栏</div>
+          <div style={{ padding: '40px 8px', border: '1px solid #000', textAlign: 'center', fontSize: '0.8rem' }}>main · 表格/图表</div>
+        </div>
+      </div>
+    </div>
+  </Preview>
+  <details style="margin-top: 8px;">
+    <summary style="cursor: pointer; font-weight: 600;">可以这样描述给 AI</summary>
+    <p style={{ margin: '8px 0 0', color: 'var(--sx-sys-color-text-soft)' }}>做一个后台管理系统：顶部是 header；左侧是固定宽度的 aside 导航，贴最左并铺满整条高度；右侧 main 作为主体区域，展示表格、图表和表单；移动端把侧边栏收起。<br/><strong>关键词</strong>：<code>header</code>、<code>aside</code>、<code>main</code>、<code>固定宽度</code>、<code>占据主体</code></p>
+  </details>
+</StepCard>
+
+<StepCard num="LAY-04" label="博客/文章详情">
+  <SectionHead line1="博客 / 文章详情页骨架" line2="header + article + aside + footer" />
+  <p>主内容是文章，右侧是作者信息、目录和相关文章。<strong>你现在正在看的就是这个布局</strong>。</p>
+  <Preview label="骨架预览">
+    <div style={{ width: '100%', maxWidth: '420px', border: '1px solid #000' }}>
+      <div style={{ padding: '12px', borderBottom: '1px solid #000', background: 'var(--sx-sys-color-beige)', fontWeight: 600, textAlign: 'center' }}>header</div>
+      <div style={{ display: 'flex', gap: '12px', padding: '12px', minHeight: '200px' }}>
+        <div style={{ flex: 1, padding: '12px', border: '1px solid #000' }}>
+          <div style={{ fontWeight: 700, marginBottom: '8px' }}>article</div>
+          <div style={{ fontSize: '0.8rem', lineHeight: 1.8 }}>正文内容…<br/>正文内容…<br/>正文内容…</div>
+        </div>
+        <div style={{ width: '110px', padding: '8px', border: '1px solid #000', fontSize: '0.75rem', lineHeight: '1.8' }}>
+          <div>aside</div><div>作者</div><div>目录</div><div>相关</div>
+        </div>
+      </div>
+      <div style={{ padding: '10px', textAlign: 'center', fontSize: '0.8rem', opacity: 0.7 }}>footer</div>
+    </div>
+  </Preview>
+  <details style="margin-top: 8px;">
+    <summary style="cursor: pointer; font-weight: 600;">可以这样描述给 AI</summary>
+    <p style={{ margin: '8px 0 0', color: 'var(--sx-sys-color-text-soft)' }}>做一个博客详情页：顶部是 header；中间左边是文章正文 article，右边是 aside，放作者信息、目录和相关文章；底部是 footer；移动端把右侧栏折到下方。<br/><strong>关键词</strong>：<code>article</code>、<code>aside</code>、<code>目录</code>、<code>footer</code>、<code>单列</code></p>
+  </details>
+</StepCard>
+
+<StepCard num="LAY-05" label="常见问题">
+  <SectionHead line1="左右位置主要由 CSS 决定" line2="aside 只是语义标签" />
+  <details open style="margin-bottom: 12px;">
+    <summary style="cursor: pointer; font-weight: 600; padding: 8px 0;">为什么写了 aside，有时在左边，有时在右边？</summary>
+    <p style="margin: 8px 0 0; color: var(--sx-sys-color-text-soft);"><code>aside</code> 只是<strong>语义标签</strong>，本身不决定左右。真正决定它在哪一侧的是父容器的 CSS：如果用了 flex，就看 flex-direction / order；如果用了 grid，就看列怎么分配。HTML 负责表达「这里是 aside」，CSS 负责决定位置。</p>
+  </details>
+  <details>
+    <summary style="cursor: pointer; font-weight: 600; padding: 8px 0;">那移动端为什么经常又会变成上下排列？</summary>
+    <p style="margin: 8px 0 0; color: var(--sx-sys-color-text-soft);">因为在窄屏下，CSS 往往会把原来的两列布局改成单列——最常见做法是 flex-direction 从横向（row）改成纵向（column），或者重设 grid-template-columns。这样正文优先展示，aside 再往下堆叠，这叫<strong>响应式布局</strong>。</p>
+  </details>
+</StepCard>
+
+<Takeaway
+  num="LAY-06"
+  label="总结"
+  line1="布局先分区"
+  line2="再决定左右上下"
+  note="HTML 负责表达「这里是 aside / main」；CSS 决定它在左还是右、横排还是竖排。先会画骨架图，再写属性。"
+>
+  <ul>
+    <li>
+      <strong>官网：</strong>
+      header + nav + banner + main + footer
+    </li>
+    <li>
+      <strong>后台：</strong>
+      header + aside + main
+    </li>
+    <li>
+      <strong>博客：</strong>
+      header + article + aside + footer
+    </li>
+  </ul>
+</Takeaway>

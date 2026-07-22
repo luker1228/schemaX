@@ -1,0 +1,140 @@
+---
+title: CSS 样式课·控制页面长相
+description: 用 6 个动手练习理解 CSS 控制什么——字号、留白、方向、反馈、颜色、分割线。每条属性改一行，看页面怎么变。
+slug: fe-css-basics
+status: published
+course: frontend-handbook
+order: 4
+durationMinutes: 14
+lessonType: practice
+hero:
+  line1: CSS
+  line2: 究竟在控制
+  badge: 什么
+  pillFill: 装饰层 · 外观规则
+  pillOutline: 第 4 节 · 样式六练
+---
+
+import StepCard from '../../components/course/StepCard.astro';
+import SectionHead from '../../components/course/SectionHead.astro';
+import Note from '../../components/course/Note.astro';
+import Preview from '../../components/course/Preview.astro';
+import Takeaway from '../../components/course/Takeaway.astro';
+import Button from '../../components/design-system/Button.astro';
+
+<StepCard num="CSS-01" label="核心">
+  <SectionHead line1="CSS 究竟在控制什么" line2="你不需要先学会写 CSS" />
+  <Note tag="核心">
+    不需要先学 CSS 怎么写，只需要明白 <strong>CSS 究竟可以控制什么</strong>。下面 6 个练习，我们都用同一张「用户资料卡」，每改一条 CSS 属性，看页面怎么变。
+  </Note>
+  <Preview label="练习用的卡片结构">
+    <pre><code>{'<article class="card">\n  <h2 class="card-title">用户资料</h2>\n  <p class="card-meta">姓名·张三 角色·管理员</p>\n  <p class="card-body">正文内容</p>\n  <div class="card-actions">\n    <button>编辑</button>\n    <button>删除</button>\n  </div>\n</article>'}</code></pre>
+  </Preview>
+</StepCard>
+
+<StepCard num="CSS-02" label="字号 font-size">
+  <SectionHead line1="控制字号" line2="font-size" />
+  <p><code>font-size</code> 控制文字大小。把 <code>.card-title</code> 从 <code>16px</code> 改到 <code>55px</code>，标题会立刻变得更醒目。</p>
+  <Preview>
+    <div style={{ marginBottom: '12px' }}>
+      <div style={{ fontSize: '16px', fontWeight: 700 }}>用户资料 · 16px</div>
+    </div>
+    <div>
+      <div style={{ fontSize: '55px', fontWeight: 700, lineHeight: 1.1 }}>用户资料 · 55px</div>
+    </div>
+  </Preview>
+</StepCard>
+
+<StepCard num="CSS-03" label="留白 padding">
+  <SectionHead line1="控制留白" line2="padding" />
+  <p><code>padding</code> 控制内容和边框之间的内边距。把 <code>.card</code> 的 <code>padding</code> 从 <code>8px</code> 往上调，卡片内部会变得更松，呼吸感也会更强。</p>
+  <Preview>
+    <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap' }}>
+      <div style={{ padding: '8px', border: '1px solid #000', maxWidth: '180px' }}>
+        <p style={{ margin: 0 }}>padding: 8px（紧）</p>
+      </div>
+      <div style={{ padding: '32px', border: '1px solid #000', maxWidth: '180px' }}>
+        <p style={{ margin: 0 }}>padding: 32px（松）</p>
+      </div>
+    </div>
+  </Preview>
+</StepCard>
+
+<StepCard num="CSS-04" label="方向 flex-direction">
+  <SectionHead line1="控制方向" line2="flex-direction" />
+  <p><code>flex-direction</code> 控制 flex 子元素的排列方向。从 <code>row</code> 改成 <code>column</code>，按钮就会从横排切成竖排。</p>
+  <Preview>
+    <div style={{ display: 'flex', gap: '24px', flexWrap: 'wrap', alignItems: 'flex-start' }}>
+      <div>
+        <p style={{ margin: '0 0 8px', fontSize: '0.8rem', opacity: 0.7 }}>row（横排）</p>
+        <div style={{ display: 'flex', flexDirection: 'row', gap: '10px' }}>
+          <Button size="sm" variant="outline">编辑</Button>
+          <Button size="sm" variant="outline">删除</Button>
+        </div>
+      </div>
+      <div>
+        <p style={{ margin: '0 0 8px', fontSize: '0.8rem', opacity: 0.7 }}>column（竖排）</p>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', alignItems: 'flex-start' }}>
+          <Button size="sm" variant="outline">编辑</Button>
+          <Button size="sm" variant="outline">删除</Button>
+        </div>
+      </div>
+    </div>
+  </Preview>
+</StepCard>
+
+<StepCard num="CSS-05" label="反馈 :hover">
+  <SectionHead line1="控制反馈" line2=":hover 伪类" />
+  <p><code>:hover</code> 表示鼠标移上去时的状态。给按钮改背景或文字颜色，按钮就会出现反馈，页面也会显得更「活」。把鼠标移到下面的按钮上试试：</p>
+  <Preview>
+    <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
+      <Button variant="outline" size="sm">悬停看我</Button>
+      <Button variant="primary" size="sm">再试这个</Button>
+    </div>
+  </Preview>
+</StepCard>
+
+<StepCard num="CSS-06" label="颜色 color / background">
+  <SectionHead line1="控制颜色" line2="color 和 background" />
+  <p><code>color</code> 和 <code>background</code> 控制组件的主色调。同一句「编辑」，换一个背景色，气质就完全不同。</p>
+  <Preview>
+    <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
+      <Button variant="primary" size="sm">编辑</Button>
+      <Button variant="secondary" size="sm">编辑</Button>
+      <Button variant="danger" size="sm">删除</Button>
+    </div>
+  </Preview>
+</StepCard>
+
+<StepCard num="CSS-07" label="分割线">
+  <SectionHead line1="控制分割线" line2="width / height / background" />
+  <p>Markdown 里的 <code>---</code> 或 HTML 里的 <code>hr</code>，是你显式写出来的分割线；但页面里很多章节之间那条贯穿的线，其实是 CSS 根据相邻区块的关系统一画出来的——改它的粗细、长短、颜色都是一条属性的事。</p>
+  <Preview>
+    <div style={{ height: '1px', background: '#999', margin: '12px 0' }}></div>
+    <div style={{ height: '4px', background: '#000', margin: '12px 0' }}></div>
+    <div style={{ height: '4px', width: '72px', background: 'var(--sx-sys-color-accent)', margin: '12px 0' }}></div>
+  </Preview>
+</StepCard>
+
+<Takeaway
+  num="CSS-08"
+  label="总结"
+  line1="CSS 的所有属性"
+  line2="都在回答同一个问题"
+  note="CSS 本质上都在回答：这个元素长什么样、放在哪、什么时候变。你不需要背下所有属性——知道「大概归哪条管」，剩下的查文档或问 AI。"
+>
+  <ul>
+    <li>
+      <strong>长什么样：</strong>
+      font-size / color / background / border
+    </li>
+    <li>
+      <strong>放在哪：</strong>
+      padding / margin / display / gap
+    </li>
+    <li>
+      <strong>什么时候变：</strong>
+      :hover 等状态伪类
+    </li>
+  </ul>
+</Takeaway>

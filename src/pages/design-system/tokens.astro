@@ -59,7 +59,7 @@ const isColor = (row: Row) => row.name.includes('color');
           { label: 'Tokens' },
         ]}
       />
-      <PageHeader title="Tokens">
+      <PageHeader title="令牌 Tokens">
         <p>
           本页直接读取 <code>src/generated/tokens.ts</code>（由 <code
             >tokens:build</code
@@ -71,8 +71,8 @@ const isColor = (row: Row) => row.name.includes('color');
         groups.map((g) => (
           <section class="group">
             <h2 class="group__title">{tierLabel[g.tier] ?? g.tier}</h2>
-            <div class="table-wrap">
-              <table>
+            <div class="doc-table-scroll">
+              <table class="doc-props">
                 <thead>
                   <tr>
                     <th>变量</th>
@@ -82,7 +82,7 @@ const isColor = (row: Row) => row.name.includes('color');
                 <tbody>
                   {g.rows.map((row) => (
                     <tr>
-                      <td class="cell-name">{row.name}</td>
+                      <td class="doc-props__name">{row.name}</td>
                       <td class="cell-value">
                         {isColor(row) && (
                           <span
@@ -91,7 +91,7 @@ const isColor = (row: Row) => row.name.includes('color');
                             aria-hidden="true"
                           />
                         )}
-                        <code>{row.value}</code>
+                        <span class="doc-props__type">{row.value}</span>
                       </td>
                     </tr>
                   ))}
@@ -118,43 +118,14 @@ const isColor = (row: Row) => row.name.includes('color');
     font-weight: 800;
     margin-block-end: var(--sx-ref-space-3);
   }
-  .table-wrap {
+  .doc-table-scroll {
     overflow-x: auto;
-    border: var(--sx-sys-border-width) solid var(--sx-sys-color-border);
   }
-  table {
-    width: 100%;
-    border-collapse: collapse;
-    min-width: 32rem;
-  }
-  th,
-  td {
-    text-align: left;
-    padding: var(--sx-ref-space-2) var(--sx-ref-space-3);
-    border-bottom: 1px solid var(--sx-sys-color-border);
-    vertical-align: middle;
-  }
-  thead th {
-    background: var(--sx-sys-color-bg-page);
-    font-size: 0.75rem;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-  }
-  tbody tr:last-child td {
-    border-bottom: none;
-  }
-  .cell-name {
-    font-family: ui-monospace, monospace;
-    font-size: 0.85rem;
-  }
+  /* doc-props 取值列：色块 + 值横排（doc-props 未覆盖此列） */
   .cell-value {
     display: flex;
     align-items: center;
     gap: var(--sx-ref-space-2);
-  }
-  .cell-value code {
-    font-family: ui-monospace, monospace;
-    font-size: 0.85rem;
   }
   .swatch {
     display: inline-block;

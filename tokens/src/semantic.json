@@ -20,7 +20,15 @@
       "mint": { "$type": "color", "$value": "{ref.color.mint}" },
       "lavender": { "$type": "color", "$value": "{ref.color.lavender}" },
       "beige": { "$type": "color", "$value": "{ref.color.beige}" },
-      "gray-light": { "$type": "color", "$value": "{ref.color.gray.200}" }
+      "gray-light": { "$type": "color", "$value": "{ref.color.gray.200}" },
+      "terminal": {
+        "bg": { "$type": "color", "$value": "{ref.color.terminal.bg}" },
+        "surface": { "$type": "color", "$value": "{ref.color.terminal.surface}" },
+        "elevated": { "$type": "color", "$value": "{ref.color.terminal.elevated}" },
+        "border": { "$type": "color", "$value": "{ref.color.terminal.border}" },
+        "text": { "$type": "color", "$value": "{ref.color.terminal.text}" },
+        "muted": { "$type": "color", "$value": "{ref.color.terminal.muted}" }
+      }
     },
     "font": {
       "family": {
@@ -46,6 +54,51 @@
       "sm": { "$type": "shadow", "$value": "2px 2px 0 #000000" },
       "md": { "$type": "shadow", "$value": "4px 4px 0 #000000" },
       "lg": { "$type": "shadow", "$value": "6px 6px 0 #000000" }
+    },
+    "layout": {
+      "width": {
+        "doc": {
+          "$type": "dimension",
+          "$value": "87.5rem",
+          "$description": "文档/课时双栏布局内容总宽（侧栏 + 主区）。设计系统组件页与课程课时页共用。"
+        }
+      },
+      "sidebar": {
+        "width": {
+          "$type": "dimension",
+          "$value": "17.5rem",
+          "$description": "文档/课时左侧栏列宽。与主区组成双栏 grid。"
+        }
+      },
+      "gap": {
+        "doc": {
+          "$type": "dimension",
+          "$value": "{ref.space.8}",
+          "$description": "文档/课时双栏：侧栏 ↔ 主区间距。"
+        },
+        "main": {
+          "$type": "dimension",
+          "$value": "{ref.space.8}",
+          "$description": "文档/课时主区内部纵向间距（导航 / hero / 正文）。"
+        }
+      },
+      "padding": {
+        "inline": {
+          "$type": "dimension",
+          "$value": "{ref.space.6}",
+          "$description": "文档/课时双栏容器左右内边距。"
+        },
+        "block-start": {
+          "$type": "dimension",
+          "$value": "{ref.space.8}",
+          "$description": "文档/课时双栏容器顶部内边距。"
+        },
+        "block-end": {
+          "$type": "dimension",
+          "$value": "{ref.space.12}",
+          "$description": "文档/课时双栏容器底部内边距。"
+        }
+      }
     }
   }
 }

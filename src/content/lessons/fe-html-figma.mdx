@@ -1,0 +1,91 @@
+---
+title: HTML · 设计师视角
+description: 设计师的世界是 Frame + Text + 图形。HTML 只是把这三种东西写成标签树——Frame 会套 Frame，Text 落字，图形放图或形状。
+slug: fe-html-figma
+status: published
+course: frontend-handbook
+order: 3
+durationMinutes: 8
+lessonType: lesson
+hero:
+  line1: Frame · Text
+  line2: 图形
+  badge: HTML
+  pillFill: 三种零件 · 一棵树
+  pillOutline: 第 3 节 · 设计师结构
+---
+
+import StepCard from '../../components/course/StepCard.astro';
+import SectionHead from '../../components/course/SectionHead.astro';
+import Note from '../../components/course/Note.astro';
+import Preview from '../../components/course/Preview.astro';
+import Takeaway from '../../components/course/Takeaway.astro';
+import LayerPair from '../../components/course/LayerPair.astro';
+import Card from '../../components/design-system/Card.astro';
+import Button from '../../components/design-system/Button.astro';
+import DocTable from '../../components/design-system/DocTable.astro';
+
+<StepCard num="HTML-D-01" label="核心">
+  <SectionHead line1="先记住这一句" line2="你画界面，就这三样" />
+  <Note tag="核心">
+    设计师的世界里，界面几乎只由三种零件搭出来：
+    <strong>Frame</strong>（框 / 容器）、
+    <strong>Text</strong>（字）、
+    <strong>图形</strong>（矩形、圆、图标、图片……）。
+    HTML 不是另一套宇宙——它只是把这三样写成标签，再用<strong>嵌套</strong>表达「谁包着谁」。
+  </Note>
+</StepCard>
+
+<StepCard num="HTML-D-02" label="三原语">
+  <SectionHead line1="三样零件" line2="各自对应什么标签" />
+  <p>先建立总表，再看具体例子：</p>
+
+  <DocTable label="设计师三原语对照表">
+    <thead>
+      <tr>
+        <th>设计师世界</th>
+        <th>干什么</th>
+        <th>HTML 里大致是</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="doc-props__name">Frame</td>
+        <td class="doc-props__desc">框住一组东西；可以再套 Frame</td>
+        <td>
+          <code>{'<div>'}</code>、<code>{'<section>'}</code>、<code>{'<header>'}</code>…
+        </td>
+      </tr>
+      <tr>
+        <td class="doc-props__name">Text</td>
+        <td class="doc-props__desc">落字：标题、正文、标签文案</td>
+        <td>
+          <code>{'<h1>'}</code>–<code>{'<h6>'}</code>、<code>{'<p>'}</code>、<code>{'<span>'}</code>…
+        </td>
+      </tr>
+      <tr>
+        <td class="doc-props__name">图形</td>
+        <td class="doc-props__desc">矩形色块、图标、插图、照片</td>
+        <td>
+          <code>{'<img>'}</code>、<code>{'<svg>'}</code>，或带背景的 <code>{'<div>'}</code>
+        </td>
+      </tr>
+    </tbody>
+  </DocTable>
+
+  <p>
+    画稿时：Frame 套 Frame，Text 和图形挂在某一层 Frame 里。
+    写 HTML 时：标签套标签，字和图片挂在某一层容器里。<strong>缩进越深，越靠内。</strong>
+  </p>
+</StepCard>
+
+<StepCard num="HTML-D-03" label="对照">
+  <SectionHead line1="一张卡片" line2="图层树 ↔ 标签树" />
+  <p>
+    同一张卡片：左边是设计师熟悉的<strong>图层面板</strong>，右边是浏览器看到的
+    HTML——缩进、嵌套、名字，一一对应。悬停任一侧，另一侧会一起亮起。
+  </p>
+
+  <LayerPair id="htmlPair" layersTitle="图层 · LAYERS" fileName="card.html" />
+
+</StepCard>

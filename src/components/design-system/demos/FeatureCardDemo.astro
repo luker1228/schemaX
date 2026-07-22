@@ -1,5 +1,6 @@
 ---
-// FeatureCard 演示 —— 仅供 /design-system/components 展示页使用。
+// FeatureCard 演示 —— V2 文档布局：States（Demo）/ Props（属性表）/ Slots（插槽表）/ Code（用法卡片）。
+// 仅供 /design-system/components/featurecard 详情页的 doc-content 区使用。
 import FeatureCard from '../FeatureCard.astro';
 import Demo from '../Demo.astro';
 
@@ -122,138 +123,208 @@ const usage = `<!-- Live：可点击跳转，黄底 Live 胶囊，hover 抬起 -
 ---
 
 <>
-  <Demo label="Live（可点击）" attr='status="live"' stageClass="wrap">
-    <FeatureCard
-      title="Tokens"
-      description="Reference / Semantic / Article / Component Token（读取生成产物）。"
-      status="live"
-      href="javascript:void(0)"
-      mediaColor="var(--sx-sys-color-accent)"
-    >
-      <Fragment set:html={iconBraces} />
-    </FeatureCard>
-    <FeatureCard
-      title="Components"
-      description="Button / Card / Tag / Badge / Navigation 等。"
-      status="live"
-      href="javascript:void(0)"
-      mediaColor="var(--sx-sys-color-accent)"
-    >
-      <Fragment set:html={iconComponent} />
-    </FeatureCard>
-    <Fragment slot="note">
-      <p>
-        <code>status="live"</code>：黄底 Live 胶囊，渲染为 <code>&lt;a&gt;</code
-        >（提供 href 时）， hover 抬起，行为同全局 <code>.card--interactive</code>。
+  {/* —— States：Live / Planned / Media —— */}
+  <section class="doc-section">
+    <div class="doc-section__head">
+      <div class="doc-section__eyebrow">
+        <span class="doc-section__mark" aria-hidden="true"></span>
+        <h2 class="doc-section__title">状态演示</h2>
+      </div>
+      <p class="doc-section__sub">
+        Live（可点击）/ Planned（静态占位）/ Media（自定义媒体色）。用 Demo
+        组件封装：头部为标签与代码，舞台为实例，底部为可折叠说明。
       </p>
-    </Fragment>
-  </Demo>
+    </div>
+    <div class="doc-section__body">
+      <Demo label="Live（可点击）" attr='status="live"' stageClass="wrap">
+        <FeatureCard
+          title="Tokens"
+          description="Reference / Semantic / Article / Component Token（读取生成产物）。"
+          status="live"
+          href="javascript:void(0)"
+          mediaColor="var(--sx-sys-color-accent)"
+        >
+          <Fragment set:html={iconBraces} />
+        </FeatureCard>
+        <FeatureCard
+          title="Components"
+          description="Button / Card / Tag / Badge / Navigation 等。"
+          status="live"
+          href="javascript:void(0)"
+          mediaColor="var(--sx-sys-color-accent)"
+        >
+          <Fragment set:html={iconComponent} />
+        </FeatureCard>
+        <Fragment slot="note">
+          <p>
+            <code>status="live"</code>：黄底 Live 胶囊，渲染为 <code>&lt;a&gt;</code
+            >（提供 href 时）， hover 抬起，行为同全局 <code>.card--interactive</code>。
+          </p>
+        </Fragment>
+      </Demo>
 
-  <Demo label="Planned（静态占位）" attr='status="planned"' stageClass="wrap">
-    <FeatureCard
-      title="Content"
-      description="Markdown 与 MDX 的真实排版规范。"
-      status="planned"
-      mediaColor="var(--sx-sys-color-beige)"
-    >
-      <Fragment set:html={iconFileText} />
-    </FeatureCard>
-    <FeatureCard
-      title="Patterns"
-      description="文章头部、课程目录、项目 Hero 等组合模式。"
-      status="planned"
-      mediaColor="var(--sx-sys-color-beige)"
-    >
-      <Fragment set:html={iconNetwork} />
-    </FeatureCard>
-    <Fragment slot="note">
-      <p>
-        <code>status="planned"</code>：米底 Planned 胶囊，强制渲染为 <code
-          >&lt;div&gt;</code
-        >（即便传了 href 也不生效），不可点击、hover 不抬起 —— 强化「未开放」语义。
+      <Demo label="Planned（静态占位）" attr='status="planned"' stageClass="wrap">
+        <FeatureCard
+          title="Content"
+          description="Markdown 与 MDX 的真实排版规范。"
+          status="planned"
+          mediaColor="var(--sx-sys-color-beige)"
+        >
+          <Fragment set:html={iconFileText} />
+        </FeatureCard>
+        <FeatureCard
+          title="Patterns"
+          description="文章头部、课程目录、项目 Hero 等组合模式。"
+          status="planned"
+          mediaColor="var(--sx-sys-color-beige)"
+        >
+          <Fragment set:html={iconNetwork} />
+        </FeatureCard>
+        <Fragment slot="note">
+          <p>
+            <code>status="planned"</code>：米底 Planned 胶囊，强制渲染为 <code
+              >&lt;div&gt;</code
+            >（即便传了 href 也不生效），不可点击、hover 不抬起 —— 强化「未开放」语义。
+          </p>
+        </Fragment>
+      </Demo>
+
+      <Demo label="Media 可放任意内容" attr="默认 slot" stageClass="wrap">
+        <FeatureCard
+          title="默认色"
+          description="不传 mediaColor 时，媒体条兜底为品牌强调黄。"
+          status="live"
+          href="javascript:void(0)"
+        >
+          <Fragment set:html={iconComponent} />
+        </FeatureCard>
+        <FeatureCard
+          title="自定义色"
+          description="mediaColor 传任意 --sx-* token，如薄荷装饰色。"
+          status="live"
+          href="javascript:void(0)"
+          mediaColor="var(--sx-sys-color-mint)"
+        >
+          <Fragment set:html={iconBraces} />
+        </FeatureCard>
+        <Fragment slot="note">
+          <p>
+            默认 slot 可放图标 / SVG / <code>&lt;img&gt;</code> 等。留空则媒体条仅呈现纯色背景。
+            <code>mediaColor</code> 传 <code>--sx-*</code> token 字符串即可换色。
+          </p>
+        </Fragment>
+      </Demo>
+    </div>
+  </section>
+
+  {/* —— Props：真实属性表 —— */}
+  <section class="doc-section">
+    <div class="doc-section__head">
+      <div class="doc-section__eyebrow">
+        <span class="doc-section__mark" aria-hidden="true"></span>
+        <h2 class="doc-section__title">Props 属性</h2>
+      </div>
+      <p class="doc-section__sub">
+        FeatureCard 组件接受的属性。title 为必填，其余可选。
       </p>
-    </Fragment>
-  </Demo>
-
-  <Demo label="Media 可放任意内容" attr="默认 slot" stageClass="wrap">
-    <FeatureCard
-      title="默认色"
-      description="不传 mediaColor 时，媒体条兜底为品牌强调黄。"
-      status="live"
-      href="javascript:void(0)"
-    >
-      <Fragment set:html={iconComponent} />
-    </FeatureCard>
-    <FeatureCard
-      title="自定义色"
-      description="mediaColor 传任意 --sx-* token，如薄荷装饰色。"
-      status="live"
-      href="javascript:void(0)"
-      mediaColor="var(--sx-sys-color-mint)"
-    >
-      <Fragment set:html={iconBraces} />
-    </FeatureCard>
-    <Fragment slot="note">
-      <p>
-        默认 slot 可放图标 / SVG / <code>&lt;img&gt;</code> 等。留空则媒体条仅呈现纯色背景。
-        <code>mediaColor</code> 传 <code>--sx-*</code> token 字符串即可换色。
-      </p>
-    </Fragment>
-  </Demo>
-
-  <h3 class="sub-title">Props</h3>
-  <div class="table-wrap">
-    <table>
-      <thead>
-        <tr><th>Prop</th><th>类型</th><th>默认</th><th>说明</th></tr>
-      </thead>
-      <tbody>
-        {
-          apiRows.map((r) => (
+    </div>
+    <div class="doc-section__body">
+      <div class="doc-table-scroll">
+        <table class="doc-props">
+          <thead>
             <tr>
-              <td class="cell-name">
-                <code>{r.name}</code>
-              </td>
-              <td>
-                <code>{r.type}</code>
-              </td>
-              <td>
-                <code>{r.default}</code>
-              </td>
-              <td class="cell-desc">{r.desc}</td>
+              <th>Prop</th>
+              <th>Type</th>
+              <th>Default</th>
+              <th>Description</th>
             </tr>
-          ))
-        }
-      </tbody>
-    </table>
-  </div>
+          </thead>
+          <tbody>
+            {
+              apiRows.map((r) => (
+                <tr>
+                  <td class="doc-props__name">{r.name}</td>
+                  <td>
+                    <span class="doc-props__type">{r.type}</span>
+                  </td>
+                  <td>
+                    <span class="doc-props__type">{r.default}</span>
+                  </td>
+                  <td class="doc-props__desc">{r.desc}</td>
+                </tr>
+              ))
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
 
-  <h3 class="sub-title">Slots</h3>
-  <div class="table-wrap">
-    <table>
-      <thead>
-        <tr><th>Slot</th><th>说明</th></tr>
-      </thead>
-      <tbody>
-        {
-          slots.map((s) => (
+  {/* —— Slots：插槽表 —— */}
+  <section class="doc-section">
+    <div class="doc-section__head">
+      <div class="doc-section__eyebrow">
+        <span class="doc-section__mark" aria-hidden="true"></span>
+        <h2 class="doc-section__title">Slots 插槽</h2>
+      </div>
+      <p class="doc-section__sub">FeatureCard 组件提供的具名插槽与默认插槽。</p>
+    </div>
+    <div class="doc-section__body">
+      <div class="doc-table-scroll">
+        <table class="doc-props">
+          <thead>
             <tr>
-              <td class="cell-name">
-                <code>{s.name}</code>
-              </td>
-              <td class="cell-desc">{s.desc}</td>
+              <th>Slot</th>
+              <th>Description</th>
             </tr>
-          ))
-        }
-      </tbody>
-    </table>
-  </div>
+          </thead>
+          <tbody>
+            {
+              slots.map((s) => (
+                <tr>
+                  <td class="doc-props__name">{s.name}</td>
+                  <td class="doc-props__desc">{s.desc}</td>
+                </tr>
+              ))
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
 
-  <h3 class="sub-title">用法</h3>
-  <pre class="usage"><code>{usage}</code></pre>
+  {/* —— Code：用法示例卡片 —— */}
+  <section class="doc-section">
+    <div class="doc-section__head">
+      <div class="doc-section__eyebrow">
+        <span class="doc-section__mark" aria-hidden="true"></span>
+        <h2 class="doc-section__title">用法示例</h2>
+      </div>
+      <p class="doc-section__sub">
+        在 Astro 页面中引入 FeatureCard，按 status 区分 live / planned。
+      </p>
+    </div>
+    <div class="doc-section__body">
+      <figure class="doc-code">
+        <figcaption class="doc-code__bar">
+          <span class="doc-code__file">FeatureCard.astro</span>
+          <span class="doc-code__lang">astro</span>
+        </figcaption>
+        <pre class="doc-code__body"><code>{usage}</code></pre>
+      </figure>
+    </div>
+  </section>
 </>
 
 <style>
+  /* doc-section__body 内的 Demo：去掉 Demo 自带的底部 margin，统一由 body gap 控制。 */
+  :global(.doc-section__body .demo) {
+    margin-block-end: 0;
+  }
+  /* props 表窄屏横向滚动防御 */
+  .doc-table-scroll {
+    overflow-x: auto;
+  }
   /* demo 卡片统一宽度，便于横向对比 */
   .demo__stage :global(.featurecard) {
     min-width: 13rem;

@@ -1,0 +1,28 @@
+---
+// DocTable —— 文档/课程对照表
+// 外壳：.doc-table-scroll + .doc-props.doc-props--paper（src/styles/doc.css）
+// 表头 / 表体经默认 slot 传入（thead / tbody）。
+//
+// 列约定（可选 class，与设计系统 Props 表一致）：
+//   · 名称列：doc-props__name
+//   · 类型/代码列：doc-props__type（或裸 <code>）
+//   · 说明列：doc-props__desc
+//   · 树形缩进：doc-props__depth-1 / depth-2（替代 inline padding）
+interface Props {
+  class?: string;
+  /** 横向滚动区域的可访问性名称（默认「对照表」） */
+  label?: string;
+}
+const { class: className, label = '对照表' } = Astro.props;
+---
+
+<div
+  class:list={['doc-table-scroll', className]}
+  role="region"
+  aria-label={label}
+  tabindex="0"
+>
+  <table class="doc-props doc-props--paper">
+    <slot />
+  </table>
+</div>

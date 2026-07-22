@@ -1,0 +1,348 @@
+---
+title: HTML可以看做Markdown
+description: Html 可以看做 Markdown——用对照把骨架看清。以邻里小卖部为例，练出「先想区块，再选标签」的判断。
+slug: fe-html-structure
+status: published
+course: frontend-handbook
+order: 2
+durationMinutes: 12
+lessonType: lesson
+hero:
+  line1: Html可以看做
+  badge: Markdown
+  pillFill: 结构 · 语义 · 标签
+  pillOutline: 第 2 节 · 骨架对照
+---
+
+import StepCard from '../../components/course/StepCard.astro';
+import SectionHead from '../../components/course/SectionHead.astro';
+import Note from '../../components/course/Note.astro';
+import CodeCompare from '../../components/design-system/CodeCompare.astro';
+import Preview from '../../components/course/Preview.astro';
+import Takeaway from '../../components/course/Takeaway.astro';
+
+<StepCard num="HTML-01" label="核心">
+  <SectionHead line1="Html 可以看做 Markdown" line2="同一类结构，两套写法" />
+  <Note tag="核心">
+    <strong>Html 可以看做 Markdown</strong>——都是在描述「有什么结构」。
+    上一节说过：小店里有没有货架、标题、购买按钮，由 <strong>HTML 骨架</strong>决定。
+    Markdown 用 <code>#</code> 表示标题，HTML 用 <code>&lt;h1&gt;</code>；Markdown 用
+    <code>-</code> 表示列表，HTML 用 <code>&lt;ul&gt;&lt;li&gt;</code>。概念一样，写法不同。
+    后端同学不必背全标签表，但要形成稳定判断：<strong>先想区块，再选语义标签</strong>。
+  </Note>
+</StepCard>
+
+<StepCard num="HTML-02" label="标题">
+  <SectionHead line1="标题 h1–h6" line2="# 数量 ↔ 标签层级" />
+  <p>
+    Markdown 用 <code>#</code> 数量表示标题层级，HTML 用 <code>&lt;h1&gt;</code> 到
+    <code>&lt;h6&gt;</code>。一页通常只有一个 h1（店名），分区用 h2、h3。
+  </p>
+  <CodeCompare
+    from="MARKDOWN.MD"
+    to="INDEX.HTML"
+    source={'# 邻里小卖部\n## 今日上架\n### 咖啡角'}
+    target={'<h1>邻里小卖部</h1>\n<h2>今日上架</h2>\n<h3>咖啡角</h3>'}
+  />
+  <Preview label="渲染结果">
+    <h1>{'邻里小卖部'}</h1>
+    <h2>{'今日上架'}</h2>
+    <h3>{'咖啡角'}</h3>
+  </Preview>
+</StepCard>
+
+<StepCard num="HTML-03" label="段落">
+  <SectionHead line1="段落 p" line2="空行分隔 ↔ 显式包裹" />
+  <p>
+    Markdown 里空行就隔开段落；HTML 必须用 <code>&lt;p&gt;</code> 把每段包起来，浏览器才知道「这是一段」。
+  </p>
+  <CodeCompare
+    from="MARKDOWN.MD"
+    to="INDEX.HTML"
+    source={'欢迎光临邻里小卖部。\n\n今日三件好物，现做现售。\n\n现金友好，自取打包。'}
+    target={
+      '<p>欢迎光临邻里小卖部。</p>\n<p>今日三件好物，现做现售。</p>\n<p>现金友好，自取打包。</p>'
+    }
+  />
+  <Preview label="渲染结果">
+    <p>{'欢迎光临邻里小卖部。'}</p>
+    <p>{'今日三件好物，现做现售。'}</p>
+    <p>{'现金友好，自取打包。'}</p>
+  </Preview>
+</StepCard>
+
+<StepCard num="HTML-04" label="换行">
+  <SectionHead line1="换行 br" line2="源码回车 ≠ 屏幕换行" />
+  <p>
+    <strong>浏览器会把源码里的空白折叠成一个空格</strong>
+    ——敲多少回车都没用。要在同一段里硬换行，必须用 <code>&lt;br /&gt;</code>。
+  </p>
+  <CodeCompare
+    from="MARKDOWN.MD"
+    to="INDEX.HTML"
+    source={'地址：巷口 3 号\n营业：10:00–20:00\n\n（末尾空两格再回车 = 软换行）'}
+    target={'<p>地址：巷口 3 号<br />\n营业：10:00–20:00</p>'}
+  />
+  <Preview label="渲染结果对比">
+    <p>{'地址：巷口 3 号 营业：10:00–20:00（源码回车，显示成一行）'}</p>
+    <hr />
+    <p>
+      {'地址：巷口 3 号'}
+      <br />
+      {'营业：10:00–20:00（用 br 真正换行）'}
+    </p>
+  </Preview>
+</StepCard>
+
+<StepCard num="HTML-05" label="粗体">
+  <SectionHead line1="粗体 strong" line2="**文字** ↔ 重要语义" />
+  <p>
+    Markdown 用双星号，HTML 用 <code>&lt;strong&gt;</code>。不只是加粗，语义上表示「这段更重要」。
+  </p>
+  <CodeCompare
+    from="MARKDOWN.MD"
+    to="INDEX.HTML"
+    source={'今日特价：**手冲咖啡 ¥28**。'}
+    target={'<p>今日特价：<strong>手冲咖啡 ¥28</strong>。</p>'}
+  />
+  <Preview label="渲染结果">
+    <p>
+      {'今日特价：'}
+      <strong>{'手冲咖啡 ¥28'}</strong>
+      {'。'}
+    </p>
+  </Preview>
+</StepCard>
+
+<StepCard num="HTML-06" label="斜体">
+  <SectionHead line1="斜体 em" line2="*文字* ↔ 语气强调" />
+  <p>
+    Markdown 用单星号，HTML 用 <code>&lt;em&gt;</code>，表示语气上的强调（不是「更重要」，是「读的时候加重」）。
+  </p>
+  <CodeCompare
+    from="MARKDOWN.MD"
+    to="INDEX.HTML"
+    source={'店员说：*请自备购物袋*。'}
+    target={'<p>店员说：<em>请自备购物袋</em>。</p>'}
+  />
+  <Preview label="渲染结果">
+    <p>
+      {'店员说：'}
+      <em>{'请自备购物袋'}</em>
+      {'。'}
+    </p>
+  </Preview>
+</StepCard>
+
+<StepCard num="HTML-07" label="引用">
+  <SectionHead line1="引用 blockquote" line2="> 开头 ↔ 引用块" />
+  <p>
+    Markdown 用 <code>&gt;</code> 开头，HTML 用 <code>&lt;blockquote&gt;</code>——适合店长寄语、公告摘录。
+  </p>
+  <CodeCompare
+    from="MARKDOWN.MD"
+    to="INDEX.HTML"
+    source={'> 新鲜现做，卖完即止。\n> 欢迎再来。'}
+    target={'<blockquote>\n  新鲜现做，卖完即止。\n  欢迎再来。\n</blockquote>'}
+  />
+  <Preview label="渲染结果">
+    <blockquote>{'新鲜现做，卖完即止。欢迎再来。'}</blockquote>
+  </Preview>
+</StepCard>
+
+<StepCard num="HTML-08" label="行内代码">
+  <SectionHead line1="行内代码 code" line2="反引号 ↔ 短代码片段" />
+  <p>
+    Markdown 用反引号包住短代码，HTML 用 <code>&lt;code&gt;</code>。页面上出现类名、字段名时常用。
+  </p>
+  <CodeCompare
+    from="MARKDOWN.MD"
+    to="INDEX.HTML"
+    source={'按钮节点写成 `button.buy`。'}
+    target={'<p>按钮节点写成 <code>button.buy</code>。</p>'}
+  />
+  <Preview label="渲染结果">
+    <p>
+      {'按钮节点写成 '}
+      <code>{'button.buy'}</code>
+      {'。'}
+    </p>
+  </Preview>
+</StepCard>
+
+<StepCard num="HTML-09" label="代码块">
+  <SectionHead line1="代码块 pre + code" line2="三反引号 ↔ 保留换行" />
+  <p>
+    Markdown 用三个反引号包多行代码；HTML 用 <code>&lt;pre&gt;&lt;code&gt;</code>。
+    <code>pre</code> 负责保留空格和换行。
+  </p>
+  <CodeCompare
+    from="MARKDOWN.MD"
+    to="INDEX.HTML"
+    source={'```html\n<button type="button">购买</button>\n```'}
+    target={'<pre><code>&lt;button type="button"&gt;购买&lt;/button&gt;</code></pre>'}
+  />
+  <Preview label="渲染结果">
+    <pre>
+      <code>{'<button type="button">购买</button>'}</code>
+    </pre>
+  </Preview>
+</StepCard>
+
+<StepCard num="HTML-10" label="分隔线">
+  <SectionHead line1="分隔线 hr" line2="--- ↔ 主题切断" />
+  <p>
+    Markdown 用三个短横线，HTML 用 <code>&lt;hr /&gt;</code>，表示「上面一段话题结束了」。
+  </p>
+  <CodeCompare
+    from="MARKDOWN.MD"
+    to="INDEX.HTML"
+    source={'菜单看完了\n\n---\n\n下面是营业时间'}
+    target={'<p>菜单看完了</p>\n<hr />\n<p>下面是营业时间</p>'}
+  />
+  <Preview label="渲染结果">
+    <p>{'菜单看完了'}</p>
+    <hr />
+    <p>{'下面是营业时间'}</p>
+  </Preview>
+</StepCard>
+
+<StepCard num="HTML-11" label="无序列表">
+  <SectionHead line1="无序列表 ul + li" line2="- 项 ↔ 容器套项" />
+  <p>
+    Markdown 用 <code>-</code> 或 <code>*</code> 开头；HTML 结构更清楚：外层
+    <code>&lt;ul&gt;</code> 是列表容器，内层 <code>&lt;li&gt;</code> 是每一项——小店菜单最常用。
+  </p>
+  <CodeCompare
+    from="MARKDOWN.MD"
+    to="INDEX.HTML"
+    source={'- 手冲咖啡 · ¥28\n- 全麦吐司 · ¥12\n- 季节水果 · ¥18'}
+    target={
+      '<ul>\n  <li>手冲咖啡 · ¥28</li>\n  <li>全麦吐司 · ¥12</li>\n  <li>季节水果 · ¥18</li>\n</ul>'
+    }
+  />
+  <Preview label="渲染结果">
+    <ul>
+      <li>{'手冲咖啡 · ¥28'}</li>
+      <li>{'全麦吐司 · ¥12'}</li>
+      <li>{'季节水果 · ¥18'}</li>
+    </ul>
+  </Preview>
+</StepCard>
+
+<StepCard num="HTML-12" label="有序列表">
+  <SectionHead line1="有序列表 ol + li" line2="1. 2. 3. ↔ 自动编号" />
+  <p>
+    Markdown 用数字加点；HTML 用 <code>&lt;ol&gt;</code> 包 <code>&lt;li&gt;</code>，浏览器自动加序号——适合下单步骤。
+  </p>
+  <CodeCompare
+    from="MARKDOWN.MD"
+    to="INDEX.HTML"
+    source={'1. 选商品\n2. 点购买\n3. 到店取货'}
+    target={'<ol>\n  <li>选商品</li>\n  <li>点购买</li>\n  <li>到店取货</li>\n</ol>'}
+  />
+  <Preview label="渲染结果">
+    <ol>
+      <li>{'选商品'}</li>
+      <li>{'点购买'}</li>
+      <li>{'到店取货'}</li>
+    </ol>
+  </Preview>
+</StepCard>
+
+<StepCard num="HTML-13" label="链接">
+  <SectionHead line1="链接 a" line2="[文字](url) ↔ href" />
+  <p>
+    Markdown 用方括号 + 圆括号；HTML 用 <code>&lt;a href="..."&gt;</code>。演示里不跳走真站，用
+    <code>javascript:void(0)</code> 占位。
+  </p>
+  <CodeCompare
+    from="MARKDOWN.MD"
+    to="INDEX.HTML"
+    source={'[查看本周菜单](/menu)'}
+    target={'<a href="/menu">查看本周菜单</a>'}
+  />
+  <Preview label="渲染结果">
+    <p>
+      <a href="javascript:void(0)">{'查看本周菜单'}</a>
+    </p>
+  </Preview>
+</StepCard>
+
+<StepCard num="HTML-14" label="图片">
+  <SectionHead line1="图片 img" line2="![alt](src) ↔ src + alt" />
+  <p>
+    Markdown 在链接前加 <code>!</code>；HTML 用自闭合的 <code>&lt;img /&gt;</code>，必带
+    <code>src</code> 和 <code>alt</code>（读屏与加载失败时的文字）。
+  </p>
+  <CodeCompare
+    from="MARKDOWN.MD"
+    to="INDEX.HTML"
+    source={'![邻里小卖部店招](/images/placeholder.svg)'}
+    target={'<img src="/images/placeholder.svg" alt="邻里小卖部店招" />'}
+  />
+  <Preview label="渲染结果">
+    <img src="/images/placeholder.svg" alt="邻里小卖部店招" width="150" height="60" />
+  </Preview>
+</StepCard>
+
+<StepCard num="HTML-15" label="表格">
+  <SectionHead line1="表格 table" line2="管道符 ↔ 行与单元格" />
+  <p>
+    Markdown 表格够用但受限；HTML 用 <code>table</code> / <code>tr</code> / <code>th</code> /
+    <code>td</code> 组合，价目表更稳。
+  </p>
+  <CodeCompare
+    from="MARKDOWN.MD"
+    to="INDEX.HTML"
+    source={'| 商品 | 价格 |\n|------|------|\n| 手冲咖啡 | ¥28 |\n| 全麦吐司 | ¥12 |'}
+    target={
+      '<table>\n  <tr>\n    <th>商品</th><th>价格</th>\n  </tr>\n  <tr>\n    <td>手冲咖啡</td><td>¥28</td>\n  </tr>\n  <tr>\n    <td>全麦吐司</td><td>¥12</td>\n  </tr>\n</table>'
+    }
+  />
+  <Preview label="渲染结果">
+    <table>
+      <thead>
+        <tr>
+          <th>{'商品'}</th>
+          <th>{'价格'}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>{'手冲咖啡'}</td>
+          <td>{'¥28'}</td>
+        </tr>
+        <tr>
+          <td>{'全麦吐司'}</td>
+          <td>{'¥12'}</td>
+        </tr>
+      </tbody>
+    </table>
+  </Preview>
+</StepCard>
+
+<StepCard num="HTML-16" label="表单">
+  <SectionHead line1="表单 form" line2="Markdown 没有 · HTML 独有" />
+  <p>
+    Markdown 没有表单。下单、留言、搜商品都靠 HTML：
+    <code>form</code> 包住 <code>label</code> / <code>input</code> / <code>button</code>。
+  </p>
+  <CodeCompare
+    from="MARKDOWN.MD"
+    to="INDEX.HTML"
+    source={'（Markdown 不支持表单）'}
+    target={
+      '<form>\n  <label for="item">想买什么</label>\n  <input type="text" id="item" />\n  <button type="submit">提交</button>\n</form>'
+    }
+  />
+  <Preview label="渲染结果">
+    <form>
+      <label for="fe-item">{'想买什么'}</label>
+      <input type="text" id="fe-item" placeholder="例如：手冲咖啡" />
+      <button type="button">{'提交'}</button>
+    </form>
+  </Preview>
+</StepCard>
+
+  

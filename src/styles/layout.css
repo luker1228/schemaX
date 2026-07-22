@@ -1,4 +1,5 @@
-/* 布局辅助：容器 / 堆叠 / 区段（归入 layout 层）。 */
+/* 布局辅助：容器 / 堆叠 / 区段 / 文档双栏（归入 layout 层）。 */
+
 .sx-container {
   width: 100%;
   max-width: var(--sx-layout-width-page);
@@ -22,4 +23,63 @@
   display: grid;
   gap: var(--sx-ref-space-8);
   grid-template-columns: repeat(auto-fill, minmax(min(100%, 18rem), 1fr));
+}
+
+/* ══════════════════════════════════════════════════════════════
+   文档双栏布局（sys.layout.*）
+   设计系统组件页 + 课程课时页共用同一壳：
+     .sx-doc-layout
+       .sx-doc-side-slot  → sticky 侧栏槽（DocSide）
+       .sx-doc-main       → 主区（hero / 正文 / pager）
+   sticky 做在 grid 子项上；main 最小宽度 0 防 pre 撑破。
+   ══════════════════════════════════════════════════════════════ */
+
+.sx-doc-layout {
+  width: 100%;
+  max-width: var(--sx-sys-layout-width-doc);
+  margin-inline: auto;
+  padding-inline: var(--sx-sys-layout-padding-inline);
+  padding-block: var(--sx-sys-layout-padding-block-start)
+    var(--sx-sys-layout-padding-block-end);
+  display: grid;
+  grid-template-columns: var(--sx-sys-layout-sidebar-width) minmax(0, 1fr);
+  gap: var(--sx-sys-layout-gap-doc);
+  align-items: start;
+  box-sizing: border-box;
+}
+
+/* 侧栏槽 = sticky 主体。
+   max-height 限制在视口内，过长目录在槽内滚动，避免顶项（如第 1 节）被裁出视口。 */
+.sx-doc-side-slot {
+  --sx-doc-side-top: calc(
+    var(--sx-comp-header-logo-size) + 2 * var(--sx-comp-header-padding-block) +
+      0.75rem
+  );
+  position: sticky;
+  top: var(--sx-doc-side-top);
+  align-self: start;
+  height: fit-content;
+  max-height: calc(100vh - var(--sx-doc-side-top) - 1rem);
+  overflow-x: hidden;
+  overflow-y: auto;
+  z-index: 10;
+  min-width: 0;
+  scrollbar-width: thin;
+}
+
+.sx-doc-main {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sx-sys-layout-gap-main);
+  min-width: 0;
+}
+
+/* 窄屏：侧栏隐藏，主区全宽 */
+@media (max-width: 1024px) {
+  .sx-doc-layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .sx-doc-side-slot {
+    display: none;
+  }
 }

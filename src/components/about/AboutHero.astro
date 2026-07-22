@@ -1,218 +1,208 @@
 ---
-import { profile } from '../../data/profile';
-
-const identities = [
-  {
-    emoji: '🔨',
-    title: 'Builder',
-    description: '构建 AI Agent、开发平台与开源工具',
-    color: 'var(--sx-sys-color-accent)',
-  },
-  {
-    emoji: '✍️',
-    title: 'Writer',
-    description: '记录系统设计、工程实践与技术思考',
-    color: 'var(--sx-sys-color-mint)',
-  },
-  {
-    emoji: '📚',
-    title: 'Teacher',
-    description: '把复杂知识整理成可学习、可实践的课程',
-    color: 'var(--sx-sys-color-lavender)',
-  },
-] as const;
+import { aboutHero, accentToken } from '../../data/about';
 ---
 
-<section class="about-hero">
-  <div class="about-hero__inner">
-    <div class="about-hero__avatar">
-      <span class="avatar-placeholder">{profile.name[0]}</span>
+<section class="hero">
+  <img
+    class="hero__deco hero__deco--graphql"
+    src="/images/icons/graphql.svg"
+    alt=""
+    aria-hidden="true"
+  />
+  <img
+    class="hero__deco hero__deco--python"
+    src="/images/icons/python.svg"
+    alt=""
+    aria-hidden="true"
+  />
+  <img
+    class="hero__deco hero__deco--docker"
+    src="/images/icons/docker.svg"
+    alt=""
+    aria-hidden="true"
+  />
+  <img
+    class="hero__deco hero__deco--k8s"
+    src="/images/icons/k8s-official.svg"
+    alt=""
+    aria-hidden="true"
+  />
+
+  <div class="hero__inner">
+    <nav class="hero__crumb" aria-label="Breadcrumb">
+      <span class="hero__crumb-item hero__crumb-item--muted">Home</span>
+      <span class="hero__crumb-sep">/</span>
+      <span class="hero__crumb-item" aria-current="page">关于我</span>
+    </nav>
+
+    <h1 class="hero__title">{aboutHero.title}</h1>
+
+    <div class="hero__principles">
+      {aboutHero.principles.map((p) => (
+        <span
+          class="hero__principle"
+          style={`--sx-accent: ${accentToken[p.accent]}`}
+        >
+          {p.label}
+        </span>
+      ))}
     </div>
 
-    <div class="about-hero__content">
-      <h1 class="about-hero__title">
-        你好，我是 <span class="about-hero__name">{profile.name}</span>
-      </h1>
-
-      <p class="about-hero__role">{profile.role} & 独立构建者</p>
-
-      <p class="about-hero__bio">
-        我关注 AI Agent、Schema 驱动的设计与后端工程。SchemaX 是我的个人知识与作品平台：用结构连接课程、思考、代码、设计与 AI 执行。
-      </p>
-
-      <div class="about-hero__identities">
-        {identities.map((identity) => (
-          <div class="identity-card">
-            <span class="identity-card__emoji" style={`--card-bg: ${identity.color}`}>
-              {identity.emoji}
-            </span>
-            <div class="identity-card__content">
-              <h3 class="identity-card__title">{identity.title}</h3>
-              <p class="identity-card__desc">{identity.description}</p>
-            </div>
-          </div>
-        ))}
-      </div>
-    </div>
+    <p class="hero__intro">{aboutHero.intro}</p>
+    <p class="hero__desc">{aboutHero.description}</p>
+    <p class="hero__copy">{aboutHero.copy}</p>
   </div>
 </section>
 
 <style>
-  .about-hero {
+  .hero {
+    position: relative;
     background: var(--sx-sys-color-bg-page);
-    padding-block: clamp(3rem, 7vw, 5rem);
-    padding-inline: var(--sx-ref-space-6);
+    padding-block: clamp(2.75rem, 6vw, 3.5rem);
+    padding-inline: clamp(1.5rem, 5vw, 4.5rem);
+    min-height: clamp(24rem, 50vh, 30rem);
+    overflow: hidden;
   }
 
-  .about-hero__inner {
-    max-width: 64rem;
+  /* —— 装饰图标：四角散落（设计稿 graphql/python/docker/k8s） —— */
+  .hero__deco {
+    position: absolute;
+    pointer-events: none;
+    object-fit: contain;
+    z-index: 0;
+  }
+
+  /* 四角散落（对照设计稿 graphql/python/docker/k8s 的绝对坐标，转百分比） */
+  .hero__deco--graphql {
+    top: 20%;
+    left: 8%;
+    width: 4.25rem;
+    height: 4.5rem;
+  }
+
+  .hero__deco--python {
+    top: 30%;
+    right: 8%;
+    width: 4.25rem;
+    height: 4.25rem;
+  }
+
+  .hero__deco--docker {
+    bottom: 18%;
+    left: 12%;
+    width: 3.75rem;
+    height: 3rem;
+  }
+
+  .hero__deco--k8s {
+    bottom: 18%;
+    right: 14%;
+    width: 3.5rem;
+    height: 3.5625rem;
+  }
+
+  /* —— 内容 —— */
+  .hero__inner {
+    position: relative;
+    z-index: 1;
+    max-width: 80rem;
     margin-inline: auto;
-    display: grid;
-    grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
-    gap: var(--sx-ref-space-12);
-    align-items: start;
-  }
-
-  /* —— 头像区域 —— */
-  .about-hero__avatar {
-    position: sticky;
-    top: 6rem;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 1rem;
+    gap: 1.25rem;
+    text-align: left;
   }
 
-  .avatar-placeholder {
-    width: 100%;
-    max-width: 12rem;
-    aspect-ratio: 1;
-    display: flex;
+  .hero__crumb {
+    display: inline-flex;
     align-items: center;
-    justify-content: center;
-    font-family: var(--sx-sys-font-family-display), system-ui, sans-serif;
-    font-size: 4rem;
-    font-weight: 700;
-    background: var(--sx-sys-color-accent);
-    color: var(--sx-sys-color-ink);
+    gap: 0.5rem;
+    padding: 0.5rem 0.75rem;
+    background: var(--sx-sys-color-bg-surface);
     border: var(--sx-sys-border-width-strong) solid var(--sx-sys-color-border);
     border-radius: var(--sx-sys-radius-md);
-    box-shadow: var(--sx-sys-shadow-lg);
+    box-shadow: var(--sx-sys-shadow-sm);
+    font-family: var(--sx-sys-font-family-mono), ui-monospace, monospace;
+    font-size: 0.8125rem;
+    font-weight: 700;
   }
 
-  /* —— 内容区域 —— */
-  .about-hero__content {
-    display: flex;
-    flex-direction: column;
-    gap: var(--sx-ref-space-6);
+  .hero__crumb-item {
+    color: var(--sx-sys-color-text-primary);
   }
 
-  .about-hero__title {
+  .hero__crumb-item--muted,
+  .hero__crumb-sep {
+    color: var(--sx-sys-color-text-soft);
+  }
+
+  .hero__title {
     margin: 0;
     font-family: var(--sx-sys-font-family-display), system-ui, sans-serif;
-    font-size: clamp(2rem, 5vw, 3rem);
+    font-size: clamp(2.75rem, 7vw, 4.5rem);
     font-weight: 700;
-    line-height: 1.1;
+    line-height: 1.02;
     letter-spacing: -0.02em;
     color: var(--sx-sys-color-text-primary);
   }
 
-  .about-hero__name {
-    background: var(--sx-sys-color-accent);
-    padding: 0 0.1em;
-  }
-
-  .about-hero__role {
-    margin: -0.5rem 0 0 0;
-    font-family: var(--sx-sys-font-family-mono), ui-monospace, monospace;
-    font-size: 1.125rem;
-    font-weight: 600;
-    color: var(--sx-sys-color-text-soft);
-  }
-
-  .about-hero__bio {
-    margin: 0;
-    max-width: 45ch;
-    font-size: 1.125rem;
-    line-height: 1.7;
-    color: var(--sx-sys-color-text-soft);
-  }
-
-  /* —— 身份卡片 —— */
-  .about-hero__identities {
+  .hero__principles {
+    width: 100%;
     display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    margin-top: 1rem;
-  }
-
-  .identity-card {
-    display: flex;
-    align-items: center;
-    gap: 1.25rem;
-    padding: 1.25rem;
-    border: var(--sx-sys-border-width) solid var(--sx-sys-color-border);
-    border-radius: var(--sx-sys-radius-md);
-    background: var(--sx-sys-color-bg-page);
-    box-shadow: var(--sx-sys-shadow-sm);
-    transition:
-      transform 160ms ease,
-      box-shadow 160ms ease;
-  }
-
-  .identity-card:hover {
-    transform: translate(-2px, -2px);
-    box-shadow: var(--sx-sys-shadow-md);
-  }
-
-  .identity-card__emoji {
-    flex: 0 0 auto;
-    width: 3.5rem;
-    height: 3.5rem;
-    display: flex;
-    align-items: center;
+    flex-wrap: wrap;
     justify-content: center;
-    font-size: 1.75rem;
-    background: var(--card-bg, var(--sx-sys-color-accent));
+    gap: 0.75rem;
+    margin-block: 0.25rem;
+  }
+
+  .hero__principle {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.5625rem 0.8125rem;
+    background: var(--sx-accent, var(--sx-sys-color-bg-surface));
     border: var(--sx-sys-border-width) solid var(--sx-sys-color-border);
     border-radius: var(--sx-sys-radius-md);
-  }
-
-  .identity-card__content {
-    flex: 1;
-    min-width: 0;
-  }
-
-  .identity-card__title {
-    margin: 0 0 0.25rem 0;
     font-family: var(--sx-sys-font-family-mono), ui-monospace, monospace;
-    font-size: 1rem;
-    font-weight: 700;
+    font-size: 0.75rem;
+    font-weight: 800;
     color: var(--sx-sys-color-text-primary);
   }
 
-  .identity-card__desc {
+  .hero__intro {
     margin: 0;
-    font-size: 0.9375rem;
-    line-height: 1.5;
+    font-family: var(--sx-sys-font-family-body), system-ui, sans-serif;
+    font-size: clamp(1.25rem, 2.4vw, 1.5rem);
+    font-weight: 600;
+    line-height: 1.25;
+    color: var(--sx-sys-color-text-primary);
+  }
+
+  .hero__desc {
+    margin: 0;
+    font-family: var(--sx-sys-font-family-body), system-ui, sans-serif;
+    font-size: 1.1875rem;
+    font-weight: 500;
+    line-height: 1.55;
     color: var(--sx-sys-color-text-soft);
   }
 
-  @media (max-width: 64rem) {
-    .about-hero__inner {
-      grid-template-columns: 1fr;
-      gap: var(--sx-ref-space-8);
+  .hero__copy {
+    margin: 0;
+    max-width: 35rem;
+    font-family: var(--sx-sys-font-family-body), system-ui, sans-serif;
+    font-size: 1.0625rem;
+    line-height: 1.6;
+    color: var(--sx-sys-color-text-soft);
+  }
+
+  @media (max-width: 48rem) {
+    .hero {
+      min-height: auto;
     }
 
-    .about-hero__avatar {
-      position: static;
-      flex-direction: row;
-      justify-content: center;
-    }
-
-    .avatar-placeholder {
-      max-width: 8rem;
-      font-size: 3rem;
+    .hero__deco {
+      display: none;
     }
   }
 </style>

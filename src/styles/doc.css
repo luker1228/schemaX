@@ -1,0 +1,274 @@
+/* 文档页 Demo 共用展示样式（V2）—— SchemaX
+   被 /design-system/components/<name> 各 *Demo.astro 的 States / Props / Code 区块复用。
+
+   独立成文件：与 components.css 的 .table-wrap 同为表格展示样式，但二者选择器
+   特异性分布相似（基础 td 低特异 + :last-child td 高特异），同文件共存会触发
+   stylelint no-descending-specificity 对两个独立表格组件的误报。分文件后各自
+   单独校验；运行时仍由 global.css 归入同一 components 层，两者作用于不同表格、
+   互不覆盖。
+
+   .doc-props：属性表 —— accent 黄表头 + 1px 黑边框分隔 + 圆角。
+   .doc-table-scroll：窄屏横向滚动外壳（Demo / 课程共用，全局一份）。
+   .doc-code：代码/预览卡片 —— beige 底 + 顶栏；仅顶栏与内容区之间有 1px 分界线。
+     · .doc-code__body：纯代码（pre，等宽 + white-space:pre）
+     · .doc-code__stage：非代码内容（课程渲染预览等）
+   .doc-note：提示块 —— beige 底 + 黑底 accent 标签；无边框、无阴影。
+   .doc-section：区块标题 —— accent 色块 + 大标题 + 副标题。 */
+
+/* 窄屏横向滚动防御（Demo 内联 style 与课程共用） */
+.doc-table-scroll {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  /* 可键盘聚焦时给出可见焦点（仅键盘） */
+  border-radius: var(--sx-sys-radius-md);
+}
+.doc-table-scroll:focus {
+  outline: none;
+}
+.doc-table-scroll:focus-visible {
+  outline: 2px solid var(--sx-sys-color-action);
+  outline-offset: 3px;
+}
+
+.doc-props {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  background: var(--sx-sys-color-bg-surface);
+  border: var(--sx-sys-border-width) solid var(--sx-sys-color-border);
+  border-radius: var(--sx-sys-radius-md);
+  /* 压过 .sx-article :where(table) 的硬阴影，保持 Demo 表克制 */
+  box-shadow: none;
+  overflow: hidden;
+}
+.doc-props thead th {
+  padding: 0.75rem 1rem;
+  background: var(--sx-sys-color-accent);
+  /* 显式重置：避免课程页 .sx-article td/th 全边框叠加上来 */
+  border: none;
+  border-bottom: var(--sx-sys-border-width) solid var(--sx-sys-color-border);
+  text-align: left;
+  font-family: var(--sx-sys-font-family-mono);
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--sx-sys-color-text-primary);
+  white-space: nowrap;
+}
+.doc-props tbody td {
+  padding: 0.875rem 1rem;
+  border: none;
+  border-bottom: var(--sx-sys-border-width) solid var(--sx-sys-color-border);
+  vertical-align: top;
+  font-size: 0.8125rem;
+  line-height: 1.55;
+  color: var(--sx-sys-color-text-primary);
+}
+.doc-props tbody tr:last-child td {
+  border-bottom: none;
+}
+/* MDX 常把单元格包成 <p>——清掉默认段距，避免行高发虚 */
+.doc-props td > :where(p) {
+  margin: 0;
+  display: inline;
+}
+.doc-props td code,
+.doc-props td .doc-props__type {
+  font-family: var(--sx-sys-font-family-mono);
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--sx-sys-color-text-soft);
+}
+.doc-props__name {
+  font-family: var(--sx-sys-font-family-mono);
+  font-size: 0.8125rem;
+  font-weight: 800;
+  color: var(--sx-sys-color-text-primary);
+  white-space: nowrap;
+  width: 1%;
+}
+.doc-props__desc {
+  font-family: var(--sx-sys-font-family-body);
+  color: var(--sx-sys-color-text-primary);
+}
+
+/* ── 课程 DocTable 变体：暖纸底 + 硬阴影（落在白 StepCard 上才立得住） ── */
+.doc-props--paper {
+  min-width: 28rem;
+  background: var(--sx-sys-color-bg-page);
+  box-shadow: var(--sx-sys-shadow-sm);
+  border-radius: 0;
+}
+.doc-props--paper thead th {
+  /* 表头与表体分界加重一档，扫描时先落黄条 */
+  border-bottom-width: var(--sx-sys-border-width-strong);
+  padding: 0.8125rem 1.125rem;
+}
+.doc-props--paper tbody td {
+  padding: 1rem 1.125rem;
+  background: transparent;
+}
+/* 斑马纹：偶数行轻微 beige，长表更易扫行 */
+.doc-props--paper tbody tr:nth-child(even) td {
+  background: color-mix(in srgb, var(--sx-sys-color-beige) 70%, transparent);
+}
+/* 代码 chip：对照表里的标签是主角，做成可扫的小块 */
+.doc-props--paper td code {
+  display: inline-block;
+  padding: 0.12em 0.45em;
+  margin-block: 0.1em;
+  background: var(--sx-sys-color-bg-surface);
+  border: var(--sx-sys-border-width) solid var(--sx-sys-color-border);
+  border-radius: 2px;
+  color: var(--sx-sys-color-text-primary);
+  font-weight: 700;
+  line-height: 1.35;
+  white-space: nowrap;
+}
+/* 树形缩进（Frame 套娃对照用） */
+.doc-props tbody td.doc-props__depth-1 {
+  padding-left: 2rem;
+}
+.doc-props tbody td.doc-props__depth-2 {
+  padding-left: 3.25rem;
+}
+
+.doc-code {
+  margin: 0;
+  background: var(--sx-sys-color-beige);
+  border: none;
+  border-radius: var(--sx-sys-radius-md);
+  box-shadow: none;
+  overflow: hidden;
+}
+.doc-code__bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.625rem 1rem;
+  /* 唯一描边：顶栏与 body/stage 的分界线 */
+  border-bottom: var(--sx-sys-border-width) solid var(--sx-sys-color-border);
+  font-family: var(--sx-sys-font-family-mono);
+  color: var(--sx-sys-color-text-soft);
+}
+.doc-code__file {
+  font-size: 0.6875rem;
+  font-weight: 800;
+}
+.doc-code__lang {
+  font-size: 0.625rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.doc-code__body {
+  margin: 0;
+  padding: 1.125rem 1.25rem;
+  overflow-x: auto;
+  font-family: var(--sx-sys-font-family-mono);
+  font-size: 0.8125rem;
+  line-height: 1.55;
+  color: var(--sx-sys-color-text-primary);
+  white-space: pre;
+}
+/* 非代码内容区（课程渲染预览等）：同卡片壳，但不强制等宽/pre 换行 */
+.doc-code__stage {
+  margin: 0;
+  padding: 1.125rem 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  color: var(--sx-sys-color-text-primary);
+  background: transparent;
+}
+.doc-code__comment {
+  color: var(--sx-sys-color-text-soft);
+}
+
+/* ── 提示块（课程 Note 等） ── */
+.doc-note {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding: 1.375rem;
+  width: 100%;
+  box-sizing: border-box;
+  background: var(--sx-sys-color-beige);
+  border: none;
+  border-radius: var(--sx-sys-radius-md);
+  box-shadow: none;
+}
+.doc-note__head {
+  display: flex;
+  align-items: center;
+}
+.doc-note__tag {
+  display: inline-block;
+  padding: 0.1875rem 0.5625rem;
+  width: fit-content;
+  background: var(--sx-sys-color-border);
+  color: var(--sx-sys-color-accent);
+  font-family: var(--sx-sys-font-family-mono);
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.doc-note__body {
+  font-family: var(--sx-sys-font-family-body);
+  font-size: 1rem;
+  line-height: 1.8;
+  color: var(--sx-sys-color-text-primary);
+}
+.doc-note__body :where(p) {
+  margin: 0;
+}
+.doc-note__body :where(strong) {
+  font-weight: 700;
+}
+
+.doc-section {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+.doc-section__head {
+  display: flex;
+  flex-direction: column;
+  gap: 0.625rem;
+}
+.doc-section__eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+  margin: 0;
+}
+.doc-section__mark {
+  width: 0.875rem;
+  height: 0.875rem;
+  background: var(--sx-sys-color-accent);
+  border: var(--sx-sys-border-width) solid var(--sx-sys-color-border);
+  flex: 0 0 auto;
+}
+.doc-section__title {
+  margin: 0;
+  font-family: var(--sx-sys-font-family-display);
+  font-size: 2rem;
+  font-weight: 800;
+  line-height: 1.06;
+  letter-spacing: -0.01em;
+  color: var(--sx-sys-color-text-primary);
+}
+.doc-section__sub {
+  margin: 0;
+  font-family: var(--sx-sys-font-family-body);
+  font-size: 0.9375rem;
+  line-height: 1.53;
+  color: var(--sx-sys-color-text-soft);
+}
+.doc-section__body {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}

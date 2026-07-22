@@ -7,6 +7,12 @@
   line-height: var(--sx-article-line-height);
 }
 
+/* 课时页：放宽阅读宽度，让 CodeCompare 等组件可横向展开 */
+.sx-article--lesson {
+  max-width: none;
+  margin-inline: 0;
+}
+
 .sx-article :where(h2) {
   margin-block: 4rem 1.5rem;
   font-size: 2rem;
@@ -151,7 +157,9 @@
   box-shadow: none;
 }
 
-.sx-article :where(figure) {
+/* 正文插图 figure。排除组件自带外壳（CodeCompare 的 .win 等），
+   避免课程页里组件被正文插图样式（padding / 阴影 / 居中 caption）污染。 */
+.sx-article :where(figure:not([class])) {
   margin-block: 1.5rem;
   background: var(--sx-sys-color-bg-surface);
   border: var(--sx-sys-border-width) solid var(--sx-sys-color-border);
@@ -159,7 +167,7 @@
   padding: var(--sx-ref-space-3);
 }
 
-.sx-article :where(figcaption) {
+.sx-article :where(figure:not([class]) > figcaption) {
   font-size: 0.85rem;
   opacity: 0.7;
   text-align: center;

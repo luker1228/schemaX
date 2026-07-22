@@ -1,7 +1,6 @@
 ---
-// Breadcrumb 演示 —— 仅供 /design-system/components 展示页使用。
-// 展示页通过 import.meta.glob 自动捕获本文件。
-// 共享样式（.demo / .demo__head / .demo__stage 等）由展示页用 :global() 注入。
+// Breadcrumb 演示 —— V2 文档布局：States（Demo）/ Props（属性表）/ Code（用法卡片）。
+// 仅供 /design-system/components/breadcrumb 详情页的 doc-content 区使用。
 import Breadcrumb from '../Breadcrumb.astro';
 import Demo from '../Demo.astro';
 import type { BreadcrumbItem } from '../Breadcrumb.astro';
@@ -61,53 +60,109 @@ import Breadcrumb from '@/components/design-system/Breadcrumb.astro';
 ---
 
 <>
-  <Demo label="默认（三级）" attr="<Breadcrumb items={[...]} />">
-    <Breadcrumb items={simpleItems} />
-    <Fragment slot="note">
-      <p>
-        最后一项（<code>Components</code>）自动渲染为 <code
-          >aria-current="page"</code
-        >， 不可点、略暗；其余为链接，hover 时整块黄底填充。
+  {/* —— States：默认三级 / 深层路径 —— */}
+  <section class="doc-section">
+    <div class="doc-section__head">
+      <div class="doc-section__eyebrow">
+        <span class="doc-section__mark" aria-hidden="true"></span>
+        <h2 class="doc-section__title">状态演示</h2>
+      </div>
+      <p class="doc-section__sub">
+        层级路径导航，最后一项自动渲染为当前页。用 Demo
+        组件封装：头部为标签与代码，舞台为实例，底部为可折叠说明。
       </p>
-    </Fragment>
-  </Demo>
+    </div>
+    <div class="doc-section__body">
+      <Demo label="默认（三级）" attr="<Breadcrumb items={[...]} />">
+        <Breadcrumb items={simpleItems} />
+        <Fragment slot="note">
+          <p>
+            最后一项（<code>Components</code>）自动渲染为 <code>aria-current="page"</code
+            >， 不可点、略暗；其余为链接，hover 时整块黄底填充。
+          </p>
+        </Fragment>
+      </Demo>
 
-  <Demo label="深层路径" attr="items.length >= 4">
-    <Breadcrumb items={deepItems} />
-    <Fragment slot="note">
-      <p>
-        支持任意层级。「/」分隔符比文字更暗，长路径下也不抢视觉；窄屏会自动换行。
-      </p>
-    </Fragment>
-  </Demo>
+      <Demo label="深层路径" attr="items.length >= 4">
+        <Breadcrumb items={deepItems} />
+        <Fragment slot="note">
+          <p>
+            支持任意层级。「/」分隔符比文字更暗，长路径下也不抢视觉；窄屏会自动换行。
+          </p>
+        </Fragment>
+      </Demo>
+    </div>
+  </section>
 
-  <h3 class="sub-title">Props</h3>
-  <div class="table-wrap">
-    <table>
-      <thead>
-        <tr><th>Prop</th><th>类型</th><th>默认</th><th>说明</th></tr>
-      </thead>
-      <tbody>
-        {
-          apiRows.map((r) => (
+  {/* —— Props：真实属性表 —— */}
+  <section class="doc-section">
+    <div class="doc-section__head">
+      <div class="doc-section__eyebrow">
+        <span class="doc-section__mark" aria-hidden="true"></span>
+        <h2 class="doc-section__title">Props 属性</h2>
+      </div>
+      <p class="doc-section__sub">Breadcrumb 组件接受的属性。items 为必填。</p>
+    </div>
+    <div class="doc-section__body">
+      <div class="doc-table-scroll">
+        <table class="doc-props">
+          <thead>
             <tr>
-              <td class="cell-name">
-                <code>{r.name}</code>
-              </td>
-              <td>
-                <code>{r.type}</code>
-              </td>
-              <td>
-                <code>{r.default}</code>
-              </td>
-              <td class="cell-desc">{r.desc}</td>
+              <th>Prop</th>
+              <th>Type</th>
+              <th>Default</th>
+              <th>Description</th>
             </tr>
-          ))
-        }
-      </tbody>
-    </table>
-  </div>
+          </thead>
+          <tbody>
+            {
+              apiRows.map((r) => (
+                <tr>
+                  <td class="doc-props__name">{r.name}</td>
+                  <td>
+                    <span class="doc-props__type">{r.type}</span>
+                  </td>
+                  <td>
+                    <span class="doc-props__type">{r.default}</span>
+                  </td>
+                  <td class="doc-props__desc">{r.desc}</td>
+                </tr>
+              ))
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
 
-  <h3 class="sub-title">用法</h3>
-  <pre class="usage"><code>{usage}</code></pre>
+  {/* —— Code：用法示例卡片 —— */}
+  <section class="doc-section">
+    <div class="doc-section__head">
+      <div class="doc-section__eyebrow">
+        <span class="doc-section__mark" aria-hidden="true"></span>
+        <h2 class="doc-section__title">用法示例</h2>
+      </div>
+      <p class="doc-section__sub">在 Astro 页面中引入 Breadcrumb，传入层级路径数组。</p>
+    </div>
+    <div class="doc-section__body">
+      <figure class="doc-code">
+        <figcaption class="doc-code__bar">
+          <span class="doc-code__file">Breadcrumb.astro</span>
+          <span class="doc-code__lang">astro</span>
+        </figcaption>
+        <pre class="doc-code__body"><code>{usage}</code></pre>
+      </figure>
+    </div>
+  </section>
 </>
+
+<style>
+  /* doc-section__body 内的 Demo：去掉 Demo 自带的底部 margin，统一由 body gap 控制。 */
+  :global(.doc-section__body .demo) {
+    margin-block-end: 0;
+  }
+  /* props 表窄屏横向滚动防御 */
+  .doc-table-scroll {
+    overflow-x: auto;
+  }
+</style>

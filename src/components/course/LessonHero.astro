@@ -1,0 +1,150 @@
+---
+// LessonHero —— 课时页大标题区
+// 设计稿：双行 display 标题（第二行可嵌黄底徽章）+ 右侧 meta pills + 阅读时长。
+// 零 JS，纯展示。用于课时主区顶部，替代传统 lhead。
+
+interface Props {
+  /** 第一行大标题，如 "Html可以看做" */
+  line1: string;
+  /** 第二行前缀文字，如 "怎么翻成"；可省略 */
+  line2?: string;
+  /** 高亮徽章文字，如 "Markdown"；不传则无徽章 */
+  badge?: string;
+  /** 实心黄 pill 文案，如 "MARKDOWN 对照 · COMPARE" */
+  pillFill?: string;
+  /** 描边白 pill 文案，如 "HTML 第一课 · 语法对照" */
+  pillOutline?: string;
+  /** 阅读时长文案，如 "阅读时长 ≈ 12 分钟" */
+  readTime?: string;
+}
+
+const { line1, line2, badge, pillFill, pillOutline, readTime } = Astro.props;
+const hasLine2Row = Boolean(line2) || Boolean(badge);
+---
+
+<header class="lhero">
+  <h1 class="lhero__title">
+    <span class="lhero__line1">{line1}</span>
+    {
+      hasLine2Row && (
+        <span class="lhero__line2">
+          {line2 ? <span class="lhero__line2-pre">{line2}</span> : null}
+          {badge ? <span class="lhero__badge">{badge}</span> : null}
+        </span>
+      )
+    }
+  </h1>
+
+  {
+    (pillFill || pillOutline || readTime) && (
+      <div class="lhero__meta">
+        {pillFill && <span class="lhero__pill lhero__pill--fill">{pillFill}</span>}
+        {pillOutline && (
+          <span class="lhero__pill lhero__pill--outline">{pillOutline}</span>
+        )}
+        {readTime && <span class="lhero__time">{readTime}</span>}
+      </div>
+    )
+  }
+</header>
+
+<style>
+  .lhero {
+    display: flex;
+    flex-flow: row wrap;
+    gap: 1.875rem;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 1.5rem 0 0.5rem;
+    box-sizing: border-box;
+  }
+
+  .lhero__title {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    margin: 0;
+    font-family: var(--sx-sys-font-family-display);
+    font-weight: 700;
+    line-height: 1;
+    color: var(--sx-sys-color-text-primary);
+    min-width: 0;
+  }
+
+  .lhero__line1,
+  .lhero__line2-pre {
+    font-size: clamp(2.5rem, 6vw, 4.75rem);
+    letter-spacing: -0.02em;
+  }
+
+  .lhero__line2 {
+    display: flex;
+    flex-flow: row wrap;
+    align-items: center;
+    gap: 0;
+  }
+
+  .lhero__badge {
+    display: inline-block;
+    padding: 0.15em 0.35em;
+    background: var(--sx-sys-color-accent);
+    font-size: clamp(2.5rem, 6vw, 4.75rem);
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    color: var(--sx-sys-color-text-primary);
+  }
+
+  .lhero__meta {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    align-items: center;
+    flex-shrink: 0;
+  }
+
+  .lhero__pill {
+    display: inline-block;
+    padding: 0.4375rem 0.8125rem;
+    border: var(--sx-sys-border-width) solid var(--sx-sys-color-border);
+    border-radius: 999px;
+    font-size: 0.75rem;
+    white-space: nowrap;
+  }
+
+  .lhero__pill--fill {
+    background: var(--sx-sys-color-accent);
+    font-family: var(--sx-sys-font-family-mono);
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    color: var(--sx-sys-color-text-primary);
+  }
+
+  .lhero__pill--outline {
+    background: var(--sx-sys-color-bg-surface);
+    font-family: var(--sx-sys-font-family-body);
+    font-weight: 600;
+    color: var(--sx-sys-color-text-primary);
+  }
+
+  .lhero__time {
+    font-family: var(--sx-sys-font-family-mono);
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.025em;
+    color: var(--sx-sys-color-text-soft);
+    white-space: nowrap;
+  }
+
+  @media (max-width: 720px) {
+    .lhero {
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 2rem 0 1.5rem;
+    }
+    .lhero__meta {
+      align-items: flex-start;
+    }
+  }
+</style>

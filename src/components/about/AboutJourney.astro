@@ -1,226 +1,135 @@
 ---
-import { journey } from '../../data/about';
-
-// tag → 节点配色（装饰性，与 TechStackGrid 的等级配色思路一致）。
-const tagColors: Record<string, string> = {
-  构建: 'var(--sx-sys-color-accent)',
-  AI: 'var(--sx-sys-color-mint)',
-  工程: 'var(--sx-sys-color-lavender)',
-  前端: 'var(--sx-sys-color-action-primary)',
-  教学: 'var(--sx-sys-color-beige)',
-};
-
-const colorFor = (tag: string) => tagColors[tag] ?? 'var(--sx-sys-color-accent)';
+import { milestones } from '../../data/about';
 ---
 
 <section class="journey">
   <div class="journey__inner">
-    <header class="journey__header">
-      <h2 class="journey__title">经历</h2>
-      <p class="journey__lede">
-        从前端工程到 AI Agent，再到独立构建 SchemaX —— 一条向「结构化未知」收敛的路径。
-      </p>
-    </header>
+    <div class="journey__head">
+      <h2 class="journey__title">个人履历</h2>
+    </div>
 
-    <ol class="journey__timeline">
-      {journey.map((entry) => (
-        <li class={`journey__entry${entry.highlight ? ' journey__entry--highlight' : ''}`}>
-          <span
-            class="journey__node"
-            style={`--sx-entry-color: ${colorFor(entry.tag)}`}
-            aria-hidden="true"
-          />
-
-          <article class="journey__card">
-            <div class="journey__card-head">
-              <span class="journey__period">{entry.period}</span>
-              <span
-                class="journey__tag"
-                style={`--sx-tag-color: ${colorFor(entry.tag)}`}
-              >
-                {entry.tag}
-              </span>
-            </div>
-
-            <h3 class="journey__role">{entry.title}</h3>
-            {entry.org && <span class="journey__org">{entry.org}</span>}
-            <p class="journey__desc">{entry.description}</p>
-          </article>
-        </li>
+    <div class="journey__timeline">
+      {milestones.map((m) => (
+        <div class="milestone">
+          <div class="milestone__year-col">
+            <span class="milestone__year">{m.year}</span>
+            <span class="milestone__tag">{m.tag}</span>
+          </div>
+          <div class="milestone__copy">
+            <h3 class="milestone__title">{m.title}</h3>
+            <p class="milestone__desc">{m.desc}</p>
+          </div>
+        </div>
       ))}
-    </ol>
+    </div>
   </div>
 </section>
 
 <style>
   .journey {
     background: var(--sx-sys-color-bg-page);
-    padding-block: clamp(3rem, 7vw, 5rem);
-    padding-inline: var(--sx-ref-space-6);
-    border-top: var(--sx-sys-border-width) solid var(--sx-sys-color-border);
+    padding-block: clamp(2.5rem, 5vw, 3.5rem);
+    padding-inline: clamp(1.5rem, 5vw, 4.5rem);
   }
 
   .journey__inner {
-    max-width: 64rem;
+    max-width: 80rem;
     margin-inline: auto;
     display: flex;
     flex-direction: column;
-    gap: var(--sx-ref-space-10);
-  }
-
-  /* —— 头部 —— */
-  .journey__header {
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1rem;
+    gap: 1.875rem;
   }
 
   .journey__title {
     margin: 0;
     font-family: var(--sx-sys-font-family-display), system-ui, sans-serif;
-    font-size: clamp(1.75rem, 4vw, 2.5rem);
-    font-weight: 700;
+    font-size: clamp(1.75rem, 4vw, 2.75rem);
+    font-weight: 800;
+    line-height: 1.05;
     letter-spacing: -0.02em;
     color: var(--sx-sys-color-text-primary);
   }
 
-  .journey__lede {
-    margin: 0;
-    max-width: 46ch;
-    font-size: 1rem;
-    line-height: 1.6;
-    color: var(--sx-sys-color-text-soft);
-  }
-
-  /* —— 时间线 —— */
   .journey__timeline {
-    margin: 0;
-    padding: 0;
-    list-style: none;
-  }
-
-  .journey__entry {
-    position: relative;
-    padding-left: 3.25rem;
-    padding-bottom: var(--sx-ref-space-6);
-  }
-
-  .journey__entry:last-child {
-    padding-bottom: 0;
-  }
-
-  /* 竖线：贯穿整条 entry（含底部间距），相邻 entry 首尾相接形成连续线 */
-  .journey__entry::before {
-    content: '';
-    position: absolute;
-    left: 0.9375rem; /* 与节点中心对齐（节点 left:0 + 宽 1.875rem / 2） */
-    top: 0;
-    bottom: 0;
-    width: var(--sx-sys-border-width);
-    background: var(--sx-sys-color-border);
-  }
-
-  /* 最后一个 entry：靠前一条的线接到本节点即可，自身不再向下延伸 */
-  .journey__entry:last-child::before {
-    bottom: calc(100% - 0.9375rem);
-  }
-
-  /* 节点：彩色方块 + 硬阴影，落在竖线上 */
-  .journey__node {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 1.875rem;
-    height: 1.875rem;
-    background: var(--sx-entry-color, var(--sx-sys-color-accent));
+    background: var(--sx-sys-color-bg-surface);
     border: var(--sx-sys-border-width-strong) solid var(--sx-sys-color-border);
-    box-shadow: var(--sx-sys-shadow-sm);
-  }
-
-  /* —— 卡片 —— */
-  .journey__card {
-    padding: 1.25rem 1.5rem;
-    border: var(--sx-sys-border-width) solid var(--sx-sys-color-border);
     border-radius: var(--sx-sys-radius-md);
-    background: var(--sx-sys-color-bg-page);
-    box-shadow: var(--sx-sys-shadow-sm);
-    transition:
-      transform 160ms ease,
-      box-shadow 160ms ease;
+    box-shadow: 6px 6px 0 var(--sx-sys-color-border);
   }
 
-  .journey__card:hover {
-    transform: translate(-2px, -2px);
-    box-shadow: var(--sx-sys-shadow-md);
-  }
-
-  .journey__entry--highlight .journey__card {
-    border-width: var(--sx-sys-border-width-strong);
-    box-shadow: var(--sx-sys-shadow-md);
-  }
-
-  .journey__entry--highlight .journey__card:hover {
-    box-shadow: var(--sx-sys-shadow-lg);
-  }
-
-  .journey__card-head {
+  .milestone {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    gap: 0.75rem;
-    flex-wrap: wrap;
-    margin-bottom: 0.5rem;
+    gap: 2rem;
+    padding: 1.75rem;
+    border-bottom: var(--sx-sys-border-width-strong) solid var(--sx-sys-color-border);
   }
 
-  .journey__period {
-    font-family: var(--sx-sys-font-family-mono), ui-monospace, monospace;
-    font-size: 0.8125rem;
-    font-weight: 700;
-    color: var(--sx-sys-color-text-soft);
+  .milestone:last-child {
+    border-bottom: none;
   }
 
-  .journey__tag {
-    display: inline-flex;
-    align-items: center;
-    padding: 0.2rem 0.6rem;
+  .milestone__year-col {
+    flex: 0 0 12.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .milestone__year {
+    font-family: var(--sx-sys-font-family-display), system-ui, sans-serif;
+    font-size: 1.875rem;
+    font-weight: 800;
+    line-height: 1;
+    color: var(--sx-sys-color-text-primary);
+  }
+
+  .milestone__tag {
+    align-self: flex-start;
+    padding: 0.25rem 0.5rem;
+    background: var(--sx-sys-color-accent);
     border: var(--sx-sys-border-width) solid var(--sx-sys-color-border);
-    border-radius: 9999px;
-    background: var(--sx-tag-color, var(--sx-sys-color-accent));
     font-family: var(--sx-sys-font-family-mono), ui-monospace, monospace;
     font-size: 0.6875rem;
-    font-weight: 700;
+    font-weight: 800;
+    letter-spacing: 0.0375em;
     color: var(--sx-sys-color-text-primary);
   }
 
-  .journey__role {
+  .milestone__copy {
+    flex: 1 1 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.375rem;
+    min-width: 0;
+  }
+
+  .milestone__title {
     margin: 0;
     font-family: var(--sx-sys-font-family-display), system-ui, sans-serif;
-    font-size: 1.25rem;
-    font-weight: 700;
-    line-height: 1.2;
+    font-size: 1.375rem;
+    font-weight: 800;
+    line-height: 1.15;
     color: var(--sx-sys-color-text-primary);
   }
 
-  .journey__org {
-    display: block;
-    margin-top: 0.25rem;
-    font-family: var(--sx-sys-font-family-mono), ui-monospace, monospace;
-    font-size: 0.8125rem;
-    color: var(--sx-sys-color-text-muted);
-  }
-
-  .journey__desc {
-    margin: 0.625rem 0 0;
-    font-size: 0.9375rem;
-    line-height: 1.6;
+  .milestone__desc {
+    margin: 0;
+    font-family: var(--sx-sys-font-family-body), system-ui, sans-serif;
+    font-size: 1rem;
+    line-height: 1.5;
     color: var(--sx-sys-color-text-soft);
   }
 
-  @media (max-width: 36rem) {
-    .journey__entry {
-      padding-left: 2.75rem;
+  @media (max-width: 40rem) {
+    .milestone {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.75rem;
+    }
+
+    .milestone__year-col {
+      flex-basis: auto;
     }
   }
 </style>

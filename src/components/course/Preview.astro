@@ -1,0 +1,169 @@
+---
+// Preview —— 渲染结果 / 片段预览容器
+// 外壳统一用全局 .doc-code（与设计系统用法示例卡片同构）：
+//   figure.doc-code > figcaption.doc-code__bar + stage/body
+// 有 code prop 时走 pre.doc-code__body；否则 slot 走 .doc-code__stage（渲染预览）。
+interface Props {
+  /** 顶栏左侧标签（文件名或说明），默认「渲染结果」 */
+  label?: string;
+  /** 顶栏右侧语言标签，如 astro / js / css */
+  lang?: string;
+  /** 纯代码字符串；传入后忽略 slot，渲染为 doc-code__body */
+  code?: string;
+}
+const { label = '渲染结果', lang, code } = Astro.props;
+const isCode = typeof code === 'string';
+---
+
+<figure class="doc-code">
+  <figcaption class="doc-code__bar">
+    <span class="doc-code__file">{label}</span>
+    {lang ? <span class="doc-code__lang">{lang}</span> : null}
+  </figcaption>
+  {
+    isCode ? (
+      <pre class="doc-code__body">
+        <code>{code}</code>
+      </pre>
+    ) : (
+      <div class="doc-code__stage">
+        <slot />
+      </div>
+    )
+  }
+</figure>
+
+<style>
+  /* 舞台内元素局部 reset：避免 .sx-article 段落间距渗入预览 */
+  .doc-code__stage :global(h1) {
+    font-size: 1.875rem;
+    margin: 0;
+    font-family: var(--sx-sys-font-family-display);
+    font-weight: 700;
+    line-height: 1.2;
+  }
+  .doc-code__stage :global(h2) {
+    font-size: 1.5rem;
+    margin: 0;
+    font-family: var(--sx-sys-font-family-display);
+    font-weight: 700;
+    line-height: 1.2;
+  }
+  .doc-code__stage :global(h3) {
+    font-size: 1.1875rem;
+    margin: 0;
+    font-family: var(--sx-sys-font-family-display);
+    font-weight: 700;
+    line-height: 1.2;
+  }
+  .doc-code__stage :global(p) {
+    margin: 0;
+    line-height: 1.6;
+  }
+  .doc-code__stage :global(ul),
+  .doc-code__stage :global(ol) {
+    margin: 0;
+    padding-left: 1.25rem;
+  }
+  .doc-code__stage :global(li) {
+    margin: 0 0 4px;
+  }
+  .doc-code__stage :global(blockquote) {
+    margin: 0;
+    padding: 8px 14px;
+    border-left: 4px solid var(--sx-sys-color-action-primary);
+    font-style: italic;
+    background: var(--sx-sys-color-bg-surface);
+  }
+  .doc-code__stage :global(code) {
+    font-family: var(--sx-sys-font-family-mono);
+    font-size: 0.875em;
+    background: var(--sx-sys-color-beige);
+    padding: 0.1em 0.4em;
+  }
+  /* 舞台内嵌 pre：外层已是 doc-code 壳，去掉双层边框 */
+  .doc-code__stage :global(pre) {
+    margin: 0;
+    padding: 0;
+    background: transparent;
+    border: none;
+    font-family: var(--sx-sys-font-family-mono);
+    font-size: 0.8125rem;
+    line-height: 1.55;
+    overflow-x: auto;
+    white-space: pre;
+  }
+  .doc-code__stage :global(pre code) {
+    background: transparent;
+    padding: 0;
+    font-size: inherit;
+  }
+  .doc-code__stage :global(hr) {
+    border: none;
+    border-top: var(--sx-sys-border-width) solid var(--sx-sys-color-border);
+    margin: 8px 0;
+    width: 100%;
+  }
+  .doc-code__stage :global(a) {
+    color: var(--sx-sys-color-action-primary);
+    text-decoration: underline;
+  }
+  .doc-code__stage :global(img) {
+    max-width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  /* 表格：黑表头 + 黄字 + 1px 黑边 */
+  .doc-code__stage :global(table) {
+    width: 100%;
+    border-collapse: collapse;
+    border: var(--sx-sys-border-width) solid var(--sx-sys-color-border);
+    background: var(--sx-sys-color-bg-surface);
+  }
+  .doc-code__stage :global(th),
+  .doc-code__stage :global(td) {
+    padding: 12px 16px;
+    border: var(--sx-sys-border-width) solid var(--sx-sys-color-border);
+    text-align: left;
+    font-size: 0.9375rem;
+  }
+  .doc-code__stage :global(th) {
+    background: var(--sx-sys-color-border);
+    color: var(--sx-sys-color-accent);
+    font-weight: 700;
+  }
+  .doc-code__stage :global(td) {
+    background: var(--sx-sys-color-bg-surface);
+    color: var(--sx-sys-color-text-primary);
+    font-weight: 500;
+  }
+
+  /* 表单：简单纵排 */
+  .doc-code__stage :global(form) {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: flex-start;
+  }
+  .doc-code__stage :global(label) {
+    font-weight: 600;
+    font-size: 0.9375rem;
+  }
+  .doc-code__stage :global(input[type='text']) {
+    padding: 8px 12px;
+    border: var(--sx-sys-border-width) solid var(--sx-sys-color-border);
+    background: var(--sx-sys-color-bg-surface);
+    font: inherit;
+    min-width: 12rem;
+  }
+  .doc-code__stage :global(button) {
+    padding: 8px 16px;
+    border: var(--sx-sys-border-width) solid var(--sx-sys-color-border);
+    background: var(--sx-sys-color-accent);
+    font: inherit;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: var(--sx-sys-shadow-sm);
+  }
+</style>

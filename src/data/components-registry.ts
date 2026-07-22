@@ -77,4 +77,18 @@ export const componentsRegistry: ComponentEntry[] = [
     description: '缩略图+标题+描述+状态徽章的介绍卡片，可链接或静态。',
     status: 'live',
   },
+  {
+    name: 'CodeCompare',
+    title: '代码转换对比',
+    description:
+      '双窗口代码转换展示块。左侧源 + 中间双箭头 + 右侧目标；bar 控制顶栏深浅（dark/light），用于展示 Markdown→HTML 等格式转换。',
+    status: 'live',
+  },
+  {
+    name: 'DocSide',
+    title: '文档侧栏',
+    description:
+      '文档左侧边栏导航。多组 eyebrow + 链接列表；支持当前页高亮与 planned 灰显，数据驱动、零 JS。',
+    status: 'live',
+  },
 ];

@@ -347,3 +347,22 @@
 .term__cursor.hidden {
   visibility: hidden;
 }
+
+/* ── 设计系统 Demo 共用展示样式 ────────────────────────────
+   被 /design-system/components 索引页与各组件详情页的 *Demo.astro 内部引用
+   （<Demo> 组件之外的辅助展示：小标题 / 属性表 / 用法代码块）。
+   拆分组件展示页后两处共用，故从页面 scoped style 提到全局 components 层。 */
+
+/* 注：V2 文档页 Demo 共用样式（.doc-props / .doc-code / .doc-section）已抽离到
+   doc.css，同样归入 components 层。分文件以规避 no-descending-specificity 对
+   doc.css 的 .doc-props 与本文件表格选择器的误报。
+
+   旧的 .table-wrap / .cell-name / .cell-desc / .usage 表格与代码块样式已随
+   demo 迁移到 doc-props / doc-code 而移除。本文件仅保留 .sub-title
+   （foundations / content 页面的内容区块小标题仍在使用）。 */
+
+.sub-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-block: var(--sx-ref-space-8) var(--sx-ref-space-3);
+}

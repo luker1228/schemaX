@@ -1,0 +1,87 @@
+---
+// StepCard —— 课时内步骤卡片
+// 设计稿：白底 + 6px 硬阴影 + 1px 黑边；头部黑底 step-num 徽章 + step label。
+// 用于每个教学小节（核心/标题/段落/列表...）。
+interface Props {
+  /** 步骤编号，如 "HTML-01" "CSS-03"；同时作为锚点 id（小写） */
+  num: string;
+  /** 步骤标签，如 "核心" "标题" "练习" */
+  label: string;
+}
+const { num, label } = Astro.props;
+const anchorId = num.toLowerCase();
+---
+
+<section class="step" id={anchorId}>
+  <header class="step__head">
+    <span class="step__num">{num}</span>
+    <span class="step__label">{label}</span>
+  </header>
+  <div class="step__body">
+    <slot />
+  </div>
+</section>
+
+<style>
+  .step {
+    background: var(--sx-sys-color-bg-surface);
+    border: var(--sx-sys-border-width) solid var(--sx-sys-color-border);
+    box-shadow: 6px 6px 0 0 var(--sx-sys-color-border);
+    padding: 34px 36px;
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+    width: 100%;
+    box-sizing: border-box;
+    scroll-margin-top: calc(
+      var(--sx-comp-header-logo-size) + 2 * var(--sx-comp-header-padding-block) +
+        1rem
+    );
+  }
+
+  .step__head {
+    display: flex;
+    gap: 14px;
+    align-items: center;
+  }
+
+  .step__num {
+    display: inline-block;
+    padding: 5px 10px;
+    background: var(--sx-sys-color-border);
+    color: var(--sx-sys-color-accent);
+    font-family: var(--sx-sys-font-family-mono);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.8px;
+    border: var(--sx-sys-border-width) solid var(--sx-sys-color-border);
+    white-space: nowrap;
+  }
+
+  .step__label {
+    font-family: var(--sx-sys-font-family-display);
+    font-size: 1.5rem;
+    font-weight: 600;
+    line-height: 1;
+    color: var(--sx-sys-color-text-primary);
+  }
+
+  .step__body {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+
+  .step__body > :global(p) {
+    font-size: 1rem;
+    line-height: 1.75;
+    color: var(--sx-sys-color-text-soft);
+    margin: 0;
+  }
+
+  @media (max-width: 640px) {
+    .step {
+      padding: 24px 20px;
+    }
+  }
+</style>

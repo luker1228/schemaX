@@ -1,0 +1,224 @@
+---
+// Takeaway —— 课程「带走」总结卡
+// 设计稿：黑底卡 + step head（编号 + 标签 + ★ TAKEAWAY）+ 双行标题 + dark note + 黄方块要点列表。
+// 自包含，无嵌套 import。slot 放要点列表（ul > li）或补充正文。
+
+interface Props {
+  /** 步骤编号，如 "HTML-17" */
+  num?: string;
+  /** 步骤标签，默认「总结」 */
+  label?: string;
+  /** 标题第一行（白字） */
+  line1: string;
+  /** 标题第二行（黄字） */
+  line2: string;
+  /** 右上角徽章，默认 "★ TAKEAWAY" */
+  badge?: string;
+  /** note 标签，默认「带走」 */
+  noteTag?: string;
+  /** 带走区正文（也可用 slot="note"） */
+  note?: string;
+}
+
+const {
+  num = '',
+  label = '总结',
+  line1,
+  line2,
+  badge = '★ TAKEAWAY',
+  noteTag = '带走',
+  note,
+} = Astro.props;
+---
+
+<section class="ta" id={num ? num.toLowerCase() : undefined}>
+  <header class="ta__head">
+    {num && <span class="ta__num">{num}</span>}
+    <span class="ta__label">{label}</span>
+    <span class="ta__spacer" aria-hidden="true"></span>
+    <span class="ta__badge">{badge}</span>
+  </header>
+
+  <div class="ta__title">
+    <span class="ta__l1">{line1}</span>
+    <span class="ta__l2">{line2}</span>
+  </div>
+
+  <div class="ta__note">
+    <div class="ta__note-head">
+      <span class="ta__note-tag">{noteTag}</span>
+    </div>
+    <div class="ta__note-body">
+      <slot name="note">{note}</slot>
+    </div>
+  </div>
+
+  <div class="ta__list">
+    <slot />
+  </div>
+</section>
+
+<style>
+  .ta {
+    background: var(--sx-sys-color-border);
+    border: var(--sx-sys-border-width) solid var(--sx-sys-color-border);
+    box-shadow: 6px 6px 0 0 var(--sx-sys-color-border);
+    padding: 34px 36px;
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+    width: 100%;
+    box-sizing: border-box;
+    color: var(--sx-sys-color-bg-surface);
+    scroll-margin-top: calc(
+      var(--sx-comp-header-logo-size) + 2 * var(--sx-comp-header-padding-block) +
+        1rem
+    );
+  }
+
+  .ta__head {
+    display: flex;
+    gap: 14px;
+    align-items: center;
+    width: 100%;
+  }
+
+  .ta__num {
+    display: inline-block;
+    padding: 5px 10px;
+    background: var(--sx-sys-color-border);
+    color: var(--sx-sys-color-accent);
+    font-family: var(--sx-sys-font-family-mono);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.8px;
+    border: var(--sx-sys-border-width) solid var(--sx-sys-color-border);
+    white-space: nowrap;
+  }
+
+  .ta__label {
+    font-family: var(--sx-sys-font-family-display);
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--sx-sys-color-bg-surface);
+    white-space: nowrap;
+  }
+
+  .ta__spacer {
+    flex: 1 1 0;
+    height: 1px;
+    min-width: 0.5rem;
+  }
+
+  .ta__badge {
+    display: inline-block;
+    padding: 5px 10px;
+    background: var(--sx-sys-color-accent);
+    color: var(--sx-sys-color-border);
+    font-family: var(--sx-sys-font-family-mono);
+    font-size: 0.6875rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    border: var(--sx-sys-border-width) solid var(--sx-sys-color-border);
+    white-space: nowrap;
+  }
+
+  .ta__title {
+    font-family: var(--sx-sys-font-family-display);
+    font-size: clamp(1.5rem, 3vw, 2.25rem);
+    font-weight: 700;
+    line-height: 1.2;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    color: var(--sx-sys-color-bg-surface);
+  }
+
+  .ta__l2 {
+    color: var(--sx-sys-color-accent);
+  }
+
+  .ta__note {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 22px;
+    /* 略浅于纯黑的内嵌面：用 border/surface 混色，避免裸 hex */
+    background: color-mix(
+      in srgb,
+      var(--sx-sys-color-border) 90%,
+      var(--sx-sys-color-bg-surface)
+    );
+    border: var(--sx-sys-border-width) solid var(--sx-sys-color-border);
+  }
+
+  .ta__note-tag {
+    display: inline-block;
+    padding: 3px 9px;
+    background: var(--sx-sys-color-accent);
+    color: var(--sx-sys-color-border);
+    font-family: var(--sx-sys-font-family-mono);
+    font-size: 0.6875rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    width: fit-content;
+  }
+
+  .ta__note-body {
+    font-size: 1rem;
+    line-height: 1.8;
+    color: var(--sx-sys-color-bg-surface);
+  }
+
+  .ta__note-body :global(p) {
+    margin: 0;
+  }
+
+  .ta__note-body :global(a) {
+    color: var(--sx-sys-color-accent);
+  }
+
+  /* 要点列表：黄方块 marker + 白字；lead 用 strong */
+  .ta__list :global(ul) {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .ta__list :global(li) {
+    display: flex;
+    flex-direction: row;
+    gap: 14px;
+    align-items: flex-start;
+    font-size: 1rem;
+    line-height: 1.625;
+    color: var(--sx-sys-color-bg-surface);
+  }
+
+  .ta__list :global(li)::before {
+    content: '';
+    flex: 0 0 auto;
+    width: 12px;
+    height: 12px;
+    margin-top: 7px;
+    background: var(--sx-sys-color-accent);
+    border: var(--sx-sys-border-width) solid var(--sx-sys-color-border);
+    box-sizing: border-box;
+  }
+
+  .ta__list :global(strong) {
+    font-weight: 700;
+    color: var(--sx-sys-color-bg-surface);
+  }
+
+  @media (max-width: 640px) {
+    .ta {
+      padding: 24px 20px;
+    }
+  }
+</style>

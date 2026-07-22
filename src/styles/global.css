@@ -23,6 +23,7 @@
 @import './layout.css' layer(layout);
 @import './article.css' layer(article);
 @import './components.css' layer(components);
+@import './doc.css' layer(components); /* 文档页 V2 共用展示样式 */
 @import './utilities.css' layer(utilities);
 /* code.css 放 overrides 层 —— 必须晚于 Expressive Code 运行期注入的
    默认主题 CSS（Expressive Code 把变量挂在 :root，本文件用更高层叠层覆盖）。 */

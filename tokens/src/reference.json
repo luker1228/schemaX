@@ -24,6 +24,14 @@
       "gray": {
         "200": { "$type": "color", "$value": "#CBCCC9" },
         "500": { "$type": "color", "$value": "#666666" }
+      },
+      "terminal": {
+        "bg": { "$type": "color", "$value": "#0f1115" },
+        "surface": { "$type": "color", "$value": "#161a20" },
+        "elevated": { "$type": "color", "$value": "#1b1f26" },
+        "border": { "$type": "color", "$value": "#2a2f37" },
+        "text": { "$type": "color", "$value": "#e6e6e6" },
+        "muted": { "$type": "color", "$value": "#9aa0a6" }
       }
     },
     "space": {

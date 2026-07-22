@@ -1,0 +1,230 @@
+---
+// CodeCompare 组件 —— SchemaX UI
+// 代码转换对比展示块：左侧「源」窗口 + 中间双箭头徽章 + 右侧「目标」窗口。
+// 用于教程/文档中展示从一种格式转换为另一种格式的过程（如 Markdown → HTML）。
+//
+// 两个窗口同构：顶栏（红黄绿点 + 文件名）+ 米色代码区。
+// 顶栏主题由 bar 控制（CSS 变量驱动，避免 scoped 后代选择器失效）：
+//   dark  —— 黑顶栏 + 白字（默认，课程主视觉）
+//   light —— 米色顶栏 + 墨字
+// 代码内容可通过 props（source / target）或命名 slot 传入；slot 优先。
+//
+// 设计语言：1px 黑边、米色窗体、黑色箭头徽章 + 黄色双 chevron。
+// 注意：本组件使用 figure/figcaption/pre，必须在样式中完整 reset，
+// 避免 .sx-article 的正文 figure 规则渗入（padding / 阴影 / 居中等）。
+
+export type CodeCompareBar = 'dark' | 'light';
+
+interface Props {
+  /** 左侧窗口标题（源文件名） */
+  from?: string;
+  /** 右侧窗口标题（目标文件名） */
+  to?: string;
+  /** 左侧源代码内容（字符串）。若同时传入 source 命名 slot，则 slot 优先 */
+  source?: string;
+  /** 右侧目标代码内容（字符串）。若同时传入 target 命名 slot，则 slot 优先 */
+  target?: string;
+  /** 顶栏主题：dark = 黑底白字（默认）；light = 米色底墨字 */
+  bar?: CodeCompareBar;
+}
+
+const { from = 'INPUT', to = 'OUTPUT', source, target, bar = 'dark' } = Astro.props;
+
+// 顶栏色板：在根节点设 CSS 变量，子元素直接消费，不依赖 .cmp--bar-* 后代选择器。
+// light：米色底 + 墨字（与代码区同色系，底部分隔线区分顶栏）
+// dark：黑底白字
+const barVars =
+  bar === 'light'
+    ? {
+        '--cmp-bar-bg': 'var(--sx-sys-color-beige)',
+        '--cmp-bar-fg': 'var(--sx-sys-color-text-primary)',
+        '--cmp-bar-fg-opacity': '0.75',
+        '--cmp-bar-border-bottom':
+          'var(--sx-sys-border-width) solid var(--sx-sys-color-border)',
+        '--cmp-dot-border': 'var(--sx-sys-border-width) solid var(--sx-sys-color-border)',
+      }
+    : {
+        '--cmp-bar-bg': 'var(--sx-sys-color-border)',
+        '--cmp-bar-fg': 'var(--sx-sys-color-bg-surface)',
+        '--cmp-bar-fg-opacity': '1',
+        '--cmp-bar-border-bottom': 'none',
+        '--cmp-dot-border': 'none',
+      };
+---
+
+<div class:list={['cmp', `cmp--bar-${bar}`]} style={barVars}>
+  <figure class="win">
+    <figcaption class="win__bar">
+      <span class="win__dots" aria-hidden="true">
+        <span class="win__dot win__dot--red"></span>
+        <span class="win__dot win__dot--yellow"></span>
+        <span class="win__dot win__dot--green"></span>
+      </span>
+      <span class="win__file">{from}</span>
+    </figcaption>
+    <pre class="win__code"><code><slot name="source">{source}</slot></code></pre>
+  </figure>
+
+  <div class="cmp__arrow" aria-hidden="true">
+    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path
+        d="M9 6l6 6-6 6"
+        stroke="currentColor"
+        stroke-width="2.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <path
+        d="M15 6l6 6-6 6"
+        stroke="currentColor"
+        stroke-width="2.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+    </svg>
+  </div>
+
+  <figure class="win">
+    <figcaption class="win__bar">
+      <span class="win__dots" aria-hidden="true">
+        <span class="win__dot win__dot--red"></span>
+        <span class="win__dot win__dot--yellow"></span>
+        <span class="win__dot win__dot--green"></span>
+      </span>
+      <span class="win__file">{to}</span>
+    </figcaption>
+    <pre class="win__code"><code><slot name="target">{target}</slot></code></pre>
+  </figure>
+</div>
+
+<style>
+  /* ── 容器：左右等宽 + 中间箭头（设计稿 gap 20px） ── */
+  .cmp {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    gap: 1.25rem;
+    width: 100%;
+    max-width: 100%;
+  }
+
+  /* ── 窗口：米色底 + 1px 黑边；完整 reset 防 .sx-article figure 渗入 ── */
+  .win {
+    flex: 1 1 0;
+    min-width: 0;
+    margin: 0;
+    padding: 0;
+    border: var(--sx-sys-border-width) solid var(--sx-sys-color-border);
+    border-radius: 0;
+    box-shadow: none;
+    background: var(--sx-sys-color-beige);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* ── 标题栏：颜色完全由根节点 CSS 变量控制 ── */
+  .win__bar {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+    margin: 0;
+    padding: 0.5rem 0.75rem;
+    border: none;
+    border-bottom: var(--cmp-bar-border-bottom);
+    background: var(--cmp-bar-bg);
+    text-align: left;
+    opacity: 1;
+    font-size: inherit;
+    line-height: 1;
+  }
+  .win__dots {
+    display: inline-flex;
+    gap: 0.3rem;
+    flex-shrink: 0;
+  }
+  .win__dot {
+    display: inline-block;
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 50%;
+    box-sizing: border-box;
+    border: var(--cmp-dot-border);
+  }
+  .win__dot--red {
+    background: var(--sx-sys-color-danger);
+  }
+  .win__dot--yellow {
+    background: var(--sx-sys-color-accent);
+  }
+  .win__dot--green {
+    background: var(--sx-sys-color-success);
+  }
+  .win__file {
+    font-family: var(--sx-sys-font-family-mono);
+    font-size: 0.625rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    white-space: nowrap;
+    color: var(--cmp-bar-fg);
+    opacity: var(--cmp-bar-fg-opacity);
+  }
+
+  /* ── 代码区：米色延续，等宽；两侧样式完全一致 ── */
+  .win__code {
+    margin: 0;
+    padding: 0.875rem;
+    flex: 1 1 auto;
+    font-family: var(--sx-sys-font-family-mono);
+    font-size: 0.8125rem;
+    line-height: 1.7;
+    background: transparent;
+    color: var(--sx-sys-color-text-primary);
+    overflow-x: auto;
+    white-space: pre;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+  }
+  .win__code code {
+    font-family: inherit;
+    font-size: inherit;
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    padding: 0;
+    color: inherit;
+  }
+
+  /* ── 中间箭头：黑底黄 chevron 徽章 ── */
+  .cmp__arrow {
+    flex: 0 0 auto;
+    width: 2.75rem;
+    aspect-ratio: 1;
+    align-self: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--sx-sys-color-border);
+    border: 6px solid var(--sx-sys-color-border);
+    color: var(--sx-sys-color-accent);
+    box-sizing: border-box;
+  }
+  .cmp__arrow svg {
+    width: 1.5rem;
+    height: 1.5rem;
+    display: block;
+  }
+
+  /* ── 窄屏：上下堆叠，箭头旋转 90° ── */
+  @media (max-width: 640px) {
+    .cmp {
+      flex-direction: column;
+    }
+    .cmp__arrow {
+      transform: rotate(90deg);
+      width: 2.5rem;
+      border-width: 5px;
+    }
+  }
+</style>

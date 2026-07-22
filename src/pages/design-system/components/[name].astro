@@ -1,0 +1,142 @@
+---
+// 组件详情页 —— /design-system/components/<name>
+// V2 文档布局：左侧 DocSidebar（设计系统区域 + 组件目录）+ 主区
+// （DocPager 前后导航 / Hero / 各组件 <Demo/>）。数据驱动，所有 live 组件共用。
+// 双栏壳：.sx-doc-layout（layout.css + sys.layout.* tokens）。
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import DocSidebar from '../../../components/design-system/DocSidebar.astro';
+import DocPager from '../../../components/design-system/DocPager.astro';
+import { componentsRegistry } from '../../../data/components-registry';
+
+// 生成路径：live 组件 → /components/<name 小写>。
+// props 带原始 entry（含 PascalCase name，用于查 demo loader）与前后相邻组件（pager）。
+export async function getStaticPaths() {
+  const live = componentsRegistry.filter((c) => c.status === 'live');
+  return live.map((entry, i) => ({
+    params: { name: entry.name.toLowerCase() },
+    props: {
+      entry,
+      prev: live[i - 1] ?? null,
+      next: live[i + 1] ?? null,
+    },
+  }));
+}
+
+// 收集所有 demo 文件，按组件名索引（复用 components.astro 的 glob 模式）。
+// astro 未把组件工厂类型作为公共导出，demo 无 props 透传，用 any 承载 default。
+type DemoComponent = any; // eslint-disable-line @typescript-eslint/no-explicit-any
+const demos = import.meta.glob<{ default: DemoComponent }>(
+  '../../../components/design-system/demos/*Demo.astro',
+);
+const demoByName = new Map<
+  string,
+  () => Promise<{ default: DemoComponent }>
+>();
+for (const [path, loader] of Object.entries(demos)) {
+  const match = path.match(/\/([^/]+)Demo\.astro$/);
+  if (match) demoByName.set(match[1], loader);
+}
+
+const { entry, prev, next } = Astro.props;
+const loader = demoByName.get(entry.name);
+const { default: Demo } = loader ? await loader() : { default: null };
+---
+
+<BaseLayout title={`${entry.title} · Components`} description={entry.description}>
+  <div class="sx-doc-layout">
+    <div class="sx-doc-side-slot">
+      <DocSidebar current={entry.name} />
+    </div>
+
+    <div class="sx-doc-main">
+      <DocPager
+        prev={
+          prev
+            ? {
+                title: prev.title,
+                href: `/design-system/components/${prev.name.toLowerCase()}`,
+              }
+            : null
+        }
+        next={
+          next
+            ? {
+                title: next.title,
+                href: `/design-system/components/${next.name.toLowerCase()}`,
+              }
+            : null
+        }
+        centerHref="/design-system/components"
+        centerLabel="组件目录"
+        label="组件前后导航"
+      />
+
+      <header class="doc-hero">
+        <p class="doc-hero__eyebrow">{entry.name}</p>
+        <h1 class="doc-hero__title">{entry.title}</h1>
+        <p class="doc-hero__desc">{entry.description}</p>
+      </header>
+
+      <div class="doc-content">
+        {
+          Demo ? (
+            <Demo />
+          ) : (
+            <p class="missing">
+              组件 {entry.name} 标记为 live，但未找到 demos/{entry.name}
+              Demo.astro。
+            </p>
+          )
+        }
+      </div>
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  /* —— 页面专属：Hero / 正文区（双栏壳见 layout.css .sx-doc-*） —— */
+  .doc-hero {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sx-ref-space-3);
+    padding-block: var(--sx-ref-space-4);
+  }
+  .doc-hero__eyebrow {
+    margin: 0;
+    font-family: var(--sx-sys-font-family-mono);
+    color: var(--sx-sys-color-action-primary);
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+  }
+  .doc-hero__title {
+    margin: 0;
+    font-family: var(--sx-sys-font-family-display);
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 700;
+    line-height: 1.02;
+    letter-spacing: -0.02em;
+    color: var(--sx-sys-color-text-primary);
+  }
+  .doc-hero__desc {
+    margin: 0;
+    max-width: 50rem;
+    font-family: var(--sx-sys-font-family-body);
+    font-size: 1.1875rem;
+    line-height: 1.53;
+    color: var(--sx-sys-color-text-soft);
+  }
+
+  .doc-content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sx-ref-space-12);
+  }
+
+  .missing {
+    opacity: 0.7;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 0.85rem;
+  }
+</style>

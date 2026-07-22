@@ -2,31 +2,29 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Command from '../../components/design-system/Command.astro';
 import Crumb from '../../components/design-system/Crumb.astro';
-import Card from '../../components/design-system/Card.astro';
+import FeatureCard from '../../components/design-system/FeatureCard.astro';
 import { componentsRegistry } from '../../data/components-registry';
 
-// 用 import.meta.glob 预先收集所有 demo 文件，按组件名索引。
-// 脚手架新增 demo 文件后无需修改本页，自动被 glob 捕获。
-// astro 未把组件工厂类型作为公共导出，demo 无 props 透传，用 any 承载 default。
-type DemoComponent = any; // eslint-disable-line @typescript-eslint/no-explicit-any
-const demos = import.meta.glob<{ default: DemoComponent }>(
-  '../../components/design-system/demos/*Demo.astro',
-);
-
-// 把 demo 路径映射到组件名：'demos/NavDemo.astro' → 'Nav'
-const demoByName = new Map<
-  string,
-  () => Promise<{ default: DemoComponent }>
->();
-for (const [path, loader] of Object.entries(demos)) {
-  const match = path.match(/\/([^/]+)Demo\.astro$/);
-  if (match) demoByName.set(match[1], loader);
-}
-
+// 本页现为「组件目录索引」：live 组件以卡片展示，点击进入详情页
+// /design-system/components/<name>（详情页只渲染该组件的 <Demo/>）。
+// glob 加载与 demo 渲染已移至 [name].astro；新增组件后本页自动出现卡片（数据驱动）。
 const liveComponents = componentsRegistry.filter((c) => c.status === 'live');
 const plannedComponents = componentsRegistry.filter(
   (c) => c.status === 'planned',
 );
+
+const BASE = '/design-system/components';
+const detailHref = (name: string) => `${BASE}/${name.toLowerCase()}`;
+
+// live 目录卡 media 装饰色轮换（呼应首页 bento 的装饰色系）
+const MEDIA_COLORS = [
+  'var(--sx-sys-color-accent)',
+  'var(--sx-sys-color-mint)',
+  'var(--sx-sys-color-lavender)',
+  'var(--sx-sys-color-beige)',
+  'var(--sx-sys-color-gray-light)',
+];
+const mediaColor = (i: number) => MEDIA_COLORS[i % MEDIA_COLORS.length];
 ---
 
 <BaseLayout
@@ -45,7 +43,7 @@ const plannedComponents = componentsRegistry.filter(
 
       <header class="page-head">
         <p class="eyebrow">SchemaX UI</p>
-        <h1>Components</h1>
+        <h1>组件 Components</h1>
         <p>组件库按真实使用方式展示。新增组件：</p>
         <div class="page-head__cmd">
           <Command theme="light" title="bash">
@@ -54,46 +52,43 @@ const plannedComponents = componentsRegistry.filter(
         </div>
       </header>
 
-      {/* —— 已实现组件：渲染演示 —— */}
-      {
-        liveComponents.map(async (entry) => {
-          const loader = demoByName.get(entry.name);
-          if (!loader) {
-            return (
-              <p class="missing">
-                组件 {entry.name} 标记为 live，但未找到 demos/{entry.name}
-                Demo.astro。
-              </p>
-            );
-          }
-          const { default: Demo } = await loader();
-          return (
-            <section class="group">
-              <h2 class="group__title">{entry.title}</h2>
-              <p class="group__lede">{entry.description}</p>
-              <Demo />
-            </section>
-          );
-        })
-      }
+      {/* —— Live 组件：卡片目录，点击进入详情页 —— */}
+      <div class="sx-grid">
+        {
+          liveComponents.map((entry, i) => (
+            <FeatureCard
+              title={entry.title}
+              description={entry.description}
+              status="live"
+              href={detailHref(entry.name)}
+              mediaColor={mediaColor(i)}
+            >
+              <span class="comp-card__name">{entry.name}</span>
+            </FeatureCard>
+          ))
+        }
+      </div>
 
-      {/* —— 计划中组件：占位卡片 —— */}
+      {/* —— Planned 组件：占位卡（不可点），附生成命令 —— */}
       {
         plannedComponents.length > 0 && (
-          <section class="group">
-            <h2 class="group__title">Planned</h2>
+          <section class="planned-group">
+            <h2 class="planned-group__title">Planned</h2>
             <div class="sx-grid">
               {plannedComponents.map((entry) => (
-                <Card class="planned">
-                  <div class="planned__head">
-                    <span class="planned__name">{entry.name}</span>
-                    <span class="badge">Planned</span>
-                  </div>
-                  <p class="planned__desc">{entry.description}</p>
-                  <code class="planned__cmd">
-                    pnpm gen:component {entry.name}
-                  </code>
-                </Card>
+                <FeatureCard
+                  title={entry.title}
+                  status="planned"
+                  mediaColor="var(--sx-sys-color-beige)"
+                >
+                  <span class="comp-card__name">{entry.name}</span>
+                  <Fragment slot="description">
+                    <p>{entry.description}</p>
+                    <code class="comp-card__cmd">
+                      pnpm gen:component {entry.name}
+                    </code>
+                  </Fragment>
+                </FeatureCard>
               ))}
             </div>
           </section>
@@ -121,7 +116,7 @@ const plannedComponents = componentsRegistry.filter(
     max-width: 28rem;
   }
   .eyebrow {
-    font-family: ui-monospace, monospace;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
     color: var(--sx-sys-color-action-primary);
     font-weight: 700;
     letter-spacing: 0.08em;
@@ -139,116 +134,36 @@ const plannedComponents = componentsRegistry.filter(
     margin-block-start: var(--sx-ref-space-2);
   }
   .page-head code {
-    font-family: ui-monospace, monospace;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
     background: var(--sx-sys-color-bg-surface);
     border: var(--sx-sys-border-width) solid var(--sx-sys-color-border);
     padding: 0.05em 0.4em;
   }
 
-  .group {
-    margin-block-end: var(--sx-ref-space-12);
-  }
-  .group__title {
-    font-size: 1.4rem;
-    font-weight: 800;
-    margin-block-end: var(--sx-ref-space-2);
-  }
-  .group__lede {
-    opacity: 0.8;
-    margin-block-end: var(--sx-ref-space-6);
-  }
-
-  /* 演示块（.demo / .demo__head / .demo__stage / .demo__details / .demo__note）
-     的样式已封装在 src/components/design-system/Demo.astro 的 scoped style 内。
-     本页只保留各 *Demo.astro 共用、且不属于 Demo 组件的样式：
-     .sub-title / .table-wrap / .usage。 */
-
-  :global(.sub-title) {
-    font-size: 1.1rem;
+  /* 目录卡 media：等宽大字组件名，契合 schema 视觉母题（字段名 / 类型标签）。
+     span 由本页传入 FeatureCard 的 media slot，带本页 cid，故 scoped style 可匹配。 */
+  .comp-card__name {
+    font-family: var(--sx-sys-font-family-mono);
+    font-size: 1.5rem;
     font-weight: 700;
-    margin-block: var(--sx-ref-space-8) var(--sx-ref-space-3);
+    letter-spacing: -0.02em;
   }
-  :global(.table-wrap) {
-    overflow-x: auto;
-    border: var(--sx-sys-border-width) solid var(--sx-sys-color-border);
-  }
-  :global(.table-wrap table) {
-    width: 100%;
-    border-collapse: collapse;
-    min-width: 32rem;
-  }
-  :global(.table-wrap th),
-  :global(.table-wrap td) {
-    text-align: left;
-    padding: var(--sx-ref-space-2) var(--sx-ref-space-3);
-    border-bottom: var(--sx-sys-border-width) solid var(--sx-sys-color-border);
-    vertical-align: middle;
-  }
-  :global(.table-wrap thead th) {
-    background: var(--sx-sys-color-bg-page);
-    font-size: 0.75rem;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-  }
-  :global(.table-wrap tbody tr:last-child td) {
-    border-bottom: none;
-  }
-  :global(.table-wrap .cell-name) {
-    font-weight: 700;
-  }
-  :global(.table-wrap td code) {
-    font-family: ui-monospace, monospace;
-    font-size: 0.82rem;
-    background: var(--sx-sys-color-bg-page);
-    padding: 0.05em 0.35em;
-  }
-  :global(.table-wrap .cell-desc) {
-    opacity: 0.85;
-  }
-  :global(.usage) {
-    margin: 0;
-    padding: var(--sx-ref-space-3);
-    background: var(--sx-sys-color-bg-page);
-    border: var(--sx-sys-border-width) solid var(--sx-sys-color-border);
-    overflow-x: auto;
-    font-family: ui-monospace, monospace;
-    font-size: 0.82rem;
-    line-height: 1.6;
-  }
-
-  /* Planned 占位卡片 */
-  .planned {
-    display: flex;
-    flex-direction: column;
-    gap: var(--sx-ref-space-2);
-    height: 100%;
-  }
-  .planned__head {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: var(--sx-ref-space-2);
-  }
-  .planned__name {
-    font-family: ui-monospace, monospace;
-    font-weight: 700;
-  }
-  .planned__desc {
-    flex: 1;
-    opacity: 0.8;
-    font-size: 0.9rem;
-  }
-  .planned__cmd {
-    font-family: ui-monospace, monospace;
+  /* planned 卡 description slot 内的生成命令 */
+  .comp-card__cmd {
+    display: inline-block;
+    margin-block-start: var(--sx-ref-space-2);
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
     font-size: 0.78rem;
     background: var(--sx-sys-color-bg-page);
     padding: 0.05em 0.4em;
-    align-self: flex-start;
   }
 
-  .missing {
-    opacity: 0.7;
-    font-family: ui-monospace, monospace;
-    font-size: 0.85rem;
+  .planned-group {
+    margin-block-start: var(--sx-ref-space-12);
+  }
+  .planned-group__title {
+    font-size: 1.4rem;
+    font-weight: 800;
+    margin-block-end: var(--sx-ref-space-6);
   }
 </style>

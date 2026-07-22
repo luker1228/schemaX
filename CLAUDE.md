@@ -86,6 +86,39 @@ pnpm gen:component Button 主要、次要、幽灵、强调变体。
 - 必须**演示 `<a>` 元素本身**（如「链接 vs 按钮」「链接 vs 容器」对比）时，用 `href="javascript:void(0)"` —— 点击不跳转、不刷新、不改 URL，且保留 hover 与焦点行为，符合零 JS 优先约束。
 - 用法**代码示例**（`<pre class="usage">` 里的文本）保持真实 href（如 `/projects`），因为它示范的是正确写法，不会被渲染成可点击元素。
 
+## 课程讲解 / 展示样式（承重约定）
+
+**核心：课程里做讲解和视觉展示的「装修层」，大部分用设计系统组件 + Tailwind（shadcn 工作流），不要手写大段 inline style。**
+
+本仓库尚未安装 npm 版 `shadcn/ui` 源码包，但已按 shadcn 方式接线：
+
+- **组件**：`src/components/design-system/*`（`Card` / `Button` / `Badge` 等）—— 课程 MDX 里演示 UI 时优先 import 这些
+- **工具类**：Tailwind v4 + `src/styles/tailwind.css` 的 token 桥接（`bg-primary` / `text-ink` / `shadow-brutal-md` 等 shadcn 标准色名）
+- **课程壳**：`src/components/course/*`（`StepCard` / `Preview` / `Note` / `Takeaway`）只负责教学版式，舞台内容里的按钮、卡片、标签走设计系统
+
+| 场景 | 做法 |
+|------|------|
+| 展示「装修后长什么样」 | `<Card>` + `<Button>` + `<Badge>` + 少量 Tailwind 布局类 |
+| 展示「只有骨架」 | 裸 HTML（`h1` / `ul` / `a`），**不要**套 Card/Button |
+| 专讲某条 CSS 属性（如 `font-size`） | 可在该练习里用 inline / 最小样式，但整页 UI 仍优先组件 |
+| 禁止 | 用一长串 `style="padding:…;background:…;border:…"` 手搓整卡视觉 |
+
+示例（导览课「小店装修」）：
+
+```astro
+import Card from '../../components/design-system/Card.astro';
+import Button from '../../components/design-system/Button.astro';
+import Badge from '../../components/design-system/Badge.astro';
+
+<Preview label="骨架 + 装修后">
+  <Card shadow="md" class="mx-auto flex max-w-sm flex-col gap-3.5 bg-primary">
+    <Badge>今日上架</Badge>
+    <h1 class="m-0 text-2xl font-bold">邻里小卖部</h1>
+    <Button variant="outline" size="sm">购买</Button>
+  </Card>
+</Preview>
+```
+
 ## 架构：承重原则
 
 以下贯穿全局的决策约束着每一个实现选择：

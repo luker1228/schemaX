@@ -48,37 +48,43 @@ if (stageClass === 'align') {
   .demo {
     background: var(--sx-sys-color-bg-surface);
     border: var(--sx-sys-border-width) solid var(--sx-sys-color-border);
-    box-shadow: var(--sx-comp-demo-shadow);
+    border-radius: var(--sx-sys-radius-md);
+    overflow: hidden;
     margin-block-end: var(--sx-ref-space-4);
   }
 
   /* 头部：状态名 + 代码片段 */
   .demo__head {
     display: flex;
-    align-items: baseline;
+    align-items: center;
     justify-content: space-between;
     gap: var(--sx-ref-space-3);
-    padding: var(--sx-ref-space-2) var(--sx-ref-space-3);
+    padding: 0.75rem 1rem;
     border-bottom: var(--sx-sys-border-width) solid var(--sx-sys-color-border);
-    background: var(--sx-sys-color-bg-page);
+    background: var(--sx-sys-color-bg-surface);
     flex-wrap: wrap;
   }
   .demo__label {
+    font-family: var(--sx-sys-font-family-mono);
     font-weight: 800;
-    font-size: 0.9rem;
+    font-size: 0.75rem;
   }
   .demo__attr {
-    font-family: ui-monospace, monospace;
-    font-size: 0.78rem;
-    background: var(--sx-sys-color-bg-surface);
-    padding: 0.05em 0.4em;
+    font-family: var(--sx-sys-font-family-mono);
+    font-size: 0.625rem;
+    background: var(--sx-sys-color-beige);
+    border-radius: 3px;
+    padding: 3px 7px;
   }
 
-  /* 舞台：演示内容区 */
+  /* 舞台：演示内容区 —— paper 底色区分演示舞台。
+     不用 outline：它会与 head 的 border-bottom / details 的 border-top 紧邻，
+     视觉合成约 2px 的粗线。只靠背景色框出演示区即可。 */
   .demo__stage {
-    padding: var(--sx-ref-space-6);
+    padding: 1.875rem 1rem;
     display: flex;
     justify-content: center;
+    background: var(--sx-sys-color-bg-page);
   }
   /* 舞台里的 nav 默认居中 */
   .demo__stage :global(.nav) {

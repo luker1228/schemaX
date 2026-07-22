@@ -1,0 +1,171 @@
+---
+title: JavaScript 交互课·让页面动起来
+description: 用 4 个最小交互案例理解 JS——点击改状态、输入实时镜像、动态添加列表项、删除与空状态。学会「事件→状态→界面变化」的流程。
+slug: fe-js-interaction
+status: published
+course: frontend-handbook
+order: 6
+durationMinutes: 12
+lessonType: practice
+hero:
+  line1: JavaScript
+  line2: 是页面的
+  badge: 神经
+  pillFill: 事件 · 状态 · 渲染
+  pillOutline: 第 6 节 · 交互四练
+---
+
+import StepCard from '../../components/course/StepCard.astro';
+import SectionHead from '../../components/course/SectionHead.astro';
+import Note from '../../components/course/Note.astro';
+import Preview from '../../components/course/Preview.astro';
+import Takeaway from '../../components/course/Takeaway.astro';
+import Button from '../../components/design-system/Button.astro';
+
+<StepCard num="JS-01" label="核心">
+  <SectionHead line1="先理解一件事" line2="用户一动，页面就跟着变" />
+  <Note tag="核心">
+    JavaScript 的本质很简单：<strong>用户做了一个动作（事件），页面收到事件，然后你改一点状态或内容，界面马上跟着变</strong>。先把这个过程看懂，再学框架会顺很多。下面 4 段都是看代码 + 看结果，只需要观察：监听了什么动作，改了什么内容，页面怎么跟着变。
+  </Note>
+</StepCard>
+
+<StepCard num="JS-02" label="点击事件">
+  <SectionHead line1="监听点击事件" line2="改一个文字状态" />
+  <p>点按钮，改一个文字状态——这是最常见的交互：</p>
+  <Preview label="JavaScript">
+    <pre><code>{`const status = document.querySelector('.status-value');
+document.querySelector('.update-btn').addEventListener('click', () => {
+  status.textContent = '已处理';
+});
+document.querySelector('.cancel-btn').addEventListener('click', () => {
+  status.textContent = '待处理';
+});`}</code></pre>
+  </Preview>
+  <ul>
+    <li><strong>监听的动作</strong>：两个按钮的 <code>click</code></li>
+    <li><strong>改的内容</strong>：<code>.status-value</code> 的文字</li>
+    <li><strong>行为</strong>：点「更新状态」→ 变「已处理」；点「取消」→ 变回「待处理」</li>
+  </ul>
+  <Preview label="渲染效果（静态快照）">
+    <div style={{ maxWidth: '360px', padding: '18px', border: '1px solid #000', background: '#fff' }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
+        <span>当前状态</span>
+        <strong>待处理</strong>
+      </div>
+      <div style={{ display: 'flex', gap: '10px' }}>
+        <Button variant="outline" size="sm">更新状态</Button>
+        <Button variant="outline" size="sm">取消</Button>
+      </div>
+    </div>
+  </Preview>
+</StepCard>
+
+<StepCard num="JS-03" label="输入事件">
+  <SectionHead line1="监听输入事件" line2="实时镜像文字" />
+  <p>在输入框里打字，让下面的预览文字<strong>实时同步</strong>变化：</p>
+  <Preview label="JavaScript">
+    <pre><code>{`const input = document.querySelector('.demo-input');
+const mirror = document.querySelector('.mirror-text');
+input.addEventListener('input', () => {
+  mirror.textContent = input.value || '还没输入';
+});`}</code></pre>
+  </Preview>
+  <ul>
+    <li><strong>监听的动作</strong>：输入框的 <code>input</code>（每打一个字就触发）</li>
+    <li><strong>改的内容</strong>：把输入框的当前值写进 <code>.mirror-text</code></li>
+  </ul>
+  <Preview label="渲染效果（静态快照）">
+    <div style={{ maxWidth: '420px', padding: '18px', border: '1px solid #000', background: '#fff' }}>
+      <input type="text" placeholder="输入一句话试试（演示用）" style={{ width: '100%', padding: '10px 12px', border: '1px solid #000', marginBottom: '14px', boxSizing: 'border-box' }} readOnly />
+      <p style={{ margin: 0, fontSize: '18px', fontWeight: 700 }}>还没输入</p>
+    </div>
+  </Preview>
+</StepCard>
+
+<StepCard num="JS-04" label="动态添加">
+  <SectionHead line1="监听点击，动态添加" line2="创建节点插进页面" />
+  <p>输入任务 → 点「添加」按钮 → 新任务追加到列表里。这里多了一步：<strong>读取输入值，然后创建一个新节点插进页面</strong>。</p>
+  <Preview label="JavaScript">
+    <pre><code>{`const input = document.querySelector('.task-input');
+const button = document.querySelector('.add-button');
+const list = document.querySelector('.task-list');
+
+button.addEventListener('click', () => {
+  const text = input.value.trim();
+  if (!text) return;
+  const item = document.createElement('li');
+  item.textContent = text;
+  list.appendChild(item);
+  input.value = '';
+});`}</code></pre>
+  </Preview>
+  <Preview label="渲染效果（添加后静态快照）">
+    <div style={{ maxWidth: '420px', padding: '18px', border: '1px solid #000', background: '#fff' }}>
+      <div style={{ display: 'flex', gap: '10px', marginBottom: '14px' }}>
+        <input type="text" placeholder="例如：检查接口日志" style={{ flex: 1, padding: '10px 12px', border: '1px solid #000' }} readOnly />
+        <Button variant="secondary" size="sm">添加</Button>
+      </div>
+      <ul style={{ margin: 0, paddingLeft: '18px' }}>
+        <li style={{ marginTop: '8px' }}>先跑通页面</li>
+        <li style={{ marginTop: '8px' }}>检查接口日志</li>
+      </ul>
+    </div>
+  </Preview>
+</StepCard>
+
+<StepCard num="JS-05" label="删除事件">
+  <SectionHead line1="监听点击，删除与空状态" line2="条件判断" />
+  <p>删掉任务以后，如果列表空了，就显示「暂无任务」。这里练的是<strong>删除动作 + 条件判断</strong>。注意用了<strong>事件委托</strong>——不用给每个按钮单独绑监听，在父容器上绑一次就行。</p>
+  <Preview label="JavaScript">
+    <pre><code>{`const list = document.querySelector('.task-stack');
+const empty = document.querySelector('.empty-state');
+
+function syncEmptyState() {
+  empty.hidden = list.children.length > 0;
+}
+
+list.addEventListener('click', (event) => {
+  if (!event.target.matches('.delete-button')) return;
+  event.target.closest('.task-item')?.remove();
+  syncEmptyState();
+});
+syncEmptyState();`}</code></pre>
+  </Preview>
+  <Preview label="渲染效果（删除前静态快照）">
+    <div style={{ maxWidth: '420px', padding: '18px', border: '1px solid #000', background: '#fff' }}>
+      <div style={{ display: 'grid', gap: '10px' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', gap: '12px', alignItems: 'center', padding: '10px 12px', border: '1px solid #000' }}>
+          <span>补充接口文档</span>
+          <Button variant="outline" size="sm">删除</Button>
+        </div>
+        <div style={{ display: 'flex', justifyContent: 'space-between', gap: '12px', alignItems: 'center', padding: '10px 12px', border: '1px solid #000' }}>
+          <span>检查任务日志</span>
+          <Button variant="outline" size="sm">删除</Button>
+        </div>
+      </div>
+    </div>
+  </Preview>
+</StepCard>
+
+<Takeaway
+  num="JS-06"
+  label="总结"
+  line1="所有前端交互"
+  line2="都逃不开这三步"
+  note="看懂这个闭环，React/Vue 只是「更优雅地组织状态和界面」的工具，本质不变。"
+>
+  <ul>
+    <li>
+      <strong>监听事件：</strong>
+      用户的什么动作触发？（click / input / submit…）
+    </li>
+    <li>
+      <strong>改状态/数据：</strong>
+      根据动作改了什么？（变量、列表、节点…）
+    </li>
+    <li>
+      <strong>更新界面：</strong>
+      界面如何根据新状态变？（改文字、增删节点、显隐…）
+    </li>
+  </ul>
+</Takeaway>

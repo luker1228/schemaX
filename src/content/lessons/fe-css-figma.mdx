@@ -1,0 +1,103 @@
+---
+title: CSS · Figma 对照
+description: 把 Figma 的属性面板看成 CSS 属性清单——一行一个属性→值，字段名几乎一模一样。看到字段就会写属性。
+slug: fe-css-figma
+status: published
+course: frontend-handbook
+order: 5
+durationMinutes: 8
+lessonType: lesson
+hero:
+  line1: 属性面板
+  line2: 就是
+  badge: CSS
+  pillFill: Figma · 属性对照
+  pillOutline: 第 5 节 · 设计稿读样式
+---
+
+import StepCard from '../../components/course/StepCard.astro';
+import SectionHead from '../../components/course/SectionHead.astro';
+import Note from '../../components/course/Note.astro';
+import Preview from '../../components/course/Preview.astro';
+import Takeaway from '../../components/course/Takeaway.astro';
+import DocTable from '../../components/design-system/DocTable.astro';
+
+<StepCard num="CSS-F-01" label="核心">
+  <SectionHead line1="先记住这一句" line2="属性面板 = CSS 清单" />
+  <Note tag="核心">
+    选中一个 Figma 图层，右侧那块属性面板，就是它「长什么样」的全部信息。CSS 把同一块信息写成了文本：<strong>一行一个属性，冒号后面跟值</strong>，字段名几乎一模一样。
+  </Note>
+</StepCard>
+
+<StepCard num="CSS-F-02" label="对照">
+  <SectionHead line1="一个按钮，两种描述" line2="Figma ↔ CSS" />
+  <p>同一个按钮，左边是 Figma 属性面板，右边是浏览器看到的 CSS——它们是同一个东西：</p>
+
+  <DocTable label="Figma 属性与 CSS 对照表">
+    <thead>
+      <tr>
+        <th>Figma 属性面板</th>
+        <th>CSS 属性</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="doc-props__name">Layout · P（内边距）= 20</td>
+        <td>
+          <code>padding: 20px</code>
+        </td>
+      </tr>
+      <tr>
+        <td class="doc-props__name">Layout · ⌒（圆角）= 8</td>
+        <td>
+          <code>border-radius: 8px</code>
+        </td>
+      </tr>
+      <tr>
+        <td class="doc-props__name">Fill · 填充 = FF4D2E</td>
+        <td>
+          <code>background: #ff4d2e</code>
+        </td>
+      </tr>
+      <tr>
+        <td class="doc-props__name">Text · Aa（字号）= 14</td>
+        <td>
+          <code>font-size: 14px</code>
+        </td>
+      </tr>
+      <tr>
+        <td class="doc-props__name">Text · 字色 = FFFFFF</td>
+        <td>
+          <code>color: #ffffff</code>
+        </td>
+      </tr>
+    </tbody>
+  </DocTable>
+
+  <Preview label="渲染结果（按上述 CSS 渲染的按钮）">
+    <button style={{ padding: '20px', borderRadius: '8px', background: '#ff4d2e', fontSize: '14px', color: '#fff', border: 'none', cursor: 'pointer' }}>按钮</button>
+  </Preview>
+</StepCard>
+
+<Takeaway
+  num="CSS-F-03"
+  label="总结"
+  line1="Figma 视角 vs 代码视角"
+  line2="字段名几乎一样"
+  note="看懂对照表，再打开任何设计稿，都能把右侧面板「翻译」成一段 CSS。"
+>
+  <ul>
+    <li>
+      <strong>Figma 视角：</strong>
+      右侧属性面板 = 长什么样的全部信息
+    </li>
+    <li>
+      <strong>代码视角：</strong>
+      一组「属性: 值」文本
+    </li>
+    <li>
+      <strong>对照口诀：</strong>
+      padding 内边距 · border-radius 圆角 · background 填充
+    </li>
+  </ul>
+</Takeaway>

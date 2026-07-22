@@ -1,0 +1,40 @@
+---
+// SectionHead —— 课时内章节标题
+// 双行大标题，第二行高亮（蓝色）。用于 StepCard 内部的标题区。
+interface Props {
+  /** 第一行（常规色） */
+  line1: string;
+  /** 第二行（蓝色高亮） */
+  line2: string;
+}
+const { line1, line2 } = Astro.props;
+---
+
+<div class="sec-head">
+  <h2 class="sec-head__title">
+    <span class="sec-head__l1">{line1}</span>
+    <span class="sec-head__l2">{line2}</span>
+  </h2>
+</div>
+
+<style>
+  .sec-head {
+    width: 100%;
+  }
+  .sec-head__title {
+    font-family: var(--sx-sys-font-family-display);
+    font-size: clamp(1.5rem, 3vw, 2.25rem);
+    font-weight: 700;
+    line-height: 1.2;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .sec-head__l1 {
+    color: var(--sx-sys-color-text-primary);
+  }
+  .sec-head__l2 {
+    color: var(--sx-sys-color-action-primary);
+  }
+</style>

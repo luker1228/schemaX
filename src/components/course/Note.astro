@@ -1,0 +1,18 @@
+---
+// Note —— 提示块（核心 / 带走 / 注意等）
+// 外壳使用全局 .doc-note（doc.css），无边框、无阴影。
+interface Props {
+  /** 左侧小标签，如「核心」「带走」 */
+  tag: string;
+}
+const { tag } = Astro.props;
+---
+
+<div class="doc-note">
+  <div class="doc-note__head">
+    <span class="doc-note__tag">{tag}</span>
+  </div>
+  <div class="doc-note__body">
+    <slot />
+  </div>
+</div>

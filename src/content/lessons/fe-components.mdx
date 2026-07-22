@@ -1,0 +1,257 @@
+---
+title: 组件认知·常见 UI 词汇表
+description: 给后端同学的前端组件词汇表——Card、Button、Form、Modal、Drawer 等 10 个常见组件，用后端类比理解，附给 AI 的描述模板。
+slug: fe-components
+status: published
+course: frontend-handbook
+order: 7
+durationMinutes: 10
+lessonType: lesson
+hero:
+  line1: 先认组件
+  line2: 再和 AI 说
+  badge: 前端话
+  pillFill: 组件词汇表 · VOCAB
+  pillOutline: 第 7 节 · 会叫名字
+---
+
+import StepCard from '../../components/course/StepCard.astro';
+import SectionHead from '../../components/course/SectionHead.astro';
+import Note from '../../components/course/Note.astro';
+import Preview from '../../components/course/Preview.astro';
+import Takeaway from '../../components/course/Takeaway.astro';
+import Card from '../../components/design-system/Card.astro';
+import Button from '../../components/design-system/Button.astro';
+import Badge from '../../components/design-system/Badge.astro';
+
+<StepCard num="CMP-01" label="核心">
+  <SectionHead line1="先认识组件" line2="再学会和 AI 说前端语言" />
+  <Note tag="核心">
+    这页不是组件文档大全，而是给后端同学的<strong>组件词汇表</strong>。每个组件都回答三件事：1）它是什么（视觉长什么样）；2）后端怎么理解（用你熟悉的概念类比）；3）怎样描述给 AI（一句话提示词模板）。先认词，后面写提示词才不会卡壳。
+  </Note>
+</StepCard>
+
+<StepCard num="CMP-02" label="Card 卡片">
+  <SectionHead line1="Card 卡片" line2="像接口返回的一条资源摘要" />
+  <p>展示对象的核心信息（头像/标题/元数据/操作）。</p>
+  <Preview>
+    <Card style={{ maxWidth: '280px' }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '12px' }}>
+        <div style={{ width: '40px', height: '40px', borderRadius: '50%', background: 'var(--sx-sys-color-beige)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 700 }}>张</div>
+        <div>
+          <div style={{ fontWeight: 700 }}>张三</div>
+          <div style={{ fontSize: '0.85rem', opacity: 0.7 }}>管理员</div>
+        </div>
+        <Badge variant="success">在线</Badge>
+      </div>
+      <div style={{ display: 'flex', gap: '8px' }}>
+        <Button variant="primary" size="sm">编辑</Button>
+        <Button variant="outline" size="sm">详情</Button>
+      </div>
+    </Card>
+  </Preview>
+  <details style="margin-top: 8px;">
+    <summary style="cursor: pointer; font-weight: 600;">给 AI 的描述模板</summary>
+    <p style={{ margin: '8px 0 0', color: 'var(--sx-sys-color-text-soft)' }}>请生成一个用户信息卡片，包含头像、用户名、角色、状态标签和操作按钮。卡片需要有边框和阴影效果。</p>
+  </details>
+</StepCard>
+
+<StepCard num="CMP-03" label="Button 按钮">
+  <SectionHead line1="Button 按钮" line2="像可触发动作的 RPC 入口" />
+  <p>要区分主按钮（确认/提交）、次按钮（取消）、危险按钮（删除）。</p>
+  <Preview>
+    <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
+      <Button variant="primary">主操作</Button>
+      <Button variant="secondary">次要</Button>
+      <Button variant="outline">中性</Button>
+      <Button variant="danger">删除</Button>
+    </div>
+  </Preview>
+  <details style="margin-top: 8px;">
+    <summary style="cursor: pointer; font-weight: 600;">给 AI 的描述模板</summary>
+    <p style={{ margin: '8px 0 0', color: 'var(--sx-sys-color-text-soft)' }}>请生成主按钮和次按钮两种样式，并包含默认、hover、disabled 三个状态。</p>
+  </details>
+</StepCard>
+
+<StepCard num="CMP-04" label="Form 表单">
+  <SectionHead line1="Form 表单" line2="像收集请求参数的结构体" />
+  <p>承载输入字段、校验规则和提交动作。</p>
+  <Preview>
+    <form style={{ display: 'grid', gap: '12px', width: '100%', maxWidth: '320px' }}>
+      <div>
+        <label style={{ display: 'block', marginBottom: '4px', fontSize: '0.85rem', fontWeight: 600 }}>用户名</label>
+        <input type="text" placeholder="请输入用户名" style={{ width: '100%', padding: '8px 12px', border: '1px solid #000', boxSizing: 'border-box' }} />
+      </div>
+      <div>
+        <label style={{ display: 'block', marginBottom: '4px', fontSize: '0.85rem', fontWeight: 600 }}>邮箱</label>
+        <input type="email" placeholder="name@example.com" style={{ width: '100%', padding: '8px 12px', border: '1px solid #000', boxSizing: 'border-box' }} />
+      </div>
+      <div style={{ color: '#f9575c', fontSize: '0.85rem' }}>邮箱格式不正确</div>
+      <Button variant="primary">提交</Button>
+    </form>
+  </Preview>
+  <details style="margin-top: 8px;">
+    <summary style="cursor: pointer; font-weight: 600;">给 AI 的描述模板</summary>
+    <p style={{ margin: '8px 0 0', color: 'var(--sx-sys-color-text-soft)' }}>请生成一个用户创建表单，包含名称、角色、邮箱和提交按钮，并在校验失败时显示错误信息。</p>
+  </details>
+</StepCard>
+
+<StepCard num="CMP-05" label="Input 输入框">
+  <SectionHead line1="Input 输入框" line2="像结构体的可编辑字段" />
+  <p>常常伴随 placeholder、错误态、帮助文本和焦点态。</p>
+  <Preview>
+    <div style={{ display: 'grid', gap: '16px' }}>
+      <input placeholder="默认输入框" style={{ padding: '8px 12px', border: '1px solid #000', minWidth: '200px' }} />
+      <input placeholder="错误状态" style={{ padding: '8px 12px', border: '2px solid #f9575c', minWidth: '200px' }} />
+      <input disabled placeholder="禁用状态" style={{ padding: '8px 12px', border: '1px solid #999', background: '#eee', minWidth: '200px' }} />
+    </div>
+  </Preview>
+  <details style="margin-top: 8px;">
+    <summary style="cursor: pointer; font-weight: 600;">给 AI 的描述模板</summary>
+    <p style={{ margin: '8px 0 0', color: 'var(--sx-sys-color-text-soft)' }}>请生成一个带 label、placeholder、错误提示和帮助文案的输入框组件。</p>
+  </details>
+</StepCard>
+
+<StepCard num="CMP-06" label="Modal 弹窗">
+  <SectionHead line1="Modal 弹窗" line2="像临时阻断流程的确认层" />
+  <p>适合删除确认、审批确认、关键设置。弹出时背景变暗，必须先处理它才能继续。</p>
+  <Preview>
+    <div style={{ position: 'relative', width: '100%', maxWidth: '400px', minHeight: '180px', background: 'rgba(0,0,0,0.3)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+      <Card style={{ width: '300px', zIndex: 2 }}>
+        <h4 style={{ margin: '0 0 8px' }}>确认删除</h4>
+        <p style={{ margin: '0 0 16px', fontSize: '0.9rem', opacity: 0.8 }}>此操作不可撤销，确定删除该用户吗？</p>
+        <div style={{ display: 'flex', gap: '8px', justifyContent: 'flex-end' }}>
+          <Button variant="outline" size="sm">取消</Button>
+          <Button variant="danger" size="sm">确认删除</Button>
+        </div>
+      </Card>
+    </div>
+  </Preview>
+  <details style="margin-top: 8px;">
+    <summary style="cursor: pointer; font-weight: 600;">给 AI 的描述模板</summary>
+    <p style={{ margin: '8px 0 0', color: 'var(--sx-sys-color-text-soft)' }}>点击删除按钮后弹出一个确认 Modal，包含标题、说明文案、取消按钮和确认按钮。点击遮罩或取消按钮关闭。</p>
+  </details>
+</StepCard>
+
+<StepCard num="CMP-07" label="Drawer 抽屉">
+  <SectionHead line1="Drawer 抽屉" line2="像不跳转就展开的详情接口" />
+  <p>从侧边滑出，适合查看详情、配置表单、日志。和 Modal 区别：不阻断主流程，可并排看上下文。</p>
+  <Preview>
+    <div style={{ position: 'relative', width: '100%', maxWidth: '400px', height: '180px', border: '1px solid #000', background: 'var(--sx-sys-color-bg-page)' }}>
+      <p style={{ padding: '12px', margin: 0 }}>主页面内容区...</p>
+      <div style={{ position: 'absolute', right: 0, top: 0, bottom: 0, width: '220px', borderLeft: '1px solid #000', background: '#fff', padding: '16px' }}>
+        <h4 style={{ margin: '0 0 8px' }}>用户详情</h4>
+        <p style={{ fontSize: '0.85rem', margin: '4px 0' }}>张三 · 管理员</p>
+        <p style={{ fontSize: '0.85rem', margin: '4px 0' }}>zhangsan@example.com</p>
+      </div>
+    </div>
+  </Preview>
+  <details style="margin-top: 8px;">
+    <summary style="cursor: pointer; font-weight: 600;">给 AI 的描述模板</summary>
+    <p style={{ margin: '8px 0 0', color: 'var(--sx-sys-color-text-soft)' }}>点击表格中的「查看详情」按钮后，从右侧打开一个 Drawer，展示当前用户的详细信息。</p>
+  </details>
+</StepCard>
+
+<StepCard num="CMP-08" label="Navbar 导航栏">
+  <SectionHead line1="Navbar 导航栏" line2="像系统的全局入口（API 网关）" />
+  <p>类似 API 网关暴露的一组顶层路径。</p>
+  <Preview>
+    <div style={{ width: '100%', maxWidth: '500px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '12px 16px', border: '1px solid #000', background: '#fff' }}>
+      <strong>SchemaX</strong>
+      <nav style={{ display: 'flex', gap: '16px', fontSize: '0.9rem' }}>
+        <a href="javascript:void(0)">课程</a>
+        <a href="javascript:void(0)">项目</a>
+        <a href="javascript:void(0)">博客</a>
+      </nav>
+      <Button variant="primary" size="sm">登录</Button>
+    </div>
+  </Preview>
+  <details style="margin-top: 8px;">
+    <summary style="cursor: pointer; font-weight: 600;">给 AI 的描述模板</summary>
+    <p style={{ margin: '8px 0 0', color: 'var(--sx-sys-color-text-soft)' }}>请生成一个顶部导航栏，左侧是 Logo，中间是菜单，右侧是搜索框和登录按钮。当前页菜单项高亮。</p>
+  </details>
+</StepCard>
+
+<StepCard num="CMP-09" label="Sidebar 侧边栏">
+  <SectionHead line1="Sidebar 侧边栏" line2="像后台应用的路由索引" />
+  <p>帮助用户在不同模块之间切换，常见于管理后台。</p>
+  <Preview>
+    <nav style={{ width: '200px', border: '1px solid #000', background: '#fff', padding: '12px' }}>
+      <div style={{ fontSize: '0.7rem', textTransform: 'uppercase', marginBottom: '8px', opacity: 0.6 }}>内容管理</div>
+      <div style={{ padding: '6px 8px', background: 'var(--sx-sys-color-accent)', fontWeight: 600, marginBottom: '4px' }}>用户列表</div>
+      <div style={{ padding: '6px 8px', marginBottom: '4px' }}>课程管理</div>
+      <div style={{ padding: '6px 8px', marginBottom: '4px' }}>文章管理</div>
+      <div style={{ fontSize: '0.7rem', textTransform: 'uppercase', margin: '16px 0 8px', opacity: 0.6 }}>系统</div>
+      <div style={{ padding: '6px 8px' }}>设置</div>
+    </nav>
+  </Preview>
+  <details style="margin-top: 8px;">
+    <summary style="cursor: pointer; font-weight: 600;">给 AI 的描述模板</summary>
+    <p style={{ margin: '8px 0 0', color: 'var(--sx-sys-color-text-soft)' }}>请生成一个管理后台左侧 Sidebar，包含分组标题、当前高亮态和折叠态。</p>
+  </details>
+</StepCard>
+
+<StepCard num="CMP-10" label="Table 表格">
+  <SectionHead line1="Table 表格" line2="像批量资源视图" />
+  <p>适合用户、订单、日志、任务等列表数据。</p>
+  <Preview>
+    <table>
+      <thead>
+        <tr>
+          <th>姓名</th><th>角色</th><th>状态</th><th>操作</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>张三</td><td>管理员</td><td><Badge variant="success">在线</Badge></td><td><a href="javascript:void(0)">编辑</a></td>
+        </tr>
+        <tr>
+          <td>李四</td><td>编辑者</td><td><Badge variant="default">离线</Badge></td><td><a href="javascript:void(0)">编辑</a></td>
+        </tr>
+      </tbody>
+    </table>
+  </Preview>
+  <details style="margin-top: 8px;">
+    <summary style="cursor: pointer; font-weight: 600;">给 AI 的描述模板</summary>
+    <p style={{ margin: '8px 0 0', color: 'var(--sx-sys-color-text-soft)' }}>请生成一个用户列表 Table，包含头像、姓名、角色、状态、创建时间和操作列。支持分页。</p>
+  </details>
+</StepCard>
+
+<StepCard num="CMP-11" label="Loading / Empty 状态">
+  <SectionHead line1="Loading / Empty State" line2="页面状态机的一部分" />
+  <p>它们不是装饰，而是页面状态机的一部分——<strong>AI 提示词必须明确这些状态</strong>，否则它只会给你「理想数据」的界面。</p>
+  <Preview>
+    <Card style={{ maxWidth: '280px', textAlign: 'center' }}>
+      <div style={{ fontSize: '2rem', opacity: 0.4 }}>∅</div>
+      <p style={{ margin: '8px 0 4px', fontWeight: 600 }}>暂无数据</p>
+      <p style={{ margin: 0, fontSize: '0.85rem', opacity: 0.7 }}>还没有创建任何任务</p>
+    </Card>
+  </Preview>
+  <details style="margin-top: 8px;">
+    <summary style="cursor: pointer; font-weight: 600;">给 AI 的描述模板</summary>
+    <p style={{ margin: '8px 0 0', color: 'var(--sx-sys-color-text-soft)' }}>表格加载时显示 Loading 骨架屏，空数据时显示 Empty State（含图标和引导文案），错误时显示错误提示条。三个状态都要。</p>
+  </details>
+</StepCard>
+
+<Takeaway
+  num="CMP-12"
+  label="总结"
+  line1="会叫名字"
+  line2="才能下得了指令"
+  note="组件词汇是你和 AI、设计师、前端对齐的共同语言。先认词，再写提示词。"
+>
+  <ul>
+    <li>
+      <strong>容器：</strong>
+      Card / Modal / Drawer
+    </li>
+    <li>
+      <strong>操作：</strong>
+      Button / Form / Table
+    </li>
+    <li>
+      <strong>状态：</strong>
+      Loading / Empty / Badge——提示词必须写全
+    </li>
+  </ul>
+</Takeaway>
