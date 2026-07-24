@@ -1,11 +1,11 @@
 ---
 // SectionHead —— 课时内章节标题
-// 双行大标题，第二行高亮（蓝色）。用于 StepCard 内部的标题区。
+// 双行大标题，第二行用品牌黄马克笔高亮（非蓝色）。
 interface Props {
   /** 第一行（常规色） */
   line1: string;
-  /** 第二行（蓝色高亮） */
-  line2: string;
+  /** 第二行（黄色马克笔高亮） */
+  line2?: string;
 }
 const { line1, line2 } = Astro.props;
 ---
@@ -13,7 +13,11 @@ const { line1, line2 } = Astro.props;
 <div class="sec-head">
   <h2 class="sec-head__title">
     <span class="sec-head__l1">{line1}</span>
-    <span class="sec-head__l2">{line2}</span>
+    {
+      line2 ? (
+        <span class="sec-head__l2">{line2}</span>
+      ) : null
+    }
   </h2>
 </div>
 
@@ -34,7 +38,14 @@ const { line1, line2 } = Astro.props;
   .sec-head__l1 {
     color: var(--sx-sys-color-text-primary);
   }
+  /* 黄色马克笔：只罩住文字宽度，换行时逐段高亮 */
   .sec-head__l2 {
-    color: var(--sx-sys-color-action-primary);
+    color: var(--sx-sys-color-text-primary);
+    background: var(--sx-sys-color-accent);
+    padding: 0.08em 0.28em;
+    width: fit-content;
+    max-width: 100%;
+    box-decoration-break: clone;
+    -webkit-box-decoration-break: clone;
   }
 </style>

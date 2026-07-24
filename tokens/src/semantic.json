@@ -66,15 +66,15 @@
       "sidebar": {
         "width": {
           "$type": "dimension",
-          "$value": "17.5rem",
-          "$description": "文档/课时左侧栏列宽。与主区组成双栏 grid。"
+          "$value": "13.5rem",
+          "$description": "文档/课时左侧栏列宽。与主区组成双栏 grid。偏窄以把主区（白板）让宽。"
         }
       },
       "gap": {
         "doc": {
           "$type": "dimension",
-          "$value": "{ref.space.8}",
-          "$description": "文档/课时双栏：侧栏 ↔ 主区间距。"
+          "$value": "10rem",
+          "$description": "文档/课时双栏：侧栏 ↔ 主区间距（目录与白板之间的留白）。"
         },
         "main": {
           "$type": "dimension",

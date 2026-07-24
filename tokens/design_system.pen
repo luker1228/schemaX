@@ -789,6 +789,7 @@
                               "type": "text",
                               "id": "Jz5tN",
                               "name": "Primary CTA Text",
+                              "rotation": -0.3206780425281703,
                               "fill": "$--sx-sys-color-text-primary",
                               "content": "了解我",
                               "fontFamily": "$--sx-font-mono",
@@ -18698,10 +18699,12 @@
       "id": "fVojU",
       "x": -1942,
       "y": 7412,
-      "name": "HTML Lesson · Markdown 对照",
+      "name": "HTML Lesson · 白板课件",
       "clip": true,
       "width": 1440,
+      "height": 900,
       "fill": "$--sx-sys-color-bg-page",
+      "cornerRadius": 2,
       "layout": "vertical",
       "children": [
         {
@@ -18713,232 +18716,147 @@
         },
         {
           "type": "frame",
-          "id": "d2SQsl",
-          "name": "Lesson Body",
+          "id": "GeSQK",
+          "name": "Lesson Console",
           "width": "fill_container",
-          "gap": 30,
-          "padding": [
-            16,
-            0,
-            64,
-            0
-          ],
+          "height": "fill_container",
           "children": [
             {
-              "id": "kTZQv",
-              "type": "ref",
-              "ref": "CoHAT",
-              "x": 0,
-              "y": 16,
-              "gap": 30,
-              "flipX": false,
-              "flipY": false,
-              "width": "fit_content",
-              "height": "fit_content"
+              "type": "frame",
+              "id": "wISzp",
+              "name": "Lesson Sidebar",
+              "width": 280,
+              "height": "fill_container",
+              "fill": "$--sx-sys-color-bg-page",
+              "stroke": "$--sx-sys-color-border",
+              "layout": "vertical",
+              "gap": 20,
+              "padding": [
+                28,
+                22
+              ],
+              "children": [
+                {
+                  "id": "tgaTn",
+                  "type": "ref",
+                  "ref": "CoHAT",
+                  "x": 22,
+                  "y": 28,
+                  "descendants": {
+                    "eOSjz": {
+                      "enabled": false
+                    }
+                  }
+                }
+              ]
             },
             {
               "type": "frame",
-              "id": "yVMqt",
-              "name": "doc",
-              "height": 3563,
-              "fill": "#ffffff00",
+              "id": "Lph4j",
+              "name": "Slide Whiteboard",
+              "width": "fill_container",
+              "height": "fill_container",
+              "fill": "$--sx-sys-color-bg-page",
+              "stroke": "$--sx-sys-color-border",
               "layout": "vertical",
-              "gap": 30,
-              "alignItems": "center",
               "children": [
                 {
                   "type": "frame",
-                  "id": "neV5G",
-                  "name": "docs-nav",
-                  "width": 724,
-                  "height": 61,
-                  "fill": "$--sx-sys-color-bg-surface",
-                  "cornerRadius": 4,
+                  "id": "jgZDb",
+                  "name": "Board Topbar",
+                  "width": "fill_container",
+                  "fill": "$--sx-sys-color-bg-page",
                   "stroke": "$--sx-sys-color-border",
-                  "strokeWidth": 2,
-                  "effect": {
-                    "type": "shadow",
-                    "shadowType": "outer",
-                    "color": "#000000",
-                    "offset": {
-                      "x": 4,
-                      "y": 4
-                    }
-                  },
+                  "padding": [
+                    15,
+                    30
+                  ],
+                  "justifyContent": "space_between",
+                  "alignItems": "center",
                   "children": [
                     {
                       "type": "frame",
-                      "id": "WV0Vt",
-                      "name": "docs-prev",
-                      "width": "fill_container",
-                      "height": "fill_container",
+                      "id": "dItMX",
+                      "name": "Topbar Left",
+                      "fill": "$--sx-sys-color-bg-surface",
+                      "cornerRadius": 2,
                       "stroke": "$--sx-sys-color-border",
-                      "strokeWidth": {
-                        "right": 2
-                      },
-                      "gap": 14,
-                      "padding": [
-                        18,
-                        22
-                      ],
-                      "alignItems": "center",
-                      "children": [
-                        {
-                          "type": "path",
-                          "id": "Zg5RD",
-                          "name": "arrow-left",
-                          "geometry": "M19 12h-14m6-6l-6 6 6 6",
-                          "viewBox": [
-                            0,
-                            0,
-                            24,
-                            24
-                          ],
-                          "width": 22,
-                          "height": 22,
-                          "stroke": "$--sx-sys-color-text-primary",
-                          "strokeWidth": 2,
-                          "strokeLinejoin": "round",
-                          "strokeLinecap": "round"
-                        },
-                        {
-                          "type": "frame",
-                          "id": "uckmy",
-                          "name": "prev text",
-                          "layout": "vertical",
-                          "gap": 2,
-                          "children": [
-                            {
-                              "type": "text",
-                              "id": "GTe0I",
-                              "name": "prev title",
-                              "fill": "$--sx-sys-color-text-primary",
-                              "content": "Typography",
-                              "fontFamily": "$--sx-font-display",
-                              "fontSize": 19,
-                              "fontWeight": "800"
-                            }
-                          ]
+                      "strokeWidth": 1,
+                      "effect": {
+                        "type": "shadow",
+                        "shadowType": "outer",
+                        "color": "#000000",
+                        "offset": {
+                          "x": 4,
+                          "y": 4
                         }
-                      ]
-                    },
-                    {
-                      "type": "frame",
-                      "id": "R4ZZQ",
-                      "name": "docs-center",
-                      "height": "fill_container",
-                      "gap": 8,
+                      },
+                      "gap": 12,
                       "padding": [
-                        18,
-                        14
+                        8,
+                        12
                       ],
-                      "justifyContent": "center",
                       "alignItems": "center",
                       "children": [
                         {
                           "type": "frame",
-                          "id": "kF5nH",
-                          "name": "copy page btn",
-                          "fill": "$--sx-sys-color-bg-page",
-                          "cornerRadius": 4,
+                          "id": "C9wOu",
+                          "name": "Step Tag",
+                          "fill": "$--sx-sys-color-text-primary",
                           "stroke": "$--sx-sys-color-border",
                           "strokeWidth": 1,
-                          "gap": 8,
                           "padding": [
-                            9,
-                            12
+                            5,
+                            10
                           ],
-                          "alignItems": "center",
                           "children": [
                             {
-                              "type": "icon",
-                              "id": "Ce40x",
-                              "name": "copy icon",
-                              "width": 16,
-                              "height": 16,
-                              "icon": "copy",
-                              "library": "lucide",
-                              "fill": "$--sx-sys-color-text-primary"
-                            },
-                            {
                               "type": "text",
-                              "id": "N4VNf",
-                              "name": "copy label",
-                              "fill": "$--sx-sys-color-text-primary",
-                              "content": "Copy page",
+                              "id": "VrZJn",
+                              "name": "Step Num",
+                              "fill": "$--sx-sys-color-accent",
+                              "content": "HTML-02",
                               "fontFamily": "$--sx-font-mono",
                               "fontSize": 12,
-                              "fontWeight": "800"
-                            },
-                            {
-                              "type": "text",
-                              "id": "Idu35",
-                              "name": "chevron",
-                              "fill": "$--retro-muted-ink",
-                              "content": "▾",
-                              "fontFamily": "$--sx-font-mono",
-                              "fontSize": 10,
-                              "fontWeight": "800"
+                              "fontWeight": "700",
+                              "letterSpacing": 0.8
                             }
                           ]
+                        },
+                        {
+                          "type": "text",
+                          "id": "usy2q",
+                          "name": "Section Label",
+                          "fill": "$--sx-sys-color-text-primary",
+                          "content": "标题 · heading",
+                          "fontFamily": "$--sx-font-display",
+                          "fontSize": 22,
+                          "fontWeight": "700"
                         }
                       ]
                     },
                     {
                       "type": "frame",
-                      "id": "QfviV",
-                      "name": "docs-next",
-                      "width": "fill_container",
-                      "height": "fill_container",
+                      "id": "M0a7v",
+                      "name": "Page Badge",
+                      "fill": "$--sx-sys-color-accent",
+                      "cornerRadius": "$--radius-pill",
                       "stroke": "$--sx-sys-color-border",
-                      "strokeWidth": {
-                        "left": 2
-                      },
-                      "gap": 14,
+                      "strokeWidth": 1,
                       "padding": [
-                        18,
-                        22
+                        6,
+                        12
                       ],
-                      "justifyContent": "end",
-                      "alignItems": "center",
                       "children": [
                         {
-                          "type": "frame",
-                          "id": "DJYAA",
-                          "name": "next text",
-                          "layout": "vertical",
-                          "gap": 2,
-                          "alignItems": "end",
-                          "children": [
-                            {
-                              "type": "text",
-                              "id": "w4THIt",
-                              "name": "next title",
-                              "fill": "$--sx-sys-color-text-primary",
-                              "content": "Alert",
-                              "fontFamily": "$--sx-font-display",
-                              "fontSize": 19,
-                              "fontWeight": "800"
-                            }
-                          ]
-                        },
-                        {
-                          "type": "path",
-                          "id": "VwMTQ",
-                          "name": "arrow-right",
-                          "geometry": "M5 12h14m-6-6l6 6-6 6",
-                          "viewBox": [
-                            0,
-                            0,
-                            24,
-                            24
-                          ],
-                          "width": 22,
-                          "height": 22,
-                          "stroke": "$--sx-sys-color-text-primary",
-                          "strokeWidth": 2,
-                          "strokeLinejoin": "round",
-                          "strokeLinecap": "round"
+                          "type": "text",
+                          "id": "j1fzLH",
+                          "name": "Badge Text",
+                          "fill": "$--sx-sys-color-text-primary",
+                          "content": "3 / 6",
+                          "fontFamily": "$--sx-font-mono",
+                          "fontSize": 12,
+                          "fontWeight": "800"
                         }
                       ]
                     }
@@ -18946,327 +18864,65 @@
                 },
                 {
                   "type": "frame",
-                  "id": "SCezC",
-                  "name": "Lesson Hero",
+                  "id": "RI6Xb",
+                  "name": "Board Content",
                   "width": "fill_container",
-                  "gap": 30,
+                  "height": "fill_container",
+                  "layout": "vertical",
+                  "gap": 20,
                   "padding": [
-                    76,
-                    96,
-                    52,
-                    96
+                    24,
+                    30
                   ],
                   "justifyContent": "center",
                   "alignItems": "center",
                   "children": [
                     {
                       "type": "frame",
-                      "id": "F6UhN",
-                      "name": "Title Group",
-                      "width": 740,
+                      "id": "r3D4PP",
+                      "name": "Intro Title",
+                      "width": "fill_container",
                       "layout": "vertical",
-                      "gap": 6,
+                      "gap": 4,
                       "children": [
                         {
                           "type": "text",
-                          "id": "iOGUy",
-                          "name": "Title Line 1",
+                          "id": "PrCRr",
+                          "name": "IT1",
                           "fill": "$--sx-sys-color-text-primary",
-                          "content": "Markdown",
-                          "lineHeight": 1,
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "HTML 和 Markdown",
                           "fontFamily": "$--sx-font-display",
-                          "fontSize": 76,
+                          "fontSize": 36,
                           "fontWeight": "700"
                         },
                         {
-                          "type": "frame",
-                          "id": "IYSqO",
-                          "name": "Title Line 2",
-                          "alignItems": "center",
-                          "children": [
-                            {
-                              "type": "text",
-                              "id": "dbY0b",
-                              "name": "TL2 Pre",
-                              "fill": "$--sx-sys-color-text-primary",
-                              "content": "怎么翻成",
-                              "lineHeight": 1,
-                              "fontFamily": "$--sx-font-display",
-                              "fontSize": 76,
-                              "fontWeight": "700"
-                            },
-                            {
-                              "type": "frame",
-                              "id": "ow3TP",
-                              "name": "HTML Badge",
-                              "fill": "$--sx-sys-color-accent",
-                              "padding": [
-                                4,
-                                18
-                              ],
-                              "children": [
-                                {
-                                  "type": "text",
-                                  "id": "tWVak",
-                                  "name": "HTML Badge Text",
-                                  "fill": "$--sx-sys-color-text-primary",
-                                  "content": "HTML",
-                                  "lineHeight": 1,
-                                  "fontFamily": "$--sx-font-display",
-                                  "fontSize": 76,
-                                  "fontWeight": "700"
-                                }
-                              ]
-                            }
-                          ]
+                          "type": "text",
+                          "id": "l5547m",
+                          "name": "IT2",
+                          "fill": "$--sx-ref-color-blue-500",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "本质上是同一类东西",
+                          "fontFamily": "$--sx-font-display",
+                          "fontSize": 36,
+                          "fontWeight": "700"
                         }
                       ]
                     },
                     {
-                      "type": "frame",
-                      "id": "yO1dY",
-                      "name": "Hero Meta",
-                      "layout": "vertical",
-                      "gap": 12,
-                      "alignItems": "center",
-                      "children": [
-                        {
-                          "type": "frame",
-                          "id": "wRVsm",
-                          "name": "Pill Fill",
-                          "fill": "$--sx-sys-color-accent",
-                          "cornerRadius": "$--radius-pill",
-                          "stroke": "$--sx-sys-color-border",
-                          "strokeWidth": "$--sx-sys-border-width",
-                          "padding": [
-                            7,
-                            13
-                          ],
-                          "children": [
-                            {
-                              "type": "text",
-                              "id": "I0c8zI",
-                              "name": "Pill Fill Text",
-                              "fill": "$--sx-sys-color-text-primary",
-                              "content": "MARKDOWN 对照 · COMPARE",
-                              "fontFamily": "$--sx-font-mono",
-                              "fontSize": 12,
-                              "fontWeight": "700",
-                              "letterSpacing": 1
-                            }
-                          ]
-                        },
-                        {
-                          "type": "frame",
-                          "id": "fjLIk",
-                          "name": "Pill Outline",
-                          "fill": "$--sx-sys-color-bg-surface",
-                          "cornerRadius": "$--radius-pill",
-                          "stroke": "$--sx-sys-color-border",
-                          "strokeWidth": "$--sx-sys-border-width",
-                          "padding": [
-                            7,
-                            13
-                          ],
-                          "children": [
-                            {
-                              "type": "text",
-                              "id": "IpGt1",
-                              "name": "Pill Outline Text",
-                              "fill": "$--sx-sys-color-text-primary",
-                              "content": "HTML 第一课 · 语法对照",
-                              "fontFamily": "$--sx-font-body",
-                              "fontSize": 12,
-                              "fontWeight": "600"
-                            }
-                          ]
-                        },
-                        {
-                          "type": "text",
-                          "id": "e7GmN",
-                          "name": "Read Time",
-                          "fill": "$--retro-muted-ink",
-                          "content": "阅读时长 ≈ 12 分钟",
-                          "fontFamily": "$--sx-font-mono",
-                          "fontSize": 12,
-                          "fontWeight": "500",
-                          "letterSpacing": 0.4
-                        }
-                      ]
-                    }
-                  ]
-                },
-                {
-                  "type": "frame",
-                  "id": "pSyHe",
-                  "name": "Top Sections",
-                  "width": "fit_content(1129)",
-                  "layout": "vertical",
-                  "gap": 28,
-                  "children": [
-                    {
-                      "type": "frame",
-                      "id": "aYlDg",
-                      "name": "Intro Section · 核心",
+                      "type": "text",
+                      "id": "l1YUb0",
+                      "name": "Item Desc",
+                      "fill": "$--accent-foreground",
+                      "textGrowth": "fixed-width",
                       "width": "fill_container",
-                      "fill": "$--sx-sys-color-bg-surface",
-                      "stroke": "$--sx-sys-color-border",
-                      "strokeWidth": "$--sx-sys-border-width",
-                      "effect": {
-                        "type": "shadow",
-                        "shadowType": "outer",
-                        "color": "#000000",
-                        "offset": {
-                          "x": 6,
-                          "y": 6
-                        }
-                      },
-                      "layout": "vertical",
-                      "gap": 22,
-                      "padding": [
-                        34,
-                        36
-                      ],
-                      "children": [
-                        {
-                          "type": "frame",
-                          "id": "MBbvQ",
-                          "name": "Step Head",
-                          "width": "fill_container",
-                          "gap": 14,
-                          "alignItems": "center",
-                          "children": [
-                            {
-                              "type": "frame",
-                              "id": "YSN1w",
-                              "name": "Step Num",
-                              "fill": "$--sx-sys-color-text-primary",
-                              "stroke": "$--sx-sys-color-border",
-                              "strokeWidth": "$--sx-sys-border-width",
-                              "padding": [
-                                5,
-                                10
-                              ],
-                              "children": [
-                                {
-                                  "type": "text",
-                                  "id": "R0oPX",
-                                  "name": "Step Num Text",
-                                  "fill": "$--sx-sys-color-accent",
-                                  "content": "HTML-01",
-                                  "fontFamily": "$--sx-font-mono",
-                                  "fontSize": 12,
-                                  "fontWeight": "700",
-                                  "letterSpacing": 0.8
-                                }
-                              ]
-                            },
-                            {
-                              "type": "text",
-                              "id": "XK6VV",
-                              "name": "Step Label",
-                              "fill": "$--sx-sys-color-text-primary",
-                              "content": "核心",
-                              "fontFamily": "$--sx-font-display",
-                              "fontSize": 24,
-                              "fontWeight": "600"
-                            }
-                          ]
-                        },
-                        {
-                          "type": "frame",
-                          "id": "VrkBD",
-                          "name": "Intro Title",
-                          "width": "fill_container",
-                          "layout": "vertical",
-                          "gap": 4,
-                          "children": [
-                            {
-                              "type": "text",
-                              "id": "OVJcJ",
-                              "name": "IT1",
-                              "fill": "$--sx-sys-color-text-primary",
-                              "textGrowth": "fixed-width",
-                              "width": "fill_container",
-                              "content": "HTML 和 Markdown",
-                              "fontFamily": "$--sx-font-display",
-                              "fontSize": 36,
-                              "fontWeight": "700"
-                            },
-                            {
-                              "type": "text",
-                              "id": "v9Gcuu",
-                              "name": "IT2",
-                              "fill": "$--sx-ref-color-blue-500",
-                              "textGrowth": "fixed-width",
-                              "width": "fill_container",
-                              "content": "本质上是同一类东西",
-                              "fontFamily": "$--sx-font-display",
-                              "fontSize": 36,
-                              "fontWeight": "700"
-                            }
-                          ]
-                        },
-                        {
-                          "type": "frame",
-                          "id": "RF6yn",
-                          "name": "Inline Note",
-                          "width": "fill_container",
-                          "fill": "$--retro-code-surface",
-                          "stroke": "$--sx-sys-color-border",
-                          "strokeWidth": "$--sx-sys-border-width",
-                          "layout": "vertical",
-                          "gap": 12,
-                          "padding": 22,
-                          "children": [
-                            {
-                              "type": "frame",
-                              "id": "H9akUh",
-                              "name": "Note Head",
-                              "gap": 10,
-                              "alignItems": "center",
-                              "children": [
-                                {
-                                  "type": "frame",
-                                  "id": "fxXGk",
-                                  "name": "Note Tag",
-                                  "fill": "$--sx-sys-color-text-primary",
-                                  "padding": [
-                                    3,
-                                    9
-                                  ],
-                                  "children": [
-                                    {
-                                      "type": "text",
-                                      "id": "xGzGP",
-                                      "name": "Note Tag Text",
-                                      "fill": "$--sx-sys-color-accent",
-                                      "content": "核心",
-                                      "fontFamily": "$--sx-font-mono",
-                                      "fontSize": 11,
-                                      "fontWeight": "700",
-                                      "letterSpacing": 1
-                                    }
-                                  ]
-                                }
-                              ]
-                            },
-                            {
-                              "type": "text",
-                              "id": "OEpuM",
-                              "name": "Note Body",
-                              "fill": "$--sx-sys-color-text-primary",
-                              "textGrowth": "fixed-width",
-                              "width": "fill_container",
-                              "content": "HTML 就像 JSON 或 Markdown。JSON 是给程序看的结构化数据，HTML 是给浏览器看的结构化文档。Markdown 用 # 表示标题，HTML 用 <h1>；Markdown 用 - 表示列表，HTML 用 <ul><li>。概念完全一样，只是写法不同。遇到不会的查一下或问 AI 就行。",
-                              "lineHeight": 1.8,
-                              "fontFamily": "$--sx-font-body",
-                              "fontSize": 16,
-                              "fontWeight": "normal"
-                            }
-                          ]
-                        }
-                      ]
+                      "content": "Markdown 用 # 数量表示标题层级，HTML 用 <h1> 到 <h6> 标签。一个页面通常只有一个 h1，其他用 h2、h3 组织层级。",
+                      "lineHeight": 1.75,
+                      "fontFamily": "Bricolage Grotesque",
+                      "fontSize": 16,
+                      "fontWeight": "normal"
                     },
                     {
                       "type": "frame",
@@ -19275,14 +18931,13 @@
                       "width": "fill_container",
                       "fill": "$--sx-sys-color-bg-surface",
                       "stroke": "$--sx-sys-color-border",
-                      "strokeWidth": "$--sx-sys-border-width",
                       "effect": {
                         "type": "shadow",
                         "shadowType": "outer",
                         "color": "#000000",
                         "offset": {
-                          "x": 6,
-                          "y": 6
+                          "x": 4,
+                          "y": 4
                         }
                       },
                       "layout": "vertical",
@@ -19292,64 +18947,6 @@
                         36
                       ],
                       "children": [
-                        {
-                          "type": "frame",
-                          "id": "wz2uT",
-                          "name": "Step Head",
-                          "width": "fill_container",
-                          "gap": 14,
-                          "alignItems": "center",
-                          "children": [
-                            {
-                              "type": "frame",
-                              "id": "P4ugo",
-                              "name": "Step Num",
-                              "fill": "$--sx-sys-color-text-primary",
-                              "stroke": "$--sx-sys-color-border",
-                              "strokeWidth": "$--sx-sys-border-width",
-                              "padding": [
-                                5,
-                                10
-                              ],
-                              "children": [
-                                {
-                                  "type": "text",
-                                  "id": "JiDzq",
-                                  "name": "Step Num Text",
-                                  "fill": "$--sx-sys-color-accent",
-                                  "content": "HTML-02",
-                                  "fontFamily": "$--sx-font-mono",
-                                  "fontSize": 12,
-                                  "fontWeight": "700",
-                                  "letterSpacing": 0.8
-                                }
-                              ]
-                            },
-                            {
-                              "type": "text",
-                              "id": "SxKZ9",
-                              "name": "Step Label",
-                              "fill": "$--sx-sys-color-text-primary",
-                              "content": "标题",
-                              "fontFamily": "$--sx-font-display",
-                              "fontSize": 24,
-                              "fontWeight": "600"
-                            }
-                          ]
-                        },
-                        {
-                          "type": "text",
-                          "id": "l1YUb0",
-                          "name": "Item Desc",
-                          "fill": "$--retro-muted-ink",
-                          "textGrowth": "fixed-width",
-                          "width": "fill_container",
-                          "content": "Markdown 用 # 数量表示标题层级，HTML 用 <h1> 到 <h6> 标签。一个页面通常只有一个 h1，其他用 h2、h3 组织层级。",
-                          "lineHeight": 1.75,
-                          "fontFamily": "$--sx-font-body",
-                          "fontSize": 16,
-                          "fontWeight": "normal"
-                        },
                         {
                           "id": "GnFb4",
                           "type": "ref",
@@ -19442,756 +19039,1571 @@
                 },
                 {
                   "type": "frame",
-                  "id": "dKxHA",
-                  "name": "Bottom Sections",
+                  "id": "z1UcNp",
+                  "name": "Board Pager",
                   "width": "fill_container",
-                  "layout": "vertical",
-                  "gap": 28,
+                  "fill": "$--sx-sys-color-bg-page",
+                  "stroke": "$--sx-sys-color-border",
+                  "padding": [
+                    14,
+                    30
+                  ],
+                  "justifyContent": "space_between",
+                  "alignItems": "center",
                   "children": [
                     {
                       "type": "frame",
-                      "id": "GdYuU",
-                      "name": "UL Section · 无序列表",
-                      "width": "fill_container",
-                      "fill": "$--sx-sys-color-bg-surface",
-                      "stroke": "$--sx-sys-color-border",
-                      "strokeWidth": "$--sx-sys-border-width",
-                      "effect": {
-                        "type": "shadow",
-                        "shadowType": "outer",
-                        "color": "#000000",
-                        "offset": {
-                          "x": 6,
-                          "y": 6
-                        }
-                      },
-                      "layout": "vertical",
-                      "gap": 22,
-                      "padding": [
-                        34,
-                        36
-                      ],
+                      "id": "u9bCc",
+                      "name": "Prev",
+                      "gap": 10,
+                      "alignItems": "center",
                       "children": [
                         {
+                          "type": "path",
+                          "id": "LKdGe",
+                          "geometry": "M19 12h-14m6-6l-6 6 6 6",
+                          "viewBox": [
+                            0,
+                            0,
+                            24,
+                            24
+                          ],
+                          "width": 20,
+                          "height": 20,
+                          "stroke": "$--sx-sys-color-text-primary",
+                          "strokeWidth": 2,
+                          "strokeLinejoin": "round",
+                          "strokeLinecap": "round"
+                        },
+                        {
                           "type": "frame",
-                          "id": "YCYOJ",
-                          "name": "Step Head",
-                          "width": "fill_container",
-                          "gap": 14,
-                          "alignItems": "center",
+                          "id": "qh5jU",
+                          "name": "Prev Text",
+                          "layout": "vertical",
+                          "gap": 1,
                           "children": [
                             {
-                              "type": "frame",
-                              "id": "wql2w",
-                              "name": "Step Num",
-                              "fill": "$--sx-sys-color-text-primary",
-                              "stroke": "$--sx-sys-color-border",
-                              "strokeWidth": "$--sx-sys-border-width",
-                              "padding": [
-                                5,
-                                10
-                              ],
-                              "children": [
-                                {
-                                  "type": "text",
-                                  "id": "CuqvM",
-                                  "name": "Step Num Text",
-                                  "fill": "$--sx-sys-color-accent",
-                                  "content": "HTML-11",
-                                  "fontFamily": "$--sx-font-mono",
-                                  "fontSize": 12,
-                                  "fontWeight": "700",
-                                  "letterSpacing": 0.8
-                                }
-                              ]
+                              "type": "text",
+                              "id": "NkYee",
+                              "name": "Prev Eyebrow",
+                              "fill": "$--retro-muted-ink",
+                              "content": "上一页",
+                              "fontFamily": "$--sx-font-mono",
+                              "fontSize": 10,
+                              "fontWeight": "700"
                             },
                             {
                               "type": "text",
-                              "id": "E3vnt6",
-                              "name": "Step Label",
+                              "id": "Lvt1m",
+                              "name": "Prev Title",
+                              "fill": "$--sx-sys-color-text-primary",
+                              "content": "核心",
+                              "fontFamily": "$--sx-font-display",
+                              "fontSize": 15,
+                              "fontWeight": "700"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "vSvqN",
+                      "name": "Dots",
+                      "gap": 8,
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "rectangle",
+                          "id": "UYjcD",
+                          "name": "Dot 1",
+                          "fill": "$--sx-sys-color-bg-page",
+                          "width": 10,
+                          "height": 10,
+                          "stroke": "$--sx-sys-color-border",
+                          "strokeWidth": 1
+                        },
+                        {
+                          "type": "rectangle",
+                          "id": "lBFz2",
+                          "name": "Dot 2",
+                          "fill": "$--sx-sys-color-bg-page",
+                          "width": 10,
+                          "height": 10,
+                          "stroke": "$--sx-sys-color-border",
+                          "strokeWidth": 1
+                        },
+                        {
+                          "type": "rectangle",
+                          "id": "JH02J",
+                          "name": "Dot 3",
+                          "fill": "$--sx-sys-color-accent",
+                          "width": 16,
+                          "height": 16,
+                          "stroke": "$--sx-sys-color-border",
+                          "strokeWidth": 1
+                        },
+                        {
+                          "type": "rectangle",
+                          "id": "SUQIw",
+                          "name": "Dot 4",
+                          "fill": "$--sx-sys-color-bg-page",
+                          "width": 10,
+                          "height": 10,
+                          "stroke": "$--sx-sys-color-border",
+                          "strokeWidth": 1
+                        },
+                        {
+                          "type": "rectangle",
+                          "id": "K5l2b",
+                          "name": "Dot 5",
+                          "fill": "$--sx-sys-color-bg-page",
+                          "width": 10,
+                          "height": 10,
+                          "stroke": "$--sx-sys-color-border",
+                          "strokeWidth": 1
+                        },
+                        {
+                          "type": "rectangle",
+                          "id": "k4TKIc",
+                          "name": "Dot 6",
+                          "fill": "$--sx-sys-color-bg-page",
+                          "width": 10,
+                          "height": 10,
+                          "stroke": "$--sx-sys-color-border",
+                          "strokeWidth": 1
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "xoujs",
+                      "name": "Next",
+                      "gap": 10,
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "V1vXO",
+                          "name": "Next Text",
+                          "layout": "vertical",
+                          "gap": 1,
+                          "alignItems": "end",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "yaiS5",
+                              "name": "Next Eyebrow",
+                              "fill": "$--retro-muted-ink",
+                              "content": "下一页",
+                              "fontFamily": "$--sx-font-mono",
+                              "fontSize": 10,
+                              "fontWeight": "700"
+                            },
+                            {
+                              "type": "text",
+                              "id": "t3PtJ",
+                              "name": "Next Title",
                               "fill": "$--sx-sys-color-text-primary",
                               "content": "无序列表",
                               "fontFamily": "$--sx-font-display",
-                              "fontSize": 24,
-                              "fontWeight": "600"
+                              "fontSize": 15,
+                              "fontWeight": "700"
                             }
                           ]
                         },
                         {
-                          "type": "text",
-                          "id": "c7wY4",
-                          "name": "Item Desc",
-                          "fill": "$--retro-muted-ink",
-                          "textGrowth": "fixed-width",
-                          "width": "fill_container",
-                          "content": "Markdown 用 - 或 * 开头，HTML 用 <ul> 包裹 <li>。HTML 的结构更清晰：外层是列表容器，内层是列表项。",
-                          "lineHeight": 1.75,
-                          "fontFamily": "$--sx-font-body",
-                          "fontSize": 16,
-                          "fontWeight": "normal"
-                        },
+                          "type": "path",
+                          "id": "w95ZhZ",
+                          "geometry": "M5 12h14m-6-6l6 6-6 6",
+                          "viewBox": [
+                            0,
+                            0,
+                            24,
+                            24
+                          ],
+                          "width": 20,
+                          "height": 20,
+                          "stroke": "$--sx-sys-color-text-primary",
+                          "strokeWidth": 2,
+                          "strokeLinejoin": "round",
+                          "strokeLinecap": "round"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "o1J3F6",
+      "x": -1902,
+      "y": 6425,
+      "name": "小店",
+      "clip": true,
+      "width": 508,
+      "height": 421,
+      "fill": "#FFFFFF",
+      "layout": "vertical",
+      "justifyContent": "center",
+      "children": [
+        {
+          "type": "frame",
+          "id": "LTHbk",
+          "name": "Title",
+          "clip": true,
+          "width": 428,
+          "height": 79,
+          "fill": "#FFFFFF",
+          "layout": "vertical",
+          "justifyContent": "center",
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "text",
+              "id": "nJdsv",
+              "name": "Title",
+              "fill": "#000000",
+              "textGrowth": "fixed-width-height",
+              "width": 99,
+              "height": 30,
+              "content": "邻里小卖部",
+              "fontFamily": "Inter",
+              "fontSize": 16,
+              "fontWeight": "normal"
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "rYgD0",
+          "name": "Items",
+          "clip": true,
+          "width": "fill_container",
+          "height": 259,
+          "fill": "#FFFFFF",
+          "layout": "vertical",
+          "padding": [
+            0,
+            50
+          ],
+          "justifyContent": "space_around",
+          "children": [
+            {
+              "type": "text",
+              "id": "biPqU",
+              "fill": "#000000",
+              "content": "手冲咖啡",
+              "fontFamily": "Inter",
+              "fontSize": 16,
+              "fontWeight": "normal"
+            },
+            {
+              "type": "text",
+              "id": "ihFNc",
+              "fill": "#000000",
+              "content": "全麦吐司",
+              "fontFamily": "Inter",
+              "fontSize": 16,
+              "fontWeight": "normal"
+            },
+            {
+              "type": "text",
+              "id": "bYdyz",
+              "fill": "#000000",
+              "content": "季节水果",
+              "fontFamily": "Inter",
+              "fontSize": 16,
+              "fontWeight": "normal"
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "igiQI",
+          "name": "button",
+          "clip": true,
+          "width": "fill_container",
+          "fill": "#FFFFFF",
+          "layout": "vertical",
+          "justifyContent": "center",
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "text",
+              "id": "t3zql",
+              "fill": "#000000",
+              "content": "购买",
+              "fontFamily": "Inter",
+              "fontSize": 16,
+              "fontWeight": "normal"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "zXkPY",
+      "x": -1942,
+      "y": 8420,
+      "name": "Slide · 封面 · 开篇",
+      "clip": true,
+      "width": 1160,
+      "height": 900,
+      "fill": "$--sx-sys-color-bg-page",
+      "cornerRadius": 2,
+      "stroke": "$--sx-sys-color-border",
+      "strokeWidth": 2,
+      "effect": {
+        "type": "shadow",
+        "shadowType": "outer",
+        "color": "#000000",
+        "offset": {
+          "x": 4,
+          "y": 4
+        }
+      },
+      "layout": "vertical",
+      "children": [
+        {
+          "type": "frame",
+          "id": "wNY0B",
+          "name": "Board Topbar",
+          "width": "fill_container",
+          "fill": "$--sx-sys-color-bg-page",
+          "stroke": "$--sx-sys-color-border",
+          "padding": [
+            15,
+            26
+          ],
+          "justifyContent": "space_between",
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "frame",
+              "id": "Hc4lH",
+              "name": "Topbar Left",
+              "fill": "$--sx-sys-color-bg-surface",
+              "cornerRadius": 2,
+              "stroke": "$--sx-sys-color-border",
+              "strokeWidth": 1,
+              "effect": {
+                "type": "shadow",
+                "shadowType": "outer",
+                "color": "#000000",
+                "offset": {
+                  "x": 4,
+                  "y": 4
+                }
+              },
+              "gap": 12,
+              "padding": [
+                8,
+                12
+              ],
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "XEefn",
+                  "name": "Step Tag",
+                  "fill": "$--sx-sys-color-text-primary",
+                  "stroke": "$--sx-sys-color-border",
+                  "strokeWidth": 1,
+                  "padding": [
+                    5,
+                    10
+                  ],
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "POkOX",
+                      "name": "Step Num",
+                      "fill": "$--sx-sys-color-accent",
+                      "content": "START",
+                      "fontFamily": "$--sx-font-mono",
+                      "fontSize": 12,
+                      "fontWeight": "700",
+                      "letterSpacing": 0.8
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "id": "t42Apy",
+                  "name": "Section Label",
+                  "fill": "$--sx-sys-color-text-primary",
+                  "content": "封面 · 开篇",
+                  "fontFamily": "$--sx-font-display",
+                  "fontSize": 22,
+                  "fontWeight": "700"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "uu7tS",
+              "name": "Page Badge",
+              "fill": "$--sx-sys-color-accent",
+              "cornerRadius": "$--radius-pill",
+              "stroke": "$--sx-sys-color-border",
+              "strokeWidth": 1,
+              "padding": [
+                6,
+                12
+              ],
+              "children": [
+                {
+                  "type": "text",
+                  "id": "mQLof",
+                  "name": "Badge Text",
+                  "fill": "$--sx-sys-color-text-primary",
+                  "content": "1 / 6",
+                  "fontFamily": "$--sx-font-mono",
+                  "fontSize": 12,
+                  "fontWeight": "800"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "qD3Bc",
+          "name": "Board Content",
+          "width": "fill_container",
+          "height": "fill_container",
+          "layout": "vertical",
+          "padding": [
+            24,
+            28
+          ],
+          "justifyContent": "center",
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "frame",
+              "id": "SCezC",
+              "name": "Lesson Hero",
+              "width": "fill_container",
+              "gap": 30,
+              "padding": [
+                76,
+                96,
+                52,
+                96
+              ],
+              "justifyContent": "center",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "F6UhN",
+                  "name": "Title Group",
+                  "width": 740,
+                  "layout": "vertical",
+                  "gap": 6,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "iOGUy",
+                      "name": "Title Line 1",
+                      "fill": "$--sx-sys-color-text-primary",
+                      "content": "Markdown",
+                      "lineHeight": 1,
+                      "fontFamily": "$--sx-font-display",
+                      "fontSize": 76,
+                      "fontWeight": "700"
+                    },
+                    {
+                      "type": "frame",
+                      "id": "IYSqO",
+                      "name": "Title Line 2",
+                      "alignItems": "center",
+                      "children": [
                         {
-                          "id": "axkV6",
-                          "type": "ref",
-                          "ref": "KHeNA",
-                          "name": "Compare",
-                          "width": "fill_container",
-                          "gap": 20,
-                          "descendants": {
-                            "h4JyJ/lh1V9": {
-                              "content": "MARKDOWN.MD"
-                            },
-                            "h4JyJ/M9KbSl": {
-                              "content": "- 第一项\n- 第二项\n- 第三项"
-                            },
-                            "r0Pvv/lh1V9": {
-                              "content": "INDEX.HTML"
-                            },
-                            "r0Pvv/M9KbSl": {
-                              "content": "<ul>\n  <li>第一项</li>\n  <li>第二项</li>\n  <li>第三项</li>\n</ul>"
-                            }
-                          }
+                          "type": "text",
+                          "id": "dbY0b",
+                          "name": "TL2 Pre",
+                          "fill": "$--sx-sys-color-text-primary",
+                          "content": "怎么翻成",
+                          "lineHeight": 1,
+                          "fontFamily": "$--sx-font-display",
+                          "fontSize": 76,
+                          "fontWeight": "700"
                         },
                         {
                           "type": "frame",
-                          "id": "yDEpD",
-                          "name": "Preview",
-                          "width": "fill_container",
-                          "layout": "vertical",
-                          "gap": 10,
+                          "id": "ow3TP",
+                          "name": "HTML Badge",
+                          "fill": "$--sx-sys-color-accent",
+                          "padding": [
+                            4,
+                            18
+                          ],
                           "children": [
                             {
                               "type": "text",
-                              "id": "f2YcDt",
-                              "name": "Preview Label",
-                              "fill": "$--retro-muted-ink",
-                              "content": "渲染结果",
-                              "fontFamily": "$--sx-font-mono",
-                              "fontSize": 11,
-                              "fontWeight": "700",
-                              "letterSpacing": 1.2
-                            },
-                            {
-                              "type": "frame",
-                              "id": "l5JqAY",
-                              "name": "Preview Content",
-                              "width": "fill_container",
-                              "fill": "$--sx-sys-color-bg-page",
-                              "stroke": "$--sx-sys-color-border",
-                              "strokeWidth": "$--sx-sys-border-width",
-                              "layout": "vertical",
-                              "gap": 10,
-                              "padding": 20,
-                              "children": [
-                                {
-                                  "type": "frame",
-                                  "id": "h8Z23Q",
-                                  "name": "LI",
-                                  "width": "fill_container",
-                                  "gap": 12,
-                                  "children": [
-                                    {
-                                      "type": "text",
-                                      "id": "hxZE1",
-                                      "name": "Marker",
-                                      "fill": "$--sx-sys-color-text-primary",
-                                      "content": "•",
-                                      "fontFamily": "$--sx-font-mono",
-                                      "fontSize": 16,
-                                      "fontWeight": "700"
-                                    },
-                                    {
-                                      "type": "text",
-                                      "id": "CxMJp",
-                                      "name": "LI Text",
-                                      "fill": "$--sx-sys-color-text-primary",
-                                      "content": "第一项",
-                                      "lineHeight": 1.5,
-                                      "fontFamily": "$--sx-font-body",
-                                      "fontSize": 16,
-                                      "fontWeight": "normal"
-                                    }
-                                  ]
-                                },
-                                {
-                                  "type": "frame",
-                                  "id": "h0SR3Y",
-                                  "name": "LI",
-                                  "width": "fill_container",
-                                  "gap": 12,
-                                  "children": [
-                                    {
-                                      "type": "text",
-                                      "id": "MEdw4",
-                                      "name": "Marker",
-                                      "fill": "$--sx-sys-color-text-primary",
-                                      "content": "•",
-                                      "fontFamily": "$--sx-font-mono",
-                                      "fontSize": 16,
-                                      "fontWeight": "700"
-                                    },
-                                    {
-                                      "type": "text",
-                                      "id": "cRG6e",
-                                      "name": "LI Text",
-                                      "fill": "$--sx-sys-color-text-primary",
-                                      "content": "第二项",
-                                      "lineHeight": 1.5,
-                                      "fontFamily": "$--sx-font-body",
-                                      "fontSize": 16,
-                                      "fontWeight": "normal"
-                                    }
-                                  ]
-                                },
-                                {
-                                  "type": "frame",
-                                  "id": "PKycm",
-                                  "name": "LI",
-                                  "width": "fill_container",
-                                  "gap": 12,
-                                  "children": [
-                                    {
-                                      "type": "text",
-                                      "id": "mvk6C",
-                                      "name": "Marker",
-                                      "fill": "$--sx-sys-color-text-primary",
-                                      "content": "•",
-                                      "fontFamily": "$--sx-font-mono",
-                                      "fontSize": 16,
-                                      "fontWeight": "700"
-                                    },
-                                    {
-                                      "type": "text",
-                                      "id": "WRw0I",
-                                      "name": "LI Text",
-                                      "fill": "$--sx-sys-color-text-primary",
-                                      "content": "第三项",
-                                      "lineHeight": 1.5,
-                                      "fontFamily": "$--sx-font-body",
-                                      "fontSize": 16,
-                                      "fontWeight": "normal"
-                                    }
-                                  ]
-                                }
-                              ]
+                              "id": "tWVak",
+                              "name": "HTML Badge Text",
+                              "fill": "$--sx-sys-color-text-primary",
+                              "content": "HTML",
+                              "lineHeight": 1,
+                              "fontFamily": "$--sx-font-display",
+                              "fontSize": 76,
+                              "fontWeight": "700"
                             }
                           ]
                         }
                       ]
-                    },
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "yO1dY",
+                  "name": "Hero Meta",
+                  "layout": "vertical",
+                  "gap": 12,
+                  "alignItems": "center",
+                  "children": [
                     {
                       "type": "frame",
-                      "id": "z0w4wF",
-                      "name": "Table Section · 表格",
-                      "width": "fill_container",
-                      "fill": "$--sx-sys-color-bg-surface",
+                      "id": "wRVsm",
+                      "name": "Pill Fill",
+                      "fill": "$--sx-sys-color-accent",
+                      "cornerRadius": "$--radius-pill",
                       "stroke": "$--sx-sys-color-border",
                       "strokeWidth": "$--sx-sys-border-width",
-                      "effect": {
-                        "type": "shadow",
-                        "shadowType": "outer",
-                        "color": "#000000",
-                        "offset": {
-                          "x": 6,
-                          "y": 6
-                        }
-                      },
-                      "layout": "vertical",
-                      "gap": 22,
                       "padding": [
-                        34,
-                        36
+                        7,
+                        13
                       ],
                       "children": [
                         {
-                          "type": "frame",
-                          "id": "yVQJ1",
-                          "name": "Step Head",
-                          "width": "fill_container",
-                          "gap": 14,
-                          "alignItems": "center",
-                          "children": [
-                            {
-                              "type": "frame",
-                              "id": "Fdln8",
-                              "name": "Step Num",
-                              "fill": "$--sx-sys-color-text-primary",
-                              "stroke": "$--sx-sys-color-border",
-                              "strokeWidth": "$--sx-sys-border-width",
-                              "padding": [
-                                5,
-                                10
-                              ],
-                              "children": [
-                                {
-                                  "type": "text",
-                                  "id": "UamHa",
-                                  "name": "Step Num Text",
-                                  "fill": "$--sx-sys-color-accent",
-                                  "content": "HTML-15",
-                                  "fontFamily": "$--sx-font-mono",
-                                  "fontSize": 12,
-                                  "fontWeight": "700",
-                                  "letterSpacing": 0.8
-                                }
-                              ]
-                            },
-                            {
-                              "type": "text",
-                              "id": "G60nP",
-                              "name": "Step Label",
-                              "fill": "$--sx-sys-color-text-primary",
-                              "content": "表格",
-                              "fontFamily": "$--sx-font-display",
-                              "fontSize": 24,
-                              "fontWeight": "600"
-                            }
-                          ]
-                        },
-                        {
                           "type": "text",
-                          "id": "L3fI4",
-                          "name": "Item Desc",
-                          "fill": "$--retro-muted-ink",
-                          "textGrowth": "fixed-width",
-                          "width": "fill_container",
-                          "content": "Markdown 表格语法简单但功能有限，HTML 表格用 <table>、<tr>（行）、<th>（表头）、<td>（单元格）组合，更灵活。",
-                          "lineHeight": 1.75,
-                          "fontFamily": "$--sx-font-body",
-                          "fontSize": 16,
-                          "fontWeight": "normal"
-                        },
-                        {
-                          "id": "sbUAg",
-                          "type": "ref",
-                          "ref": "KHeNA",
-                          "name": "Compare",
-                          "width": "fill_container",
-                          "descendants": {
-                            "h4JyJ/lh1V9": {
-                              "content": "MARKDOWN.MD"
-                            },
-                            "h4JyJ/M9KbSl": {
-                              "content": "| 姓名 | 角色 |\n|------|------|\n| 张三 | 管理员 |\n| 李四 | 编辑者 |"
-                            },
-                            "r0Pvv/lh1V9": {
-                              "content": "INDEX.HTML"
-                            },
-                            "r0Pvv/M9KbSl": {
-                              "content": "<table>\n  <tr>\n    <th>姓名</th><th>角色</th>\n  </tr>\n  <tr>\n    <td>张三</td><td>管理员</td>\n  </tr>\n  <tr>\n    <td>李四</td><td>编辑者</td>\n  </tr>\n</table>"
-                            }
-                          }
-                        },
-                        {
-                          "type": "frame",
-                          "id": "MhRNB",
-                          "name": "Preview",
-                          "width": "fill_container",
-                          "layout": "vertical",
-                          "gap": 10,
-                          "children": [
-                            {
-                              "type": "text",
-                              "id": "D5nVai",
-                              "name": "Preview Label",
-                              "fill": "$--retro-muted-ink",
-                              "content": "渲染结果",
-                              "fontFamily": "$--sx-font-mono",
-                              "fontSize": 11,
-                              "fontWeight": "700",
-                              "letterSpacing": 1.2
-                            },
-                            {
-                              "type": "frame",
-                              "id": "JeEMb",
-                              "name": "Preview Content",
-                              "width": "fill_container",
-                              "fill": "$--sx-sys-color-bg-page",
-                              "stroke": "$--sx-sys-color-border",
-                              "strokeWidth": "$--sx-sys-border-width",
-                              "layout": "vertical",
-                              "gap": 14,
-                              "padding": 22,
-                              "children": [
-                                {
-                                  "type": "frame",
-                                  "id": "TZuwi",
-                                  "name": "Table",
-                                  "width": "fill_container",
-                                  "stroke": "$--sx-sys-color-border",
-                                  "strokeWidth": "$--sx-sys-border-width",
-                                  "layout": "vertical",
-                                  "children": [
-                                    {
-                                      "type": "frame",
-                                      "id": "xZJwY",
-                                      "name": "TR",
-                                      "width": "fill_container",
-                                      "children": [
-                                        {
-                                          "type": "frame",
-                                          "id": "sYudc",
-                                          "name": "TH",
-                                          "width": "fill_container",
-                                          "fill": "$--sx-sys-color-text-primary",
-                                          "stroke": "$--sx-sys-color-border",
-                                          "strokeWidth": "$--sx-sys-border-width",
-                                          "padding": [
-                                            12,
-                                            16
-                                          ],
-                                          "children": [
-                                            {
-                                              "type": "text",
-                                              "id": "j5E8a1",
-                                              "name": "Cell Text",
-                                              "fill": "$--sx-sys-color-accent",
-                                              "content": "姓名",
-                                              "fontFamily": "$--sx-font-body",
-                                              "fontSize": 15,
-                                              "fontWeight": "700"
-                                            }
-                                          ]
-                                        },
-                                        {
-                                          "type": "frame",
-                                          "id": "Lm0Yz",
-                                          "name": "TH",
-                                          "width": "fill_container",
-                                          "fill": "$--sx-sys-color-text-primary",
-                                          "stroke": "$--sx-sys-color-border",
-                                          "strokeWidth": "$--sx-sys-border-width",
-                                          "padding": [
-                                            12,
-                                            16
-                                          ],
-                                          "children": [
-                                            {
-                                              "type": "text",
-                                              "id": "m99m7",
-                                              "name": "Cell Text",
-                                              "fill": "$--sx-sys-color-accent",
-                                              "content": "角色",
-                                              "fontFamily": "$--sx-font-body",
-                                              "fontSize": 15,
-                                              "fontWeight": "700"
-                                            }
-                                          ]
-                                        }
-                                      ]
-                                    },
-                                    {
-                                      "type": "frame",
-                                      "id": "rebUe",
-                                      "name": "TR",
-                                      "width": "fill_container",
-                                      "children": [
-                                        {
-                                          "type": "frame",
-                                          "id": "akvzJ",
-                                          "name": "TD",
-                                          "width": "fill_container",
-                                          "fill": "$--sx-ref-color-white",
-                                          "stroke": "$--sx-sys-color-border",
-                                          "strokeWidth": "$--sx-sys-border-width",
-                                          "padding": [
-                                            12,
-                                            16
-                                          ],
-                                          "children": [
-                                            {
-                                              "type": "text",
-                                              "id": "XQElt",
-                                              "name": "Cell Text",
-                                              "fill": "$--sx-sys-color-text-primary",
-                                              "content": "张三",
-                                              "fontFamily": "$--sx-font-body",
-                                              "fontSize": 15,
-                                              "fontWeight": "500"
-                                            }
-                                          ]
-                                        },
-                                        {
-                                          "type": "frame",
-                                          "id": "vwbCl",
-                                          "name": "TD",
-                                          "width": "fill_container",
-                                          "fill": "$--sx-ref-color-white",
-                                          "stroke": "$--sx-sys-color-border",
-                                          "strokeWidth": "$--sx-sys-border-width",
-                                          "padding": [
-                                            12,
-                                            16
-                                          ],
-                                          "children": [
-                                            {
-                                              "type": "text",
-                                              "id": "YTuey",
-                                              "name": "Cell Text",
-                                              "fill": "$--sx-sys-color-text-primary",
-                                              "content": "管理员",
-                                              "fontFamily": "$--sx-font-body",
-                                              "fontSize": 15,
-                                              "fontWeight": "500"
-                                            }
-                                          ]
-                                        }
-                                      ]
-                                    },
-                                    {
-                                      "type": "frame",
-                                      "id": "pX1Y2",
-                                      "name": "TR",
-                                      "width": "fill_container",
-                                      "children": [
-                                        {
-                                          "type": "frame",
-                                          "id": "M0oS50",
-                                          "name": "TD",
-                                          "width": "fill_container",
-                                          "fill": "$--sx-ref-color-white",
-                                          "stroke": "$--sx-sys-color-border",
-                                          "strokeWidth": "$--sx-sys-border-width",
-                                          "padding": [
-                                            12,
-                                            16
-                                          ],
-                                          "children": [
-                                            {
-                                              "type": "text",
-                                              "id": "QgviS",
-                                              "name": "Cell Text",
-                                              "fill": "$--sx-sys-color-text-primary",
-                                              "content": "李四",
-                                              "fontFamily": "$--sx-font-body",
-                                              "fontSize": 15,
-                                              "fontWeight": "500"
-                                            }
-                                          ]
-                                        },
-                                        {
-                                          "type": "frame",
-                                          "id": "dsPhO",
-                                          "name": "TD",
-                                          "width": "fill_container",
-                                          "fill": "$--sx-ref-color-white",
-                                          "stroke": "$--sx-sys-color-border",
-                                          "strokeWidth": "$--sx-sys-border-width",
-                                          "padding": [
-                                            12,
-                                            16
-                                          ],
-                                          "children": [
-                                            {
-                                              "type": "text",
-                                              "id": "bhVvl",
-                                              "name": "Cell Text",
-                                              "fill": "$--sx-sys-color-text-primary",
-                                              "content": "编辑者",
-                                              "fontFamily": "$--sx-font-body",
-                                              "fontSize": 15,
-                                              "fontWeight": "500"
-                                            }
-                                          ]
-                                        }
-                                      ]
-                                    }
-                                  ]
-                                }
-                              ]
-                            }
-                          ]
+                          "id": "I0c8zI",
+                          "name": "Pill Fill Text",
+                          "fill": "$--sx-sys-color-text-primary",
+                          "content": "MARKDOWN 对照 · COMPARE",
+                          "fontFamily": "$--sx-font-mono",
+                          "fontSize": 12,
+                          "fontWeight": "700",
+                          "letterSpacing": 1
                         }
                       ]
                     },
                     {
                       "type": "frame",
-                      "id": "sw85z",
-                      "name": "Summary Section · 总结",
-                      "width": "fill_container",
+                      "id": "fjLIk",
+                      "name": "Pill Outline",
+                      "fill": "$--sx-sys-color-bg-surface",
+                      "cornerRadius": "$--radius-pill",
+                      "stroke": "$--sx-sys-color-border",
+                      "strokeWidth": "$--sx-sys-border-width",
+                      "padding": [
+                        7,
+                        13
+                      ],
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "IpGt1",
+                          "name": "Pill Outline Text",
+                          "fill": "$--sx-sys-color-text-primary",
+                          "content": "HTML 第一课 · 语法对照",
+                          "fontFamily": "$--sx-font-body",
+                          "fontSize": 12,
+                          "fontWeight": "600"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "text",
+                      "id": "e7GmN",
+                      "name": "Read Time",
+                      "fill": "$--retro-muted-ink",
+                      "content": "阅读时长 ≈ 12 分钟",
+                      "fontFamily": "$--sx-font-mono",
+                      "fontSize": 12,
+                      "fontWeight": "500",
+                      "letterSpacing": 0.4
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "MQPjy",
+          "name": "Board Pager",
+          "width": "fill_container",
+          "fill": "$--sx-sys-color-bg-page",
+          "stroke": "$--sx-sys-color-border",
+          "padding": [
+            14,
+            26
+          ],
+          "justifyContent": "space_between",
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "frame",
+              "id": "n5vO6",
+              "name": "Prev",
+              "gap": 10,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "BYOct",
+                  "name": "Prev End",
+                  "fill": "$--retro-muted-ink",
+                  "content": "已是第一页",
+                  "fontFamily": "$--sx-font-mono",
+                  "fontSize": 11,
+                  "fontWeight": "700"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "xQp6F",
+              "name": "Dots",
+              "gap": 8,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "rectangle",
+                  "id": "SwCQc",
+                  "name": "Dot 1",
+                  "fill": "$--sx-sys-color-accent",
+                  "width": 16,
+                  "height": 16,
+                  "stroke": "$--sx-sys-color-border",
+                  "strokeWidth": 1
+                },
+                {
+                  "type": "rectangle",
+                  "id": "vCZen",
+                  "name": "Dot 2",
+                  "fill": "$--sx-sys-color-bg-page",
+                  "width": 10,
+                  "height": 10,
+                  "stroke": "$--sx-sys-color-border",
+                  "strokeWidth": 1
+                },
+                {
+                  "type": "rectangle",
+                  "id": "ouhza",
+                  "name": "Dot 3",
+                  "fill": "$--sx-sys-color-bg-page",
+                  "width": 10,
+                  "height": 10,
+                  "stroke": "$--sx-sys-color-border",
+                  "strokeWidth": 1
+                },
+                {
+                  "type": "rectangle",
+                  "id": "llkQk",
+                  "name": "Dot 4",
+                  "fill": "$--sx-sys-color-bg-page",
+                  "width": 10,
+                  "height": 10,
+                  "stroke": "$--sx-sys-color-border",
+                  "strokeWidth": 1
+                },
+                {
+                  "type": "rectangle",
+                  "id": "mhaX0",
+                  "name": "Dot 5",
+                  "fill": "$--sx-sys-color-bg-page",
+                  "width": 10,
+                  "height": 10,
+                  "stroke": "$--sx-sys-color-border",
+                  "strokeWidth": 1
+                },
+                {
+                  "type": "rectangle",
+                  "id": "ICHRQ",
+                  "name": "Dot 6",
+                  "fill": "$--sx-sys-color-bg-page",
+                  "width": 10,
+                  "height": 10,
+                  "stroke": "$--sx-sys-color-border",
+                  "strokeWidth": 1
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "ZGEZI",
+              "name": "Next",
+              "gap": 10,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "ORf3Q",
+                  "name": "Next Text",
+                  "layout": "vertical",
+                  "gap": 1,
+                  "alignItems": "end",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "T9ihQ",
+                      "name": "Next Eyebrow",
+                      "fill": "$--retro-muted-ink",
+                      "content": "下一页",
+                      "fontFamily": "$--sx-font-mono",
+                      "fontSize": 10,
+                      "fontWeight": "700"
+                    },
+                    {
+                      "type": "text",
+                      "id": "MBk4G",
+                      "name": "Next Title",
+                      "fill": "$--sx-sys-color-text-primary",
+                      "content": "核心",
+                      "fontFamily": "$--sx-font-display",
+                      "fontSize": 15,
+                      "fontWeight": "700"
+                    }
+                  ]
+                },
+                {
+                  "type": "path",
+                  "id": "LN1TV",
+                  "geometry": "M5 12h14m-6-6l6 6-6 6",
+                  "viewBox": [
+                    0,
+                    0,
+                    24,
+                    24
+                  ],
+                  "width": 20,
+                  "height": 20,
+                  "stroke": "$--sx-sys-color-text-primary",
+                  "strokeWidth": 2,
+                  "strokeLinejoin": "round",
+                  "strokeLinecap": "round"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "VWH9L",
+      "x": -710,
+      "y": 8420,
+      "name": "Slide · 核心",
+      "clip": true,
+      "width": 1160,
+      "height": 900,
+      "fill": "$--sx-sys-color-bg-page",
+      "cornerRadius": 2,
+      "stroke": "$--sx-sys-color-border",
+      "strokeWidth": 2,
+      "effect": {
+        "type": "shadow",
+        "shadowType": "outer",
+        "color": "#000000",
+        "offset": {
+          "x": 4,
+          "y": 4
+        }
+      },
+      "layout": "vertical",
+      "children": [
+        {
+          "type": "frame",
+          "id": "u7rg8",
+          "name": "Board Topbar",
+          "width": "fill_container",
+          "fill": "$--sx-sys-color-bg-page",
+          "stroke": "$--sx-sys-color-border",
+          "padding": [
+            15,
+            26
+          ],
+          "justifyContent": "space_between",
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "frame",
+              "id": "O41xjG",
+              "name": "Topbar Left",
+              "fill": "$--sx-sys-color-bg-surface",
+              "cornerRadius": 2,
+              "stroke": "$--sx-sys-color-border",
+              "strokeWidth": 1,
+              "effect": {
+                "type": "shadow",
+                "shadowType": "outer",
+                "color": "#000000",
+                "offset": {
+                  "x": 4,
+                  "y": 4
+                }
+              },
+              "gap": 12,
+              "padding": [
+                8,
+                12
+              ],
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "UwiVw",
+                  "name": "Step Tag",
+                  "fill": "$--sx-sys-color-text-primary",
+                  "stroke": "$--sx-sys-color-border",
+                  "strokeWidth": 1,
+                  "padding": [
+                    5,
+                    10
+                  ],
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "u5G9dh",
+                      "name": "Step Num",
+                      "fill": "$--sx-sys-color-accent",
+                      "content": "HTML-01",
+                      "fontFamily": "$--sx-font-mono",
+                      "fontSize": 12,
+                      "fontWeight": "700",
+                      "letterSpacing": 0.8
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "id": "J15AeW",
+                  "name": "Section Label",
+                  "fill": "$--sx-sys-color-text-primary",
+                  "content": "核心",
+                  "fontFamily": "$--sx-font-display",
+                  "fontSize": 22,
+                  "fontWeight": "700"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "PbRzF",
+              "name": "Page Badge",
+              "fill": "$--sx-sys-color-accent",
+              "cornerRadius": "$--radius-pill",
+              "stroke": "$--sx-sys-color-border",
+              "strokeWidth": 1,
+              "padding": [
+                6,
+                12
+              ],
+              "children": [
+                {
+                  "type": "text",
+                  "id": "X8cfQg",
+                  "name": "Badge Text",
+                  "fill": "$--sx-sys-color-text-primary",
+                  "content": "2 / 6",
+                  "fontFamily": "$--sx-font-mono",
+                  "fontSize": 12,
+                  "fontWeight": "800"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "Z0IXxg",
+          "name": "Board Content",
+          "width": "fill_container",
+          "height": "fill_container",
+          "layout": "vertical",
+          "padding": [
+            24,
+            28
+          ],
+          "justifyContent": "center",
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "frame",
+              "id": "aYlDg",
+              "name": "Intro Section · 核心",
+              "width": "fill_container",
+              "fill": "$--sx-sys-color-bg-surface",
+              "stroke": "$--sx-sys-color-border",
+              "effect": {
+                "type": "shadow",
+                "shadowType": "outer",
+                "color": "#000000",
+                "offset": {
+                  "x": 4,
+                  "y": 4
+                }
+              },
+              "layout": "vertical",
+              "gap": 22,
+              "padding": [
+                34,
+                36
+              ],
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "MBbvQ",
+                  "name": "Step Head",
+                  "width": "fill_container",
+                  "gap": 14,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "YSN1w",
+                      "name": "Step Num",
                       "fill": "$--sx-sys-color-text-primary",
                       "stroke": "$--sx-sys-color-border",
                       "strokeWidth": "$--sx-sys-border-width",
-                      "effect": {
-                        "type": "shadow",
-                        "shadowType": "outer",
-                        "color": "#000000",
-                        "offset": {
-                          "x": 6,
-                          "y": 6
-                        }
-                      },
-                      "layout": "vertical",
-                      "gap": 22,
                       "padding": [
-                        34,
-                        36
+                        5,
+                        10
                       ],
                       "children": [
                         {
-                          "type": "frame",
-                          "id": "Lrjxv",
-                          "name": "Step Head",
-                          "width": "fill_container",
-                          "gap": 14,
-                          "alignItems": "center",
-                          "children": [
-                            {
-                              "type": "frame",
-                              "id": "N5RRhl",
-                              "name": "Step Num",
-                              "fill": "$--sx-sys-color-text-primary",
-                              "stroke": "$--sx-sys-color-border",
-                              "strokeWidth": "$--sx-sys-border-width",
-                              "padding": [
-                                5,
-                                10
-                              ],
-                              "children": [
-                                {
-                                  "type": "text",
-                                  "id": "RmVqi",
-                                  "name": "Step Num Text",
-                                  "fill": "$--sx-sys-color-accent",
-                                  "content": "HTML-17",
-                                  "fontFamily": "$--sx-font-mono",
-                                  "fontSize": 12,
-                                  "fontWeight": "700",
-                                  "letterSpacing": 0.8
-                                }
-                              ]
-                            },
-                            {
-                              "type": "text",
-                              "id": "f1EHSi",
-                              "name": "Step Label",
-                              "fill": "$--sx-sys-color-text-primary",
-                              "content": "总结",
-                              "fontFamily": "$--sx-font-display",
-                              "fontSize": 24,
-                              "fontWeight": "600"
-                            },
-                            {
-                              "type": "frame",
-                              "id": "kHozr",
-                              "name": "Spacer",
-                              "width": "fill_container",
-                              "height": 1
-                            },
-                            {
-                              "type": "frame",
-                              "id": "QgGv1",
-                              "name": "Star Tag",
-                              "fill": "$--sx-sys-color-accent",
-                              "stroke": "$--sx-sys-color-border",
-                              "strokeWidth": "$--sx-sys-border-width",
-                              "padding": [
-                                5,
-                                10
-                              ],
-                              "children": [
-                                {
-                                  "type": "text",
-                                  "id": "KcFnV",
-                                  "name": "Star Tag Text",
-                                  "fill": "$--sx-sys-color-text-primary",
-                                  "content": "★ TAKEAWAY",
-                                  "fontFamily": "$--sx-font-mono",
-                                  "fontSize": 11,
-                                  "fontWeight": "700",
-                                  "letterSpacing": 1
-                                }
-                              ]
-                            }
-                          ]
-                        },
+                          "type": "text",
+                          "id": "R0oPX",
+                          "name": "Step Num Text",
+                          "fill": "$--sx-sys-color-accent",
+                          "content": "HTML-01",
+                          "fontFamily": "$--sx-font-mono",
+                          "fontSize": 12,
+                          "fontWeight": "700",
+                          "letterSpacing": 0.8
+                        }
+                      ]
+                    },
+                    {
+                      "type": "text",
+                      "id": "XK6VV",
+                      "name": "Step Label",
+                      "fill": "$--sx-sys-color-text-primary",
+                      "content": "核心",
+                      "fontFamily": "$--sx-font-display",
+                      "fontSize": 24,
+                      "fontWeight": "600"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "VrkBD",
+                  "name": "Intro Title",
+                  "width": "fill_container",
+                  "layout": "vertical",
+                  "gap": 4,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "OVJcJ",
+                      "name": "IT1",
+                      "fill": "$--sx-sys-color-text-primary",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "HTML 和 Markdown",
+                      "fontFamily": "$--sx-font-display",
+                      "fontSize": 36,
+                      "fontWeight": "700"
+                    },
+                    {
+                      "type": "text",
+                      "id": "v9Gcuu",
+                      "name": "IT2",
+                      "fill": "$--sx-ref-color-blue-500",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "本质上是同一类东西",
+                      "fontFamily": "$--sx-font-display",
+                      "fontSize": 36,
+                      "fontWeight": "700"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "RF6yn",
+                  "name": "Inline Note",
+                  "width": "fill_container",
+                  "fill": "$--retro-code-surface",
+                  "stroke": "$--sx-sys-color-border",
+                  "strokeWidth": "$--sx-sys-border-width",
+                  "layout": "vertical",
+                  "gap": 12,
+                  "padding": 22,
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "H9akUh",
+                      "name": "Note Head",
+                      "gap": 10,
+                      "alignItems": "center",
+                      "children": [
                         {
                           "type": "frame",
-                          "id": "mNdDa",
-                          "name": "Summary Title",
-                          "width": "fill_container",
-                          "layout": "vertical",
-                          "gap": 4,
+                          "id": "fxXGk",
+                          "name": "Note Tag",
+                          "fill": "$--sx-sys-color-text-primary",
+                          "padding": [
+                            3,
+                            9
+                          ],
                           "children": [
                             {
                               "type": "text",
-                              "id": "CU3yY",
-                              "name": "ST1",
-                              "fill": "$--sx-ref-color-white",
-                              "textGrowth": "fixed-width",
-                              "width": "fill_container",
-                              "content": "最后记住的不是语法表",
-                              "fontFamily": "$--sx-font-display",
-                              "fontSize": 36,
-                              "fontWeight": "700"
-                            },
-                            {
-                              "type": "text",
-                              "id": "QmaWh",
-                              "name": "ST2",
+                              "id": "xGzGP",
+                              "name": "Note Tag Text",
                               "fill": "$--sx-sys-color-accent",
-                              "textGrowth": "fixed-width",
-                              "width": "fill_container",
-                              "content": "而是结构判断",
-                              "fontFamily": "$--sx-font-display",
-                              "fontSize": 36,
-                              "fontWeight": "700"
+                              "content": "核心",
+                              "fontFamily": "$--sx-font-mono",
+                              "fontSize": 11,
+                              "fontWeight": "700",
+                              "letterSpacing": 1
                             }
                           ]
-                        },
+                        }
+                      ]
+                    },
+                    {
+                      "type": "text",
+                      "id": "OEpuM",
+                      "name": "Note Body",
+                      "fill": "$--sx-sys-color-text-primary",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "HTML 就像 JSON 或 Markdown。JSON 是给程序看的结构化数据，HTML 是给浏览器看的结构化文档。Markdown 用 # 表示标题，HTML 用 <h1>；Markdown 用 - 表示列表，HTML 用 <ul><li>。概念完全一样，只是写法不同。遇到不会的查一下或问 AI 就行。",
+                      "lineHeight": 1.8,
+                      "fontFamily": "$--sx-font-body",
+                      "fontSize": 16,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "u6Y14v",
+          "name": "Board Pager",
+          "width": "fill_container",
+          "fill": "$--sx-sys-color-bg-page",
+          "stroke": "$--sx-sys-color-border",
+          "padding": [
+            14,
+            26
+          ],
+          "justifyContent": "space_between",
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "frame",
+              "id": "N0rFv1",
+              "name": "Prev",
+              "gap": 10,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "path",
+                  "id": "aqgCz",
+                  "geometry": "M19 12h-14m6-6l-6 6 6 6",
+                  "viewBox": [
+                    0,
+                    0,
+                    24,
+                    24
+                  ],
+                  "width": 20,
+                  "height": 20,
+                  "stroke": "$--sx-sys-color-text-primary",
+                  "strokeWidth": 2,
+                  "strokeLinejoin": "round",
+                  "strokeLinecap": "round"
+                },
+                {
+                  "type": "frame",
+                  "id": "l5vne",
+                  "name": "Prev Text",
+                  "layout": "vertical",
+                  "gap": 1,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "Io9cC",
+                      "name": "Prev Eyebrow",
+                      "fill": "$--retro-muted-ink",
+                      "content": "上一页",
+                      "fontFamily": "$--sx-font-mono",
+                      "fontSize": 10,
+                      "fontWeight": "700"
+                    },
+                    {
+                      "type": "text",
+                      "id": "WaJMX",
+                      "name": "Prev Title",
+                      "fill": "$--sx-sys-color-text-primary",
+                      "content": "封面",
+                      "fontFamily": "$--sx-font-display",
+                      "fontSize": 15,
+                      "fontWeight": "700"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "s2tU1P",
+              "name": "Dots",
+              "gap": 8,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "rectangle",
+                  "id": "epkao",
+                  "name": "Dot 1",
+                  "fill": "$--sx-sys-color-bg-page",
+                  "width": 10,
+                  "height": 10,
+                  "stroke": "$--sx-sys-color-border",
+                  "strokeWidth": 1
+                },
+                {
+                  "type": "rectangle",
+                  "id": "sZkGb",
+                  "name": "Dot 2",
+                  "fill": "$--sx-sys-color-accent",
+                  "width": 16,
+                  "height": 16,
+                  "stroke": "$--sx-sys-color-border",
+                  "strokeWidth": 1
+                },
+                {
+                  "type": "rectangle",
+                  "id": "dDkqN",
+                  "name": "Dot 3",
+                  "fill": "$--sx-sys-color-bg-page",
+                  "width": 10,
+                  "height": 10,
+                  "stroke": "$--sx-sys-color-border",
+                  "strokeWidth": 1
+                },
+                {
+                  "type": "rectangle",
+                  "id": "D04hei",
+                  "name": "Dot 4",
+                  "fill": "$--sx-sys-color-bg-page",
+                  "width": 10,
+                  "height": 10,
+                  "stroke": "$--sx-sys-color-border",
+                  "strokeWidth": 1
+                },
+                {
+                  "type": "rectangle",
+                  "id": "mfPS2",
+                  "name": "Dot 5",
+                  "fill": "$--sx-sys-color-bg-page",
+                  "width": 10,
+                  "height": 10,
+                  "stroke": "$--sx-sys-color-border",
+                  "strokeWidth": 1
+                },
+                {
+                  "type": "rectangle",
+                  "id": "LpuZu",
+                  "name": "Dot 6",
+                  "fill": "$--sx-sys-color-bg-page",
+                  "width": 10,
+                  "height": 10,
+                  "stroke": "$--sx-sys-color-border",
+                  "strokeWidth": 1
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "qSWtn",
+              "name": "Next",
+              "gap": 10,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "mYP3d",
+                  "name": "Next Text",
+                  "layout": "vertical",
+                  "gap": 1,
+                  "alignItems": "end",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "h1yla",
+                      "name": "Next Eyebrow",
+                      "fill": "$--retro-muted-ink",
+                      "content": "下一页",
+                      "fontFamily": "$--sx-font-mono",
+                      "fontSize": 10,
+                      "fontWeight": "700"
+                    },
+                    {
+                      "type": "text",
+                      "id": "L8jhSc",
+                      "name": "Next Title",
+                      "fill": "$--sx-sys-color-text-primary",
+                      "content": "标题",
+                      "fontFamily": "$--sx-font-display",
+                      "fontSize": 15,
+                      "fontWeight": "700"
+                    }
+                  ]
+                },
+                {
+                  "type": "path",
+                  "id": "Tmkjc",
+                  "geometry": "M5 12h14m-6-6l6 6-6 6",
+                  "viewBox": [
+                    0,
+                    0,
+                    24,
+                    24
+                  ],
+                  "width": 20,
+                  "height": 20,
+                  "stroke": "$--sx-sys-color-text-primary",
+                  "strokeWidth": 2,
+                  "strokeLinejoin": "round",
+                  "strokeLinecap": "round"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "iUPGX",
+      "x": 522,
+      "y": 8420,
+      "name": "Slide · 无序列表",
+      "clip": true,
+      "width": 1160,
+      "height": 900,
+      "fill": "$--sx-sys-color-bg-page",
+      "cornerRadius": 2,
+      "stroke": "$--sx-sys-color-border",
+      "strokeWidth": 2,
+      "effect": {
+        "type": "shadow",
+        "shadowType": "outer",
+        "color": "#000000",
+        "offset": {
+          "x": 4,
+          "y": 4
+        }
+      },
+      "layout": "vertical",
+      "children": [
+        {
+          "type": "frame",
+          "id": "NqjbD",
+          "name": "Board Topbar",
+          "width": "fill_container",
+          "fill": "$--sx-sys-color-bg-page",
+          "stroke": "$--sx-sys-color-border",
+          "padding": [
+            15,
+            26
+          ],
+          "justifyContent": "space_between",
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "frame",
+              "id": "FBbSN",
+              "name": "Topbar Left",
+              "fill": "$--sx-sys-color-bg-surface",
+              "cornerRadius": 2,
+              "stroke": "$--sx-sys-color-border",
+              "strokeWidth": 1,
+              "effect": {
+                "type": "shadow",
+                "shadowType": "outer",
+                "color": "#000000",
+                "offset": {
+                  "x": 4,
+                  "y": 4
+                }
+              },
+              "gap": 12,
+              "padding": [
+                8,
+                12
+              ],
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "VMReT",
+                  "name": "Step Tag",
+                  "fill": "$--sx-sys-color-text-primary",
+                  "stroke": "$--sx-sys-color-border",
+                  "strokeWidth": 1,
+                  "padding": [
+                    5,
+                    10
+                  ],
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "nT4Z2",
+                      "name": "Step Num",
+                      "fill": "$--sx-sys-color-accent",
+                      "content": "HTML-03",
+                      "fontFamily": "$--sx-font-mono",
+                      "fontSize": 12,
+                      "fontWeight": "700",
+                      "letterSpacing": 0.8
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "id": "aMCCA",
+                  "name": "Section Label",
+                  "fill": "$--sx-sys-color-text-primary",
+                  "content": "无序列表",
+                  "fontFamily": "$--sx-font-display",
+                  "fontSize": 22,
+                  "fontWeight": "700"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "NXT68",
+              "name": "Page Badge",
+              "fill": "$--sx-sys-color-accent",
+              "cornerRadius": "$--radius-pill",
+              "stroke": "$--sx-sys-color-border",
+              "strokeWidth": 1,
+              "padding": [
+                6,
+                12
+              ],
+              "children": [
+                {
+                  "type": "text",
+                  "id": "XI9Wa",
+                  "name": "Badge Text",
+                  "fill": "$--sx-sys-color-text-primary",
+                  "content": "4 / 6",
+                  "fontFamily": "$--sx-font-mono",
+                  "fontSize": 12,
+                  "fontWeight": "800"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "dUS9N",
+          "name": "Board Content",
+          "width": "fill_container",
+          "height": "fill_container",
+          "layout": "vertical",
+          "padding": [
+            24,
+            28
+          ],
+          "justifyContent": "center",
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "frame",
+              "id": "GdYuU",
+              "name": "UL Section · 无序列表",
+              "width": "fill_container",
+              "fill": "$--sx-sys-color-bg-surface",
+              "stroke": "$--sx-sys-color-border",
+              "effect": {
+                "type": "shadow",
+                "shadowType": "outer",
+                "color": "#000000",
+                "offset": {
+                  "x": 4,
+                  "y": 4
+                }
+              },
+              "layout": "vertical",
+              "gap": 22,
+              "padding": [
+                34,
+                36
+              ],
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "YCYOJ",
+                  "name": "Step Head",
+                  "width": "fill_container",
+                  "gap": 14,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "wql2w",
+                      "name": "Step Num",
+                      "fill": "$--sx-sys-color-text-primary",
+                      "stroke": "$--sx-sys-color-border",
+                      "strokeWidth": "$--sx-sys-border-width",
+                      "padding": [
+                        5,
+                        10
+                      ],
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "CuqvM",
+                          "name": "Step Num Text",
+                          "fill": "$--sx-sys-color-accent",
+                          "content": "HTML-11",
+                          "fontFamily": "$--sx-font-mono",
+                          "fontSize": 12,
+                          "fontWeight": "700",
+                          "letterSpacing": 0.8
+                        }
+                      ]
+                    },
+                    {
+                      "type": "text",
+                      "id": "E3vnt6",
+                      "name": "Step Label",
+                      "fill": "$--sx-sys-color-text-primary",
+                      "content": "无序列表",
+                      "fontFamily": "$--sx-font-display",
+                      "fontSize": 24,
+                      "fontWeight": "600"
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "id": "c7wY4",
+                  "name": "Item Desc",
+                  "fill": "$--retro-muted-ink",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "Markdown 用 - 或 * 开头，HTML 用 <ul> 包裹 <li>。HTML 的结构更清晰：外层是列表容器，内层是列表项。",
+                  "lineHeight": 1.75,
+                  "fontFamily": "$--sx-font-body",
+                  "fontSize": 16,
+                  "fontWeight": "normal"
+                },
+                {
+                  "id": "axkV6",
+                  "type": "ref",
+                  "ref": "KHeNA",
+                  "name": "Compare",
+                  "width": "fill_container",
+                  "gap": 20,
+                  "descendants": {
+                    "h4JyJ/lh1V9": {
+                      "content": "MARKDOWN.MD"
+                    },
+                    "h4JyJ/M9KbSl": {
+                      "content": "- 第一项\n- 第二项\n- 第三项"
+                    },
+                    "r0Pvv/lh1V9": {
+                      "content": "INDEX.HTML"
+                    },
+                    "r0Pvv/M9KbSl": {
+                      "content": "<ul>\n  <li>第一项</li>\n  <li>第二项</li>\n  <li>第三项</li>\n</ul>"
+                    }
+                  }
+                },
+                {
+                  "type": "frame",
+                  "id": "yDEpD",
+                  "name": "Preview",
+                  "width": "fill_container",
+                  "layout": "vertical",
+                  "gap": 10,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "f2YcDt",
+                      "name": "Preview Label",
+                      "fill": "$--retro-muted-ink",
+                      "content": "渲染结果",
+                      "fontFamily": "$--sx-font-mono",
+                      "fontSize": 11,
+                      "fontWeight": "700",
+                      "letterSpacing": 1.2
+                    },
+                    {
+                      "type": "frame",
+                      "id": "l5JqAY",
+                      "name": "Preview Content",
+                      "width": "fill_container",
+                      "fill": "$--sx-sys-color-bg-page",
+                      "stroke": "$--sx-sys-color-border",
+                      "strokeWidth": "$--sx-sys-border-width",
+                      "layout": "vertical",
+                      "gap": 10,
+                      "padding": 20,
+                      "children": [
                         {
                           "type": "frame",
-                          "id": "SNeAg",
-                          "name": "Inline Note",
+                          "id": "h8Z23Q",
+                          "name": "LI",
                           "width": "fill_container",
-                          "fill": "#1a1a1a",
-                          "stroke": "$--sx-sys-color-border",
-                          "strokeWidth": "$--sx-sys-border-width",
-                          "layout": "vertical",
                           "gap": 12,
-                          "padding": 22,
                           "children": [
                             {
-                              "type": "frame",
-                              "id": "NGFWo",
-                              "name": "Note Head",
-                              "gap": 10,
-                              "alignItems": "center",
-                              "children": [
-                                {
-                                  "type": "frame",
-                                  "id": "t7CfT",
-                                  "name": "Note Tag",
-                                  "fill": "$--sx-sys-color-accent",
-                                  "padding": [
-                                    3,
-                                    9
-                                  ],
-                                  "children": [
-                                    {
-                                      "type": "text",
-                                      "id": "awg39",
-                                      "name": "Note Tag Text",
-                                      "fill": "$--sx-sys-color-text-primary",
-                                      "content": "带走",
-                                      "fontFamily": "$--sx-font-mono",
-                                      "fontSize": 11,
-                                      "fontWeight": "700",
-                                      "letterSpacing": 1
-                                    }
-                                  ]
-                                }
-                              ]
+                              "type": "text",
+                              "id": "hxZE1",
+                              "name": "Marker",
+                              "fill": "$--sx-sys-color-text-primary",
+                              "content": "•",
+                              "fontFamily": "$--sx-font-mono",
+                              "fontSize": 16,
+                              "fontWeight": "700"
                             },
                             {
                               "type": "text",
-                              "id": "ePybr",
-                              "name": "Note Body",
-                              "fill": "$--sx-ref-color-white",
-                              "textGrowth": "fixed-width",
-                              "width": "fill_container",
-                              "content": "HTML 比 Markdown 啰嗦，但每个标签都有明确语义。后端同学学 HTML，重点不是记住所有标签，而是形成稳定的结构判断。",
-                              "lineHeight": 1.8,
+                              "id": "CxMJp",
+                              "name": "LI Text",
+                              "fill": "$--sx-sys-color-text-primary",
+                              "content": "第一项",
+                              "lineHeight": 1.5,
                               "fontFamily": "$--sx-font-body",
                               "fontSize": 16,
                               "fontWeight": "normal"
@@ -20200,71 +20612,605 @@
                         },
                         {
                           "type": "frame",
-                          "id": "gP4Mr",
-                          "name": "Bullet List",
+                          "id": "h0SR3Y",
+                          "name": "LI",
                           "width": "fill_container",
+                          "gap": 12,
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "MEdw4",
+                              "name": "Marker",
+                              "fill": "$--sx-sys-color-text-primary",
+                              "content": "•",
+                              "fontFamily": "$--sx-font-mono",
+                              "fontSize": 16,
+                              "fontWeight": "700"
+                            },
+                            {
+                              "type": "text",
+                              "id": "cRG6e",
+                              "name": "LI Text",
+                              "fill": "$--sx-sys-color-text-primary",
+                              "content": "第二项",
+                              "lineHeight": 1.5,
+                              "fontFamily": "$--sx-font-body",
+                              "fontSize": 16,
+                              "fontWeight": "normal"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "PKycm",
+                          "name": "LI",
+                          "width": "fill_container",
+                          "gap": 12,
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "mvk6C",
+                              "name": "Marker",
+                              "fill": "$--sx-sys-color-text-primary",
+                              "content": "•",
+                              "fontFamily": "$--sx-font-mono",
+                              "fontSize": 16,
+                              "fontWeight": "700"
+                            },
+                            {
+                              "type": "text",
+                              "id": "WRw0I",
+                              "name": "LI Text",
+                              "fill": "$--sx-sys-color-text-primary",
+                              "content": "第三项",
+                              "lineHeight": 1.5,
+                              "fontFamily": "$--sx-font-body",
+                              "fontSize": 16,
+                              "fontWeight": "normal"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "qB6Gs",
+          "name": "Board Pager",
+          "width": "fill_container",
+          "fill": "$--sx-sys-color-bg-page",
+          "stroke": "$--sx-sys-color-border",
+          "padding": [
+            14,
+            26
+          ],
+          "justifyContent": "space_between",
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "frame",
+              "id": "WHejk",
+              "name": "Prev",
+              "gap": 10,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "path",
+                  "id": "enkD3",
+                  "geometry": "M19 12h-14m6-6l-6 6 6 6",
+                  "viewBox": [
+                    0,
+                    0,
+                    24,
+                    24
+                  ],
+                  "width": 20,
+                  "height": 20,
+                  "stroke": "$--sx-sys-color-text-primary",
+                  "strokeWidth": 2,
+                  "strokeLinejoin": "round",
+                  "strokeLinecap": "round"
+                },
+                {
+                  "type": "frame",
+                  "id": "hYCKL",
+                  "name": "Prev Text",
+                  "layout": "vertical",
+                  "gap": 1,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "eLAVd",
+                      "name": "Prev Eyebrow",
+                      "fill": "$--retro-muted-ink",
+                      "content": "上一页",
+                      "fontFamily": "$--sx-font-mono",
+                      "fontSize": 10,
+                      "fontWeight": "700"
+                    },
+                    {
+                      "type": "text",
+                      "id": "u8JssM",
+                      "name": "Prev Title",
+                      "fill": "$--sx-sys-color-text-primary",
+                      "content": "标题",
+                      "fontFamily": "$--sx-font-display",
+                      "fontSize": 15,
+                      "fontWeight": "700"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "A2duGe",
+              "name": "Dots",
+              "gap": 8,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "rectangle",
+                  "id": "lIcgu",
+                  "name": "Dot 1",
+                  "fill": "$--sx-sys-color-bg-page",
+                  "width": 10,
+                  "height": 10,
+                  "stroke": "$--sx-sys-color-border",
+                  "strokeWidth": 1
+                },
+                {
+                  "type": "rectangle",
+                  "id": "xnTJH",
+                  "name": "Dot 2",
+                  "fill": "$--sx-sys-color-bg-page",
+                  "width": 10,
+                  "height": 10,
+                  "stroke": "$--sx-sys-color-border",
+                  "strokeWidth": 1
+                },
+                {
+                  "type": "rectangle",
+                  "id": "ytfSB",
+                  "name": "Dot 3",
+                  "fill": "$--sx-sys-color-bg-page",
+                  "width": 10,
+                  "height": 10,
+                  "stroke": "$--sx-sys-color-border",
+                  "strokeWidth": 1
+                },
+                {
+                  "type": "rectangle",
+                  "id": "LEALm",
+                  "name": "Dot 4",
+                  "fill": "$--sx-sys-color-accent",
+                  "width": 16,
+                  "height": 16,
+                  "stroke": "$--sx-sys-color-border",
+                  "strokeWidth": 1
+                },
+                {
+                  "type": "rectangle",
+                  "id": "BT1zh",
+                  "name": "Dot 5",
+                  "fill": "$--sx-sys-color-bg-page",
+                  "width": 10,
+                  "height": 10,
+                  "stroke": "$--sx-sys-color-border",
+                  "strokeWidth": 1
+                },
+                {
+                  "type": "rectangle",
+                  "id": "kMsmP",
+                  "name": "Dot 6",
+                  "fill": "$--sx-sys-color-bg-page",
+                  "width": 10,
+                  "height": 10,
+                  "stroke": "$--sx-sys-color-border",
+                  "strokeWidth": 1
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "yWoTx",
+              "name": "Next",
+              "gap": 10,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "R2vbsD",
+                  "name": "Next Text",
+                  "layout": "vertical",
+                  "gap": 1,
+                  "alignItems": "end",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "g7UbNm",
+                      "name": "Next Eyebrow",
+                      "fill": "$--retro-muted-ink",
+                      "content": "下一页",
+                      "fontFamily": "$--sx-font-mono",
+                      "fontSize": 10,
+                      "fontWeight": "700"
+                    },
+                    {
+                      "type": "text",
+                      "id": "k1L2HT",
+                      "name": "Next Title",
+                      "fill": "$--sx-sys-color-text-primary",
+                      "content": "表格",
+                      "fontFamily": "$--sx-font-display",
+                      "fontSize": 15,
+                      "fontWeight": "700"
+                    }
+                  ]
+                },
+                {
+                  "type": "path",
+                  "id": "PovWG",
+                  "geometry": "M5 12h14m-6-6l6 6-6 6",
+                  "viewBox": [
+                    0,
+                    0,
+                    24,
+                    24
+                  ],
+                  "width": 20,
+                  "height": 20,
+                  "stroke": "$--sx-sys-color-text-primary",
+                  "strokeWidth": 2,
+                  "strokeLinejoin": "round",
+                  "strokeLinecap": "round"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "DkYCr",
+      "x": 1754,
+      "y": 8420,
+      "name": "Slide · 表格",
+      "clip": true,
+      "width": 1160,
+      "height": 900,
+      "fill": "$--sx-sys-color-bg-page",
+      "cornerRadius": 2,
+      "stroke": "$--sx-sys-color-border",
+      "strokeWidth": 2,
+      "effect": {
+        "type": "shadow",
+        "shadowType": "outer",
+        "color": "#000000",
+        "offset": {
+          "x": 4,
+          "y": 4
+        }
+      },
+      "layout": "vertical",
+      "children": [
+        {
+          "type": "frame",
+          "id": "PohzW",
+          "name": "Board Topbar",
+          "width": "fill_container",
+          "fill": "$--sx-sys-color-bg-page",
+          "stroke": "$--sx-sys-color-border",
+          "padding": [
+            15,
+            26
+          ],
+          "justifyContent": "space_between",
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "frame",
+              "id": "Z05kO",
+              "name": "Topbar Left",
+              "fill": "$--sx-sys-color-bg-surface",
+              "cornerRadius": 2,
+              "stroke": "$--sx-sys-color-border",
+              "strokeWidth": 1,
+              "effect": {
+                "type": "shadow",
+                "shadowType": "outer",
+                "color": "#000000",
+                "offset": {
+                  "x": 4,
+                  "y": 4
+                }
+              },
+              "gap": 12,
+              "padding": [
+                8,
+                12
+              ],
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "kgd7W",
+                  "name": "Step Tag",
+                  "fill": "$--sx-sys-color-text-primary",
+                  "stroke": "$--sx-sys-color-border",
+                  "strokeWidth": 1,
+                  "padding": [
+                    5,
+                    10
+                  ],
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "aeAnQ",
+                      "name": "Step Num",
+                      "fill": "$--sx-sys-color-accent",
+                      "content": "HTML-04",
+                      "fontFamily": "$--sx-font-mono",
+                      "fontSize": 12,
+                      "fontWeight": "700",
+                      "letterSpacing": 0.8
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "id": "aavlm",
+                  "name": "Section Label",
+                  "fill": "$--sx-sys-color-text-primary",
+                  "content": "表格",
+                  "fontFamily": "$--sx-font-display",
+                  "fontSize": 22,
+                  "fontWeight": "700"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "CD1Cf",
+              "name": "Page Badge",
+              "fill": "$--sx-sys-color-accent",
+              "cornerRadius": "$--radius-pill",
+              "stroke": "$--sx-sys-color-border",
+              "strokeWidth": 1,
+              "padding": [
+                6,
+                12
+              ],
+              "children": [
+                {
+                  "type": "text",
+                  "id": "yEorJ",
+                  "name": "Badge Text",
+                  "fill": "$--sx-sys-color-text-primary",
+                  "content": "5 / 6",
+                  "fontFamily": "$--sx-font-mono",
+                  "fontSize": 12,
+                  "fontWeight": "800"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "UqiIK",
+          "name": "Board Content",
+          "width": "fill_container",
+          "height": "fill_container",
+          "layout": "vertical",
+          "padding": [
+            24,
+            28
+          ],
+          "justifyContent": "center",
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "frame",
+              "id": "z0w4wF",
+              "name": "Table Section · 表格",
+              "width": "fill_container",
+              "fill": "$--sx-sys-color-bg-surface",
+              "stroke": "$--sx-sys-color-border",
+              "effect": {
+                "type": "shadow",
+                "shadowType": "outer",
+                "color": "#000000",
+                "offset": {
+                  "x": 4,
+                  "y": 4
+                }
+              },
+              "layout": "vertical",
+              "gap": 22,
+              "padding": [
+                34,
+                36
+              ],
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "yVQJ1",
+                  "name": "Step Head",
+                  "width": "fill_container",
+                  "gap": 14,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "Fdln8",
+                      "name": "Step Num",
+                      "fill": "$--sx-sys-color-text-primary",
+                      "stroke": "$--sx-sys-color-border",
+                      "strokeWidth": "$--sx-sys-border-width",
+                      "padding": [
+                        5,
+                        10
+                      ],
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "UamHa",
+                          "name": "Step Num Text",
+                          "fill": "$--sx-sys-color-accent",
+                          "content": "HTML-15",
+                          "fontFamily": "$--sx-font-mono",
+                          "fontSize": 12,
+                          "fontWeight": "700",
+                          "letterSpacing": 0.8
+                        }
+                      ]
+                    },
+                    {
+                      "type": "text",
+                      "id": "G60nP",
+                      "name": "Step Label",
+                      "fill": "$--sx-sys-color-text-primary",
+                      "content": "表格",
+                      "fontFamily": "$--sx-font-display",
+                      "fontSize": 24,
+                      "fontWeight": "600"
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "id": "L3fI4",
+                  "name": "Item Desc",
+                  "fill": "$--retro-muted-ink",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "Markdown 表格语法简单但功能有限，HTML 表格用 <table>、<tr>（行）、<th>（表头）、<td>（单元格）组合，更灵活。",
+                  "lineHeight": 1.75,
+                  "fontFamily": "$--sx-font-body",
+                  "fontSize": 16,
+                  "fontWeight": "normal"
+                },
+                {
+                  "id": "sbUAg",
+                  "type": "ref",
+                  "ref": "KHeNA",
+                  "name": "Compare",
+                  "width": "fill_container",
+                  "descendants": {
+                    "h4JyJ/lh1V9": {
+                      "content": "MARKDOWN.MD"
+                    },
+                    "h4JyJ/M9KbSl": {
+                      "content": "| 姓名 | 角色 |\n|------|------|\n| 张三 | 管理员 |\n| 李四 | 编辑者 |"
+                    },
+                    "r0Pvv/lh1V9": {
+                      "content": "INDEX.HTML"
+                    },
+                    "r0Pvv/M9KbSl": {
+                      "content": "<table>\n  <tr>\n    <th>姓名</th><th>角色</th>\n  </tr>\n  <tr>\n    <td>张三</td><td>管理员</td>\n  </tr>\n  <tr>\n    <td>李四</td><td>编辑者</td>\n  </tr>\n</table>"
+                    }
+                  }
+                },
+                {
+                  "type": "frame",
+                  "id": "MhRNB",
+                  "name": "Preview",
+                  "width": "fill_container",
+                  "layout": "vertical",
+                  "gap": 10,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "D5nVai",
+                      "name": "Preview Label",
+                      "fill": "$--retro-muted-ink",
+                      "content": "渲染结果",
+                      "fontFamily": "$--sx-font-mono",
+                      "fontSize": 11,
+                      "fontWeight": "700",
+                      "letterSpacing": 1.2
+                    },
+                    {
+                      "type": "frame",
+                      "id": "JeEMb",
+                      "name": "Preview Content",
+                      "width": "fill_container",
+                      "fill": "$--sx-sys-color-bg-page",
+                      "stroke": "$--sx-sys-color-border",
+                      "strokeWidth": "$--sx-sys-border-width",
+                      "layout": "vertical",
+                      "gap": 14,
+                      "padding": 22,
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "TZuwi",
+                          "name": "Table",
+                          "width": "fill_container",
+                          "stroke": "$--sx-sys-color-border",
+                          "strokeWidth": "$--sx-sys-border-width",
                           "layout": "vertical",
-                          "gap": 14,
                           "children": [
                             {
                               "type": "frame",
-                              "id": "Xc4Em",
-                              "name": "Bullet",
+                              "id": "xZJwY",
+                              "name": "TR",
                               "width": "fill_container",
-                              "gap": 14,
                               "children": [
                                 {
                                   "type": "frame",
-                                  "id": "ji4SK",
-                                  "name": "Marker Wrap",
+                                  "id": "sYudc",
+                                  "name": "TH",
+                                  "width": "fill_container",
+                                  "fill": "$--sx-sys-color-text-primary",
+                                  "stroke": "$--sx-sys-color-border",
+                                  "strokeWidth": "$--sx-sys-border-width",
                                   "padding": [
-                                    7,
-                                    0,
-                                    0,
-                                    0
+                                    12,
+                                    16
                                   ],
                                   "children": [
                                     {
-                                      "type": "rectangle",
-                                      "id": "XlWIM",
-                                      "name": "Marker",
+                                      "type": "text",
+                                      "id": "j5E8a1",
+                                      "name": "Cell Text",
                                       "fill": "$--sx-sys-color-accent",
-                                      "width": 12,
-                                      "height": 12,
-                                      "stroke": "$--sx-sys-color-border",
-                                      "strokeWidth": "$--sx-sys-border-width"
+                                      "content": "姓名",
+                                      "fontFamily": "$--sx-font-body",
+                                      "fontSize": 15,
+                                      "fontWeight": "700"
                                     }
                                   ]
                                 },
                                 {
                                   "type": "frame",
-                                  "id": "a9QL2",
-                                  "name": "Bullet Text",
+                                  "id": "Lm0Yz",
+                                  "name": "TH",
                                   "width": "fill_container",
-                                  "gap": 6,
+                                  "fill": "$--sx-sys-color-text-primary",
+                                  "stroke": "$--sx-sys-color-border",
+                                  "strokeWidth": "$--sx-sys-border-width",
+                                  "padding": [
+                                    12,
+                                    16
+                                  ],
                                   "children": [
                                     {
                                       "type": "text",
-                                      "id": "V2OPre",
-                                      "name": "Lead",
-                                      "fill": "$--sx-sys-color-text-primary",
-                                      "content": "结构优先：",
+                                      "id": "m99m7",
+                                      "name": "Cell Text",
+                                      "fill": "$--sx-sys-color-accent",
+                                      "content": "角色",
                                       "fontFamily": "$--sx-font-body",
-                                      "fontSize": 16,
+                                      "fontSize": 15,
                                       "fontWeight": "700"
-                                    },
-                                    {
-                                      "type": "text",
-                                      "id": "dP1Mg",
-                                      "name": "Body",
-                                      "fill": "$--sx-sys-color-text-primary",
-                                      "textGrowth": "fixed-width",
-                                      "width": "fill_container",
-                                      "content": "先想清楚页面有哪些区块，再选标签",
-                                      "lineHeight": 1.6,
-                                      "fontFamily": "$--sx-font-body",
-                                      "fontSize": 16,
-                                      "fontWeight": "normal"
                                     }
                                   ]
                                 }
@@ -20272,63 +21218,57 @@
                             },
                             {
                               "type": "frame",
-                              "id": "K7FSCI",
-                              "name": "Bullet",
+                              "id": "rebUe",
+                              "name": "TR",
                               "width": "fill_container",
-                              "gap": 14,
                               "children": [
                                 {
                                   "type": "frame",
-                                  "id": "QW6UT",
-                                  "name": "Marker Wrap",
+                                  "id": "akvzJ",
+                                  "name": "TD",
+                                  "width": "fill_container",
+                                  "fill": "$--sx-ref-color-white",
+                                  "stroke": "$--sx-sys-color-border",
+                                  "strokeWidth": "$--sx-sys-border-width",
                                   "padding": [
-                                    7,
-                                    0,
-                                    0,
-                                    0
+                                    12,
+                                    16
                                   ],
                                   "children": [
                                     {
-                                      "type": "rectangle",
-                                      "id": "b0qlm",
-                                      "name": "Marker",
-                                      "fill": "$--sx-sys-color-accent",
-                                      "width": 12,
-                                      "height": 12,
-                                      "stroke": "$--sx-sys-color-border",
-                                      "strokeWidth": "$--sx-sys-border-width"
+                                      "type": "text",
+                                      "id": "XQElt",
+                                      "name": "Cell Text",
+                                      "fill": "$--sx-sys-color-text-primary",
+                                      "content": "张三",
+                                      "fontFamily": "$--sx-font-body",
+                                      "fontSize": 15,
+                                      "fontWeight": "500"
                                     }
                                   ]
                                 },
                                 {
                                   "type": "frame",
-                                  "id": "l6XW5H",
-                                  "name": "Bullet Text",
+                                  "id": "vwbCl",
+                                  "name": "TD",
                                   "width": "fill_container",
-                                  "gap": 6,
+                                  "fill": "$--sx-ref-color-white",
+                                  "stroke": "$--sx-sys-color-border",
+                                  "strokeWidth": "$--sx-sys-border-width",
+                                  "padding": [
+                                    12,
+                                    16
+                                  ],
                                   "children": [
                                     {
                                       "type": "text",
-                                      "id": "y12BEG",
-                                      "name": "Lead",
+                                      "id": "YTuey",
+                                      "name": "Cell Text",
                                       "fill": "$--sx-sys-color-text-primary",
-                                      "content": "语义重要：",
+                                      "content": "管理员",
                                       "fontFamily": "$--sx-font-body",
-                                      "fontSize": 16,
-                                      "fontWeight": "700"
-                                    },
-                                    {
-                                      "type": "text",
-                                      "id": "ZZWiI",
-                                      "name": "Body",
-                                      "fill": "$--sx-sys-color-text-primary",
-                                      "textGrowth": "fixed-width",
-                                      "width": "fill_container",
-                                      "content": "用 <strong> 而不是 <b>，用 <em> 而不是 <i>",
-                                      "lineHeight": 1.6,
-                                      "fontFamily": "$--sx-font-body",
-                                      "fontSize": 16,
-                                      "fontWeight": "normal"
+                                      "fontSize": 15,
+                                      "fontWeight": "500"
                                     }
                                   ]
                                 }
@@ -20336,63 +21276,57 @@
                             },
                             {
                               "type": "frame",
-                              "id": "ZVTfX",
-                              "name": "Bullet",
+                              "id": "pX1Y2",
+                              "name": "TR",
                               "width": "fill_container",
-                              "gap": 14,
                               "children": [
                                 {
                                   "type": "frame",
-                                  "id": "ajxet",
-                                  "name": "Marker Wrap",
+                                  "id": "M0oS50",
+                                  "name": "TD",
+                                  "width": "fill_container",
+                                  "fill": "$--sx-ref-color-white",
+                                  "stroke": "$--sx-sys-color-border",
+                                  "strokeWidth": "$--sx-sys-border-width",
                                   "padding": [
-                                    7,
-                                    0,
-                                    0,
-                                    0
+                                    12,
+                                    16
                                   ],
                                   "children": [
                                     {
-                                      "type": "rectangle",
-                                      "id": "HSMYc",
-                                      "name": "Marker",
-                                      "fill": "$--sx-sys-color-accent",
-                                      "width": 12,
-                                      "height": 12,
-                                      "stroke": "$--sx-sys-color-border",
-                                      "strokeWidth": "$--sx-sys-border-width"
+                                      "type": "text",
+                                      "id": "QgviS",
+                                      "name": "Cell Text",
+                                      "fill": "$--sx-sys-color-text-primary",
+                                      "content": "李四",
+                                      "fontFamily": "$--sx-font-body",
+                                      "fontSize": 15,
+                                      "fontWeight": "500"
                                     }
                                   ]
                                 },
                                 {
                                   "type": "frame",
-                                  "id": "olaDg",
-                                  "name": "Bullet Text",
+                                  "id": "dsPhO",
+                                  "name": "TD",
                                   "width": "fill_container",
-                                  "gap": 6,
+                                  "fill": "$--sx-ref-color-white",
+                                  "stroke": "$--sx-sys-color-border",
+                                  "strokeWidth": "$--sx-sys-border-width",
+                                  "padding": [
+                                    12,
+                                    16
+                                  ],
                                   "children": [
                                     {
                                       "type": "text",
-                                      "id": "hZJw3",
-                                      "name": "Lead",
+                                      "id": "bhVvl",
+                                      "name": "Cell Text",
                                       "fill": "$--sx-sys-color-text-primary",
-                                      "content": "层级清楚：",
+                                      "content": "编辑者",
                                       "fontFamily": "$--sx-font-body",
-                                      "fontSize": 16,
-                                      "fontWeight": "700"
-                                    },
-                                    {
-                                      "type": "text",
-                                      "id": "xiBI9",
-                                      "name": "Body",
-                                      "fill": "$--sx-sys-color-text-primary",
-                                      "textGrowth": "fixed-width",
-                                      "width": "fill_container",
-                                      "content": "h1 → h2 → h3 不要跳级",
-                                      "lineHeight": 1.6,
-                                      "fontFamily": "$--sx-font-body",
-                                      "fontSize": 16,
-                                      "fontWeight": "normal"
+                                      "fontSize": 15,
+                                      "fontWeight": "500"
                                     }
                                   ]
                                 }
@@ -20403,6 +21337,902 @@
                       ]
                     }
                   ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "wX4ge",
+          "name": "Board Pager",
+          "width": "fill_container",
+          "fill": "$--sx-sys-color-bg-page",
+          "stroke": "$--sx-sys-color-border",
+          "padding": [
+            14,
+            26
+          ],
+          "justifyContent": "space_between",
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "frame",
+              "id": "jQwwo",
+              "name": "Prev",
+              "gap": 10,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "path",
+                  "id": "qEUat",
+                  "geometry": "M19 12h-14m6-6l-6 6 6 6",
+                  "viewBox": [
+                    0,
+                    0,
+                    24,
+                    24
+                  ],
+                  "width": 20,
+                  "height": 20,
+                  "stroke": "$--sx-sys-color-text-primary",
+                  "strokeWidth": 2,
+                  "strokeLinejoin": "round",
+                  "strokeLinecap": "round"
+                },
+                {
+                  "type": "frame",
+                  "id": "eIAzt",
+                  "name": "Prev Text",
+                  "layout": "vertical",
+                  "gap": 1,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "Tl035",
+                      "name": "Prev Eyebrow",
+                      "fill": "$--retro-muted-ink",
+                      "content": "上一页",
+                      "fontFamily": "$--sx-font-mono",
+                      "fontSize": 10,
+                      "fontWeight": "700"
+                    },
+                    {
+                      "type": "text",
+                      "id": "HFvlA",
+                      "name": "Prev Title",
+                      "fill": "$--sx-sys-color-text-primary",
+                      "content": "列表",
+                      "fontFamily": "$--sx-font-display",
+                      "fontSize": 15,
+                      "fontWeight": "700"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "VKBhb",
+              "name": "Dots",
+              "gap": 8,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "rectangle",
+                  "id": "QaIke",
+                  "name": "Dot 1",
+                  "fill": "$--sx-sys-color-bg-page",
+                  "width": 10,
+                  "height": 10,
+                  "stroke": "$--sx-sys-color-border",
+                  "strokeWidth": 1
+                },
+                {
+                  "type": "rectangle",
+                  "id": "FHexC",
+                  "name": "Dot 2",
+                  "fill": "$--sx-sys-color-bg-page",
+                  "width": 10,
+                  "height": 10,
+                  "stroke": "$--sx-sys-color-border",
+                  "strokeWidth": 1
+                },
+                {
+                  "type": "rectangle",
+                  "id": "LBnFt",
+                  "name": "Dot 3",
+                  "fill": "$--sx-sys-color-bg-page",
+                  "width": 10,
+                  "height": 10,
+                  "stroke": "$--sx-sys-color-border",
+                  "strokeWidth": 1
+                },
+                {
+                  "type": "rectangle",
+                  "id": "udMbg",
+                  "name": "Dot 4",
+                  "fill": "$--sx-sys-color-bg-page",
+                  "width": 10,
+                  "height": 10,
+                  "stroke": "$--sx-sys-color-border",
+                  "strokeWidth": 1
+                },
+                {
+                  "type": "rectangle",
+                  "id": "CZwEi",
+                  "name": "Dot 5",
+                  "fill": "$--sx-sys-color-accent",
+                  "width": 16,
+                  "height": 16,
+                  "stroke": "$--sx-sys-color-border",
+                  "strokeWidth": 1
+                },
+                {
+                  "type": "rectangle",
+                  "id": "bJvkd",
+                  "name": "Dot 6",
+                  "fill": "$--sx-sys-color-bg-page",
+                  "width": 10,
+                  "height": 10,
+                  "stroke": "$--sx-sys-color-border",
+                  "strokeWidth": 1
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "xLrYm",
+              "name": "Next",
+              "gap": 10,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "NpX0h",
+                  "name": "Next Text",
+                  "layout": "vertical",
+                  "gap": 1,
+                  "alignItems": "end",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "P84cIQ",
+                      "name": "Next Eyebrow",
+                      "fill": "$--retro-muted-ink",
+                      "content": "下一页",
+                      "fontFamily": "$--sx-font-mono",
+                      "fontSize": 10,
+                      "fontWeight": "700"
+                    },
+                    {
+                      "type": "text",
+                      "id": "wRRaM",
+                      "name": "Next Title",
+                      "fill": "$--sx-sys-color-text-primary",
+                      "content": "总结",
+                      "fontFamily": "$--sx-font-display",
+                      "fontSize": 15,
+                      "fontWeight": "700"
+                    }
+                  ]
+                },
+                {
+                  "type": "path",
+                  "id": "d32AbX",
+                  "geometry": "M5 12h14m-6-6l6 6-6 6",
+                  "viewBox": [
+                    0,
+                    0,
+                    24,
+                    24
+                  ],
+                  "width": 20,
+                  "height": 20,
+                  "stroke": "$--sx-sys-color-text-primary",
+                  "strokeWidth": 2,
+                  "strokeLinejoin": "round",
+                  "strokeLinecap": "round"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "xNK8T",
+      "x": 2986,
+      "y": 8420,
+      "name": "Slide · 总结",
+      "clip": true,
+      "width": 1160,
+      "height": 900,
+      "fill": "$--sx-sys-color-bg-page",
+      "cornerRadius": 2,
+      "stroke": "$--sx-sys-color-border",
+      "strokeWidth": 2,
+      "effect": {
+        "type": "shadow",
+        "shadowType": "outer",
+        "color": "#000000",
+        "offset": {
+          "x": 4,
+          "y": 4
+        }
+      },
+      "layout": "vertical",
+      "children": [
+        {
+          "type": "frame",
+          "id": "J6kvrQ",
+          "name": "Board Topbar",
+          "width": "fill_container",
+          "fill": "$--sx-sys-color-bg-page",
+          "stroke": "$--sx-sys-color-border",
+          "padding": [
+            15,
+            26
+          ],
+          "justifyContent": "space_between",
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "frame",
+              "id": "Oxu6L",
+              "name": "Topbar Left",
+              "fill": "$--sx-sys-color-bg-surface",
+              "cornerRadius": 2,
+              "stroke": "$--sx-sys-color-border",
+              "strokeWidth": 1,
+              "effect": {
+                "type": "shadow",
+                "shadowType": "outer",
+                "color": "#000000",
+                "offset": {
+                  "x": 4,
+                  "y": 4
+                }
+              },
+              "gap": 12,
+              "padding": [
+                8,
+                12
+              ],
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "wkycb",
+                  "name": "Step Tag",
+                  "fill": "$--sx-sys-color-text-primary",
+                  "stroke": "$--sx-sys-color-border",
+                  "strokeWidth": 1,
+                  "padding": [
+                    5,
+                    10
+                  ],
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "U5Tx95",
+                      "name": "Step Num",
+                      "fill": "$--sx-sys-color-accent",
+                      "content": "HTML-17",
+                      "fontFamily": "$--sx-font-mono",
+                      "fontSize": 12,
+                      "fontWeight": "700",
+                      "letterSpacing": 0.8
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "id": "hy7QE",
+                  "name": "Section Label",
+                  "fill": "$--sx-sys-color-text-primary",
+                  "content": "总结",
+                  "fontFamily": "$--sx-font-display",
+                  "fontSize": 22,
+                  "fontWeight": "700"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "pd3Dr",
+              "name": "Page Badge",
+              "fill": "$--sx-sys-color-accent",
+              "cornerRadius": "$--radius-pill",
+              "stroke": "$--sx-sys-color-border",
+              "strokeWidth": 1,
+              "padding": [
+                6,
+                12
+              ],
+              "children": [
+                {
+                  "type": "text",
+                  "id": "xnBZ0",
+                  "name": "Badge Text",
+                  "fill": "$--sx-sys-color-text-primary",
+                  "content": "6 / 6",
+                  "fontFamily": "$--sx-font-mono",
+                  "fontSize": 12,
+                  "fontWeight": "800"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "tXJbs",
+          "name": "Board Content",
+          "width": "fill_container",
+          "height": "fill_container",
+          "layout": "vertical",
+          "padding": [
+            24,
+            28
+          ],
+          "justifyContent": "center",
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "frame",
+              "id": "sw85z",
+              "name": "Summary Section · 总结",
+              "width": "fill_container",
+              "fill": "$--sx-sys-color-text-primary",
+              "stroke": "$--sx-sys-color-border",
+              "effect": {
+                "type": "shadow",
+                "shadowType": "outer",
+                "color": "#000000",
+                "offset": {
+                  "x": 4,
+                  "y": 4
+                }
+              },
+              "layout": "vertical",
+              "gap": 22,
+              "padding": [
+                34,
+                36
+              ],
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "Lrjxv",
+                  "name": "Step Head",
+                  "width": "fill_container",
+                  "gap": 14,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "N5RRhl",
+                      "name": "Step Num",
+                      "fill": "$--sx-sys-color-text-primary",
+                      "stroke": "$--sx-sys-color-border",
+                      "strokeWidth": "$--sx-sys-border-width",
+                      "padding": [
+                        5,
+                        10
+                      ],
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "RmVqi",
+                          "name": "Step Num Text",
+                          "fill": "$--sx-sys-color-accent",
+                          "content": "HTML-17",
+                          "fontFamily": "$--sx-font-mono",
+                          "fontSize": 12,
+                          "fontWeight": "700",
+                          "letterSpacing": 0.8
+                        }
+                      ]
+                    },
+                    {
+                      "type": "text",
+                      "id": "f1EHSi",
+                      "name": "Step Label",
+                      "fill": "$--sx-sys-color-text-primary",
+                      "content": "总结",
+                      "fontFamily": "$--sx-font-display",
+                      "fontSize": 24,
+                      "fontWeight": "600"
+                    },
+                    {
+                      "type": "frame",
+                      "id": "kHozr",
+                      "name": "Spacer",
+                      "width": "fill_container",
+                      "height": 1
+                    },
+                    {
+                      "type": "frame",
+                      "id": "QgGv1",
+                      "name": "Star Tag",
+                      "fill": "$--sx-sys-color-accent",
+                      "stroke": "$--sx-sys-color-border",
+                      "strokeWidth": "$--sx-sys-border-width",
+                      "padding": [
+                        5,
+                        10
+                      ],
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "KcFnV",
+                          "name": "Star Tag Text",
+                          "fill": "$--sx-sys-color-text-primary",
+                          "content": "★ TAKEAWAY",
+                          "fontFamily": "$--sx-font-mono",
+                          "fontSize": 11,
+                          "fontWeight": "700",
+                          "letterSpacing": 1
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "mNdDa",
+                  "name": "Summary Title",
+                  "width": "fill_container",
+                  "layout": "vertical",
+                  "gap": 4,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "CU3yY",
+                      "name": "ST1",
+                      "fill": "$--sx-ref-color-white",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "最后记住的不是语法表",
+                      "fontFamily": "$--sx-font-display",
+                      "fontSize": 36,
+                      "fontWeight": "700"
+                    },
+                    {
+                      "type": "text",
+                      "id": "QmaWh",
+                      "name": "ST2",
+                      "fill": "$--sx-sys-color-accent",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "而是结构判断",
+                      "fontFamily": "$--sx-font-display",
+                      "fontSize": 36,
+                      "fontWeight": "700"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "SNeAg",
+                  "name": "Inline Note",
+                  "width": "fill_container",
+                  "fill": "#1a1a1a",
+                  "stroke": "$--sx-sys-color-border",
+                  "strokeWidth": "$--sx-sys-border-width",
+                  "layout": "vertical",
+                  "gap": 12,
+                  "padding": 22,
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "NGFWo",
+                      "name": "Note Head",
+                      "gap": 10,
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "t7CfT",
+                          "name": "Note Tag",
+                          "fill": "$--sx-sys-color-accent",
+                          "padding": [
+                            3,
+                            9
+                          ],
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "awg39",
+                              "name": "Note Tag Text",
+                              "fill": "$--sx-sys-color-text-primary",
+                              "content": "带走",
+                              "fontFamily": "$--sx-font-mono",
+                              "fontSize": 11,
+                              "fontWeight": "700",
+                              "letterSpacing": 1
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "text",
+                      "id": "ePybr",
+                      "name": "Note Body",
+                      "fill": "$--sx-ref-color-white",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "HTML 比 Markdown 啰嗦，但每个标签都有明确语义。后端同学学 HTML，重点不是记住所有标签，而是形成稳定的结构判断。",
+                      "lineHeight": 1.8,
+                      "fontFamily": "$--sx-font-body",
+                      "fontSize": 16,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "gP4Mr",
+                  "name": "Bullet List",
+                  "width": "fill_container",
+                  "layout": "vertical",
+                  "gap": 14,
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "Xc4Em",
+                      "name": "Bullet",
+                      "width": "fill_container",
+                      "gap": 14,
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "ji4SK",
+                          "name": "Marker Wrap",
+                          "padding": [
+                            7,
+                            0,
+                            0,
+                            0
+                          ],
+                          "children": [
+                            {
+                              "type": "rectangle",
+                              "id": "XlWIM",
+                              "name": "Marker",
+                              "fill": "$--sx-sys-color-accent",
+                              "width": 12,
+                              "height": 12,
+                              "stroke": "$--sx-sys-color-border",
+                              "strokeWidth": "$--sx-sys-border-width"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "a9QL2",
+                          "name": "Bullet Text",
+                          "width": "fill_container",
+                          "gap": 6,
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "V2OPre",
+                              "name": "Lead",
+                              "fill": "$--sx-sys-color-text-primary",
+                              "content": "结构优先：",
+                              "fontFamily": "$--sx-font-body",
+                              "fontSize": 16,
+                              "fontWeight": "700"
+                            },
+                            {
+                              "type": "text",
+                              "id": "dP1Mg",
+                              "name": "Body",
+                              "fill": "$--sx-sys-color-text-primary",
+                              "textGrowth": "fixed-width",
+                              "width": "fill_container",
+                              "content": "先想清楚页面有哪些区块，再选标签",
+                              "lineHeight": 1.6,
+                              "fontFamily": "$--sx-font-body",
+                              "fontSize": 16,
+                              "fontWeight": "normal"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "K7FSCI",
+                      "name": "Bullet",
+                      "width": "fill_container",
+                      "gap": 14,
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "QW6UT",
+                          "name": "Marker Wrap",
+                          "padding": [
+                            7,
+                            0,
+                            0,
+                            0
+                          ],
+                          "children": [
+                            {
+                              "type": "rectangle",
+                              "id": "b0qlm",
+                              "name": "Marker",
+                              "fill": "$--sx-sys-color-accent",
+                              "width": 12,
+                              "height": 12,
+                              "stroke": "$--sx-sys-color-border",
+                              "strokeWidth": "$--sx-sys-border-width"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "l6XW5H",
+                          "name": "Bullet Text",
+                          "width": "fill_container",
+                          "gap": 6,
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "y12BEG",
+                              "name": "Lead",
+                              "fill": "$--sx-sys-color-text-primary",
+                              "content": "语义重要：",
+                              "fontFamily": "$--sx-font-body",
+                              "fontSize": 16,
+                              "fontWeight": "700"
+                            },
+                            {
+                              "type": "text",
+                              "id": "ZZWiI",
+                              "name": "Body",
+                              "fill": "$--sx-sys-color-text-primary",
+                              "textGrowth": "fixed-width",
+                              "width": "fill_container",
+                              "content": "用 <strong> 而不是 <b>，用 <em> 而不是 <i>",
+                              "lineHeight": 1.6,
+                              "fontFamily": "$--sx-font-body",
+                              "fontSize": 16,
+                              "fontWeight": "normal"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "ZVTfX",
+                      "name": "Bullet",
+                      "width": "fill_container",
+                      "gap": 14,
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "ajxet",
+                          "name": "Marker Wrap",
+                          "padding": [
+                            7,
+                            0,
+                            0,
+                            0
+                          ],
+                          "children": [
+                            {
+                              "type": "rectangle",
+                              "id": "HSMYc",
+                              "name": "Marker",
+                              "fill": "$--sx-sys-color-accent",
+                              "width": 12,
+                              "height": 12,
+                              "stroke": "$--sx-sys-color-border",
+                              "strokeWidth": "$--sx-sys-border-width"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "olaDg",
+                          "name": "Bullet Text",
+                          "width": "fill_container",
+                          "gap": 6,
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "hZJw3",
+                              "name": "Lead",
+                              "fill": "$--sx-sys-color-text-primary",
+                              "content": "层级清楚：",
+                              "fontFamily": "$--sx-font-body",
+                              "fontSize": 16,
+                              "fontWeight": "700"
+                            },
+                            {
+                              "type": "text",
+                              "id": "xiBI9",
+                              "name": "Body",
+                              "fill": "$--sx-sys-color-text-primary",
+                              "textGrowth": "fixed-width",
+                              "width": "fill_container",
+                              "content": "h1 → h2 → h3 不要跳级",
+                              "lineHeight": 1.6,
+                              "fontFamily": "$--sx-font-body",
+                              "fontSize": 16,
+                              "fontWeight": "normal"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "U8RjQL",
+          "name": "Board Pager",
+          "width": "fill_container",
+          "fill": "$--sx-sys-color-bg-page",
+          "stroke": "$--sx-sys-color-border",
+          "padding": [
+            14,
+            26
+          ],
+          "justifyContent": "space_between",
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "frame",
+              "id": "FZ4dz",
+              "name": "Prev",
+              "gap": 10,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "path",
+                  "id": "VJa06",
+                  "geometry": "M19 12h-14m6-6l-6 6 6 6",
+                  "viewBox": [
+                    0,
+                    0,
+                    24,
+                    24
+                  ],
+                  "width": 20,
+                  "height": 20,
+                  "stroke": "$--sx-sys-color-text-primary",
+                  "strokeWidth": 2,
+                  "strokeLinejoin": "round",
+                  "strokeLinecap": "round"
+                },
+                {
+                  "type": "frame",
+                  "id": "uszrc",
+                  "name": "Prev Text",
+                  "layout": "vertical",
+                  "gap": 1,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "XwrAW",
+                      "name": "Prev Eyebrow",
+                      "fill": "$--retro-muted-ink",
+                      "content": "上一页",
+                      "fontFamily": "$--sx-font-mono",
+                      "fontSize": 10,
+                      "fontWeight": "700"
+                    },
+                    {
+                      "type": "text",
+                      "id": "IJExP",
+                      "name": "Prev Title",
+                      "fill": "$--sx-sys-color-text-primary",
+                      "content": "表格",
+                      "fontFamily": "$--sx-font-display",
+                      "fontSize": 15,
+                      "fontWeight": "700"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "wplOp",
+              "name": "Dots",
+              "gap": 8,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "rectangle",
+                  "id": "zSFaj",
+                  "name": "Dot 1",
+                  "fill": "$--sx-sys-color-bg-page",
+                  "width": 10,
+                  "height": 10,
+                  "stroke": "$--sx-sys-color-border",
+                  "strokeWidth": 1
+                },
+                {
+                  "type": "rectangle",
+                  "id": "S6PMQ",
+                  "name": "Dot 2",
+                  "fill": "$--sx-sys-color-bg-page",
+                  "width": 10,
+                  "height": 10,
+                  "stroke": "$--sx-sys-color-border",
+                  "strokeWidth": 1
+                },
+                {
+                  "type": "rectangle",
+                  "id": "l6ULj9",
+                  "name": "Dot 3",
+                  "fill": "$--sx-sys-color-bg-page",
+                  "width": 10,
+                  "height": 10,
+                  "stroke": "$--sx-sys-color-border",
+                  "strokeWidth": 1
+                },
+                {
+                  "type": "rectangle",
+                  "id": "d6cf2p",
+                  "name": "Dot 4",
+                  "fill": "$--sx-sys-color-bg-page",
+                  "width": 10,
+                  "height": 10,
+                  "stroke": "$--sx-sys-color-border",
+                  "strokeWidth": 1
+                },
+                {
+                  "type": "rectangle",
+                  "id": "xNM1e",
+                  "name": "Dot 5",
+                  "fill": "$--sx-sys-color-bg-page",
+                  "width": 10,
+                  "height": 10,
+                  "stroke": "$--sx-sys-color-border",
+                  "strokeWidth": 1
+                },
+                {
+                  "type": "rectangle",
+                  "id": "qSEzV",
+                  "name": "Dot 6",
+                  "fill": "$--sx-sys-color-accent",
+                  "width": 16,
+                  "height": 16,
+                  "stroke": "$--sx-sys-color-border",
+                  "strokeWidth": 1
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "L3cqeZ",
+              "name": "Next",
+              "gap": 10,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "ii6CL",
+                  "name": "Next End",
+                  "fill": "$--retro-muted-ink",
+                  "content": "已是最后一页",
+                  "fontFamily": "$--sx-font-mono",
+                  "fontSize": 11,
+                  "fontWeight": "700"
                 }
               ]
             }

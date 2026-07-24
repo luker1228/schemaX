@@ -1,0 +1,265 @@
+---
+title: 页面区块·Hero / Navbar / Sidebar
+description: 进阶词汇：区块级（block）组件——Hero 主视觉、Navbar 顶栏、Sidebar 侧栏、Footer 页脚。它们拼的是整页骨架，不是小按钮。
+slug: fe-blocks
+status: published
+course: frontend-handbook
+order: 11
+part: advanced
+durationMinutes: 10
+lessonType: lesson
+presentation: board
+hero:
+  line1: 区块级组件
+  line2: 拼的是整页
+  badge: Block
+  pillFill: Hero · Navbar · Sidebar
+  pillOutline: 进阶篇 · 页面骨架零件
+---
+
+import StepCard from '../../components/course/StepCard.astro';
+import StepSplit from '../../components/course/StepSplit.astro';
+import SectionHead from '../../components/course/SectionHead.astro';
+import Note from '../../components/course/Note.astro';
+import Preview from '../../components/course/Preview.astro';
+import Takeaway from '../../components/course/Takeaway.astro';
+import Button from '../../components/design-system/Button.astro';
+import Badge from '../../components/design-system/Badge.astro';
+
+<StepCard num="BLK-01" label="核心">
+  <SectionHead line1="基础组件 vs 页面区块" line2="零件小，区块大" />
+  <Note tag="核心">
+    基础篇认的是 <strong>Button / Card / Input</strong> 这类可嵌进任意区域的小零件。
+    本课认的是 <strong>Block（区块）</strong>：通常横跨一栏或整屏，决定「这一页先看见什么」。
+    和 AI 说需求时，先报区块（Hero + Navbar + 三列 Feature），再填区块里的基础组件，层次才对。
+  </Note>
+</StepCard>
+
+<StepCard num="BLK-02" label="Hero">
+  <StepSplit>
+    <SectionHead line1="Hero 主视觉" line2="像接口文档的 Overview 首屏" />
+    <p class="m-0 text-base leading-relaxed">
+      {'页面最上方的大块介绍区：大标题、一句价值主张、主 CTA、可选配图或徽章。官网首页、落地页几乎都有；后台系统通常'}
+      <strong>{'没有'}</strong>
+      {' Hero。'}
+    </p>
+    <details style="margin-top: 0;">
+      <summary style="cursor: pointer; font-weight: 600;">{'给 AI 的描述模板'}</summary>
+      <p class="m-0 mt-2 text-sm leading-relaxed opacity-80">
+        {'首页顶部做一个 Hero：左侧大标题 + 副文案 + 主按钮「开始」和次按钮「了解更多」；右侧放产品截图。背景用浅色，标题不超过两行。'}
+      </p>
+    </details>
+    <Preview slot="figure" label="Hero 示意">
+      <div
+        style={{
+          width: '100%',
+          maxWidth: '420px',
+          border: '1px solid #000',
+          background: 'var(--sx-sys-color-accent)',
+          padding: '28px 20px',
+          boxSizing: 'border-box',
+        }}
+      >
+        <Badge>新课上架</Badge>
+        <h2 style={{ margin: '12px 0 8px', fontSize: '1.5rem', fontWeight: 800, lineHeight: 1.15 }}>
+          把前端需求讲清楚
+        </h2>
+        <p style={{ margin: '0 0 16px', fontSize: '0.9rem', opacity: 0.85 }}>
+          给后端同学的战术手册——结构、样式、交互、组件、布局。
+        </p>
+        <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+          <Button variant="primary" size="sm">
+            开始学习
+          </Button>
+          <Button variant="outline" size="sm">
+            看目录
+          </Button>
+        </div>
+      </div>
+    </Preview>
+  </StepSplit>
+</StepCard>
+
+<StepCard num="BLK-03" label="Navbar">
+  <StepSplit>
+    <SectionHead line1="Navbar 导航栏" line2="像系统的全局入口（API 网关）" />
+    <p class="m-0 text-base leading-relaxed">
+      {'顶栏全局导航：Logo、一级菜单、搜索/登录等。类似 API 网关暴露的一组顶层路径，几乎每页都在。'}
+    </p>
+    <details style="margin-top: 0;">
+      <summary style="cursor: pointer; font-weight: 600;">{'给 AI 的描述模板'}</summary>
+      <p class="m-0 mt-2 text-sm leading-relaxed opacity-80">
+        {'请生成一个顶部导航栏，左侧是 Logo，中间是菜单，右侧是搜索框和登录按钮。当前页菜单项高亮。'}
+      </p>
+    </details>
+    <Preview slot="figure" label="Navbar 示意">
+      <div
+        style={{
+          width: '100%',
+          maxWidth: '500px',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          padding: '12px 16px',
+          border: '1px solid #000',
+          background: '#fff',
+          boxSizing: 'border-box',
+        }}
+      >
+        <strong>SchemaX</strong>
+        <nav style={{ display: 'flex', gap: '16px', fontSize: '0.9rem' }}>
+          <a href="javascript:void(0)">课程</a>
+          <a href="javascript:void(0)">项目</a>
+          <a href="javascript:void(0)">博客</a>
+        </nav>
+        <Button variant="primary" size="sm">
+          登录
+        </Button>
+      </div>
+    </Preview>
+  </StepSplit>
+</StepCard>
+
+<StepCard num="BLK-04" label="Sidebar">
+  <StepSplit>
+    <SectionHead line1="Sidebar 侧边栏" line2="像后台应用的路由索引" />
+    <p class="m-0 text-base leading-relaxed">
+      {'帮助用户在不同模块之间切换，常见于管理后台；和 Navbar 可以同时存在（顶栏全局 + 侧栏模块）。'}
+    </p>
+    <details style="margin-top: 0;">
+      <summary style="cursor: pointer; font-weight: 600;">{'给 AI 的描述模板'}</summary>
+      <p class="m-0 mt-2 text-sm leading-relaxed opacity-80">
+        {'请生成一个管理后台左侧 Sidebar，包含分组标题、当前高亮态和折叠态。'}
+      </p>
+    </details>
+    <Preview slot="figure" label="Sidebar 示意">
+      <nav
+        style={{
+          width: '200px',
+          border: '1px solid #000',
+          background: '#fff',
+          padding: '12px',
+          boxSizing: 'border-box',
+        }}
+      >
+        <div
+          style={{
+            fontSize: '0.7rem',
+            textTransform: 'uppercase',
+            marginBottom: '8px',
+            opacity: 0.6,
+          }}
+        >
+          内容管理
+        </div>
+        <div
+          style={{
+            padding: '6px 8px',
+            background: 'var(--sx-sys-color-accent)',
+            fontWeight: 600,
+            marginBottom: '4px',
+          }}
+        >
+          用户列表
+        </div>
+        <div style={{ padding: '6px 8px', marginBottom: '4px' }}>课程管理</div>
+        <div style={{ padding: '6px 8px', marginBottom: '4px' }}>文章管理</div>
+        <div
+          style={{
+            fontSize: '0.7rem',
+            textTransform: 'uppercase',
+            margin: '16px 0 8px',
+            opacity: 0.6,
+          }}
+        >
+          系统
+        </div>
+        <div style={{ padding: '6px 8px' }}>设置</div>
+      </nav>
+    </Preview>
+  </StepSplit>
+</StepCard>
+
+<StepCard num="BLK-05" label="Footer">
+  <StepSplit>
+    <SectionHead line1="Footer 页脚" line2="像响应里的 meta / 版权尾巴" />
+    <p class="m-0 text-base leading-relaxed">
+      {'页面最底部的信息区：链接组、版权、备案号。官网和内容站常见；纯工具后台可以极简或没有。'}
+    </p>
+    <details style="margin-top: 0;">
+      <summary style="cursor: pointer; font-weight: 600;">{'给 AI 的描述模板'}</summary>
+      <p class="m-0 mt-2 text-sm leading-relaxed opacity-80">
+        {'页脚放三列链接（产品 / 资源 / 公司）+ 底部一行版权。移动端改成纵向堆叠。'}
+      </p>
+    </details>
+    <Preview slot="figure" label="Footer 示意">
+      <div
+        style={{
+          width: '100%',
+          maxWidth: '420px',
+          border: '1px solid #000',
+          padding: '16px',
+          background: 'var(--sx-sys-color-beige)',
+          boxSizing: 'border-box',
+          fontSize: '0.85rem',
+        }}
+      >
+        <div style={{ display: 'flex', gap: '16px', marginBottom: '10px', flexWrap: 'wrap' }}>
+          <a href="javascript:void(0)">关于</a>
+          <a href="javascript:void(0)">文档</a>
+          <a href="javascript:void(0)">GitHub</a>
+        </div>
+        <div style={{ opacity: 0.65 }}>© SchemaX · 仅供学习演示</div>
+      </div>
+    </Preview>
+  </StepSplit>
+</StepCard>
+
+<StepCard num="BLK-06" label="怎么用">
+  <SectionHead line1="和 AI 说话时" line2="先区块，再零件" />
+  <p class="m-0 text-base leading-relaxed">{'好的顺序：'}</p>
+  <ol>
+    <li>
+      <strong>{'报骨架'}</strong>
+      {'：本页有 Navbar + Hero + 三列卡片区 + Footer'}
+    </li>
+    <li>
+      <strong>{'填区块'}</strong>
+      {'：Hero 要标题 / 副文 / 两个 CTA'}
+    </li>
+    <li>
+      <strong>{'落零件'}</strong>
+      {'：CTA 用主/次 Button；卡片区用 Card 网格'}
+    </li>
+  </ol>
+  <p class="m-0 text-base leading-relaxed">
+    {'基础课的 Button / Card 在这里被'}
+    <strong>{'组装'}</strong>
+    {'进区块；布局课的 '}
+    <code>{'header + main + footer'}</code>
+    {' 则是这些区块的槽位。'}
+  </p>
+</StepCard>
+
+<Takeaway
+  num="BLK-07"
+  label="总结"
+  line1="Block 管整页"
+  line2="Atom 管零件"
+  note="和 AI 对齐时：先区块名，再区块内部的基础组件，少返工。"
+>
+  <ul>
+    <li>
+      <strong>常见区块：</strong>
+      Hero · Navbar · Sidebar · Footer（还有 Banner / FAQ 区等）
+    </li>
+    <li>
+      <strong>后台常见：</strong>
+      Navbar + Sidebar + 内容区（通常没有 Hero）
+    </li>
+    <li>
+      <strong>官网常见：</strong>
+      Navbar + Hero + 多段内容 + Footer
+    </li>
+  </ul>
+</Takeaway>

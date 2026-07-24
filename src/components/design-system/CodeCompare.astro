@@ -36,19 +36,19 @@ const { from = 'INPUT', to = 'OUTPUT', source, target, bar = 'dark' } = Astro.pr
 const barVars =
   bar === 'light'
     ? {
-        '--cmp-bar-bg': 'var(--sx-sys-color-beige)',
-        '--cmp-bar-fg': 'var(--sx-sys-color-text-primary)',
-        '--cmp-bar-fg-opacity': '0.75',
-        '--cmp-bar-border-bottom':
+        '--sx-cmp-bar-bg': 'var(--sx-sys-color-beige)',
+        '--sx-cmp-bar-fg': 'var(--sx-sys-color-text-primary)',
+        '--sx-cmp-bar-fg-opacity': '0.75',
+        '--sx-cmp-bar-border-bottom':
           'var(--sx-sys-border-width) solid var(--sx-sys-color-border)',
-        '--cmp-dot-border': 'var(--sx-sys-border-width) solid var(--sx-sys-color-border)',
+        '--sx-cmp-dot-border': 'var(--sx-sys-border-width) solid var(--sx-sys-color-border)',
       }
     : {
-        '--cmp-bar-bg': 'var(--sx-sys-color-border)',
-        '--cmp-bar-fg': 'var(--sx-sys-color-bg-surface)',
-        '--cmp-bar-fg-opacity': '1',
-        '--cmp-bar-border-bottom': 'none',
-        '--cmp-dot-border': 'none',
+        '--sx-cmp-bar-bg': 'var(--sx-sys-color-border)',
+        '--sx-cmp-bar-fg': 'var(--sx-sys-color-bg-surface)',
+        '--sx-cmp-bar-fg-opacity': '1',
+        '--sx-cmp-bar-border-bottom': 'none',
+        '--sx-cmp-dot-border': 'none',
       };
 ---
 
@@ -131,8 +131,8 @@ const barVars =
     margin: 0;
     padding: 0.5rem 0.75rem;
     border: none;
-    border-bottom: var(--cmp-bar-border-bottom);
-    background: var(--cmp-bar-bg);
+    border-bottom: var(--sx-cmp-bar-border-bottom);
+    background: var(--sx-cmp-bar-bg);
     text-align: left;
     opacity: 1;
     font-size: inherit;
@@ -149,7 +149,7 @@ const barVars =
     height: 0.5rem;
     border-radius: 50%;
     box-sizing: border-box;
-    border: var(--cmp-dot-border);
+    border: var(--sx-cmp-dot-border);
   }
   .win__dot--red {
     background: var(--sx-sys-color-danger);
@@ -166,8 +166,8 @@ const barVars =
     font-weight: 700;
     letter-spacing: 0.06em;
     white-space: nowrap;
-    color: var(--cmp-bar-fg);
-    opacity: var(--cmp-bar-fg-opacity);
+    color: var(--sx-cmp-bar-fg);
+    opacity: var(--sx-cmp-bar-fg-opacity);
   }
 
   /* ── 代码区：米色延续，等宽；两侧样式完全一致 ── */

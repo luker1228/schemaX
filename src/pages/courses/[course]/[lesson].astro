@@ -4,7 +4,8 @@ import DocSide from '../../../components/design-system/DocSide.astro';
 import type { DocSideGroup } from '../../../components/design-system/DocSide.astro';
 import DocPager from '../../../components/design-system/DocPager.astro';
 import LessonHero from '../../../components/course/LessonHero.astro';
-import { getCollection, getEntry, render } from 'astro:content';
+import LessonBoard from '../../../components/course/LessonBoard.astro';
+import { getCollection, render } from 'astro:content';
 import { courseIdOf } from '../../../lib/content';
 
 export async function getStaticPaths() {
@@ -17,9 +18,16 @@ export async function getStaticPaths() {
 
 const { lesson } = Astro.props;
 const courseId = Astro.params.course as string;
-const course = await getEntry('courses', courseId);
 const { Content } = await render(lesson);
-const { title, description, durationMinutes, objectives, hero } = lesson.data;
+const {
+  title,
+  description,
+  durationMinutes,
+  objectives,
+  hero,
+  presentation = 'scroll',
+} = lesson.data;
+const isBoard = presentation === 'board';
 
 const siblings = (await getCollection('lessons'))
   .filter((l) => courseIdOf(l.data.course) === courseId)
@@ -40,18 +48,26 @@ const readTime = durationMinutes
   ? `阅读时长 ≈ ${durationMinutes} 分钟`
   : undefined;
 
-// 侧栏：课程课时目录（当前课高亮）
-const sideGroups: DocSideGroup[] = [
-  {
-    title: course?.data.title ?? '课时',
-    ariaLabel: '课时目录',
-    items: siblings.map((l) => ({
-      label: `${l.data.order}. ${l.data.title}`,
-      href: lessonHref(l.id),
-      current: l.id === lesson.id,
-    })),
-  },
-];
+// 侧栏：基础篇 / 进阶篇分组（当前课高亮）
+const partLabel = { basics: '基础篇', advanced: '进阶篇' } as const;
+const partOrder = ['basics', 'advanced'] as const;
+const sideGroups: DocSideGroup[] = partOrder
+  .map((part) => {
+    const items = siblings
+      .filter((l) => (l.data.part ?? 'basics') === part)
+      .map((l) => ({
+        label: `${l.data.order}. ${l.data.title}`,
+        href: lessonHref(l.id),
+        current: l.id === lesson.id,
+      }));
+    if (items.length === 0) return null;
+    return {
+      title: partLabel[part],
+      ariaLabel: `${partLabel[part]}课时`,
+      items,
+    } satisfies DocSideGroup;
+  })
+  .filter((g): g is DocSideGroup => g !== null);
 ---
 
 <BaseLayout title={title} description={description} type="article">
@@ -62,46 +78,62 @@ const sideGroups: DocSideGroup[] = [
     </div>
 
     <div class="sx-doc-main">
-      {/* 与设计系统组件页同一 DocPager：prev / 课程目录 / next */}
-      <DocPager
-        prev={pagerPrev}
-        next={pagerNext}
-        centerHref={`/courses/${courseId}`}
-        centerLabel="课程目录"
-        label="课时前后导航"
-      />
-
       {
-        hero ? (
-          <LessonHero
-            line1={hero.line1}
-            line2={hero.line2}
-            badge={hero.badge}
-            pillFill={hero.pillFill}
-            pillOutline={hero.pillOutline}
+        isBoard ? (
+          /* 白板：无顶部 DocPager；末页可进下一章 */
+          <LessonBoard
+            cover={hero}
             readTime={readTime}
-          />
+            nextChapter={pagerNext}
+          >
+            <div class="lesson-body lesson-body--board sx-article sx-article--lesson">
+              <Content />
+            </div>
+          </LessonBoard>
         ) : (
-          <header class="lhead">
-            <h1 class="lhead__title">{title}</h1>
-            <p class="lhead__desc">{description}</p>
-            {objectives.length > 0 && (
-              <details class="lhead__obj">
-                <summary>本节目标</summary>
-                <ul>
-                  {objectives.map((o) => (
-                    <li>{o}</li>
-                  ))}
-                </ul>
-              </details>
+          <>
+            <DocPager
+              prev={pagerPrev}
+              next={pagerNext}
+              centerHref={`/courses/${courseId}`}
+              centerLabel="课程目录"
+              label="课时前后导航"
+            />
+            {hero ? (
+              <LessonHero
+                line1={hero.line1}
+                line2={hero.line2}
+                badge={hero.badge}
+                pillFill={hero.pillFill}
+                pillOutline={hero.pillOutline}
+                readTime={readTime}
+              />
+            ) : (
+              <header class="lhead">
+                <h1 class="lhead__title">{title}</h1>
+                <p class="lhead__desc">{description}</p>
+                {objectives.length > 0 && (
+                  <details class="lhead__obj">
+                    <summary>本节目标</summary>
+                    <ul>
+                      {objectives.map((o) => (
+                        <li>{o}</li>
+                      ))}
+                    </ul>
+                  </details>
+                )}
+              </header>
             )}
-          </header>
+
+            <div
+              class="lesson-body sx-article sx-article--lesson"
+              data-pagefind-body
+            >
+              <Content />
+            </div>
+          </>
         )
       }
-
-      <div class="lesson-body sx-article sx-article--lesson" data-pagefind-body>
-        <Content />
-      </div>
     </div>
   </article>
 </BaseLayout>
@@ -138,10 +170,17 @@ const sideGroups: DocSideGroup[] = [
   .lesson-body {
     display: flex;
     flex-direction: column;
-    gap: 1.75rem;
+    /* 节与节明显换气：编号徽章认节 + 大留白分段 */
+    gap: clamp(3rem, 5.5vw, 4rem);
     width: 100%;
     max-width: none;
     margin-inline: 0;
+  }
+
+  /* 白板模式：节间距交给板内 stage，body 用 contents 把 step 提成 slide */
+  .lesson-body--board {
+    display: contents;
+    gap: 0;
   }
 
   .lesson-body :global(.step),

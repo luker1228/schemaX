@@ -84,8 +84,14 @@ export function lessonFields(opts: CommonFieldOptions) {
       .enum(['lesson', 'practice', 'project', 'review'])
       .default('lesson'),
     /**
+     * 课程篇章：基础篇（先建立心智）/ 进阶篇（DOM、布局深水区等）。
+     * 侧栏与课程目录按此分组；order 仍为全课排序。
+     */
+    part: z.enum(['basics', 'advanced']).default('basics'),
+    /**
      * 可选大标题 Hero（设计稿级课时页）。
      * 有值时用 LessonHero 替代默认 lhead；无值时走传统标题区。
+     * presentation=board 时 Hero 作为白板封面页。
      */
     hero: z
       .object({
@@ -97,6 +103,12 @@ export function lessonFields(opts: CommonFieldOptions) {
         pillOutline: z.string().optional(),
       })
       .optional(),
+    /**
+     * 课时呈现方式：
+     * - scroll：传统纵向滚动（默认）
+     * - board：白板翻页——一次只展示一节，顶栏 + 底部分页切换
+     */
+    presentation: z.enum(['scroll', 'board']).default('scroll'),
   });
 }
 

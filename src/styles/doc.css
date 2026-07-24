@@ -12,6 +12,11 @@
    .doc-code：代码/预览卡片 —— beige 底 + 顶栏；仅顶栏与内容区之间有 1px 分界线。
      · .doc-code__body：纯代码（pre，等宽 + white-space:pre）
      · .doc-code__stage：非代码内容（课程渲染预览等）
+   .doc-playground：可交互 LIVE 舞台 —— 与 doc-code 并列（code 看，playground 点）。
+     · 1px 黑边外壳、无阴影；黑顶栏 + accent LIVE 徽章；水平居中
+     · 整壳 max-width：--sm ≈24rem / --md ≈32rem
+     · 单层内容：stage 即操作面（不套内卡）；底栏 trace 事件/状态/界面
+     · .doc-playground__readout：被改状态的主读数区
    .doc-note：提示块 —— beige 底 + 黑底 accent 标签；无边框、无阴影。
    .doc-section：区块标题 —— accent 色块 + 大标题 + 副标题。 */
 
@@ -65,6 +70,11 @@
   line-height: 1.55;
   color: var(--sx-sys-color-text-primary);
 }
+/* 课程 DocTable 暖纸变体 td：须在 :last-child 规则之前声明（特异性更高） */
+.doc-props--paper tbody td {
+  padding: 1rem 1.125rem;
+  background: transparent;
+}
 .doc-props tbody tr:last-child td {
   border-bottom: none;
 }
@@ -93,7 +103,7 @@
   color: var(--sx-sys-color-text-primary);
 }
 
-/* ── 课程 DocTable 变体：暖纸底 + 硬阴影（落在白 StepCard 上才立得住） ── */
+/* ── 课程 DocTable 变体：暖纸底 ── */
 .doc-props--paper {
   min-width: 28rem;
   background: var(--sx-sys-color-bg-page);
@@ -104,10 +114,6 @@
   /* 表头与表体分界加重一档，扫描时先落黄条 */
   border-bottom-width: var(--sx-sys-border-width-strong);
   padding: 0.8125rem 1.125rem;
-}
-.doc-props--paper tbody td {
-  padding: 1rem 1.125rem;
-  background: transparent;
 }
 /* 斑马纹：偶数行轻微 beige，长表更易扫行 */
 .doc-props--paper tbody tr:nth-child(even) td {
@@ -184,6 +190,290 @@
 }
 .doc-code__comment {
   color: var(--sx-sys-color-text-soft);
+}
+
+/* ── 可交互 LIVE 舞台（课程 JS 练习等） ──
+   与 .doc-code 同族不同职责：
+   · doc-code：静态代码 / 静态渲染快照
+   · doc-playground：用户可点、可输入、可改状态
+   组件封装：src/components/design-system/DocPlayground.astro
+
+   结构（单层，避免 stage 里再套卡）：
+   figure.doc-playground
+     figcaption.bar（黑顶栏 + LIVE）
+     .stage
+       .panel
+         .controls（操作面）
+         .trace（事件 / 状态 / 界面） */
+.doc-playground {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  margin-inline: auto;
+  margin-block: 0;
+  box-sizing: border-box;
+  background: var(--sx-sys-color-bg-surface);
+  border: var(--sx-sys-border-width) solid var(--sx-sys-color-border);
+  border-radius: 0;
+  box-shadow: none;
+  overflow: hidden;
+}
+/* size：整壳最大宽度（默认 sm） */
+.doc-playground--sm {
+  max-width: 24rem; /* 384px：点一下 / 输一行 */
+}
+.doc-playground--md {
+  max-width: 32rem; /* 512px：列表 / 多控件 */
+}
+.doc-playground__bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.6875rem 1rem;
+  border-bottom: var(--sx-sys-border-width) solid var(--sx-sys-color-border);
+  background: var(--sx-sys-color-border);
+  color: var(--sx-sys-color-bg-surface);
+  font-family: var(--sx-sys-font-family-mono);
+}
+.doc-playground__meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  min-width: 0;
+}
+.doc-playground__file {
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  color: var(--sx-sys-color-bg-surface);
+}
+.doc-playground__hint {
+  font-size: 0.6875rem;
+  font-weight: 500;
+  line-height: 1.35;
+  color: var(--sx-sys-color-bg-surface);
+  opacity: 0.72;
+}
+.doc-playground__badge {
+  flex: 0 0 auto;
+  display: inline-block;
+  padding: 0.2rem 0.5rem;
+  background: var(--sx-sys-color-accent);
+  color: var(--sx-sys-color-border);
+  border: var(--sx-sys-border-width) solid var(--sx-sys-color-border);
+  font-size: 0.625rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  line-height: 1.2;
+}
+/* stage：白底操作面，不再套 paper 垫层 */
+.doc-playground__stage {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0;
+  background: var(--sx-sys-color-bg-surface);
+  color: var(--sx-sys-color-text-primary);
+}
+.doc-playground__stage > :global(*) {
+  width: 100%;
+  max-width: none;
+}
+
+/* 岛内面板：与 stage 同面，不重复描边 */
+.doc-playground__panel {
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  background: transparent;
+  border: none;
+}
+.doc-playground__controls {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1.25rem 1.25rem 1.125rem;
+}
+
+/* 字段标签 */
+.doc-playground__kicker {
+  display: block;
+  margin: 0 0 0.375rem;
+  font-family: var(--sx-sys-font-family-mono);
+  font-size: 0.6875rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--sx-sys-color-text-soft);
+}
+
+/* 状态主读数：居中大字，一眼看见「被改的值」 */
+.doc-playground__readout {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  padding: 1.125rem 1rem;
+  border: var(--sx-sys-border-width) solid var(--sx-sys-color-border);
+  background: var(--sx-sys-color-beige);
+  text-align: center;
+}
+.doc-playground__readout .doc-playground__kicker {
+  margin: 0;
+}
+.doc-playground__value {
+  margin: 0;
+  font-family: var(--sx-sys-font-family-display);
+  font-size: clamp(1.375rem, 3.5vw, 1.75rem);
+  font-weight: 800;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  color: var(--sx-sys-color-text-primary);
+  overflow-wrap: anywhere;
+}
+.doc-playground__value--done {
+  color: var(--sx-sys-color-success);
+}
+.doc-playground__value--muted {
+  color: var(--sx-sys-color-text-soft);
+  font-weight: 700;
+  font-family: var(--sx-sys-font-family-mono);
+  font-size: 1.125rem;
+}
+
+/* 操作按钮行 */
+.doc-playground__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.625rem;
+  align-items: stretch;
+}
+/* 双按钮等分（更新 / 取消） */
+.doc-playground__actions--split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.625rem;
+}
+.doc-playground__actions--split .btn {
+  width: 100%;
+  justify-content: center;
+}
+
+.doc-playground__field {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  width: 100%;
+  min-width: 0;
+}
+.doc-playground__input {
+  width: 100%;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0.6875rem 0.8125rem;
+  border: var(--sx-sys-border-width) solid var(--sx-sys-color-border);
+  border-radius: 0;
+  background: var(--sx-sys-color-bg-page);
+  color: var(--sx-sys-color-text-primary);
+  font: inherit;
+  font-size: 0.9375rem;
+  line-height: 1.4;
+}
+.doc-playground__input::placeholder {
+  color: var(--sx-sys-color-text-soft);
+  opacity: 1;
+}
+.doc-playground__input:focus {
+  outline: 2px solid var(--sx-sys-color-action-primary);
+  outline-offset: 1px;
+  background: var(--sx-sys-color-bg-surface);
+}
+.doc-playground__row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.625rem;
+  align-items: stretch;
+  width: 100%;
+}
+.doc-playground__row .doc-playground__field {
+  flex: 1 1 10rem;
+}
+.doc-playground__row .btn {
+  flex: 0 0 auto;
+  align-self: stretch;
+}
+
+/* 列表 / 任务行 */
+.doc-playground__list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.doc-playground__item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.6875rem 0.8125rem;
+  border: var(--sx-sys-border-width) solid var(--sx-sys-color-border);
+  background: var(--sx-sys-color-bg-page);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  line-height: 1.35;
+}
+.doc-playground__empty {
+  margin: 0;
+  padding: 1.25rem 0.875rem;
+  border: var(--sx-sys-border-width) dashed var(--sx-sys-color-border);
+  background: var(--sx-sys-color-beige);
+  text-align: center;
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: var(--sx-sys-color-text-soft);
+}
+
+/* 运行时追踪：底栏，与控件一面对齐 */
+.doc-playground__trace {
+  width: 100%;
+  margin: 0;
+  padding: 0.8125rem 1.25rem 0.9375rem;
+  box-sizing: border-box;
+  border: none;
+  border-top: var(--sx-sys-border-width) solid var(--sx-sys-color-border);
+  background: var(--sx-sys-color-beige);
+  font-family: var(--sx-sys-font-family-mono);
+  font-size: 0.75rem;
+  line-height: 1.55;
+  color: var(--sx-sys-color-text-primary);
+  display: grid;
+  gap: 0.35rem;
+}
+.doc-playground__trace-row {
+  display: grid;
+  grid-template-columns: 2.75rem minmax(0, 1fr);
+  column-gap: 0.75rem;
+  align-items: baseline;
+}
+.doc-playground__trace-k {
+  font-size: 0.6875rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--sx-sys-color-text-soft);
+}
+.doc-playground__trace-v {
+  min-width: 0;
+  font-weight: 600;
+  overflow-wrap: anywhere;
 }
 
 /* ── 提示块（课程 Note 等） ── */

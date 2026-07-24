@@ -1,8 +1,12 @@
 ---
-// Preview —— 渲染结果 / 片段预览容器
+// Preview —— 静态代码 / 静态渲染预览容器
 // 外壳统一用全局 .doc-code（与设计系统用法示例卡片同构）：
 //   figure.doc-code > figcaption.doc-code__bar + stage/body
 // 有 code prop 时走 pre.doc-code__body；否则 slot 走 .doc-code__stage（渲染预览）。
+//
+// 可交互演示请用 DocPlayground（.doc-playground），不要塞进 doc-code：
+//   · doc-code        → 看（静态）
+//   · doc-playground  → 点（LIVE）
 interface Props {
   /** 顶栏左侧标签（文件名或说明），默认「渲染结果」 */
   label?: string;

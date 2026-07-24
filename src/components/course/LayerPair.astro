@@ -1,6 +1,6 @@
 ---
-// LayerPair —— 设计师图层树 ↔ HTML 标签树 并排对照
-// 左：Figma-like 图层面板（▾ + # / T + 缩进）
+// LayerPair —— 视觉图层树 ↔ HTML 标签树 并排对照
+// 左：图层面板 mock（▾ + # / T + 缩进）
 // 右：代码窗口（语法着色 + 同 data-key 高亮）
 // 下：双视角说明
 // 零 JS：:has([data-key]:hover) 左右联动
@@ -130,7 +130,7 @@ const partClass: Record<CodePart['kind'], string | null> = {
               data-key={row.key}
               role="treeitem"
               aria-expanded={row.expanded ? 'true' : undefined}
-              style={`--layer-depth: ${row.depth}`}
+              style={`--sx-layer-depth: ${row.depth}`}
             >
               <span
                 class:list={['layer-pair__caret', row.expanded && 'layer-pair__caret--open']}
@@ -215,14 +215,14 @@ const partClass: Record<CodePart['kind'], string | null> = {
       </header>
       {/*
         行内不换行：pre + white-space:pre 时，模板缩进空白会变成真字符。
-        缩进改由 --code-depth + padding-left 承担。
+        缩进改由 --sx-code-depth + padding-left 承担。
       */}
       <pre class="layer-pair__pre" tabindex="0">{
         codeLines.map((line) => (
           <span
             class="layer-pair__cline"
             data-key={line.key}
-            style={`--code-depth: ${line.depth}`}
+            style={`--sx-code-depth: ${line.depth}`}
           >{line.parts.map((p) =>
               partClass[p.kind] ? (
                 <span class={partClass[p.kind]!}>{p.text}</span>
@@ -240,10 +240,10 @@ const partClass: Record<CodePart['kind'], string | null> = {
     <div class="layer-pair__cap">
       <div class="layer-pair__cap-k">
         <span class="layer-pair__cap-mark" aria-hidden="true"></span>
-        设计视角
+        视觉视角
       </div>
       <p>
-        一棵<strong>图层树</strong>。Frame 套 Frame，每个图层有名字、有层级、有缩进。
+        一棵<strong>图层树</strong>。框套框，每个图层有名字、有层级、有缩进。
       </p>
     </div>
     <div class="layer-pair__cap">
@@ -260,14 +260,15 @@ const partClass: Record<CodePart['kind'], string | null> = {
 
 <style>
   .layer-pair {
-    --lp-row-pad-y: 0.4rem;
-    --lp-indent: 1rem;
-    --lp-gap: 1rem;
+    --sx-lp-row-pad-y: 0.4rem;
+    --sx-lp-indent: 1rem;
+    --sx-lp-gap: 1rem;
     /* 选中 / 悬停联动：橙红（danger），不用 accent 黄 */
-    --lp-select: var(--sx-sys-color-danger);
+    --sx-lp-select: var(--sx-sys-color-danger);
+
     display: flex;
     flex-direction: column;
-    gap: var(--lp-gap);
+    gap: var(--sx-lp-gap);
     width: 100%;
     /* 外层不再包一整块：双栏各自成卡 */
     border: none;
@@ -279,7 +280,7 @@ const partClass: Record<CodePart['kind'], string | null> = {
     display: grid;
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
     align-items: stretch;
-    gap: var(--lp-gap);
+    gap: var(--sx-lp-gap);
     min-width: 0;
   }
 
@@ -341,8 +342,8 @@ const partClass: Record<CodePart['kind'], string | null> = {
     display: flex;
     align-items: center;
     gap: 0.35rem;
-    padding: var(--lp-row-pad-y) 0.45rem;
-    padding-left: calc(0.45rem + var(--layer-depth, 0) * var(--lp-indent));
+    padding: var(--sx-lp-row-pad-y) 0.45rem;
+    padding-left: calc(0.45rem + var(--sx-layer-depth, 0) * var(--sx-lp-indent));
     border-radius: 2px;
     font-family: var(--sx-sys-font-family-body);
     font-size: 0.8125rem;
@@ -430,7 +431,7 @@ const partClass: Record<CodePart['kind'], string | null> = {
     line-height: 1.7;
     color: var(--sx-sys-color-text-primary);
     overflow-x: auto;
-    /* normal：折叠 map 行间空白节点；缩进靠 --code-depth */
+    /* normal：折叠 map 行间空白节点；缩进靠 --sx-code-depth */
     white-space: normal;
     border: none;
     background: transparent;
@@ -444,7 +445,7 @@ const partClass: Record<CodePart['kind'], string | null> = {
   .layer-pair__cline {
     display: block;
     padding: 0.08rem 0.4rem;
-    padding-left: calc(0.4rem + var(--code-depth, 0) * 1.1rem);
+    padding-left: calc(0.4rem + var(--sx-code-depth, 0) * 1.1rem);
     margin: 0;
     border-radius: 2px;
     transition: background 0.12s ease;
@@ -468,14 +469,14 @@ const partClass: Record<CodePart['kind'], string | null> = {
   .layer-pair:has([data-key='title']:hover) [data-key='title'],
   .layer-pair:has([data-key='desc']:hover) [data-key='desc'],
   .layer-pair:has([data-key='btn']:hover) [data-key='btn'] {
-    background: color-mix(in srgb, var(--lp-select) 42%, transparent);
+    background: color-mix(in srgb, var(--sx-lp-select) 42%, transparent);
   }
 
   /* ── 底注：与上方面板同宽拆成两卡 ── */
   .layer-pair__caption {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: var(--lp-gap);
+    gap: var(--sx-lp-gap);
     background: transparent;
   }
   .layer-pair__cap {

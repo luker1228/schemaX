@@ -1,0 +1,203 @@
+---
+title: HTML 的本质 · DOM 树
+description: 进阶篇：基础篇用 Markdown 与视觉认结构后，再看 HTML 的本质——浏览器把标签解析成 DOM 树，页面上的一切操作都落在这棵树上。
+slug: fe-html-dom
+status: published
+course: frontend-handbook
+order: 10
+part: advanced
+durationMinutes: 10
+lessonType: lesson
+presentation: board
+hero:
+  line1: HTML 的本质
+  line2: 是一棵树
+  badge: DOM
+  pillFill: 解析 · 节点 · 树
+  pillOutline: 进阶篇 · DOM 树
+---
+
+import StepCard from '../../components/course/StepCard.astro';
+import StepSplit from '../../components/course/StepSplit.astro';
+import SectionHead from '../../components/course/SectionHead.astro';
+import Note from '../../components/course/Note.astro';
+import Preview from '../../components/course/Preview.astro';
+import Takeaway from '../../components/course/Takeaway.astro';
+import DocTable from '../../components/design-system/DocTable.astro';
+import LayerPair from '../../components/course/LayerPair.astro';
+
+<StepCard num="DOM-01" label="衔接">
+  <SectionHead line1="基础篇在铺路" line2="进阶看本质" />
+  <Note tag="进阶">
+    <strong>基础篇</strong>里，Markdown 视角与视觉视角（框 / 字 / 图）已经够你搭结构、读嵌套。
+    <strong>进阶篇</strong>再往下挖一层：浏览器真正吃进去的是什么？
+    答案是 <strong>DOM 树</strong>——不是磁盘上的字符串本身。
+  </Note>
+</StepCard>
+
+<StepCard num="DOM-02" label="核心">
+  <SectionHead line1="HTML 文件不是页面" line2="DOM 才是" />
+  <Note tag="核心">
+    你写在磁盘上的 <code>.html</code> 只是<strong>文本</strong>。
+    浏览器读入后会<strong>解析</strong>成内存里的一棵树：每个标签变成一个<strong>节点</strong>，嵌套变成父子关系。
+    这棵树叫 <strong>DOM</strong>（Document Object Model，文档对象模型）。
+    <br /><br />
+    之后屏幕上画什么、JS 改什么、读屏读什么，操作的都是这棵树——不是原始字符串本身。
+  </Note>
+</StepCard>
+
+<StepCard num="DOM-03" label="对照">
+  <StepSplit wide>
+    <SectionHead line1="三棵树，同一套嵌套" line2="Markdown · 图层 · DOM" />
+    <p class="m-0 text-base leading-relaxed">{'同一张卡片，三种说法：'}</p>
+
+    <DocTable label="三视角对照">
+      <thead>
+        <tr>
+          <th>视角</th>
+          <th>你看到的</th>
+          <th>本质</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="doc-props__name">Markdown</td>
+          <td class="doc-props__desc">标题、列表、段落写法</td>
+          <td>描述「有什么结构」的文本</td>
+        </tr>
+        <tr>
+          <td class="doc-props__name">视觉图层</td>
+          <td class="doc-props__desc">框套框，字挂在框里</td>
+          <td>嵌套的图层树</td>
+        </tr>
+        <tr>
+          <td class="doc-props__name">DOM</td>
+          <td class="doc-props__desc">浏览器解析后的节点树</td>
+          <td>页面真正的运行时结构</td>
+        </tr>
+      </tbody>
+    </DocTable>
+
+    <p class="m-0 text-base leading-relaxed">
+      {'图层 ↔ 标签，仍是同一棵树（悬停可联动）：'}
+    </p>
+    <LayerPair
+      slot="figure"
+      id="domPair"
+      layersTitle="图层 · LAYERS"
+      fileName="card.html"
+    />
+  </StepSplit>
+</StepCard>
+
+<StepCard num="DOM-04" label="节点">
+  <SectionHead line1="树上有什么" line2="元素 · 文本 · 文档" />
+  <p class="m-0 text-base leading-relaxed">
+    {'DOM 里常见几类节点（先记这三种就够）：'}
+  </p>
+
+  <DocTable label="节点类型">
+    <thead>
+      <tr>
+        <th>类型</th>
+        <th>例子</th>
+        <th>对应直觉</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="doc-props__name">Document</td>
+        <td class="doc-props__desc">整页文档的根</td>
+        <td>整份画布 / 整份文件</td>
+      </tr>
+      <tr>
+        <td class="doc-props__name">Element</td>
+        <td class="doc-props__desc">
+          <code>{'<div>'}</code>、<code>{'<h3>'}</code>、<code>{'<button>'}</code>
+        </td>
+        <td>Frame / 标签容器或控件</td>
+      </tr>
+      <tr>
+        <td class="doc-props__name">Text</td>
+        <td class="doc-props__desc">「标题」「一段描述…」</td>
+        <td>图层里的 Text</td>
+      </tr>
+    </tbody>
+  </DocTable>
+
+  <Note tag="提示">
+    源码里写 <code>{'<h3>标题</h3>'}</code>，DOM 里通常是：
+    一个 <strong>h3 元素节点</strong>，下面挂一个内容为「标题」的 <strong>文本节点</strong>。
+    树 = 父子关系，不是平面列表。
+  </Note>
+</StepCard>
+
+<StepCard num="DOM-05" label="整页骨架">
+  <StepSplit>
+    <SectionHead line1="最小合法骨架" line2="html · head · body" />
+    <p class="m-0 text-base leading-relaxed">
+      {'浏览器眼里，一页大致长这样（缩进 = 父子）：'}
+    </p>
+    <Note tag="记法">
+      <code>{'<head>'}</code> 不负责页面上的可见布局；
+      用户看到的结构几乎都在 <code>{'<body>'}</code> 里。
+      改界面、对设计稿，默认想的是 body 里的那棵子树。
+    </Note>
+    <Preview
+      slot="figure"
+      label="document 树（示意）"
+      lang="html"
+      code={`html
+├── head          ← 给浏览器 / 搜索引擎的元信息（标题、字符集…）
+│   └── title
+└── body          ← 你真正「看见」的内容都在这
+    ├── header
+    ├── main
+    └── footer`}
+    />
+  </StepSplit>
+</StepCard>
+
+<StepCard num="DOM-06" label="实践">
+  <SectionHead line1="去哪看见 DOM" line2="开发者工具 Elements" />
+  <p class="m-0 text-base leading-relaxed">
+    {'浏览器打开任意页面 → 右键「检查」→ '}
+    <strong>{'Elements / 元素'}</strong>
+    {
+      ' 面板：那就是当前的 DOM 树（可能被 JS 改过，与磁盘上的 HTML 不完全相同）。'
+    }
+  </p>
+  <ul>
+    <li>点选节点 ≈ 选中一个图层</li>
+    <li>缩进 ≈ Frame 套娃</li>
+    <li>右侧样式 ≈ 下一章要讲的 CSS（挂在节点上的外观规则）</li>
+  </ul>
+  <Note tag="和 JS 的关系">
+    后面讲交互时会说：JS 通过 DOM API 找节点、改文字、改 class、增删节点——
+    改的是<strong>树上的对象</strong>，浏览器再根据新树重绘。
+    现在只需记住：<strong>DOM 是 JS 操作页面的把手。</strong>
+  </Note>
+</StepCard>
+
+<Takeaway
+  num="DOM-07"
+  label="总结"
+  line1="HTML 的本质"
+  line2="解析后的 DOM 树"
+  note="基础篇用隐喻进门；进阶篇认 DOM——浏览器里的真结构。"
+>
+  <ul>
+    <li>
+      <strong>源码</strong>是文本；浏览器<strong>解析</strong>后得到 DOM
+    </li>
+    <li>
+      <strong>DOM</strong>是节点树：元素套元素，文本挂在叶子附近
+    </li>
+    <li>
+      <strong>显示 / 脚本 / 读屏</strong>都围绕这棵树，不是围绕字符串本身
+    </li>
+    <li>
+      <strong>Elements 面板</strong>就是 DOM 的可视化——请养成打开它的习惯
+    </li>
+  </ul>
+</Takeaway>

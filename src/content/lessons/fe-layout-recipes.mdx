@@ -4,18 +4,21 @@ description: 先看页面骨架，再看怎么排——三种最常见的页面�
 slug: fe-layout-recipes
 status: published
 course: frontend-handbook
-order: 8
+order: 9
+part: advanced
 durationMinutes: 12
 lessonType: lesson
+presentation: board
 hero:
   line1: 先拆区域
   line2: 再谈
   badge: 布局
   pillFill: 页面骨架 · 三种配方
-  pillOutline: 第 8 节 · 分区描述
+  pillOutline: 进阶篇 · 分区描述
 ---
 
 import StepCard from '../../components/course/StepCard.astro';
+import StepSplit from '../../components/course/StepSplit.astro';
 import SectionHead from '../../components/course/SectionHead.astro';
 import Note from '../../components/course/Note.astro';
 import Preview from '../../components/course/Preview.astro';
@@ -29,71 +32,143 @@ import Takeaway from '../../components/course/Takeaway.astro';
 </StepCard>
 
 <StepCard num="LAY-02" label="传统门户/官网">
-  <SectionHead line1="传统门户 / 官网骨架" line2="header + nav + banner + main + footer" />
-  <p>典型结构是 <code>header + nav + banner + main + footer</code>。适合首页、活动页、产品官网，重点是先把入口、主视觉和内容区分开。</p>
-  <Preview label="骨架预览">
-    <div style={{ width: '100%', maxWidth: '420px', border: '1px solid #000' }}>
-      <div style={{ padding: '12px', borderBottom: '1px solid #000', background: 'var(--sx-sys-color-beige)', fontWeight: 600, textAlign: 'center' }}>header · 导航 / Logo</div>
-      <div style={{ padding: '32px 16px', borderBottom: '1px solid #000', background: 'var(--sx-sys-color-bg-surface)', textAlign: 'center', fontWeight: 700, fontSize: '1.1rem' }}>banner · 主视觉</div>
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '8px', padding: '12px', borderBottom: '1px solid #000' }}>
-        <div style={{ padding: '20px 8px', border: '1px solid #000', textAlign: 'center', fontSize: '0.8rem' }}>卡片 1</div>
-        <div style={{ padding: '20px 8px', border: '1px solid #000', textAlign: 'center', fontSize: '0.8rem' }}>卡片 2</div>
-        <div style={{ padding: '20px 8px', border: '1px solid #000', textAlign: 'center', fontSize: '0.8rem' }}>卡片 3</div>
+  <StepSplit wide>
+    <SectionHead line1="传统门户 / 官网骨架" line2="header + nav + banner + main + footer" />
+    <p class="m-0 text-base leading-relaxed">
+      {'典型结构是 '}
+      <code>header + nav + banner + main + footer</code>
+      {
+        '。适合首页、活动页、产品官网，重点是先把入口、主视觉和内容区分开。'
+      }
+    </p>
+    <details class="mt-2">
+      <summary class="cursor-pointer font-semibold">{'可以这样描述给 AI'}</summary>
+      <p class="m-2 mt-2 text-sm" style="color: var(--sx-sys-color-text-soft);">
+        {
+          '做一个门户首页：顶部是 header，里面放 Logo 和导航；中间是大 banner 和三块功能卡片；下方是 footer。桌面端三列卡片，移动端收成单列。'
+        }
+        <br />
+        <strong>{'关键词'}</strong>
+        {'：'}
+        <code>header</code>
+        {'、'}
+        <code>nav</code>
+        {'、'}
+        <code>banner</code>
+        {'、'}
+        <code>main</code>
+        {'、'}
+        <code>footer</code>
+      </p>
+    </details>
+    <Preview slot="figure" label="骨架预览">
+      <div style={{ width: '100%', maxWidth: '420px', border: '1px solid #000' }}>
+        <div style={{ padding: '12px', borderBottom: '1px solid #000', background: 'var(--sx-sys-color-beige)', fontWeight: 600, textAlign: 'center' }}>header · 导航 / Logo</div>
+        <div style={{ padding: '32px 16px', borderBottom: '1px solid #000', background: 'var(--sx-sys-color-bg-surface)', textAlign: 'center', fontWeight: 700, fontSize: '1.1rem' }}>banner · 主视觉</div>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '8px', padding: '12px', borderBottom: '1px solid #000' }}>
+          <div style={{ padding: '20px 8px', border: '1px solid #000', textAlign: 'center', fontSize: '0.8rem' }}>卡片 1</div>
+          <div style={{ padding: '20px 8px', border: '1px solid #000', textAlign: 'center', fontSize: '0.8rem' }}>卡片 2</div>
+          <div style={{ padding: '20px 8px', border: '1px solid #000', textAlign: 'center', fontSize: '0.8rem' }}>卡片 3</div>
+        </div>
+        <div style={{ padding: '10px', textAlign: 'center', fontSize: '0.8rem', opacity: 0.7 }}>footer</div>
       </div>
-      <div style={{ padding: '10px', textAlign: 'center', fontSize: '0.8rem', opacity: 0.7 }}>footer</div>
-    </div>
-  </Preview>
-  <details style="margin-top: 8px;">
-    <summary style="cursor: pointer; font-weight: 600;">可以这样描述给 AI</summary>
-    <p style={{ margin: '8px 0 0', color: 'var(--sx-sys-color-text-soft)' }}>做一个门户首页：顶部是 header，里面放 Logo 和导航；中间是大 banner 和三块功能卡片；下方是 footer。桌面端三列卡片，移动端收成单列。<br/><strong>关键词</strong>：<code>header</code>、<code>nav</code>、<code>banner</code>、<code>main</code>、<code>footer</code></p>
-  </details>
+    </Preview>
+  </StepSplit>
 </StepCard>
 
 <StepCard num="LAY-03" label="后台管理系统">
-  <SectionHead line1="后台管理系统骨架" line2="header + aside + main" />
-  <p>结构上通常是 <code>header + aside + main</code>，其中 <code>aside</code> 贴最左并铺满高度，<code>main</code> 吃掉剩余空间。</p>
-  <Preview label="骨架预览">
-    <div style={{ width: '100%', maxWidth: '420px', border: '1px solid #000' }}>
-      <div style={{ padding: '12px', borderBottom: '1px solid #000', background: 'var(--sx-sys-color-beige)', fontWeight: 600, textAlign: 'center' }}>header</div>
-      <div style={{ display: 'flex', minHeight: '200px' }}>
-        <div style={{ width: '100px', padding: '12px 8px', borderRight: '1px solid #000', fontSize: '0.8rem', lineHeight: '2' }}>
-          <div>aside</div><div>导航 1</div><div>导航 2</div><div>导航 3</div>
-        </div>
-        <div style={{ flex: 1, padding: '12px' }}>
-          <div style={{ padding: '8px', border: '1px solid #000', marginBottom: '8px', fontSize: '0.8rem' }}>筛选栏</div>
-          <div style={{ padding: '40px 8px', border: '1px solid #000', textAlign: 'center', fontSize: '0.8rem' }}>main · 表格/图表</div>
+  <StepSplit wide>
+    <SectionHead line1="后台管理系统骨架" line2="header + aside + main" />
+    <p class="m-0 text-base leading-relaxed">
+      {'结构上通常是 '}
+      <code>header + aside + main</code>
+      {'，其中 '}
+      <code>aside</code>
+      {' 贴最左并铺满高度，'}
+      <code>main</code>
+      {' 吃掉剩余空间。'}
+    </p>
+    <details class="mt-2">
+      <summary class="cursor-pointer font-semibold">{'可以这样描述给 AI'}</summary>
+      <p class="m-2 mt-2 text-sm" style="color: var(--sx-sys-color-text-soft);">
+        {
+          '做一个后台管理系统：顶部是 header；左侧是固定宽度的 aside 导航，贴最左并铺满整条高度；右侧 main 作为主体区域，展示表格、图表和表单；移动端把侧边栏收起。'
+        }
+        <br />
+        <strong>{'关键词'}</strong>
+        {'：'}
+        <code>header</code>
+        {'、'}
+        <code>aside</code>
+        {'、'}
+        <code>main</code>
+        {'、'}
+        <code>固定宽度</code>
+        {'、'}
+        <code>占据主体</code>
+      </p>
+    </details>
+    <Preview slot="figure" label="骨架预览">
+      <div style={{ width: '100%', maxWidth: '420px', border: '1px solid #000' }}>
+        <div style={{ padding: '12px', borderBottom: '1px solid #000', background: 'var(--sx-sys-color-beige)', fontWeight: 600, textAlign: 'center' }}>header</div>
+        <div style={{ display: 'flex', minHeight: '200px' }}>
+          <div style={{ width: '100px', padding: '12px 8px', borderRight: '1px solid #000', fontSize: '0.8rem', lineHeight: '2' }}>
+            <div>aside</div><div>导航 1</div><div>导航 2</div><div>导航 3</div>
+          </div>
+          <div style={{ flex: 1, padding: '12px' }}>
+            <div style={{ padding: '8px', border: '1px solid #000', marginBottom: '8px', fontSize: '0.8rem' }}>筛选栏</div>
+            <div style={{ padding: '40px 8px', border: '1px solid #000', textAlign: 'center', fontSize: '0.8rem' }}>main · 表格/图表</div>
+          </div>
         </div>
       </div>
-    </div>
-  </Preview>
-  <details style="margin-top: 8px;">
-    <summary style="cursor: pointer; font-weight: 600;">可以这样描述给 AI</summary>
-    <p style={{ margin: '8px 0 0', color: 'var(--sx-sys-color-text-soft)' }}>做一个后台管理系统：顶部是 header；左侧是固定宽度的 aside 导航，贴最左并铺满整条高度；右侧 main 作为主体区域，展示表格、图表和表单；移动端把侧边栏收起。<br/><strong>关键词</strong>：<code>header</code>、<code>aside</code>、<code>main</code>、<code>固定宽度</code>、<code>占据主体</code></p>
-  </details>
+    </Preview>
+  </StepSplit>
 </StepCard>
 
 <StepCard num="LAY-04" label="博客/文章详情">
-  <SectionHead line1="博客 / 文章详情页骨架" line2="header + article + aside + footer" />
-  <p>主内容是文章，右侧是作者信息、目录和相关文章。<strong>你现在正在看的就是这个布局</strong>。</p>
-  <Preview label="骨架预览">
-    <div style={{ width: '100%', maxWidth: '420px', border: '1px solid #000' }}>
-      <div style={{ padding: '12px', borderBottom: '1px solid #000', background: 'var(--sx-sys-color-beige)', fontWeight: 600, textAlign: 'center' }}>header</div>
-      <div style={{ display: 'flex', gap: '12px', padding: '12px', minHeight: '200px' }}>
-        <div style={{ flex: 1, padding: '12px', border: '1px solid #000' }}>
-          <div style={{ fontWeight: 700, marginBottom: '8px' }}>article</div>
-          <div style={{ fontSize: '0.8rem', lineHeight: 1.8 }}>正文内容…<br/>正文内容…<br/>正文内容…</div>
+  <StepSplit wide>
+    <SectionHead line1="博客 / 文章详情页骨架" line2="header + article + aside + footer" />
+    <p class="m-0 text-base leading-relaxed">
+      {'主内容是文章，右侧是作者信息、目录和相关文章。'}
+      <strong>{'你现在正在看的就是这个布局'}</strong>
+      {'。'}
+    </p>
+    <details class="mt-2">
+      <summary class="cursor-pointer font-semibold">{'可以这样描述给 AI'}</summary>
+      <p class="m-2 mt-2 text-sm" style="color: var(--sx-sys-color-text-soft);">
+        {
+          '做一个博客详情页：顶部是 header；中间左边是文章正文 article，右边是 aside，放作者信息、目录和相关文章；底部是 footer；移动端把右侧栏折到下方。'
+        }
+        <br />
+        <strong>{'关键词'}</strong>
+        {'：'}
+        <code>article</code>
+        {'、'}
+        <code>aside</code>
+        {'、'}
+        <code>目录</code>
+        {'、'}
+        <code>footer</code>
+        {'、'}
+        <code>单列</code>
+      </p>
+    </details>
+    <Preview slot="figure" label="骨架预览">
+      <div style={{ width: '100%', maxWidth: '420px', border: '1px solid #000' }}>
+        <div style={{ padding: '12px', borderBottom: '1px solid #000', background: 'var(--sx-sys-color-beige)', fontWeight: 600, textAlign: 'center' }}>header</div>
+        <div style={{ display: 'flex', gap: '12px', padding: '12px', minHeight: '200px' }}>
+          <div style={{ flex: 1, padding: '12px', border: '1px solid #000' }}>
+            <div style={{ fontWeight: 700, marginBottom: '8px' }}>article</div>
+            <div style={{ fontSize: '0.8rem', lineHeight: 1.8 }}>正文内容…<br/>正文内容…<br/>正文内容…</div>
+          </div>
+          <div style={{ width: '110px', padding: '8px', border: '1px solid #000', fontSize: '0.75rem', lineHeight: '1.8' }}>
+            <div>aside</div><div>作者</div><div>目录</div><div>相关</div>
+          </div>
         </div>
-        <div style={{ width: '110px', padding: '8px', border: '1px solid #000', fontSize: '0.75rem', lineHeight: '1.8' }}>
-          <div>aside</div><div>作者</div><div>目录</div><div>相关</div>
-        </div>
+        <div style={{ padding: '10px', textAlign: 'center', fontSize: '0.8rem', opacity: 0.7 }}>footer</div>
       </div>
-      <div style={{ padding: '10px', textAlign: 'center', fontSize: '0.8rem', opacity: 0.7 }}>footer</div>
-    </div>
-  </Preview>
-  <details style="margin-top: 8px;">
-    <summary style="cursor: pointer; font-weight: 600;">可以这样描述给 AI</summary>
-    <p style={{ margin: '8px 0 0', color: 'var(--sx-sys-color-text-soft)' }}>做一个博客详情页：顶部是 header；中间左边是文章正文 article，右边是 aside，放作者信息、目录和相关文章；底部是 footer；移动端把右侧栏折到下方。<br/><strong>关键词</strong>：<code>article</code>、<code>aside</code>、<code>目录</code>、<code>footer</code>、<code>单列</code></p>
-  </details>
+    </Preview>
+  </StepSplit>
 </StepCard>
 
 <StepCard num="LAY-05" label="常见问题">

@@ -22,12 +22,19 @@ interface Props {
   items: CrumbItem[];
   /** nav 的可访问性标签，默认 'Breadcrumb' */
   ariaLabel?: string;
+  /**
+   * 胶囊水平对齐。
+   * - center（默认）：列表页 + 居中 PageHeader
+   * - start：详情页左对齐内容（课程 / 作品 / 文章）
+   */
+  align?: 'center' | 'start';
 }
 
-const { items, ariaLabel = 'Breadcrumb' } = Astro.props;
+const { items, ariaLabel = 'Breadcrumb', align = 'center' } = Astro.props;
+const alignClass = align === 'start' ? 'crumb--start' : '';
 ---
 
-<nav class="crumb" aria-label={ariaLabel}>
+<nav class:list={['crumb', alignClass]} aria-label={ariaLabel}>
   <div class="crumb__pill">
     {
       items.map((item, i) => {
@@ -56,10 +63,13 @@ const { items, ariaLabel = 'Breadcrumb' } = Astro.props;
 </nav>
 
 <style>
-  /* nav 占满父容器宽度，胶囊水平居中 —— 与居中的 PageHeader 对齐 */
+  /* nav 占满父容器宽度；默认居中（列表页 PageHeader），详情页用 --start 左对齐 */
   .crumb {
     display: flex;
     justify-content: center;
+  }
+  .crumb--start {
+    justify-content: flex-start;
   }
 
   /* 胶囊：白底 + 2px 黑边 + 小硬阴影 */

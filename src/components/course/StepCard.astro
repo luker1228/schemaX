@@ -1,7 +1,8 @@
 ---
-// StepCard —— 课时内步骤卡片
-// 设计稿：白底 + 6px 硬阴影 + 1px 黑边；头部黑底 step-num 徽章 + step label。
-// 用于每个教学小节（核心/标题/段落/列表...）。
+// StepCard —— 课时内步骤分区（轻量）
+// 无白底/硬阴影/分隔线；靠编号徽章 + 标签分节。
+// 演示块（Preview / Note / 交互岛）各自保留硬边，不在外壳再套一层重卡。
+// presentation=board 时：外壳成为白板一页（data-lboard-slide），顶栏接管 num/label。
 interface Props {
   /** 步骤编号，如 "HTML-01" "CSS-03"；同时作为锚点 id（小写） */
   num: string;
@@ -12,7 +13,13 @@ const { num, label } = Astro.props;
 const anchorId = num.toLowerCase();
 ---
 
-<section class="step" id={anchorId}>
+<section
+  class="step"
+  id={anchorId}
+  data-lboard-slide
+  data-num={num}
+  data-label={label}
+>
   <header class="step__head">
     <span class="step__num">{num}</span>
     <span class="step__label">{label}</span>
@@ -24,13 +31,13 @@ const anchorId = num.toLowerCase();
 
 <style>
   .step {
-    background: var(--sx-sys-color-bg-surface);
-    border: var(--sx-sys-border-width) solid var(--sx-sys-color-border);
-    box-shadow: 6px 6px 0 0 var(--sx-sys-color-border);
-    padding: 34px 36px;
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    padding: 0;
     display: flex;
     flex-direction: column;
-    gap: 22px;
+    gap: 1.125rem;
     width: 100%;
     box-sizing: border-box;
     scroll-margin-top: calc(
@@ -41,7 +48,7 @@ const anchorId = num.toLowerCase();
 
   .step__head {
     display: flex;
-    gap: 14px;
+    gap: 0.875rem;
     align-items: center;
   }
 
@@ -69,7 +76,7 @@ const anchorId = num.toLowerCase();
   .step__body {
     display: flex;
     flex-direction: column;
-    gap: 18px;
+    gap: 1.125rem;
   }
 
   .step__body > :global(p) {
@@ -77,11 +84,5 @@ const anchorId = num.toLowerCase();
     line-height: 1.75;
     color: var(--sx-sys-color-text-soft);
     margin: 0;
-  }
-
-  @media (max-width: 640px) {
-    .step {
-      padding: 24px 20px;
-    }
   }
 </style>

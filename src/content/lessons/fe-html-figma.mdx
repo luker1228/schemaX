@@ -1,64 +1,65 @@
 ---
-title: HTML · 设计师视角
-description: 设计师的世界是 Frame + Text + 图形。HTML 只是把这三种东西写成标签树——Frame 会套 Frame，Text 落字，图形放图或形状。
+title: 从视觉角度看 HTML
+description: 眼睛看到的界面，几乎是框 + 字 + 图形。HTML 把同样的视觉结构写成标签树——框套框、字落在框里、图挂在树上。
 slug: fe-html-figma
 status: published
 course: frontend-handbook
 order: 3
+part: basics
 durationMinutes: 8
 lessonType: lesson
+presentation: board
 hero:
-  line1: Frame · Text
-  line2: 图形
-  badge: HTML
-  pillFill: 三种零件 · 一棵树
-  pillOutline: 第 3 节 · 设计师结构
+  line1: 眼睛看到的
+  line2: 就是结构
+  badge: 视觉
+  pillFill: 框 · 字 · 图
+  pillOutline: 基础篇 · 视觉视角
 ---
 
 import StepCard from '../../components/course/StepCard.astro';
+import StepSplit from '../../components/course/StepSplit.astro';
 import SectionHead from '../../components/course/SectionHead.astro';
 import Note from '../../components/course/Note.astro';
-import Preview from '../../components/course/Preview.astro';
-import Takeaway from '../../components/course/Takeaway.astro';
 import LayerPair from '../../components/course/LayerPair.astro';
-import Card from '../../components/design-system/Card.astro';
-import Button from '../../components/design-system/Button.astro';
 import DocTable from '../../components/design-system/DocTable.astro';
 
-<StepCard num="HTML-D-01" label="核心">
-  <SectionHead line1="先记住这一句" line2="你画界面，就这三样" />
+<StepCard num="HTML-V-01" label="核心">
+  <SectionHead line1="从视觉的眼睛" line2="看 HTML" />
   <Note tag="核心">
-    设计师的世界里，界面几乎只由三种零件搭出来：
-    <strong>Frame</strong>（框 / 容器）、
-    <strong>Text</strong>（字）、
-    <strong>图形</strong>（矩形、圆、图标、图片……）。
-    HTML 不是另一套宇宙——它只是把这三样写成标签，再用<strong>嵌套</strong>表达「谁包着谁」。
+    不谈职业角色，只谈<strong>你看见什么</strong>：屏幕上的界面，几乎由三种零件组成——
+    <strong>框</strong>（包住一组东西的区域）、
+    <strong>字</strong>、
+    <strong>图形</strong>（色块、图标、照片……）。
+    设计工具里常把框叫 Frame、字叫 Text；HTML 则写成标签。
+    说法不同，描述的是<strong>同一套视觉结构</strong>。
   </Note>
 </StepCard>
 
-<StepCard num="HTML-D-02" label="三原语">
-  <SectionHead line1="三样零件" line2="各自对应什么标签" />
-  <p>先建立总表，再看具体例子：</p>
+<StepCard num="HTML-V-02" label="三原语">
+  <SectionHead line1="三样视觉零件" line2="各自对应什么标签" />
+  <p class="m-0 text-base leading-relaxed">{'先建立总表，再看具体例子：'}</p>
 
-  <DocTable label="设计师三原语对照表">
+  <DocTable label="视觉三原语对照表">
     <thead>
       <tr>
-        <th>设计师世界</th>
+        <th>视觉上</th>
         <th>干什么</th>
         <th>HTML 里大致是</th>
       </tr>
     </thead>
     <tbody>
       <tr>
-        <td class="doc-props__name">Frame</td>
-        <td class="doc-props__desc">框住一组东西；可以再套 Frame</td>
+        <td class="doc-props__name">框（Frame）</td>
+        <td class="doc-props__desc">框住一组东西；可以再套框</td>
         <td>
+          容器标签：
           <code>{'<div>'}</code>、<code>{'<section>'}</code>、<code>{'<header>'}</code>…
         </td>
       </tr>
       <tr>
-        <td class="doc-props__name">Text</td>
-        <td class="doc-props__desc">落字：标题、正文、标签文案</td>
+        <td class="doc-props__name">字（Text）</td>
+        <td class="doc-props__desc">落字：标题、正文、按钮文案</td>
         <td>
           <code>{'<h1>'}</code>–<code>{'<h6>'}</code>、<code>{'<p>'}</code>、<code>{'<span>'}</code>…
         </td>
@@ -73,19 +74,48 @@ import DocTable from '../../components/design-system/DocTable.astro';
     </tbody>
   </DocTable>
 
-  <p>
-    画稿时：Frame 套 Frame，Text 和图形挂在某一层 Frame 里。
-    写 HTML 时：标签套标签，字和图片挂在某一层容器里。<strong>缩进越深，越靠内。</strong>
+  <Note tag="容器">
+    <code>{'<div>'}</code>、<code>{'<section>'}</code>、<code>{'<header>'}</code>
+    在结构上做同一件事：框住一组内容，可再套一层。视觉上叫「框」，工程师常统称<strong>容器标签</strong>。
+    外观靠 CSS，不靠标签名；名字差别主要是语义（如 header ≈ 页头、section ≈ 分区），方便读代码与无障碍。
+    <br /><br />
+    <strong>初学阶段，全部使用 <code>{'<div>'}</code> 是可以的</strong>
+    ——就像图层面板里全叫 Frame 1、Frame 2、Frame 3，或代码里函数全叫
+    <code>func1</code>、<code>func2</code>：结构能搭出来，只是名字不说明角色；
+    进阶再改成有意义的命名 / 语义标签。
+    想再往下看语义标签怎么替代滥用 div，可进阶阅读：
+    <a
+      href="https://www.freecodecamp.org/chinese/news/semantic-html-alternatives-to-using-divs/"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      语义化 HTML：除了 div，你还有这些选择（freeCodeCamp）
+    </a>
+    。
+  </Note>
+
+  <p class="m-0 text-base leading-relaxed">
+    {'视觉上：大框套小框，字和图形挂在某一层框里。写 HTML 时：标签套标签，字和图片挂在某一层容器里。'}
+    <strong>{'缩进越深，越靠内。'}</strong>
   </p>
 </StepCard>
 
-<StepCard num="HTML-D-03" label="对照">
-  <SectionHead line1="一张卡片" line2="图层树 ↔ 标签树" />
-  <p>
-    同一张卡片：左边是设计师熟悉的<strong>图层面板</strong>，右边是浏览器看到的
-    HTML——缩进、嵌套、名字，一一对应。悬停任一侧，另一侧会一起亮起。
-  </p>
+<StepCard num="HTML-V-03" label="对照">
+  <StepSplit wide>
+    <SectionHead line1="一张卡片" line2="图层树 ↔ 标签树" />
+    <p class="m-0 text-base leading-relaxed">
+      {'同一张卡片：左边是视觉结构的'}
+      <strong>{'图层树'}</strong>
+      {
+        '（框 / 字怎么叠），右边是浏览器看到的 HTML——缩进、嵌套、名字，一一对应。悬停任一侧，另一侧会一起亮起。'
+      }
+    </p>
 
-  <LayerPair id="htmlPair" layersTitle="图层 · LAYERS" fileName="card.html" />
-
+    <LayerPair
+      slot="figure"
+      id="htmlPair"
+      layersTitle="图层 · LAYERS"
+      fileName="card.html"
+    />
+  </StepSplit>
 </StepCard>
