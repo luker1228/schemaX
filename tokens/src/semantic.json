@@ -35,7 +35,25 @@
         "display": { "$type": "fontFamily", "$value": "{ref.font.family.display}" },
         "body": { "$type": "fontFamily", "$value": "{ref.font.family.body}" },
         "mono": { "$type": "fontFamily", "$value": "{ref.font.family.mono}" },
-        "terminal": { "$type": "fontFamily", "$value": "{ref.font.family.ibm-plex-mono}" }
+        "terminal": { "$type": "fontFamily", "$value": "{ref.font.family.ibm-plex-mono}" },
+        "mono-system": { "$type": "fontFamily", "$value": "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace", "$description": "UI chrome 系统等宽栈（nav / tag / terminal / 行内 code 标注）。与 Geist Mono (mono) 区分。" }
+      },
+      "size": {
+        "xs": { "$type": "dimension", "$value": "0.6875rem" },
+        "sm": { "$type": "dimension", "$value": "0.75rem" },
+        "md": { "$type": "dimension", "$value": "0.8125rem" },
+        "base": { "$type": "dimension", "$value": "0.9rem" },
+        "lg": { "$type": "dimension", "$value": "1rem" },
+        "reading": { "$type": "dimension", "$value": "1.0625rem" },
+        "xl": { "$type": "dimension", "$value": "1.2rem" },
+        "2xl": { "$type": "dimension", "$value": "1.5rem" },
+        "3xl": { "$type": "dimension", "$value": "2rem" },
+        "4xl": { "$type": "dimension", "$value": "2.5rem" }
+      },
+      "display": {
+        "sm": { "$type": "dimension", "$value": "clamp(1.25rem, 3vw, 1.75rem)" },
+        "md": { "$type": "dimension", "$value": "clamp(1.75rem, 4vw, 2.75rem)" },
+        "lg": { "$type": "dimension", "$value": "clamp(2.5rem, 7vw, 4.5rem)" }
       }
     },
     "border": {
@@ -48,12 +66,14 @@
     },
     "radius": {
       "sm": { "$type": "dimension", "$value": "0" },
-      "md": { "$type": "dimension", "$value": "4px" }
+      "md": { "$type": "dimension", "$value": "4px" },
+      "control": { "$type": "dimension", "$value": "2px", "$description": "控件机械圆角（按钮 / 标签 / 导航）。Card.radius 同源引用。" }
     },
     "shadow": {
-      "sm": { "$type": "shadow", "$value": "2px 2px 0 #000000" },
-      "md": { "$type": "shadow", "$value": "4px 4px 0 #000000" },
-      "lg": { "$type": "shadow", "$value": "6px 6px 0 #000000" }
+      "color": { "$type": "color", "$value": "{sys.color.border}", "$description": "硬阴影默认颜色（= ink 黑）。组件可局部覆盖 --sx-sys-shadow-color 做彩色偏移（如 Card 黄阴影）。" },
+      "sm": { "$type": "shadow", "$value": "2px 2px 0 var(--sx-sys-shadow-color)" },
+      "md": { "$type": "shadow", "$value": "4px 4px 0 var(--sx-sys-shadow-color)" },
+      "lg": { "$type": "shadow", "$value": "6px 6px 0 var(--sx-sys-shadow-color)" }
     },
     "layout": {
       "width": {
@@ -99,6 +119,13 @@
           "$description": "文档/课时双栏容器底部内边距。"
         }
       }
+    },
+    "breakpoint": {
+      "sm": { "$type": "dimension", "$value": "36rem" },
+      "md": { "$type": "dimension", "$value": "45rem" },
+      "lg": { "$type": "dimension", "$value": "48rem" },
+      "xl": { "$type": "dimension", "$value": "64rem" },
+      "2xl": { "$type": "dimension", "$value": "82rem" }
     }
   }
 }

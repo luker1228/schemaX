@@ -2,6 +2,7 @@
 import { site } from '../../config/site';
 import { profile } from '../../data/profile';
 import HeroTerminal from './HeroTerminal.tsx';
+import DoodleMark from './DoodleMark.astro';
 
 // 首页 hero 终端轮播内容（规范 §4.1）。纯视觉语言呈现，非真实 JSON 契约。
 const heroSlides = [
@@ -33,53 +34,65 @@ const heroSlides = [
 ];
 ---
 
-<section class="hero">
-  <div class="hero__inner">
+<section class="hero home-section" aria-labelledby="hero-title">
+  <div class="hero__inner home-section__inner">
     <div class="hero__copy">
-      <span class="hero__badge">Schema-Driven</span>
+      <div class="hero__meta">
+        <span class="hero__stamp-badge">Schema-Driven</span>
+        <DoodleMark kind="star" size="sm" class="hero__star" />
+        <DoodleMark kind="spark" size="sm" class="hero__spark" />
+      </div>
 
-      <h1 class="hero__title">
-        Structure<br />
-        <span class="hero__title-hl">the Unknown.</span>
+      <h1 class="hero__title" id="hero-title">
+        Structure
+        <span class="hero__title-line">
+          <span class="hero__title-hl">the Unknown.</span>
+          <DoodleMark kind="arrow" class="hero__arrow" />
+        </span>
       </h1>
 
       <p class="hero__lede">用 Schema，为未知建立可执行的结构。</p>
+
+      {/* Marie 式个人叙事：第一人称，短而具体 */}
       <p class="hero__bio">
-        我是 Luke，一名 AI Agent 工程师与独立构建者。这里记录我的课程、技术思考、开源作品，以及
-        SchemaX 自身的设计过程。
+        我是 Luke——AI Agent 工程师，也在自己的知识系统里当学生。SchemaX
+        是我公开的第二大脑：课程、笔记、作品与设计系统共用同一套契约。你从搜索掉进某篇文章时，看到的是可验证的结构，不是营销页。
       </p>
 
       <div class="hero__command" aria-hidden="true">
-        <span class="hero__command-label">Copy</span>
-        <code class="hero__command-code">schema &rarr; contract &rarr; tool call</code>
+        <span class="hero__command-label">path</span>
+        <code class="hero__command-code">schema → contract → tool call</code>
+        <DoodleMark kind="brace" size="sm" class="hero__brace" />
       </div>
 
       <div class="hero__cta">
-        <a class="hero__btn hero__btn--primary" href="/projects">Explore Projects</a>
-        <a class="hero__btn hero__btn--ghost" href="/blog">Read the Blog</a>
+        <a class="stamp stamp--primary" href="/projects">Explore Projects</a>
+        <a class="stamp stamp--ghost" href="/blog">Read the Blog</a>
       </div>
     </div>
 
-    <div class="hero__terminal">
-      <HeroTerminal client:visible slides={heroSlides} />
+    <div class="hero__stage">
+      <div class="hero__terminal">
+        <HeroTerminal client:visible slides={heroSlides} />
+      </div>
+      <p class="hero__caption">
+        <span class="hero__caption-mark">*</span>
+        终端里的 JSON 是视觉语言，不是对外 API 契约。
+      </p>
     </div>
   </div>
 </section>
 
 <style>
   .hero {
-    background: var(--sx-sys-color-bg-page);
-    padding-block: clamp(2.5rem, 6vw, 3.5rem);
-    padding-inline: var(--sx-ref-space-6);
+    padding-block: clamp(2.5rem, 7vw, 4.5rem) clamp(1.5rem, 4vw, 2.5rem);
   }
 
   .hero__inner {
-    max-width: 80rem;
-    margin-inline: auto;
     display: grid;
-    grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.95fr);
     gap: var(--sx-ref-space-12);
-    align-items: center;
+    align-items: start;
   }
 
   .hero__copy {
@@ -87,33 +100,50 @@ const heroSlides = [
     flex-direction: column;
     align-items: flex-start;
     gap: var(--sx-ref-space-6);
+    position: relative;
   }
 
-  /* —— Schema-Driven 蓝色 pill —— */
-  .hero__badge {
+  .hero__meta {
+    display: flex;
+    align-items: center;
+    gap: var(--sx-ref-space-3);
+  }
+
+  /* 手写标签感：略歪的蓝底印章 */
+  .hero__stamp-badge {
     display: inline-flex;
     align-items: center;
-    padding: 0.5rem 0.75rem;
+    padding: 0.4rem 0.7rem;
     border: var(--sx-sys-border-width-strong) solid var(--sx-sys-color-border);
-    border-radius: 9999px;
+    border-radius: var(--sx-sys-radius-sm);
     background: var(--sx-sys-color-action-primary);
-    color: var(--sx-sys-color-bg-page);
-    font-family: var(--sx-sys-font-family-mono), ui-monospace, monospace;
-    font-size: 0.8rem;
+    color: var(--sx-sys-color-bg-surface);
+    font-family: var(--sx-sys-font-family-mono-system), ui-monospace, monospace;
+    font-size: var(--sx-sys-font-size-md);
     font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
     box-shadow: var(--sx-sys-shadow-sm);
+    transform: rotate(-1.5deg);
   }
 
-  /* —— 巨标题：第二行黄底高亮 —— */
   .hero__title {
     margin: 0;
     font-family: var(--sx-sys-font-family-display), system-ui, sans-serif;
-    font-size: clamp(2.75rem, 7vw, 4.5rem);
-    font-weight: 700;
+    font-size: var(--sx-sys-font-display-lg);
+    font-weight: 800;
     line-height: 0.98;
     letter-spacing: -0.02em;
     color: var(--sx-sys-color-text-primary);
   }
+
+  .hero__title-line {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--sx-ref-space-3);
+    flex-wrap: wrap;
+  }
+
   .hero__title-hl {
     background: var(--sx-sys-color-accent);
     padding: 0 0.12em;
@@ -122,96 +152,100 @@ const heroSlides = [
   .hero__lede {
     margin: 0;
     font-family: var(--sx-sys-font-family-body), system-ui, sans-serif;
-    font-size: clamp(1.2rem, 2.4vw, 1.5rem);
+    font-size: var(--sx-sys-font-display-sm);
     font-weight: 700;
     line-height: 1.25;
     color: var(--sx-sys-color-text-soft);
+    max-width: 28ch;
   }
 
   .hero__bio {
     margin: 0;
-    max-width: 36ch;
-    font-size: 1.125rem;
-    line-height: 1.65;
+    max-width: 42ch;
+    font-size: var(--sx-sys-font-size-reading);
+    line-height: 1.7;
     color: var(--sx-sys-color-text-soft);
   }
 
-  /* —— 命令胶囊（静态展示，零 JS） —— */
   .hero__command {
+    position: relative;
     display: inline-flex;
     align-items: center;
     gap: 0.75rem;
-    padding: 0.75rem 1rem;
+    padding: 0.7rem 1rem;
     border: var(--sx-sys-border-width-strong) solid var(--sx-sys-color-border);
-    border-radius: var(--sx-sys-radius-md);
-    background: var(--sx-sys-color-beige);
-    box-shadow: var(--sx-sys-shadow-md);
+    border-radius: var(--sx-sys-radius-sm);
+    background: var(--sx-sys-color-bg-surface);
+    box-shadow: 3px 3px 0 var(--sx-sys-color-action-primary);
   }
+
   .hero__command-label {
-    font-family: var(--sx-sys-font-family-mono), ui-monospace, monospace;
-    font-size: 0.75rem;
+    font-family: var(--sx-sys-font-family-mono-system), ui-monospace, monospace;
+    font-size: var(--sx-sys-font-size-sm);
     font-weight: 700;
-    color: var(--sx-sys-color-text-soft);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--sx-sys-color-text-muted);
   }
+
   .hero__command-code {
     font-family: var(--sx-sys-font-family-mono), ui-monospace, monospace;
-    font-size: 0.875rem;
+    font-size: var(--sx-sys-font-size-base);
     font-weight: 700;
     color: var(--sx-sys-color-text-primary);
   }
 
-  /* —— 双 CTA：黄 primary / 米色 ghost，2px 边 + 4px 硬阴影，hover 按下 —— */
+  .hero__brace {
+    position: absolute;
+    right: -1.1rem;
+    top: -1.1rem;
+  }
+
   .hero__cta {
     display: flex;
     flex-wrap: wrap;
-    gap: 1rem;
-  }
-  .hero__btn {
-    display: inline-flex;
-    align-items: center;
-    padding: 0.85rem 1.1rem;
-    border: var(--sx-sys-border-width-strong) solid var(--sx-sys-color-border);
-    border-radius: var(--sx-sys-radius-md);
-    font-family: var(--sx-sys-font-family-mono), ui-monospace, monospace;
-    font-size: 0.875rem;
-    font-weight: 700;
-    color: var(--sx-sys-color-text-primary);
-    box-shadow: var(--sx-sys-shadow-md);
-    transition:
-      transform 120ms ease,
-      box-shadow 120ms ease;
-  }
-  .hero__btn:hover {
-    transform: translate(2px, 2px);
-    box-shadow: none;
-    color: var(--sx-sys-color-text-primary);
-  }
-  .hero__btn--primary {
-    background: var(--sx-sys-color-accent);
-  }
-  .hero__btn--ghost {
-    background: var(--sx-sys-color-beige);
+    gap: var(--sx-ref-space-4);
+    margin-top: var(--sx-ref-space-2);
   }
 
-  /* —— 终端：按 Terminal Card 设计稿 —— 2px 边 + 4px 纯黄阴影 + IBM Plex Mono —— */
+  .hero__stage {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sx-ref-space-3);
+    position: relative;
+  }
+
   .hero__terminal :global(.term) {
     border-width: var(--sx-sys-border-width-strong);
-    box-shadow: 4px 4px 0 var(--sx-sys-color-accent);
+    border-radius: var(--sx-sys-radius-sm);
+    box-shadow: 5px 5px 0 var(--sx-sys-color-accent);
     width: 100%;
     font-family: var(--sx-sys-font-family-terminal), ui-monospace, monospace;
   }
+
   .hero__terminal :global(.term__title),
   .hero__terminal :global(.term__screen),
   .hero__terminal :global(.term__code) {
     font-family: var(--sx-sys-font-family-terminal), ui-monospace, monospace;
   }
-  .hero__terminal :global(.term__title) {
-    font-weight: 400;
-  }
+
   .hero__terminal :global(.term--hero .term__screen) {
     min-height: 13rem;
-    font-size: 0.9375rem;
-    line-height: 1.533;
+    font-size: var(--sx-sys-font-size-base);
+    line-height: 1.55;
+  }
+
+  .hero__caption {
+    margin: 0;
+    font-family: var(--sx-sys-font-family-mono-system), ui-monospace, monospace;
+    font-size: var(--sx-sys-font-size-sm);
+    color: var(--sx-sys-color-text-muted);
+    transform: rotate(-0.4deg);
+  }
+
+  .hero__caption-mark {
+    color: var(--sx-sys-color-action-primary);
+    font-weight: 700;
   }
 
   @media (max-width: 48rem) {

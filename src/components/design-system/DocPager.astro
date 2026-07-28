@@ -151,7 +151,7 @@ const {
     flex: 0 0 auto;
     justify-content: center;
     font-family: var(--sx-sys-font-family-mono);
-    font-size: 0.8125rem;
+    font-size: var(--sx-sys-font-size-md);
     font-weight: 700;
   }
   a.docs-nav__slot:hover {
@@ -160,7 +160,7 @@ const {
 
   .docs-nav__title {
     font-family: var(--sx-sys-font-family-display);
-    font-size: 0.9375rem;
+    font-size: var(--sx-sys-font-size-base);
     font-weight: 700;
     white-space: nowrap;
     overflow: hidden;
@@ -192,7 +192,7 @@ const {
     border-left: none;
   }
 
-  @media (max-width: 600px) {
+   @media (max-width: 36rem) {
     .docs-nav__title {
       display: none;
     }

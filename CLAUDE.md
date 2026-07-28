@@ -12,9 +12,18 @@ SchemaX 是一个静态的、内容优先的个人知识与作品平台（首页
 
 ## 目标技术栈（规范 §6）
 
-Astro 7.x · React 19 · TypeScript（严格模式）· MDX · Astro Content Collections（使用 Content Layer 的 `glob`/`file` 加载器）· Expressive Code · Pagefind · Style Dictionary（DTCG JSON 令牌）· 原生 CSS + Tailwind v4（token 桥接）· pnpm · 静态输出。
+Astro 7.x · React 19 · TypeScript（严格模式）· MDX · Astro Content Collections（使用 Content Layer 的 `glob`/`file` 加载器）· Expressive Code · Pagefind · Style Dictionary（DTCG JSON 令牌）· 原生 CSS + Tailwind v4（token 桥接）· **Rough.js**（涂鸦 / 插画绘制）· pnpm · 静态输出。
 
 V1 **只使用** Astro + React + MDX + TS + 原生 CSS/Tailwind，单仓库（非 monorepo）。**单一 island 框架固定为 React**（不引入第二个 UI 框架）、数据库、鉴权、CMS、运行时远程 MDX 或评论系统 —— 见规范 §25 非目标。
+
+**视觉双层（承重分工，勿混用职责）：**
+
+| 层 | 技术 | 管什么 | 不管什么 |
+|----|------|--------|----------|
+| **组件底层** | RetroUI / 新粗野主义（`Button` / `Card` / `Badge` / 全局 `.btn` `.card` 等） | 交互控件、容器、边框、硬阴影、排版壳、状态与布局 | 手绘插画、装饰性线稿、涂鸦图标的「画法」 |
+| **绘制层** | **Rough.js**（`roughjs`，经 `src/lib/doodle/` 封装） | 手绘感图形：分割线、星星、箭头、花括号、课程/博客/代码等涂鸦图标、斜线填充等插画 | 不替代 Button/Card 等 UI 组件；不把控件外观改成 canvas 手绘 |
+
+简记：**RetroUI 搭架子；Rough.js 画图。**
 
 ## 命令（规范 §24 —— 脚手架已实现）
 
@@ -189,7 +198,11 @@ import Badge from '../../components/design-system/Badge.astro';
 
 ## 设计语言（§14，已锁定）
 
-SchemaX 的 UI 是 RetroUI / 新粗野主义（Neo-brutalist）风格。当前已锁定的视觉基线（参考 `retroui.dev.md` / `retroui.dev.json`）：
+SchemaX 的视觉由两层叠合，**不要合成一层、也不要互相顶替**：
+
+### A. 组件底层 —— RetroUI / 新粗野主义
+
+交互与版式的结构底座（参考 `retroui.dev.md` / `retroui.dev.json`、设计系统 `Button` / `Card` / 全局组件类）。当前已锁定的视觉基线：
 
 - **配色**：暖纸背景 `#FFF7E8`（paper）+ 纯黑墨 `#000000`（ink/border）+ 亮黄强调 `#FFDC58`（accent，唯一主操作色）+ 蓝 `#2f5bea`（action，仅用于链接 hover/focus）+ 红 `#f9575c`（danger）+ 绿 `#35ad68`（success）。装饰色（首页 bento / 分区强调用）：青 `#01FFCC`（mint）、紫 `#C7B7FF`（lavender）、浅奶油 `#EFE7D6`（beige）、棕灰 `#6B6355`（text-soft 次要正文）、中灰 `#666666`（text-muted）、浅灰 `#CBCCC9`（gray-light）—— 均经 `--sx-sys-color-*` token 定义
 - **边框**：全站统一 `1px`（`--sx-sys-border-width`，业务代码必须引用此 token）；Neo-brutalist 强调元素（首页大卡 / pill / 终端）用 `2px`（`--sx-sys-border-width-strong`）
@@ -198,7 +211,21 @@ SchemaX 的 UI 是 RetroUI / 新粗野主义（Neo-brutalist）风格。当前�
 - **字体**：Bricolage Grotesque（display，大标题）/ Geist（body，正文）/ Geist Mono（mono，等宽）—— `@fontsource` 自托管（仅引入实际字重，无运行时外部请求），通过 `--sx-sys-font-family-*` token 落地，系统字体栈作为 fallback
 - **交互**：按钮 hover 是「按下」感（向右下位移 2px + 阴影消失），非「飘起」
 
-Schema 主题的视觉母题（花括号、字段名、类型标签、`required` 星号、网格 / 节点连接器）属于品牌和设计系统区域，**不得侵入长篇阅读空间**。视觉强度按页面分级（设计系统 = 最强；博客正文 = 最克制）。
+### B. 绘制层 —— Rough.js 涂鸦 / 插画
+
+**手绘感图片与装饰线稿用 Rough.js 画，不用手写死 SVG path 冒充「涂鸦系统」，也不用 RetroUI 组件去假装插画。**
+
+- **职责**：分割线（波浪 / 铅笔 / 虚线）、装饰（星、火花、箭头、花括号）、入口图标（课程 / 博客 / 代码 / 库表等）、需要斜线影线 / 素描填充的插画块
+- **实现约定**：
+  - 依赖 `roughjs`；业务侧经 `src/lib/doodle/`（presets / render / marks）与设计系统 `<Doodle>` / `<Rough>` 使用，**不要**在页面里直接 `import rough from 'roughjs'` 散落 magic options
+  - 优先 **SSR / 构建期** `RoughGenerator` → SVG path（静态 HTML、零客户端 JS）；仅当需要浏览器内重绘/交互草图时才上 React island
+  - stroke / fill 走 token 字符串（如 `var(--sx-sys-color-border)`、`var(--sx-sys-color-accent)`），遵守 §17，禁止裸 hex
+  - 使用固定 `seed`，保证构建可复现，避免每次 build 涂鸦乱跳
+- **与 RetroUI 的边界**：按钮、卡片、导航、表单 = RetroUI；旁边的涂鸦图标、页边批注线、插画框 = Rough.js。一张「硬边卡片」里可以**嵌**一张 Rough 图，但卡片本身仍是 RetroUI 组件
+
+### 共同约束
+
+Schema 主题的视觉母题（花括号、字段名、类型标签、`required` 星号、网格 / 节点连接器）属于品牌和设计系统区域，**不得侵入长篇阅读空间**。视觉强度按页面分级（设计系统 = 最强；博客正文 = 最克制）。涂鸦绘制层同样服从该分级：首页 / 设计系统可开；长文段落流保持安静。
 
 ## 实现时
 

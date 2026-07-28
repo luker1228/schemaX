@@ -140,7 +140,7 @@ const isActive = (href: string) =>
     display: inline-flex;
     align-items: center;
     flex: 0 0 auto;
-    font-size: clamp(1.1rem, 2vw, 1.5rem);
+    font-size: var(--sx-sys-font-display-sm);
     font-weight: 400;
     letter-spacing: 0.04em;
     line-height: 0.95;
@@ -151,7 +151,7 @@ const isActive = (href: string) =>
     opacity: 0.7;
     font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
     font-weight: 600;
-    font-size: 0.78rem;
+    font-size: var(--sx-sys-font-size-md);
     /* 中文副标题：字距收窄，避免中文字间出现不自然空隙 */
     letter-spacing: 0.02em;
     line-height: normal;
@@ -169,7 +169,7 @@ const isActive = (href: string) =>
   }
 
   /* —— 移动端：单列，header-primary 改纵向 —— */
-  @media (max-width: 760px) {
+   @media (max-width: 48rem) {
     .site-header__inner {
       grid-template-columns: 1fr;
     }

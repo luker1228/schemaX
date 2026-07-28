@@ -99,8 +99,8 @@ const sideGroups: DocSideGroup[] = partOrder
               <DocPager
                 prev={pagerPrev}
                 next={pagerNext}
-                centerHref={`/courses/${courseId}`}
-                centerLabel="课程目录"
+                centerHref="/courses"
+                centerLabel="全部课程"
                 label="课时前后导航"
               />
             </div>
@@ -167,13 +167,13 @@ const sideGroups: DocSideGroup[] = partOrder
   }
   .lhead__title {
     font-family: var(--sx-sys-font-family-display);
-    font-size: clamp(1.8rem, 4vw, 2.6rem);
+    font-size: var(--sx-sys-font-display-md);
     font-weight: 800;
     letter-spacing: -0.02em;
     margin: 0 0 var(--sx-ref-space-2);
   }
   .lhead__desc {
-    font-size: 1.1rem;
+    font-size: var(--sx-sys-font-size-reading);
     opacity: 0.85;
     margin: 0;
   }

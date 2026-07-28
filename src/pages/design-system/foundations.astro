@@ -223,13 +223,13 @@ const motifs = [
   /* 与 tokens 页一致的导航 / 分组样式（各 design-system 子页各自声明 scoped 样式） */
   .back {
     font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-    font-size: 0.85rem;
+    font-size: var(--sx-sys-font-size-md);
   }
   .group {
     margin-block-end: var(--sx-ref-space-12);
   }
   .group__title {
-    font-size: 1.4rem;
+    font-size: var(--sx-sys-font-size-2xl);
     font-weight: 800;
     margin-block-end: var(--sx-ref-space-2);
   }
@@ -239,7 +239,7 @@ const motifs = [
     max-width: 46rem;
   }
   .group__hint {
-    font-size: 0.9rem;
+    font-size: var(--sx-sys-font-size-base);
     opacity: 0.7;
     margin-block-end: var(--sx-ref-space-4);
   }
@@ -251,7 +251,7 @@ const motifs = [
 
   /* 复用展示页通用样式（sub-title 为本页区块小标题；表格外观由全局 .doc-props 接管） */
   .sub-title {
-    font-size: 1.1rem;
+    font-size: var(--sx-sys-font-size-reading);
     font-weight: 700;
     margin-block: var(--sx-ref-space-6) var(--sx-ref-space-3);
   }
@@ -266,7 +266,7 @@ const motifs = [
     gap: var(--sx-ref-space-2);
   }
   .trait {
-    font-size: 0.8rem;
+    font-size: var(--sx-sys-font-size-md);
   }
 
   /* 设计原则卡片 */
@@ -283,20 +283,20 @@ const motifs = [
   }
   .principle__eyebrow {
     font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-    font-size: 0.72rem;
+    font-size: var(--sx-sys-font-size-sm);
     font-weight: 700;
     letter-spacing: 0.08em;
     text-transform: uppercase;
     color: var(--sx-sys-color-action-primary);
   }
   .principle__title {
-    font-size: 1.15rem;
+    font-size: var(--sx-sys-font-size-xl);
     font-weight: 800;
     line-height: 1.25;
     margin-block-start: var(--sx-ref-space-2);
   }
   .principle__body {
-    font-size: 0.92rem;
+    font-size: var(--sx-sys-font-size-base);
     line-height: 1.7;
     opacity: 0.82;
     margin-block-start: var(--sx-ref-space-2);
@@ -322,15 +322,15 @@ const motifs = [
   }
   .swatch-item__name {
     font-weight: 800;
-    font-size: 0.9rem;
+    font-size: var(--sx-sys-font-size-base);
   }
   .swatch-item__hex {
     font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-    font-size: 0.78rem;
+    font-size: var(--sx-sys-font-size-md);
     opacity: 0.7;
   }
   .swatch-item__role {
-    font-size: 0.78rem;
+    font-size: var(--sx-sys-font-size-md);
     opacity: 0.65;
     line-height: 1.4;
   }
@@ -346,7 +346,7 @@ const motifs = [
     background: var(--sx-sys-color-bg-surface);
     border: var(--sx-sys-border-width) solid var(--sx-sys-color-border);
     padding: var(--sx-ref-space-4) var(--sx-ref-space-3);
-    font-size: 0.82rem;
+    font-size: var(--sx-sys-font-size-md);
     font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
     min-width: 8rem;
     text-align: center;

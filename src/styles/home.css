@@ -1,0 +1,215 @@
+/* 首页专用层：纸纹、涂鸦动效、印章按钮。
+   仅由 pages/index.astro 导入，不进全站 global。 */
+
+/* —— 页面纸面 ——
+   stylelint 对 background-* 只放行 var/color-mix/url，纸纹用 SVG tile（内建尺寸，默认 repeat）。 */
+.home {
+  position: relative;
+  background-color: var(--sx-sys-color-bg-page);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3E%3Ccircle cx='1.5' cy='1.5' r='0.7' fill='black' fill-opacity='0.05'/%3E%3Ccircle cx='10' cy='9' r='0.55' fill='black' fill-opacity='0.035'/%3E%3C/svg%3E");
+}
+
+/* —— 区段壳 —— */
+.home-section {
+  padding-block: clamp(2.5rem, 6vw, 4.5rem);
+  padding-inline: var(--sx-ref-space-6);
+}
+
+.home-section__inner {
+  max-width: 80rem;
+  margin-inline: auto;
+}
+
+/* —— 区段头（编辑式）：粗标题 + 铅笔下划线 + mono 链 —— */
+.home-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--sx-ref-space-4);
+  flex-wrap: wrap;
+  margin-bottom: var(--sx-ref-space-8);
+}
+
+.home-head__title {
+  margin: 0;
+  font-family: var(--sx-sys-font-family-display), system-ui, sans-serif;
+  font-size: var(--sx-sys-font-display-sm);
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  color: var(--sx-sys-color-text-primary);
+}
+
+.home-head__link {
+  font-family: var(--sx-sys-font-family-mono-system), ui-monospace, monospace;
+  font-size: var(--sx-sys-font-size-md);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--sx-sys-color-text-primary);
+  border-bottom: var(--sx-sys-border-width) dashed var(--sx-sys-color-border);
+  padding-bottom: 0.15rem;
+  transition: color 120ms ease, border-color 120ms ease;
+}
+
+.home-head__link:hover {
+  color: var(--sx-sys-color-action-primary);
+  border-bottom-color: var(--sx-sys-color-action-primary);
+}
+
+/* —— 印章 / 贴纸按钮 —— */
+.stamp {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sx-ref-space-2);
+  padding: 0.75rem 1.15rem;
+  border: var(--sx-sys-border-width-strong) solid var(--sx-sys-color-border);
+  border-radius: var(--sx-sys-radius-sm);
+  font-family: var(--sx-sys-font-family-mono-system), ui-monospace, monospace;
+  font-size: var(--sx-sys-font-size-base);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--sx-sys-color-text-primary);
+  box-shadow: var(--sx-sys-shadow-md);
+  transition:
+    transform 120ms ease,
+    box-shadow 120ms ease;
+  /* 轻微旋转 = 贴纸/印章感 */
+  transform: rotate(-0.8deg);
+}
+
+.stamp:hover {
+  transform: translate(2px, 2px) rotate(0deg);
+  box-shadow: none;
+  color: var(--sx-sys-color-text-primary);
+}
+
+.stamp:focus-visible {
+  outline: var(--sx-sys-border-width) solid var(--sx-sys-color-action-primary);
+  outline-offset: 2px;
+}
+
+.stamp--primary {
+  background: var(--sx-sys-color-accent);
+}
+
+.stamp--ghost {
+  background: var(--sx-sys-color-bg-surface);
+  transform: rotate(0.9deg);
+}
+
+.stamp--ghost:hover {
+  transform: translate(2px, 2px) rotate(0deg);
+}
+
+.stamp--blue {
+  background: var(--sx-sys-color-action-primary);
+  color: var(--sx-sys-color-bg-surface);
+}
+
+.stamp--blue:hover {
+  color: var(--sx-sys-color-bg-surface);
+}
+
+/* —— 硬卡底座（RetroUI） —— */
+.hard-card {
+  border: var(--sx-sys-border-width-strong) solid var(--sx-sys-color-border);
+  border-radius: var(--sx-sys-radius-sm);
+  background: var(--sx-sys-color-bg-surface);
+  box-shadow: var(--sx-sys-shadow-md);
+}
+
+/* —— 涂鸦动效 —— */
+@keyframes sx-star-twinkle {
+  0%,
+  100% {
+    opacity: 0.35;
+    transform: scale(0.92);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.08);
+  }
+}
+
+@keyframes sx-line-wobble {
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  33% {
+    transform: translateY(0.5px) rotate(0.15deg);
+  }
+  66% {
+    transform: translateY(-0.5px) rotate(-0.15deg);
+  }
+}
+
+@keyframes sx-arrow-draw {
+  from {
+    stroke-dashoffset: 48;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes sx-float-soft {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-3px);
+  }
+}
+
+.doodle-star {
+  transform-origin: center;
+  animation: sx-star-twinkle 2.4s ease-in-out infinite;
+}
+
+.doodle-star--delay {
+  animation-delay: 0.9s;
+}
+
+.doodle-wobble {
+  transform-origin: center;
+  animation: sx-line-wobble 3.2s ease-in-out infinite;
+}
+
+.doodle-arrow-path {
+  stroke-dasharray: 48;
+  stroke-dashoffset: 0;
+  animation: sx-arrow-draw 1.1s ease-out 0.2s both;
+}
+
+.doodle-float {
+  animation: sx-float-soft 4s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .doodle-star,
+  .doodle-star--delay,
+  .doodle-wobble,
+  .doodle-arrow-path,
+  .doodle-float,
+  .stamp,
+  .stamp--ghost {
+    animation: none;
+  }
+
+  .stamp,
+  .stamp--ghost {
+    transform: none;
+  }
+
+  .stamp:hover,
+  .stamp--ghost:hover {
+    transform: none;
+  }
+}

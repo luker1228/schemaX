@@ -2,54 +2,17 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import FeatureCard from '../../components/design-system/FeatureCard.astro';
 import Crumb from '../../components/design-system/Crumb.astro';
+import Doodle from '../../components/design-system/Doodle.astro';
 
-// lucide 风格图标（内联 SVG，currentColor，尺寸由 FeatureCard 媒体条统一控制）。
-// 项目无 lucide 依赖，沿用 HomeManifesto 的内联 SVG 约定。
-const svgWrap = (inner: string) =>
-  `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">${inner}</svg>`;
+/**
+ * 设计系统枢纽页 —— SchemaX UI 作为作品本身的入口。
+ * 视觉：RetroUI 硬卡底座 + Rough 涂鸦媒体 + 蓝/黄强调（不用彩虹装饰）。
+ */
 
-const icons = {
-  palette: svgWrap(
-    '<circle cx="13.5" cy="6.5" r=".5" fill="currentColor"/><circle cx="17.5" cy="10.5" r=".5" fill="currentColor"/><circle cx="8.5" cy="7.5" r=".5" fill="currentColor"/><circle cx="6.5" cy="12.5" r=".5" fill="currentColor"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"/>',
-  ),
-  braces: svgWrap(
-    '<path d="M8 3H7a2 2 0 0 0-2 2v5a2 2 0 0 1-2 2 2 2 0 0 1 2 2v5c0 1.1.9 2 2 2h1"/><path d="M16 21h1a2 2 0 0 0 2-2v-5c0-1.1.9-2 2-2a2 2 0 0 1-2-2V5a2 2 0 0 0-2-2h-1"/>',
-  ),
-  component: svgWrap(
-    '<path d="M5.5 8.5 9 12l-3.5 3.5L2 12l3.5-3.5Z"/><path d="m12 2 3.5 3.5L12 9 8.5 5.5 12 2Z"/><path d="M18.5 8.5 22 12l-3.5 3.5L15 12l3.5-3.5Z"/><path d="M12 15l3.5 3.5L12 22l-3.5-3.5L12 15Z"/>',
-  ),
-  fileText: svgWrap(
-    '<path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M16 13H8"/><path d="M16 17H8"/><path d="M10 9H8"/>',
-  ),
-  network: svgWrap(
-    '<rect x="16" y="16" width="6" height="6" rx="1"/><rect x="2" y="16" width="6" height="6" rx="1"/><rect x="9" y="2" width="6" height="6" rx="1"/><path d="M5 16v-3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3"/><path d="M12 12V8"/>',
-  ),
-};
-
-// Hero 彩色徽章（薄荷 / 灰 / 红）—— 呼应三大区域，纯装饰
-const heroBadges = [
-  { label: 'Tokens', color: 'var(--sx-sys-color-mint)' },
-  { label: 'Components', color: 'var(--sx-sys-color-gray-light)' },
-  { label: 'Content', color: 'var(--sx-sys-color-danger)' },
-];
-
-// Hero 文案（对齐设计稿）—— 叙述行 + 技术栈行（mono 呼应「协议是一等公民」）
-const heroLead = '设计系统即是设计唯一真相，也是 SchemaX 的重要作品。';
-const heroStack = [
-  'Expressive Code · Pagefind · Style Dictionary（DTCG JSON 令牌）',
-  '原生 CSS + Tailwind v4（token 桥接）· pnpm · 静态输出',
-];
-
-// Figma Variables 装饰面板 —— 模拟设计工具的 color primitives 面板，
-// 强化「token 是设计真相」主题（呼应 SchemaX 协议一等公民）。
-// 纯装饰、aria-hidden；色块跟随真实 token，hex 标注真实取值。
+// Figma Variables 装饰面板色块：语义 token + 文档 hex（纯装饰，非业务色）
 const figmaVars = [
   { name: 'bg', value: '#FFF7E8', token: 'var(--sx-sys-color-bg-page)' },
-  {
-    name: 'ink',
-    value: '#000000',
-    token: 'var(--sx-sys-color-text-primary)',
-  },
+  { name: 'ink', value: '#000000', token: 'var(--sx-sys-color-text-primary)' },
   { name: 'accent', value: '#FFDC58', token: 'var(--sx-sys-color-accent)' },
   {
     name: 'action',
@@ -59,40 +22,122 @@ const figmaVars = [
   { name: 'mint', value: '#01FFCC', token: 'var(--sx-sys-color-mint)' },
 ];
 
-// 第一行：三张 Live 卡（Foundations / Tokens / Components）
-const rowOne = [
+type Entry = {
+  title: string;
+  desc: string;
+  href?: string;
+  status: 'live' | 'planned';
+  /** FeatureCard 媒体条底色 */
+  media: string;
+  /** Rough 涂鸦 kind —— 与入口语义一一对应 */
+  doodle:
+    | 'icon-base'
+    | 'icon-palette'
+    | 'icon-component'
+    | 'icon-blog'
+    | 'icon-pattern';
+};
+
+// 阅读顺序：为什么 → 取值 → 零件 → 正文 → 模式
+const entries: Entry[] = [
   {
     title: 'Foundations',
     desc: '设计语言的「为什么」：视觉方向、核心原则、基础取值。',
     href: '/design-system/foundations',
-    icon: icons.palette,
+    status: 'live',
+    media: 'var(--sx-sys-color-accent)',
+    doodle: 'icon-base',
   },
   {
     title: 'Tokens',
-    desc: '真实使用的 Reference / Semantic / Article / Component Token，读取生成产物。',
+    desc: 'Reference / Semantic / Article / Component —— 读取生成产物，不手抄文档。',
     href: '/design-system/tokens',
-    icon: icons.braces,
+    status: 'live',
+    media: 'var(--sx-sys-color-bg-page)',
+    doodle: 'icon-palette',
   },
   {
     title: 'Components',
-    desc: 'Button / Card / Tag / Badge / Navigation / Tabs / Dialog / Callout 等。',
+    desc: 'RetroUI 底座：Button、Card、Badge、Nav、Command……可按、可抬的实体控件。',
     href: '/design-system/components',
-    icon: icons.component,
+    status: 'live',
+    media: 'var(--sx-sys-color-action-primary)',
+    doodle: 'icon-component',
+  },
+  {
+    title: 'Content',
+    desc: 'Markdown / MDX 真实排版：阅读柱、代码块、引用与标注。',
+    href: '/design-system/content',
+    status: 'live',
+    media: 'var(--sx-sys-color-accent)',
+    doodle: 'icon-blog',
+  },
+  {
+    title: 'Patterns',
+    desc: '文章头、课程目录、项目 Hero、代码对比等组合模式。',
+    status: 'planned',
+    media: 'var(--sx-sys-color-beige)',
+    doodle: 'icon-pattern',
   },
 ];
 
-const accent = 'var(--sx-sys-color-accent)';
+const layers = [
+  {
+    kicker: 'Components',
+    title: 'RetroUI 底座',
+    body: '硬边框、硬阴影、按下/抬起。交互控件与容器的结构层。',
+    href: 'https://github.com/retroui/RetroUI',
+  },
+  {
+    kicker: 'Drawing',
+    title: 'Rough.js 绘制',
+    body: '涂鸦图标、装饰线稿、影线填充。画图，不替代控件。',
+    href: 'https://github.com/rough-stuff/rough',
+  },
+];
 ---
 
 <BaseLayout
   title="Design System"
-  description="SchemaX UI —— Token、组件与内容规范。"
+  description="SchemaX UI —— Token、组件与内容规范。RetroUI 底座 × Rough 涂鸦。"
 >
   <section class="sx-section ds">
-    <div class="sx-container">
-      {/* —— Hero —— */}
+    <div class="sx-container ds__inner">
+      {/* —— Hero：编辑式左文案 + 右 token 面板 —— */}
       <header class="ds-hero">
-        {/* 倾斜的 Figma Variables 装饰面板（纯装饰，仅大屏显示） */}
+        <div class="ds-hero__copy">
+          <Crumb
+            items={[{ label: 'Home', href: '/' }, { label: 'Design System' }]}
+          />
+
+          <div class="ds-hero__meta">
+            <span class="ds-stamp">SchemaX UI</span>
+            <Doodle kind="spark" size="sm" />
+          </div>
+
+          <h1 class="ds-hero__title">
+            设计系统
+            <span class="ds-hero__title-hl">即作品</span>
+          </h1>
+
+          <p class="ds-hero__lead">
+            设计系统是设计唯一真相，也是 SchemaX
+            自身的一件作品：令牌生成、组件契约与阅读规范同一套结构。
+          </p>
+
+          <ul class="ds-hero__stack" aria-label="技术栈">
+            <li>Style Dictionary · DTCG JSON 令牌 · 生成 CSS / TS</li>
+            <li>Astro 静态 · RetroUI 组件 · Rough.js 涂鸦 · Tailwind 桥接</li>
+          </ul>
+
+          <div class="ds-hero__pills" aria-label="分区标签">
+            <span class="ds-pill ds-pill--accent">Tokens</span>
+            <span class="ds-pill ds-pill--action">Components</span>
+            <span class="ds-pill">Content</span>
+          </div>
+        </div>
+
+        {/* 倾斜的 Figma Variables 装饰面板（纯装饰，仅 ≥82rem 显示） */}
         <div class="ds-vars" aria-hidden="true">
           <div class="ds-vars__panel">
             <div class="ds-vars__head">
@@ -122,135 +167,189 @@ const accent = 'var(--sx-sys-color-accent)';
             </div>
           </div>
         </div>
+      </header>
 
-        <Crumb
-          items={[{ label: 'Home', href: '/' }, { label: 'Design System' }]}
-        />
-
-        <h1 class="ds-hero__title">设计系统</h1>
-        <div class="ds-hero__desc">
-          <p class="ds-hero__lead">{heroLead}</p>
-          {heroStack.map((line) => <p class="ds-hero__stack">{line}</p>)}
+      {/* —— 双层架构说明 —— */}
+      <section class="ds-layers" aria-labelledby="ds-layers-title">
+        <div class="ds-layers__head">
+          <h2 class="ds-layers__title" id="ds-layers-title">视觉双层</h2>
+          <p class="ds-layers__sub">RetroUI 搭架子 · Rough.js 画图</p>
         </div>
-
-        <div class="ds-hero__badges">
+        <div class="ds-layers__grid">
           {
-            heroBadges.map((b) => (
-              <span class="ds-badge" style={`background:${b.color}`}>
-                {b.label}
-              </span>
+            layers.map((layer) => (
+              <a
+                class="ds-layer"
+                href={layer.href}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <span class="ds-layer__kicker">{layer.kicker}</span>
+                <h3 class="ds-layer__name">{layer.title}</h3>
+                <p class="ds-layer__body">{layer.body}</p>
+                <span class="ds-layer__go" aria-hidden="true">
+                  <Doodle kind="icon-github" size="sm" />
+                  <span>GitHub →</span>
+                </span>
+              </a>
             ))
           }
         </div>
-      </header>
+      </section>
 
-      {/* —— 第一行：三张 Live 卡 —— */}
-      <div class="ds-cards ds-cards--three">
-        {
-          rowOne.map((c) => (
-            <FeatureCard
-              title={c.title}
-              description={c.desc}
-              status="live"
-              href={c.href}
-              mediaColor={accent}
-            >
-              <Fragment set:html={c.icon} />
-            </FeatureCard>
-          ))
-        }
-      </div>
+      {/* —— 入口网格 —— */}
+      <section class="ds-catalog" aria-labelledby="ds-catalog-title">
+        <div class="ds-catalog__head">
+          <h2 class="ds-catalog__title" id="ds-catalog-title">从这里进入</h2>
+          <p class="ds-catalog__sub">按 Foundations → Tokens → Components → Content 阅读</p>
+        </div>
 
-      {/* —— 第二行：两张卡居中（Content Live / Patterns Planned）—— */}
-      <div class="ds-cards ds-cards--two">
-        <FeatureCard
-          title="Content"
-          description="Markdown 与 MDX 的真实排版规范。"
-          status="live"
-          href="/design-system/content"
-          mediaColor={accent}
-        >
-          <Fragment set:html={icons.fileText} />
-        </FeatureCard>
-        <FeatureCard
-          title="Patterns"
-          description="文章头部、课程目录、项目 Hero、代码对比等组合模式。"
-          status="planned"
-          mediaColor="var(--sx-sys-color-beige)"
-        >
-          <Fragment set:html={icons.network} />
-        </FeatureCard>
-      </div>
+        <div class="ds-cards">
+          {
+            entries.map((c) => (
+              <FeatureCard
+                title={c.title}
+                description={c.desc}
+                status={c.status}
+                href={c.href}
+                mediaColor={c.media}
+              >
+                <Doodle kind={c.doodle} size="lg" />
+              </FeatureCard>
+            ))
+          }
+        </div>
+      </section>
     </div>
   </section>
 </BaseLayout>
 
 <style>
-  /* —— Hero —— 居中：面包屑胶囊 + 大标题 + 描述（叙述 + 技术栈）+ 彩色徽章。
-     position:relative 承载右侧倾斜的 Figma Variables 装饰面板。 */
+  .ds__inner {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sx-ref-space-16);
+  }
+
+  /* —— Hero：居中单栏 + 右侧倾斜 Figma 面板装饰。
+     不设 overflow:hidden —— 旋转面板需向上/下越出 hero 边界正常显示 —— */
   .ds-hero {
     position: relative;
+    padding-block: var(--sx-ref-space-4) var(--sx-ref-space-12);
+  }
+
+  .ds-hero__copy {
+    position: relative;
+    z-index: 1;
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
     gap: var(--sx-ref-space-6);
-    padding-block-end: var(--sx-ref-space-12);
+    max-width: 46rem;
+    margin-inline: auto;
+  }
+
+  .ds-hero__meta {
+    display: flex;
+    align-items: center;
+    gap: var(--sx-ref-space-3);
+  }
+
+  .ds-stamp {
+    display: inline-flex;
+    padding: 0.4rem 0.7rem;
+    border: var(--sx-sys-border-width-strong) solid var(--sx-sys-color-border);
+    border-radius: var(--sx-sys-radius-sm);
+    background: var(--sx-sys-color-action-primary);
+    color: var(--sx-sys-color-bg-surface);
+    font-family: var(--sx-sys-font-family-mono-system), ui-monospace, monospace;
+    font-size: var(--sx-sys-font-size-md);
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    box-shadow: var(--sx-sys-shadow-sm);
+    transform: rotate(-1.2deg);
   }
 
   .ds-hero__title {
     margin: 0;
-    font-family: var(--sx-sys-font-family-display);
-    font-size: clamp(2.5rem, 8vw, 4.5rem);
-    font-weight: 700;
+    font-family: var(--sx-sys-font-family-display), system-ui, sans-serif;
+    font-size: var(--sx-sys-font-display-lg);
+    font-weight: 800;
     line-height: 1.02;
     letter-spacing: -0.02em;
     color: var(--sx-sys-color-text-primary);
   }
 
-  /* 描述区：叙述行（正文体）+ 技术栈行（mono）两档层次 */
-  .ds-hero__desc {
+  .ds-hero__title-hl {
+    display: inline-block;
+    margin-left: 0.15em;
+    background: var(--sx-sys-color-accent);
+    padding: 0 0.12em;
+  }
+
+  .ds-hero__lead {
+    margin: 0;
+    margin-inline: auto;
+    max-width: 40ch;
+    color: var(--sx-sys-color-text-soft);
+    font-size: var(--sx-sys-font-size-reading);
+    line-height: 1.7;
+  }
+
+  .ds-hero__stack {
+    margin: 0;
+    padding: 0;
+    list-style: none;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: var(--sx-ref-space-2);
-    max-width: 40rem;
-  }
-  .ds-hero__lead {
-    margin: 0;
-    color: var(--sx-sys-color-text-soft);
-    font-size: 1.1875rem;
-    font-weight: 500;
-    line-height: 1.55;
-  }
-  .ds-hero__stack {
-    margin: 0;
-    color: var(--sx-sys-color-text-muted);
-    font-family: var(--sx-sys-font-family-mono);
-    font-size: 0.875rem;
-    line-height: 1.7;
-    letter-spacing: 0.005em;
+    gap: 0.35rem;
   }
 
-  .ds-hero__badges {
+  .ds-hero__stack li {
+    font-family: var(--sx-sys-font-family-mono-system), ui-monospace, monospace;
+    font-size: var(--sx-sys-font-size-sm);
+    line-height: 1.55;
+    color: var(--sx-sys-color-text-muted);
+  }
+
+  .ds-hero__pills {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.75rem;
-  }
-  /* 彩色徽章：pill，2px 黑边，等宽小字，黑字 */
-  .ds-badge {
-    display: inline-block;
-    padding: 0.5rem 0.75rem;
-    border: var(--sx-sys-border-width-strong) solid var(--sx-sys-color-border);
-    border-radius: 9999px;
-    color: var(--sx-sys-color-text-primary);
-    font-family: var(--sx-sys-font-family-mono);
-    font-size: 0.75rem;
-    font-weight: 700;
+    justify-content: center;
+    gap: var(--sx-ref-space-3);
   }
 
-  /* —— Figma Variables 装饰面板 —— 模拟设计工具的 color primitives 面板，
-     倾斜浮于 hero 右侧，强化「token 是设计真相」主题。纯装饰，仅大屏显示。 */
+  /* 纯展示标签：不可跳转，无 hover/按下动效 */
+  .ds-pill {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.45rem 0.75rem;
+    border: var(--sx-sys-border-width-strong) solid var(--sx-sys-color-border);
+    border-radius: var(--sx-sys-radius-sm);
+    background: var(--sx-sys-color-bg-surface);
+    color: var(--sx-sys-color-text-primary);
+    font-family: var(--sx-sys-font-family-mono-system), ui-monospace, monospace;
+    font-size: var(--sx-sys-font-size-sm);
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    box-shadow: var(--sx-sys-shadow-sm);
+    cursor: default;
+  }
+
+  .ds-pill--accent {
+    background: var(--sx-sys-color-accent);
+  }
+
+  .ds-pill--action {
+    background: var(--sx-sys-color-action-primary);
+    color: var(--sx-sys-color-bg-surface);
+  }
+
+  /* —— Figma Variables 倾斜装饰面板（纯装饰，aria-hidden，≥82rem） —— */
   .ds-vars {
     position: absolute;
     top: 0;
@@ -258,6 +357,7 @@ const accent = 'var(--sx-sys-color-accent)';
     display: none;
     pointer-events: none;
   }
+
   .ds-vars__panel {
     display: flex;
     flex-direction: column;
@@ -271,11 +371,13 @@ const accent = 'var(--sx-sys-color-accent)';
     transform: rotate(-10deg);
     transform-origin: top right;
   }
+
   .ds-vars__head {
     display: flex;
     align-items: center;
     justify-content: space-between;
   }
+
   .ds-vars__title {
     font-family: var(--sx-sys-font-family-mono);
     font-size: 0.6875rem;
@@ -283,6 +385,7 @@ const accent = 'var(--sx-sys-color-accent)';
     letter-spacing: 0.05em;
     color: var(--sx-sys-color-text-primary);
   }
+
   .ds-vars__add {
     font-family: var(--sx-sys-font-family-mono);
     font-size: 0.9375rem;
@@ -290,10 +393,12 @@ const accent = 'var(--sx-sys-color-accent)';
     line-height: 1;
     color: var(--sx-sys-color-text-soft);
   }
+
   .ds-vars__divider {
     height: 1px;
     background: var(--sx-sys-color-border);
   }
+
   .ds-vars__collection {
     font-family: var(--sx-sys-font-family-mono);
     font-size: 0.625rem;
@@ -301,44 +406,52 @@ const accent = 'var(--sx-sys-color-accent)';
     letter-spacing: 0.04em;
     color: var(--sx-sys-color-text-soft);
   }
+
   .ds-vars__row {
     display: flex;
     align-items: center;
     justify-content: space-between;
   }
+
   .ds-vars__rowleft {
     display: flex;
     align-items: center;
     gap: 0.5rem;
   }
+
   .ds-vars__chip {
     width: 1rem;
     height: 1rem;
     border: var(--sx-sys-border-width) solid var(--sx-sys-color-border);
     border-radius: 0.25rem;
   }
+
   .ds-vars__name {
     font-family: var(--sx-sys-font-family-mono);
     font-size: 0.6875rem;
     font-weight: 800;
     color: var(--sx-sys-color-text-primary);
   }
+
   .ds-vars__value {
     font-family: var(--sx-sys-font-family-mono);
     font-size: 0.625rem;
     font-weight: 700;
     color: var(--sx-sys-color-text-soft);
   }
+
   .ds-vars__mode {
     display: flex;
     align-items: center;
     gap: 0.375rem;
   }
+
   .ds-vars__modeicon {
     font-size: 0.6875rem;
     line-height: 1;
     color: var(--sx-sys-color-text-soft);
   }
+
   .ds-vars__modelabel {
     font-family: var(--sx-sys-font-family-mono);
     font-size: 0.625rem;
@@ -347,42 +460,187 @@ const accent = 'var(--sx-sys-color-accent)';
     color: var(--sx-sys-color-text-soft);
   }
 
-  /* 仅在足够宽的视口显示：跳过 1200–1312px 碰撞窗，避免旋转面板逼近居中 hero */
+  /* 仅大屏显示：跳过碰撞窗，避免旋转面板逼近居中 hero */
   @media (min-width: 82rem) {
     .ds-vars {
       display: block;
     }
   }
 
-  /* —— 卡片网格 —— 默认（移动端）单列堆叠。
-     两行都走 grid（不用 flex）：grid 行高统一拉伸，Content / Patterns
-     描述长短不同时也能底边对齐；宽屏下宽度与三列卡一致。 */
+  /* —— 双层架构 —— */
+  .ds-layers__head,
+  .ds-catalog__head {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sx-ref-space-2);
+    margin-bottom: var(--sx-ref-space-6);
+  }
+
+  .ds-layers__title,
+  .ds-catalog__title {
+    margin: 0;
+    font-family: var(--sx-sys-font-family-display), system-ui, sans-serif;
+    font-size: var(--sx-sys-font-display-sm);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    color: var(--sx-sys-color-text-primary);
+  }
+
+  .ds-layers__sub,
+  .ds-catalog__sub {
+    margin: 0;
+    font-family: var(--sx-sys-font-family-mono-system), ui-monospace, monospace;
+    font-size: var(--sx-sys-font-size-sm);
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--sx-sys-color-text-muted);
+  }
+
+  .ds-layers__grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--sx-sys-border-width-strong);
+    background: var(--sx-sys-color-border);
+    border: var(--sx-sys-border-width-strong) solid var(--sx-sys-color-border);
+  }
+
+  .ds-layer {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sx-ref-space-2);
+    padding: var(--sx-ref-space-6);
+    background: var(--sx-sys-color-bg-surface);
+    text-decoration: none;
+    color: inherit;
+    transition:
+      transform 120ms ease,
+      box-shadow 120ms ease;
+  }
+
+  .ds-layer:first-child {
+    background: color-mix(
+      in srgb,
+      var(--sx-sys-color-accent) 22%,
+      var(--sx-sys-color-bg-surface)
+    );
+  }
+
+  .ds-layer:last-child {
+    background: color-mix(
+      in srgb,
+      var(--sx-sys-color-action-primary) 10%,
+      var(--sx-sys-color-bg-surface)
+    );
+  }
+
+  .ds-layer:hover {
+    transform: translate(-3px, -3px);
+    box-shadow: var(--sx-sys-shadow-md);
+  }
+
+  .ds-layer:focus-visible {
+    outline: var(--sx-sys-border-width) solid var(--sx-sys-color-action-primary);
+    outline-offset: 2px;
+  }
+
+  .ds-layer__kicker {
+    font-family: var(--sx-sys-font-family-mono-system), ui-monospace, monospace;
+    font-size: var(--sx-sys-font-size-xs);
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--sx-sys-color-text-muted);
+  }
+
+  .ds-layer__name {
+    margin: 0;
+    font-family: var(--sx-sys-font-family-display), system-ui, sans-serif;
+    font-size: var(--sx-sys-font-size-xl);
+    font-weight: 800;
+    color: var(--sx-sys-color-text-primary);
+  }
+
+  .ds-layer__body {
+    margin: 0;
+    font-size: var(--sx-sys-font-size-base);
+    line-height: 1.55;
+    color: var(--sx-sys-color-text-soft);
+  }
+
+  .ds-layer__go {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--sx-ref-space-2);
+    margin-top: auto;
+    padding-top: var(--sx-ref-space-3);
+    font-family: var(--sx-sys-font-family-mono-system), ui-monospace, monospace;
+    font-size: var(--sx-sys-font-size-sm);
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    color: var(--sx-sys-color-action-primary);
+  }
+
+  .ds-layer__go :global(.sx-doodle) {
+    width: 1.15rem;
+    height: 1.15rem;
+    color: var(--sx-sys-color-text-primary);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .ds-layer {
+      transition: none;
+    }
+
+    .ds-layer:hover {
+      transform: none;
+    }
+  }
+
+  /* —— 入口卡网格：5 卡 → 3+2 宽屏 / 单列移动 —— */
   .ds-cards {
     display: grid;
     gap: var(--sx-ref-space-6);
     grid-template-columns: 1fr;
   }
 
-  /* 组间分离：行内 space-6，行间 space-12 —— 2× 比例让两行卡读作两个独立组 */
-  .ds-cards--two {
-    margin-block-start: var(--sx-ref-space-12);
-    /* 窄屏单列时限制最大宽并居中，避免超宽 */
-    justify-content: center;
-    grid-template-columns: minmax(0, 26rem);
+  /* FeatureCard 内 Rough SVG：媒体条强制 4rem，涂鸦需 overflow visible */
+  .ds-cards :global(.featurecard__media .sx-doodle) {
+    width: 4rem;
+    height: 4rem;
+  }
+
+  .ds-cards :global(.featurecard__media) {
+    overflow: visible;
+  }
+
+  /* action 媒体条上白/浅色涂鸦对比：保持 ink 线稿可读 */
+  .ds-cards :global(.featurecard) {
+    border-radius: var(--sx-sys-radius-sm);
   }
 
   @media (min-width: 48rem) {
-    /* 第一行：三等分 */
-    .ds-cards--three {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
+    .ds-cards {
+      grid-template-columns: repeat(6, minmax(0, 1fr));
     }
-    /* 第二行：两卡居中，各取与第一行单卡相同的 1/3 宽
-       （(100% - 2×gap) / 3，gap = space-6 = 1.5rem） */
-    .ds-cards--two {
-      grid-template-columns: repeat(
-        2,
-        minmax(0, calc((100% - 2 * var(--sx-ref-space-6)) / 3))
-      );
+
+    /* 前三张各占 2 列；后两张各占 3 列居中满宽 */
+    .ds-cards > :global(:nth-child(1)),
+    .ds-cards > :global(:nth-child(2)),
+    .ds-cards > :global(:nth-child(3)) {
+      grid-column: span 2;
+    }
+
+    .ds-cards > :global(:nth-child(4)),
+    .ds-cards > :global(:nth-child(5)) {
+      grid-column: span 3;
     }
   }
+
+  @media (max-width: 48rem) {
+    .ds-layers__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
 </style>

@@ -132,14 +132,27 @@ const classes = [
     overflow: hidden;
     text-decoration: none;
     color: inherit;
+  }
+
+  /* 仅可跳转卡片才有抬起动效；静态 / planned 无 transition、无 hover 位移 */
+  .featurecard--interactive {
     transition:
       transform 120ms ease,
       box-shadow 120ms ease;
   }
 
-  /* interactive 卡片：hover 抬起（向左上位移 3px） */
   .featurecard--interactive:hover {
     transform: translate(-3px, -3px);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .featurecard--interactive {
+      transition: none;
+    }
+
+    .featurecard--interactive:hover {
+      transform: none;
+    }
   }
 
   /* Media 条：固定高度彩色区，居中放图标 / 装饰内容。
@@ -182,7 +195,7 @@ const classes = [
   .featurecard__title {
     margin: 0;
     font-family: var(--sx-sys-font-family-display);
-    font-size: 1.625rem;
+    font-size: var(--sx-sys-font-size-2xl);
     font-weight: 700;
     line-height: 1.1;
   }
@@ -198,7 +211,7 @@ const classes = [
     background: var(--sx-sys-color-accent);
     color: var(--sx-sys-color-text-primary);
     font-family: var(--sx-sys-font-family-mono);
-    font-size: 0.6875rem;
+    font-size: var(--sx-sys-font-size-xs);
     font-weight: 700;
     letter-spacing: 0.04em;
     line-height: 1;
@@ -210,7 +223,7 @@ const classes = [
   .featurecard__desc {
     flex: 1;
     color: var(--sx-sys-color-text-soft);
-    font-size: 0.9375rem;
+    font-size: var(--sx-sys-font-size-base);
     line-height: 1.5;
   }
   .featurecard__desc :global(p) {

@@ -114,16 +114,16 @@ const fmt = (d?: Date) =>
   }
   .ahead__back {
     font-family: ui-monospace, monospace;
-    font-size: 0.85rem;
+    font-size: var(--sx-sys-font-size-md);
   }
   .ahead__title {
-    font-size: clamp(2rem, 5vw, 3rem);
+    font-size: var(--sx-sys-font-display-md);
     font-weight: 800;
     letter-spacing: -0.02em;
     margin-block: var(--sx-ref-space-3);
   }
   .ahead__desc {
-    font-size: 1.15rem;
+    font-size: var(--sx-sys-font-size-xl);
     opacity: 0.85;
   }
   .ahead__meta {
@@ -132,7 +132,7 @@ const fmt = (d?: Date) =>
     gap: var(--sx-ref-space-3);
     align-items: center;
     margin-block-start: var(--sx-ref-space-4);
-    font-size: 0.85rem;
+    font-size: var(--sx-sys-font-size-md);
     font-family: ui-monospace, monospace;
     opacity: 0.8;
   }

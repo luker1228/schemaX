@@ -162,7 +162,7 @@ const barVars =
   }
   .win__file {
     font-family: var(--sx-sys-font-family-mono);
-    font-size: 0.625rem;
+    font-size: var(--sx-sys-font-size-xs);
     font-weight: 700;
     letter-spacing: 0.06em;
     white-space: nowrap;
@@ -176,7 +176,7 @@ const barVars =
     padding: 0.875rem;
     flex: 1 1 auto;
     font-family: var(--sx-sys-font-family-mono);
-    font-size: 0.8125rem;
+    font-size: var(--sx-sys-font-size-md);
     line-height: 1.7;
     background: transparent;
     color: var(--sx-sys-color-text-primary);
@@ -217,7 +217,7 @@ const barVars =
   }
 
   /* ── 窄屏：上下堆叠，箭头旋转 90° ── */
-  @media (max-width: 640px) {
+   @media (max-width: 36rem) {
     .cmp {
       flex-direction: column;
     }

@@ -1,0 +1,42 @@
+---
+/**
+ * 首页涂鸦入口 —— 薄封装设计系统 <Doodle>。
+ * 保留 kind/size API，底层已切换为 Rough.js 涂鸦系统。
+ */
+import Doodle from '../design-system/Doodle.astro';
+import type { DoodleMarkKind, DoodleSize } from '../../lib/doodle';
+
+interface Props {
+  kind: DoodleMarkKind;
+  class?: string;
+  size?: DoodleSize;
+  span?: number;
+  seed?: number;
+}
+
+const {
+  kind,
+  class: className = '',
+  size = 'md',
+  span,
+  seed,
+} = Astro.props;
+
+const animated =
+  kind === 'star' || kind === 'spark'
+    ? ('star' as const)
+    : kind === 'wave' || kind === 'pencil'
+      ? ('wobble' as const)
+      : kind === 'brace'
+        ? ('float' as const)
+        : false;
+---
+
+<Doodle
+  kind={kind}
+  size={size}
+  span={span}
+  seed={seed}
+  class={className}
+  animated={animated}
+/>

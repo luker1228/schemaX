@@ -5,8 +5,8 @@
       "shadow": { "$type": "shadow", "$value": "{sys.shadow.sm}" },
       "radius": {
         "$type": "dimension",
-        "$value": "2px",
-        "$description": "圆角卡片半径。none 变体为 0。"
+        "$value": "{sys.radius.control}",
+        "$description": "圆角卡片半径，同源 sys.radius.control（2px）。none 变体为 0。"
       },
       "hover-shadow": {
         "$type": "shadow",
@@ -61,10 +61,14 @@
       "max-width": { "$type": "dimension", "$value": "42rem" },
       "title-size": {
         "$type": "dimension",
-        "$value": "clamp(2.5rem, 6vw, 4rem)",
-        "$description": "hero 级标题字号。"
+        "$value": "{sys.font.display.lg}",
+        "$description": "hero 级标题字号，别名 sys.font.display.lg。"
       },
-      "desc-size": { "$type": "dimension", "$value": "1.05rem" },
+      "desc-size": {
+        "$type": "dimension",
+        "$value": "{sys.font.size.reading}",
+        "$description": "页头描述字号，别名 sys.font.size.reading（原 1.05rem → 1.0625rem）。"
+      },
       "gap": {
         "$type": "dimension",
         "$value": "{ref.space.3}",

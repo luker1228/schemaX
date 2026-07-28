@@ -47,7 +47,7 @@ import { principleValues, accentToken } from '../../data/about';
   .values__title {
     margin: 0;
     font-family: var(--sx-sys-font-family-display), system-ui, sans-serif;
-    font-size: clamp(1.75rem, 4vw, 2.75rem);
+    font-size: var(--sx-sys-font-display-md);
     font-weight: 800;
     line-height: 1.05;
     letter-spacing: -0.02em;
@@ -73,7 +73,7 @@ import { principleValues, accentToken } from '../../data/about';
 
   .value-card__num {
     font-family: var(--sx-sys-font-family-mono), ui-monospace, monospace;
-    font-size: 0.875rem;
+    font-size: var(--sx-sys-font-size-base);
     font-weight: 800;
     letter-spacing: 0.0625em;
     color: var(--sx-sys-color-text-primary);
@@ -82,7 +82,7 @@ import { principleValues, accentToken } from '../../data/about';
   .value-card__cn {
     margin: 0;
     font-family: var(--sx-sys-font-family-display), system-ui, sans-serif;
-    font-size: 1.875rem;
+    font-size: var(--sx-sys-font-size-3xl);
     font-weight: 800;
     line-height: 1.1;
     color: var(--sx-sys-color-text-primary);
@@ -90,7 +90,7 @@ import { principleValues, accentToken } from '../../data/about';
 
   .value-card__en {
     font-family: var(--sx-sys-font-family-mono), ui-monospace, monospace;
-    font-size: 0.8125rem;
+    font-size: var(--sx-sys-font-size-md);
     font-weight: 700;
     color: var(--sx-sys-color-text-primary);
   }
@@ -98,12 +98,12 @@ import { principleValues, accentToken } from '../../data/about';
   .value-card__body {
     margin: auto 0 0;
     font-family: var(--sx-sys-font-family-body), system-ui, sans-serif;
-    font-size: 1rem;
+    font-size: var(--sx-sys-font-size-lg);
     line-height: 1.5;
     color: var(--sx-sys-color-text-primary);
   }
 
-  @media (max-width: 40rem) {
+   @media (max-width: 36rem) {
     .values__grid {
       grid-template-columns: 1fr;
     }

@@ -8,6 +8,7 @@ import HomeProjects from '../components/home/HomeProjects.astro';
 import HomeTechNote from '../components/home/HomeTechNote.astro';
 import { getCollection } from 'astro:content';
 import { site } from '../config/site';
+import '../styles/home.css';
 
 // 已发布文章，按发布时间倒序。前 4 篇：第 1 篇进最新文章大卡，其余进归档列表。
 const posts = (
@@ -27,10 +28,12 @@ const featuredProject = projects.find((p) => p.data.featured) ?? projects[0];
 ---
 
 <BaseLayout title={site.name} type="profile">
-  <HomeHero />
-  <HomeEntries />
-  <HomeManifesto />
-  <HomeLatestPosts posts={recentPosts} />
-  <HomeProjects project={featuredProject} />
-  <HomeTechNote />
+  <div class="home">
+    <HomeHero />
+    <HomeEntries />
+    <HomeManifesto />
+    <HomeLatestPosts posts={recentPosts} />
+    <HomeProjects project={featuredProject} />
+    <HomeTechNote />
+  </div>
 </BaseLayout>

@@ -1,33 +1,59 @@
 ---
-// Tech Note：构建链路说明（固定事实，硬编码）。
-// 左文案 + 4 步彩色 pipeline 流程 + 3 个 metric。
+import DoodleMark from './DoodleMark.astro';
+
+// Tech Note：构建链路说明（固定事实）。蓝黄强调。
 const bullets = [
-  '01 tokens:build -> CSS + TS artifacts',
-  '02 content:check -> schema gate',
-  '03 astro build -> static output',
-  '04 search:build -> pagefind over dist',
+  '01 tokens:build → CSS + TS artifacts',
+  '02 content:check → schema gate',
+  '03 astro build → static output',
+  '04 search:build → pagefind over dist',
 ];
 
 const pipeline = [
-  { step: 'TOKENS', detail: 'Style Dictionary', bg: 'var(--sx-sys-color-accent)' },
-  { step: 'CONTENT', detail: 'Zod collections', bg: 'var(--sx-sys-color-mint)' },
-  { step: 'ASTRO', detail: 'Static compile', bg: 'var(--sx-sys-color-action-primary)' },
-  { step: 'SEARCH', detail: 'Pagefind index', bg: 'var(--sx-sys-color-lavender)' },
+  {
+    step: 'TOKENS',
+    detail: 'Style Dictionary',
+    bg: 'var(--sx-sys-color-accent)',
+    invert: false,
+  },
+  {
+    step: 'CONTENT',
+    detail: 'Zod collections',
+    bg: 'var(--sx-sys-color-bg-surface)',
+    invert: false,
+  },
+  {
+    step: 'ASTRO',
+    detail: 'Static compile',
+    bg: 'var(--sx-sys-color-action-primary)',
+    invert: true,
+  },
+  {
+    step: 'SEARCH',
+    detail: 'Pagefind index',
+    bg: 'var(--sx-sys-color-bg-page)',
+    invert: false,
+  },
 ];
 
 const metrics = [
-  { value: '5', label: 'COLLECTIONS' },
-  { value: '1', label: 'SOURCE OF TRUTH' },
-  { value: '0', label: 'RUNTIME CMS' },
+  { value: '5', label: 'Collections' },
+  { value: '1', label: 'Source of truth' },
+  { value: '0', label: 'Runtime CMS' },
 ];
 ---
 
-<section class="tech">
-  <div class="tech__inner">
+<section class="tech home-section" aria-labelledby="tech-title">
+  <div class="tech__inner home-section__inner">
     <div class="tech__card">
       <div class="tech__copy">
-        <span class="tech__eyebrow">TECHNICAL NOTES</span>
-        <h2 class="tech__title">构建顺序本身就是产品质量的一部分。</h2>
+        <span class="tech__eyebrow">
+          <DoodleMark kind="spark" size="sm" />
+          Technical notes
+        </span>
+        <h2 class="tech__title" id="tech-title">
+          构建顺序本身就是产品质量的一部分。
+        </h2>
         <p class="tech__body">
           令牌生成、内容校验、类型检查、静态构建与搜索索引被串成一个不可随意打乱的链路。GitHub
           数据只在构建期写入缓存，不在运行时请求。
@@ -39,27 +65,41 @@ const metrics = [
 
       <div class="tech__diagram">
         <div class="diagram__head">
-          <span class="diagram__label">PIPELINE MAP</span>
-          <span class="diagram__status">BUILD-TIME VERIFIED</span>
+          <span class="diagram__label">Pipeline map</span>
+          <span class="diagram__status">Build-time verified</span>
         </div>
 
         <div class="diagram__flow">
-          {pipeline.map((p) => (
-            <div class="flow-step" style={`--sx-step-bg: ${p.bg}`}>
-              <span class="flow-step__name">{p.step}</span>
-              <span class="flow-step__rule" />
-              <span class="flow-step__detail">{p.detail}</span>
-            </div>
-          ))}
+          {
+            pipeline.map((p, i) => (
+              <div class="flow-item">
+                <div
+                  class:list={['flow-step', p.invert && 'flow-step--invert']}
+                  style={`--sx-step-bg: ${p.bg}`}
+                >
+                  <span class="flow-step__name">{p.step}</span>
+                  <span class="flow-step__rule" />
+                  <span class="flow-step__detail">{p.detail}</span>
+                </div>
+                {i < pipeline.length - 1 && (
+                  <span class="flow-arrow" aria-hidden="true">
+                    <DoodleMark kind="arrow" size="sm" />
+                  </span>
+                )}
+              </div>
+            ))
+          }
         </div>
 
         <div class="diagram__metrics">
-          {metrics.map((m) => (
-            <div class="metric">
-              <span class="metric__value">{m.value}</span>
-              <span class="metric__label">{m.label}</span>
-            </div>
-          ))}
+          {
+            metrics.map((m) => (
+              <div class="metric">
+                <span class="metric__value">{m.value}</span>
+                <span class="metric__label">{m.label}</span>
+              </div>
+            ))
+          }
         </div>
       </div>
     </div>
@@ -68,156 +108,213 @@ const metrics = [
 
 <style>
   .tech {
-    background: var(--sx-sys-color-bg-page);
-    padding-block: clamp(2rem, 5vw, 3rem) clamp(3rem, 6vw, 4rem);
-    padding-inline: var(--sx-ref-space-6);
-  }
-  .tech__inner {
-    max-width: 80rem;
-    margin-inline: auto;
+    padding-block-end: clamp(3rem, 7vw, 5rem);
   }
 
   .tech__card {
     display: flex;
-    gap: 1.875rem;
-    padding: 1.5rem 1.625rem;
-    border: var(--sx-sys-border-width) solid var(--sx-sys-color-border);
-    border-radius: var(--sx-sys-radius-md);
+    gap: var(--sx-ref-space-8);
+    padding: var(--sx-ref-space-8);
+    border: var(--sx-sys-border-width-strong) solid var(--sx-sys-color-border);
+    border-radius: var(--sx-sys-radius-sm);
     background: var(--sx-sys-color-bg-surface);
     box-shadow: var(--sx-sys-shadow-lg);
   }
 
   .tech__copy {
-    flex: 0 0 28rem;
+    flex: 0 0 26rem;
     display: flex;
     flex-direction: column;
-    gap: 0.75rem;
+    gap: var(--sx-ref-space-3);
   }
+
   .tech__eyebrow {
-    font-family: var(--sx-sys-font-family-mono), ui-monospace, monospace;
-    font-size: 0.75rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-family: var(--sx-sys-font-family-mono-system), ui-monospace, monospace;
+    font-size: var(--sx-sys-font-size-sm);
     font-weight: 700;
-    letter-spacing: 0.05em;
-    color: var(--sx-sys-color-text-primary);
-  }
-  .tech__title {
-    margin: 0;
-    font-family: var(--sx-sys-font-family-display), system-ui, sans-serif;
-    font-size: clamp(1.5rem, 2.6vw, 2rem);
-    font-weight: 800;
-    line-height: 1.1;
-    color: var(--sx-sys-color-text-primary);
-  }
-  .tech__body {
-    margin: 0;
-    font-size: 0.9375rem;
-    line-height: 1.55;
-    color: var(--sx-sys-color-text-muted);
-  }
-  .tech__bullets {
-    margin: 0;
-    padding: 0.375rem 0 0;
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-  }
-  .tech__bullet {
-    font-family: var(--sx-sys-font-family-mono), ui-monospace, monospace;
-    font-size: 0.75rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
     color: var(--sx-sys-color-text-primary);
   }
 
-  /* —— Pipeline 图 —— */
+  .tech__title {
+    margin: 0;
+    font-family: var(--sx-sys-font-family-display), system-ui, sans-serif;
+    font-size: var(--sx-sys-font-display-sm);
+    font-weight: 800;
+    line-height: 1.12;
+    color: var(--sx-sys-color-text-primary);
+  }
+
+  .tech__body {
+    margin: 0;
+    font-size: var(--sx-sys-font-size-base);
+    line-height: 1.6;
+    color: var(--sx-sys-color-text-soft);
+  }
+
+  .tech__bullets {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: var(--sx-ref-space-2);
+  }
+
+  .tech__bullet {
+    font-family: var(--sx-sys-font-family-mono-system), ui-monospace, monospace;
+    font-size: var(--sx-sys-font-size-sm);
+    color: var(--sx-sys-color-text-primary);
+  }
+
   .tech__diagram {
     flex: 1;
     display: flex;
     flex-direction: column;
-    gap: 1.25rem;
+    gap: var(--sx-ref-space-6);
     justify-content: center;
+    min-width: 0;
   }
+
   .diagram__head {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0.6rem 0.75rem;
-    border: var(--sx-sys-border-width) solid var(--sx-sys-color-border);
-    border-radius: var(--sx-sys-radius-md);
+    gap: var(--sx-ref-space-3);
+    padding: 0.55rem 0.75rem;
+    border: var(--sx-sys-border-width-strong) solid var(--sx-sys-color-border);
+    border-radius: var(--sx-sys-radius-sm);
     background: var(--sx-sys-color-accent);
-    font-family: var(--sx-sys-font-family-mono), ui-monospace, monospace;
-    font-size: 0.7rem;
-  }
-  .diagram__label {
+    font-family: var(--sx-sys-font-family-mono-system), ui-monospace, monospace;
+    font-size: var(--sx-sys-font-size-xs);
     font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
   }
 
   .diagram__flow {
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 0.625rem;
+    gap: var(--sx-ref-space-2);
   }
+
+  .flow-item {
+    display: flex;
+    align-items: center;
+    gap: var(--sx-ref-space-2);
+    min-width: 0;
+  }
+
   .flow-step {
+    flex: 1;
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
-    padding: 0.75rem 0.625rem;
-    border: var(--sx-sys-border-width) solid var(--sx-sys-color-border);
-    border-radius: var(--sx-sys-radius-md);
+    gap: var(--sx-ref-space-2);
+    padding: 0.75rem 0.6rem;
+    border: var(--sx-sys-border-width-strong) solid var(--sx-sys-color-border);
+    border-radius: var(--sx-sys-radius-sm);
     background: var(--sx-step-bg);
     box-shadow: var(--sx-sys-shadow-sm);
+    min-width: 0;
   }
+
   .flow-step__name {
-    font-family: var(--sx-sys-font-family-mono), ui-monospace, monospace;
-    font-size: 0.7rem;
+    font-family: var(--sx-sys-font-family-mono-system), ui-monospace, monospace;
+    font-size: var(--sx-sys-font-size-xs);
     font-weight: 700;
     color: var(--sx-sys-color-text-primary);
   }
+
   .flow-step__rule {
-    height: 1px;
+    height: 2px;
     background: var(--sx-sys-color-text-primary);
   }
+
   .flow-step__detail {
-    font-family: var(--sx-sys-font-family-mono), ui-monospace, monospace;
-    font-size: 0.75rem;
+    font-family: var(--sx-sys-font-family-mono-system), ui-monospace, monospace;
+    font-size: var(--sx-sys-font-size-sm);
     color: var(--sx-sys-color-text-primary);
+  }
+
+  .flow-step--invert .flow-step__name,
+  .flow-step--invert .flow-step__detail {
+    color: var(--sx-sys-color-bg-surface);
+  }
+
+  .flow-step--invert .flow-step__rule {
+    background: var(--sx-sys-color-bg-surface);
+  }
+
+  .flow-arrow {
+    display: flex;
+    align-items: center;
+    flex: 0 0 auto;
+    opacity: 0.7;
   }
 
   .diagram__metrics {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 0.625rem;
+    gap: var(--sx-ref-space-3);
   }
+
   .metric {
     display: flex;
     flex-direction: column;
-    gap: 0.25rem;
-    padding: 0.625rem;
+    gap: 0.2rem;
+    padding: 0.65rem;
     border: var(--sx-sys-border-width) solid var(--sx-sys-color-border);
-    border-radius: var(--sx-sys-radius-md);
+    border-radius: var(--sx-sys-radius-sm);
     background: var(--sx-sys-color-bg-page);
     box-shadow: var(--sx-sys-shadow-sm);
   }
+
   .metric__value {
-    font-family: var(--sx-sys-font-family-mono), ui-monospace, monospace;
-    font-size: 1.5rem;
-    font-weight: 700;
+    font-family: var(--sx-sys-font-family-display), system-ui, sans-serif;
+    font-size: var(--sx-sys-font-size-2xl);
+    font-weight: 800;
     color: var(--sx-sys-color-text-primary);
   }
+
   .metric__label {
-    font-family: var(--sx-sys-font-family-mono), ui-monospace, monospace;
-    font-size: 0.625rem;
+    font-family: var(--sx-sys-font-family-mono-system), ui-monospace, monospace;
+    font-size: var(--sx-sys-font-size-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
     color: var(--sx-sys-color-text-muted);
   }
 
-  @media (max-width: 56rem) {
+  @media (max-width: 64rem) {
     .tech__card {
       flex-direction: column;
     }
+
     .tech__copy {
       flex-basis: auto;
     }
+  }
+
+  @media (max-width: 48rem) {
     .diagram__flow {
       grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 36rem) {
+    .diagram__metrics {
+      grid-template-columns: 1fr;
+    }
+
+    .diagram__flow {
+      grid-template-columns: 1fr;
+    }
+
+    .flow-arrow {
+      display: none;
     }
   }
 </style>

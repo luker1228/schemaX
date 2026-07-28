@@ -5,7 +5,11 @@
       "tutorial": { "$type": "dimension", "$value": "68rem" }
     },
     "font": {
-      "size": { "$type": "dimension", "$value": "1.0625rem" }
+      "size": {
+        "$type": "dimension",
+        "$value": "{sys.font.size.reading}",
+        "$description": "正文阅读字号，别名 sys.font.size.reading（1.0625rem）。"
+      }
     },
     "line": {
       "height": { "$type": "dimension", "$value": "1.8" }

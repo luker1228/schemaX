@@ -90,7 +90,7 @@ const hasMeta = Boolean(pillFill || pillOutline || readTime);
 
   .lhero__line1,
   .lhero__line2-pre {
-    font-size: clamp(2.25rem, 5.5vw, 4.25rem);
+    font-size: var(--sx-sys-font-display-lg);
   }
 
   .lhero__line2 {
@@ -107,7 +107,7 @@ const hasMeta = Boolean(pillFill || pillOutline || readTime);
     background: var(--sx-sys-color-accent);
     border: var(--sx-sys-border-width) solid var(--sx-sys-color-border);
     box-shadow: var(--sx-sys-shadow-sm);
-    font-size: clamp(2.25rem, 5.5vw, 4.25rem);
+    font-size: var(--sx-sys-font-display-lg);
     font-weight: 800;
     line-height: 1.05;
     letter-spacing: -0.03em;
@@ -139,7 +139,7 @@ const hasMeta = Boolean(pillFill || pillOutline || readTime);
     border: var(--sx-sys-border-width) solid var(--sx-sys-color-border);
     border-radius: 999px;
     font-family: var(--sx-sys-font-family-mono);
-    font-size: 0.6875rem;
+    font-size: var(--sx-sys-font-size-xs);
     font-weight: 700;
     letter-spacing: 0.04em;
     line-height: 1.3;
@@ -161,14 +161,14 @@ const hasMeta = Boolean(pillFill || pillOutline || readTime);
 
   .lhero__time {
     font-family: var(--sx-sys-font-family-mono);
-    font-size: 0.6875rem;
+    font-size: var(--sx-sys-font-size-xs);
     font-weight: 500;
     letter-spacing: 0.03em;
     color: var(--sx-sys-color-text-soft);
     white-space: nowrap;
   }
 
-  @media (max-width: 720px) {
+   @media (max-width: 45rem) {
     .lhero {
       flex-direction: column;
       align-items: flex-start;

@@ -14,12 +14,12 @@
   align-items: center;
   justify-content: center;
   gap: var(--sx-ref-space-2);
-  padding: 0.5rem 1rem;
+  padding: var(--sx-ref-space-2) var(--sx-ref-space-4);
   border: var(--sx-sys-border-width) solid var(--sx-sys-color-border);
-  border-radius: 2px;
+  border-radius: var(--sx-sys-radius-control);
   font-family: inherit;
   font-weight: 700;
-  font-size: 0.9rem;
+  font-size: var(--sx-sys-font-size-base);
   line-height: 1.2;
   background: var(--sx-sys-color-bg-surface);
   color: var(--sx-sys-color-text-primary);
@@ -100,18 +100,18 @@
 /* 尺寸 */
 .btn--sm {
   padding: 0.3rem 0.7rem;
-  font-size: 0.78rem;
+  font-size: var(--sx-sys-font-size-md); /* 原 0.78rem → md 0.8125rem */
 }
 .btn--lg {
   padding: 0.75rem 1.4rem;
-  font-size: 1rem;
+  font-size: var(--sx-sys-font-size-lg);
 }
 
 .badge {
   display: inline-block;
   padding: 0.15em 0.55em;
   border: var(--sx-sys-border-width) solid var(--sx-sys-color-border);
-  font-size: 0.7rem;
+  font-size: var(--sx-sys-font-size-xs); /* 原 0.7rem → xs 0.6875rem */
   font-weight: 800;
   letter-spacing: 0.04em;
   text-transform: uppercase;
@@ -138,8 +138,8 @@
   display: inline-block;
   padding: 0.1em 0.5em;
   border: var(--sx-sys-border-width) solid var(--sx-sys-color-border);
-  font-size: 0.72rem;
-  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: var(--sx-sys-font-size-sm); /* 原 0.72rem → sm 0.75rem */
+  font-family: var(--sx-sys-font-family-mono-system);
   background: var(--sx-sys-color-bg-page);
 }
 
@@ -155,11 +155,13 @@
 
 .card {
   --sx-card-shadow-color: var(--sx-sys-color-border);
+  /* 桥接：sys.shadow.* 的颜色随本组件 --sx-card-shadow-color 局部覆盖（Card.astro inline 注入） */
+  --sx-sys-shadow-color: var(--sx-card-shadow-color);
 
   display: block;
   background: var(--sx-sys-color-bg-surface);
   border: var(--sx-sys-border-width) solid var(--sx-sys-color-border);
-  box-shadow: 2px 2px 0 var(--sx-card-shadow-color);
+  box-shadow: var(--sx-sys-shadow-sm);
   padding: var(--sx-comp-card-padding);
   transition:
     transform 120ms ease,
@@ -184,17 +186,17 @@
   box-shadow: none;
 }
 .card--shadow-md {
-  box-shadow: 4px 4px 0 var(--sx-card-shadow-color);
+  box-shadow: var(--sx-sys-shadow-md);
 }
 .card--shadow-lg {
-  box-shadow: 6px 6px 0 var(--sx-card-shadow-color);
+  box-shadow: var(--sx-sys-shadow-lg);
 }
 
 /* 交互：只有 interactive 卡片 hover 时抬起 + 阴影升级。
    无 href 的静态卡片默认不抬起，避免误导（不可点却跳一下）。 */
 .card--interactive:hover {
   transform: translate(-3px, -3px);
-  box-shadow: 4px 4px 0 var(--sx-card-shadow-color);
+  box-shadow: var(--sx-sys-shadow-md);
 }
 
 /* ── Navigation ─────────────────────────────────────────────
@@ -211,13 +213,13 @@
 }
 
 .nav__link {
-  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-  font-size: 0.78rem;
+  font-family: var(--sx-sys-font-family-mono-system);
+  font-size: var(--sx-sys-font-size-md); /* 原 0.78rem → md 0.8125rem */
   font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   padding: 0.5rem 0.8rem;
-  border-radius: 2px;
+  border-radius: var(--sx-sys-radius-control);
   background: transparent;
   text-decoration: none;
   color: inherit;
@@ -298,8 +300,8 @@
   background: var(--sx-sys-color-success);
 }
 .term__title {
-  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-  font-size: 0.78rem;
+  font-family: var(--sx-sys-font-family-mono-system);
+  font-size: var(--sx-sys-font-size-md); /* 原 0.78rem → md 0.8125rem */
   font-weight: 700;
   opacity: 0.7;
 }
@@ -307,8 +309,8 @@
 /* 屏幕主体：等宽字体；颜色由主题切换；默认横向滚动以容纳宽命令（Command） */
 .term__screen {
   padding: var(--sx-ref-space-3) var(--sx-ref-space-4);
-  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-  font-size: 0.85rem;
+  font-family: var(--sx-sys-font-family-mono-system);
+  font-size: var(--sx-sys-font-size-md); /* 原 0.85rem → md 0.8125rem */
   line-height: 1.65;
   overflow-x: auto;
 }
@@ -329,13 +331,13 @@
    故覆盖 overflow 为 hidden，并配合 .term__code 换行与 .term__cursor 光标。 */
 .term--hero .term__screen {
   min-height: 11rem;
-  font-size: 0.95rem;
+  font-size: var(--sx-sys-font-size-base); /* 原 0.95rem → base 0.9rem */
   line-height: 1.7;
   overflow: hidden;
 }
 .term__code {
   margin: 0;
-  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-family: var(--sx-sys-font-family-mono-system);
   white-space: pre-wrap;
   overflow-wrap: break-word;
 }
@@ -362,7 +364,7 @@
    （foundations / content 页面的内容区块小标题仍在使用）。 */
 
 .sub-title {
-  font-size: 1.1rem;
+  font-size: var(--sx-sys-font-size-reading); /* 原 1.1rem → reading 1.0625rem */
   font-weight: 700;
   margin-block: var(--sx-ref-space-8) var(--sx-ref-space-3);
 }

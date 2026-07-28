@@ -114,7 +114,7 @@
   }
   .va__bar-label {
     font-family: var(--sx-sys-font-family-mono);
-    font-size: 0.6875rem;
+    font-size: var(--sx-sys-font-size-xs);
     font-weight: 800;
     letter-spacing: 0.06em;
     text-transform: uppercase;
@@ -200,14 +200,14 @@
     border: var(--sx-sys-border-width) solid var(--sx-sys-color-border);
     border-radius: 9999px;
     font-family: var(--sx-sys-font-family-body);
-    font-size: 0.75rem;
+    font-size: var(--sx-sys-font-size-sm);
     font-weight: 700;
     line-height: 1.4;
   }
   .va__title {
     margin: 0;
     font-family: var(--sx-sys-font-family-display);
-    font-size: 1.0625rem;
+    font-size: var(--sx-sys-font-size-reading);
     font-weight: 700;
     line-height: 1.25;
     color: var(--sx-sys-color-text-primary);
@@ -221,7 +221,7 @@
   }
   .va__price {
     font-family: var(--sx-sys-font-family-display);
-    font-size: 1.125rem;
+    font-size: var(--sx-sys-font-size-reading);
     font-weight: 800;
     color: var(--sx-sys-color-text-primary);
   }
@@ -234,7 +234,7 @@
     border-radius: 2px;
     box-shadow: var(--sx-sys-shadow-sm);
     font-family: var(--sx-sys-font-family-body);
-    font-size: 0.8125rem;
+    font-size: var(--sx-sys-font-size-md);
     font-weight: 700;
     line-height: 1.4;
   }
@@ -290,7 +290,7 @@
   /* ── 标注小标签 ── */
   .va__tag {
     font-family: var(--sx-sys-font-family-mono);
-    font-size: 0.6875rem;
+    font-size: var(--sx-sys-font-size-xs);
     font-weight: 700;
     letter-spacing: 0.04em;
     color: var(--sx-sys-color-text-muted);
@@ -314,7 +314,7 @@
   }
   .va__caption p {
     margin: 0;
-    font-size: 0.9375rem;
+    font-size: var(--sx-sys-font-size-base);
     line-height: 1.65;
     color: var(--sx-sys-color-text-soft);
   }
@@ -323,7 +323,7 @@
     font-weight: 700;
   }
 
-  @media (max-width: 720px) {
+   @media (max-width: 45rem) {
     .va__panels {
       grid-template-columns: 1fr;
     }

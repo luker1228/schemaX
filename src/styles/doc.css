@@ -54,7 +54,7 @@
   border-bottom: var(--sx-sys-border-width) solid var(--sx-sys-color-border);
   text-align: left;
   font-family: var(--sx-sys-font-family-mono);
-  font-size: 0.75rem;
+  font-size: var(--sx-sys-font-size-sm);
   font-weight: 800;
   letter-spacing: 0.04em;
   text-transform: uppercase;
@@ -66,7 +66,7 @@
   border: none;
   border-bottom: var(--sx-sys-border-width) solid var(--sx-sys-color-border);
   vertical-align: top;
-  font-size: 0.8125rem;
+  font-size: var(--sx-sys-font-size-md);
   line-height: 1.55;
   color: var(--sx-sys-color-text-primary);
 }
@@ -86,13 +86,13 @@
 .doc-props td code,
 .doc-props td .doc-props__type {
   font-family: var(--sx-sys-font-family-mono);
-  font-size: 0.75rem;
+  font-size: var(--sx-sys-font-size-sm);
   font-weight: 700;
   color: var(--sx-sys-color-text-soft);
 }
 .doc-props__name {
   font-family: var(--sx-sys-font-family-mono);
-  font-size: 0.8125rem;
+  font-size: var(--sx-sys-font-size-md);
   font-weight: 800;
   color: var(--sx-sys-color-text-primary);
   white-space: nowrap;
@@ -159,11 +159,11 @@
   color: var(--sx-sys-color-text-soft);
 }
 .doc-code__file {
-  font-size: 0.6875rem;
+  font-size: var(--sx-sys-font-size-xs);
   font-weight: 800;
 }
 .doc-code__lang {
-  font-size: 0.625rem;
+  font-size: var(--sx-sys-font-size-xs);
   font-weight: 800;
   letter-spacing: 0.04em;
   text-transform: uppercase;
@@ -173,7 +173,7 @@
   padding: 1.125rem 1.25rem;
   overflow-x: auto;
   font-family: var(--sx-sys-font-family-mono);
-  font-size: 0.8125rem;
+  font-size: var(--sx-sys-font-size-md);
   line-height: 1.55;
   color: var(--sx-sys-color-text-primary);
   white-space: pre;
@@ -243,13 +243,13 @@
   min-width: 0;
 }
 .doc-playground__file {
-  font-size: 0.75rem;
+  font-size: var(--sx-sys-font-size-sm);
   font-weight: 800;
   letter-spacing: 0.02em;
   color: var(--sx-sys-color-bg-surface);
 }
 .doc-playground__hint {
-  font-size: 0.6875rem;
+  font-size: var(--sx-sys-font-size-xs);
   font-weight: 500;
   line-height: 1.35;
   color: var(--sx-sys-color-bg-surface);
@@ -262,7 +262,7 @@
   background: var(--sx-sys-color-accent);
   color: var(--sx-sys-color-border);
   border: var(--sx-sys-border-width) solid var(--sx-sys-color-border);
-  font-size: 0.625rem;
+  font-size: var(--sx-sys-font-size-xs);
   font-weight: 800;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -305,7 +305,7 @@
   display: block;
   margin: 0 0 0.375rem;
   font-family: var(--sx-sys-font-family-mono);
-  font-size: 0.6875rem;
+  font-size: var(--sx-sys-font-size-xs);
   font-weight: 800;
   letter-spacing: 0.06em;
   text-transform: uppercase;
@@ -330,7 +330,7 @@
 .doc-playground__value {
   margin: 0;
   font-family: var(--sx-sys-font-family-display);
-  font-size: clamp(1.375rem, 3.5vw, 1.75rem);
+  font-size: var(--sx-sys-font-display-sm);
   font-weight: 800;
   line-height: 1.15;
   letter-spacing: -0.02em;
@@ -344,7 +344,7 @@
   color: var(--sx-sys-color-text-soft);
   font-weight: 700;
   font-family: var(--sx-sys-font-family-mono);
-  font-size: 1.125rem;
+  font-size: var(--sx-sys-font-size-reading);
 }
 
 /* 操作按钮行 */
@@ -382,7 +382,7 @@
   background: var(--sx-sys-color-bg-page);
   color: var(--sx-sys-color-text-primary);
   font: inherit;
-  font-size: 0.9375rem;
+  font-size: var(--sx-sys-font-size-base);
   line-height: 1.4;
 }
 .doc-playground__input::placeholder {
@@ -426,7 +426,7 @@
   padding: 0.6875rem 0.8125rem;
   border: var(--sx-sys-border-width) solid var(--sx-sys-color-border);
   background: var(--sx-sys-color-bg-page);
-  font-size: 0.9375rem;
+  font-size: var(--sx-sys-font-size-base);
   font-weight: 600;
   line-height: 1.35;
 }
@@ -436,7 +436,7 @@
   border: var(--sx-sys-border-width) dashed var(--sx-sys-color-border);
   background: var(--sx-sys-color-beige);
   text-align: center;
-  font-size: 0.875rem;
+  font-size: var(--sx-sys-font-size-base);
   font-weight: 700;
   color: var(--sx-sys-color-text-soft);
 }
@@ -451,7 +451,7 @@
   border-top: var(--sx-sys-border-width) solid var(--sx-sys-color-border);
   background: var(--sx-sys-color-beige);
   font-family: var(--sx-sys-font-family-mono);
-  font-size: 0.75rem;
+  font-size: var(--sx-sys-font-size-sm);
   line-height: 1.55;
   color: var(--sx-sys-color-text-primary);
   display: grid;
@@ -464,7 +464,7 @@
   align-items: baseline;
 }
 .doc-playground__trace-k {
-  font-size: 0.6875rem;
+  font-size: var(--sx-sys-font-size-xs);
   font-weight: 800;
   letter-spacing: 0.05em;
   text-transform: uppercase;
@@ -503,7 +503,7 @@
   background: var(--sx-sys-color-border);
   color: var(--sx-sys-color-accent);
   font-family: var(--sx-sys-font-family-mono);
-  font-size: 0.6875rem;
+  font-size: var(--sx-sys-font-size-xs);
   font-weight: 700;
   letter-spacing: 0.06em;
   text-transform: uppercase;
@@ -512,7 +512,7 @@
   flex: 1 1 auto;
   min-width: 0;
   font-family: var(--sx-sys-font-family-body);
-  font-size: 1rem;
+  font-size: var(--sx-sys-font-size-lg);
   line-height: 1.8;
   color: var(--sx-sys-color-text-primary);
 }
@@ -549,7 +549,7 @@
 .doc-section__title {
   margin: 0;
   font-family: var(--sx-sys-font-family-display);
-  font-size: 2rem;
+  font-size: var(--sx-sys-font-size-3xl);
   font-weight: 800;
   line-height: 1.06;
   letter-spacing: -0.01em;
@@ -558,7 +558,7 @@
 .doc-section__sub {
   margin: 0;
   font-family: var(--sx-sys-font-family-body);
-  font-size: 0.9375rem;
+  font-size: var(--sx-sys-font-size-base);
   line-height: 1.53;
   color: var(--sx-sys-color-text-soft);
 }

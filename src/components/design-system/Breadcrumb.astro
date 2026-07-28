@@ -75,7 +75,7 @@ const { items, ariaLabel = 'Breadcrumb' } = Astro.props;
   .breadcrumb__link,
   .breadcrumb__current {
     font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-    font-size: 0.82rem;
+    font-size: var(--sx-sys-font-size-md);
     font-weight: 700;
     letter-spacing: 0.04em;
     text-decoration: none;
@@ -107,7 +107,7 @@ const { items, ariaLabel = 'Breadcrumb' } = Astro.props;
   /* 分隔符：比文字更暗，不抢视觉 */
   .breadcrumb__sep {
     font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-    font-size: 0.82rem;
+    font-size: var(--sx-sys-font-size-md);
     opacity: 0.4;
     user-select: none;
   }

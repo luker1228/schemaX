@@ -297,7 +297,7 @@ const partClass: Record<CodePart['kind'], string | null> = {
   }
   .layer-pair__panel-label {
     font-family: var(--sx-sys-font-family-mono);
-    font-size: 0.6875rem;
+    font-size: var(--sx-sys-font-size-xs);
     font-weight: 800;
     letter-spacing: 0.06em;
     text-transform: uppercase;
@@ -305,7 +305,7 @@ const partClass: Record<CodePart['kind'], string | null> = {
   }
   .layer-pair__fname {
     font-family: var(--sx-sys-font-family-mono);
-    font-size: 0.6875rem;
+    font-size: var(--sx-sys-font-size-xs);
     font-weight: 700;
     letter-spacing: 0.04em;
     color: var(--sx-sys-color-bg-surface);
@@ -313,7 +313,7 @@ const partClass: Record<CodePart['kind'], string | null> = {
   .layer-pair__lang {
     margin-left: auto;
     font-family: var(--sx-sys-font-family-mono);
-    font-size: 0.625rem;
+    font-size: var(--sx-sys-font-size-xs);
     font-weight: 800;
     letter-spacing: 0.06em;
     text-transform: uppercase;
@@ -346,7 +346,7 @@ const partClass: Record<CodePart['kind'], string | null> = {
     padding-left: calc(0.45rem + var(--sx-layer-depth, 0) * var(--sx-lp-indent));
     border-radius: 2px;
     font-family: var(--sx-sys-font-family-body);
-    font-size: 0.8125rem;
+    font-size: var(--sx-sys-font-size-md);
     font-weight: 500;
     line-height: 1.25;
     color: var(--sx-sys-color-text-primary);
@@ -427,7 +427,7 @@ const partClass: Record<CodePart['kind'], string | null> = {
     padding: 0.75rem 0.5rem 0.875rem;
     flex: 1 1 auto;
     font-family: var(--sx-sys-font-family-mono);
-    font-size: 0.8125rem;
+    font-size: var(--sx-sys-font-size-md);
     line-height: 1.7;
     color: var(--sx-sys-color-text-primary);
     overflow-x: auto;
@@ -492,7 +492,7 @@ const partClass: Record<CodePart['kind'], string | null> = {
     gap: 0.4rem;
     margin-bottom: 0.45rem;
     font-family: var(--sx-sys-font-family-mono);
-    font-size: 0.6875rem;
+    font-size: var(--sx-sys-font-size-xs);
     font-weight: 800;
     letter-spacing: 0.05em;
     text-transform: uppercase;
@@ -508,7 +508,7 @@ const partClass: Record<CodePart['kind'], string | null> = {
   }
   .layer-pair__cap p {
     margin: 0;
-    font-size: 0.875rem;
+    font-size: var(--sx-sys-font-size-base);
     line-height: 1.55;
     color: var(--sx-sys-color-text-soft);
   }
@@ -526,7 +526,7 @@ const partClass: Record<CodePart['kind'], string | null> = {
     border: var(--sx-sys-border-width) solid var(--sx-sys-color-border);
   }
 
-  @media (max-width: 720px) {
+   @media (max-width: 45rem) {
     .layer-pair__panels,
     .layer-pair__caption {
       grid-template-columns: 1fr;

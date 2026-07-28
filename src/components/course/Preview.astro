@@ -40,21 +40,21 @@ const isCode = typeof code === 'string';
 <style>
   /* 舞台内元素局部 reset：避免 .sx-article 段落间距渗入预览 */
   .doc-code__stage :global(h1) {
-    font-size: 1.875rem;
+    font-size: var(--sx-sys-font-size-3xl);
     margin: 0;
     font-family: var(--sx-sys-font-family-display);
     font-weight: 700;
     line-height: 1.2;
   }
   .doc-code__stage :global(h2) {
-    font-size: 1.5rem;
+    font-size: var(--sx-sys-font-size-2xl);
     margin: 0;
     font-family: var(--sx-sys-font-family-display);
     font-weight: 700;
     line-height: 1.2;
   }
   .doc-code__stage :global(h3) {
-    font-size: 1.1875rem;
+    font-size: var(--sx-sys-font-size-xl);
     margin: 0;
     font-family: var(--sx-sys-font-family-display);
     font-weight: 700;
@@ -92,7 +92,7 @@ const isCode = typeof code === 'string';
     background: transparent;
     border: none;
     font-family: var(--sx-sys-font-family-mono);
-    font-size: 0.8125rem;
+    font-size: var(--sx-sys-font-size-md);
     line-height: 1.55;
     overflow-x: auto;
     white-space: pre;
@@ -130,7 +130,7 @@ const isCode = typeof code === 'string';
     padding: 12px 16px;
     border: var(--sx-sys-border-width) solid var(--sx-sys-color-border);
     text-align: left;
-    font-size: 0.9375rem;
+    font-size: var(--sx-sys-font-size-base);
   }
   .doc-code__stage :global(th) {
     background: var(--sx-sys-color-border);
@@ -152,7 +152,7 @@ const isCode = typeof code === 'string';
   }
   .doc-code__stage :global(label) {
     font-weight: 600;
-    font-size: 0.9375rem;
+    font-size: var(--sx-sys-font-size-base);
   }
   .doc-code__stage :global(input[type='text']) {
     padding: 8px 12px;

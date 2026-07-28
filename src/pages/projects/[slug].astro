@@ -76,7 +76,7 @@ const { title, description, status, repository, demo, stack } = project.data;
 <style>
   .back {
     font-family: ui-monospace, monospace;
-    font-size: 0.85rem;
+    font-size: var(--sx-sys-font-size-md);
   }
   .phead {
     margin-block: var(--sx-ref-space-4) var(--sx-ref-space-8);
@@ -94,13 +94,13 @@ const { title, description, status, repository, demo, stack } = project.data;
     text-decoration: underline;
   }
   .phead__title {
-    font-size: clamp(2rem, 5vw, 3rem);
+    font-size: var(--sx-sys-font-display-md);
     font-weight: 800;
     letter-spacing: -0.02em;
     margin-block: var(--sx-ref-space-3);
   }
   .phead__desc {
-    font-size: 1.15rem;
+    font-size: var(--sx-sys-font-size-xl);
     opacity: 0.85;
   }
   .phead__stack {

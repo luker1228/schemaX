@@ -36,7 +36,8 @@
     "astro": "^7.1.1",
     "astro-expressive-code": "^0.44.0",
     "react": "^19.2.7",
-    "react-dom": "^19.2.7"
+    "react-dom": "^19.2.7",
+    "roughjs": "^4.6.6"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.9",

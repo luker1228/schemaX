@@ -43,7 +43,7 @@ import { milestones } from '../../data/about';
   .journey__title {
     margin: 0;
     font-family: var(--sx-sys-font-family-display), system-ui, sans-serif;
-    font-size: clamp(1.75rem, 4vw, 2.75rem);
+    font-size: var(--sx-sys-font-display-md);
     font-weight: 800;
     line-height: 1.05;
     letter-spacing: -0.02em;
@@ -78,7 +78,7 @@ import { milestones } from '../../data/about';
 
   .milestone__year {
     font-family: var(--sx-sys-font-family-display), system-ui, sans-serif;
-    font-size: 1.875rem;
+    font-size: var(--sx-sys-font-size-3xl);
     font-weight: 800;
     line-height: 1;
     color: var(--sx-sys-color-text-primary);
@@ -90,7 +90,7 @@ import { milestones } from '../../data/about';
     background: var(--sx-sys-color-accent);
     border: var(--sx-sys-border-width) solid var(--sx-sys-color-border);
     font-family: var(--sx-sys-font-family-mono), ui-monospace, monospace;
-    font-size: 0.6875rem;
+    font-size: var(--sx-sys-font-size-xs);
     font-weight: 800;
     letter-spacing: 0.0375em;
     color: var(--sx-sys-color-text-primary);
@@ -107,7 +107,7 @@ import { milestones } from '../../data/about';
   .milestone__title {
     margin: 0;
     font-family: var(--sx-sys-font-family-display), system-ui, sans-serif;
-    font-size: 1.375rem;
+    font-size: var(--sx-sys-font-size-2xl);
     font-weight: 800;
     line-height: 1.15;
     color: var(--sx-sys-color-text-primary);
@@ -116,12 +116,12 @@ import { milestones } from '../../data/about';
   .milestone__desc {
     margin: 0;
     font-family: var(--sx-sys-font-family-body), system-ui, sans-serif;
-    font-size: 1rem;
+    font-size: var(--sx-sys-font-size-lg);
     line-height: 1.5;
     color: var(--sx-sys-color-text-soft);
   }
 
-  @media (max-width: 40rem) {
+   @media (max-width: 36rem) {
     .milestone {
       flex-direction: column;
       align-items: flex-start;

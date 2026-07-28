@@ -91,4 +91,12 @@ export const componentsRegistry: ComponentEntry[] = [
       '文档左侧边栏导航。多组 eyebrow + 链接列表；支持当前页高亮与 planned 灰显，数据驱动、零 JS。',
     status: 'live',
   },
+  {
+    name: 'Doodle',
+    title: '涂鸦 / Rough',
+    description:
+      'Rough.js 绘制层：命名 mark（图标、装饰）与原语。SSR 产出 SVG，零客户端 JS；配色走 token。',
+    status: 'live',
+  },
 ];
+

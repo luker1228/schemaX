@@ -17,7 +17,7 @@ body {
     'Hiragino Sans GB',
     'Microsoft YaHei',
     sans-serif;
-  font-size: 1rem;
+  font-size: var(--sx-sys-font-size-lg); /* 根档 1rem，与 size.lg 对齐 */
   line-height: 1.6;
   min-height: 100%;
 }

@@ -1,37 +1,49 @@
 ---
-// 四个核心入口：白底卡片 + 2px 黑边 + 各自彩色硬阴影（青/红/蓝/黄）。
-// 彩色阴影通过 --sx-entry-shadow 局部变量注入，档位（4px）走 token。
+import DoodleMark from './DoodleMark.astro';
+
+// 四入口：手绘图标 + RetroUI 硬卡 + 蓝/黄交替硬影
 const entries = [
   {
     label: 'Courses',
     href: '/courses',
-    desc: '体系化课程、章节与练习。',
-    shadow: 'var(--sx-sys-color-mint)',
+    desc: '体系化课程、章节与练习。从骨架到装修，一步可复现。',
+    icon: 'icon-course' as const,
+    shadow: 'var(--sx-sys-color-accent)',
   },
   {
     label: 'Blog',
     href: '/blog',
-    desc: '技术文章、工程总结与观点记录。',
-    shadow: 'var(--sx-sys-color-danger)',
+    desc: '技术文章与工程笔记。为搜索读者写的可执行结构。',
+    icon: 'icon-blog' as const,
+    shadow: 'var(--sx-sys-color-action-primary)',
   },
   {
     label: 'Projects',
     href: '/projects',
     desc: '开源仓库、产品实验与工程作品。',
+    icon: 'icon-code' as const,
     shadow: 'var(--sx-sys-color-action-primary)',
   },
   {
     label: 'Design System',
     href: '/design-system',
-    desc: 'SchemaX 的 Token、组件与内容规范。',
+    desc: 'Token、组件与内容规范——SchemaX 的活契约。',
+    icon: 'icon-db' as const,
     shadow: 'var(--sx-sys-color-accent)',
   },
 ];
 ---
 
-<section class="entries">
-  <div class="entries__inner">
-    <h2 class="entries__title">四个核心入口</h2>
+<section class="entries home-section" aria-labelledby="entries-title">
+  <div class="entries__inner home-section__inner">
+    <header class="home-head">
+      <div class="entries__head-copy">
+        <h2 class="home-head__title" id="entries-title">从这里走进 SchemaX</h2>
+        <p class="entries__sub">四条路径 · 同一套结构</p>
+      </div>
+      <DoodleMark kind="star" size="sm" />
+    </header>
+
     <div class="entries__grid">
       {
         entries.map((e) => (
@@ -40,8 +52,11 @@ const entries = [
             href={e.href}
             style={`--sx-entry-shadow: ${e.shadow}`}
           >
+            <span class="entry__icon">
+              <DoodleMark kind={e.icon} size="lg" />
+            </span>
             <span class="entry__arrow" aria-hidden="true">
-              &rarr;
+              <DoodleMark kind="arrow" size="sm" />
             </span>
             <span class="entry__label">{e.label}</span>
             <span class="entry__desc">{e.desc}</span>
@@ -53,43 +68,37 @@ const entries = [
 </section>
 
 <style>
-  .entries {
-    padding-block: var(--sx-ref-space-4);
-    padding-inline: var(--sx-ref-space-6);
-  }
-
-  .entries__inner {
-    max-width: 80rem;
-    margin-inline: auto;
+  .entries__head-copy {
     display: flex;
     flex-direction: column;
-    gap: var(--sx-ref-space-6);
+    gap: var(--sx-ref-space-2);
   }
 
-  .entries__title {
+  .entries__sub {
     margin: 0;
-    font-family: var(--sx-sys-font-family-display), system-ui, sans-serif;
-    font-size: clamp(1.5rem, 3vw, 1.875rem);
+    font-family: var(--sx-sys-font-family-mono-system), ui-monospace, monospace;
+    font-size: var(--sx-sys-font-size-sm);
     font-weight: 700;
-    color: var(--sx-sys-color-text-primary);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--sx-sys-color-text-muted);
   }
 
   .entries__grid {
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 1.25rem;
+    gap: var(--sx-ref-space-6);
   }
 
-  /* 卡片：固定高度 + 2px 黑边 + 彩色硬阴影。hover 抬起、阴影加大。 */
   .entry {
     position: relative;
     display: flex;
     flex-direction: column;
-    gap: 0.875rem;
-    min-height: 12.25rem;
-    padding: 1.125rem 1.125rem 1.25rem;
+    gap: var(--sx-ref-space-3);
+    min-height: 13.5rem;
+    padding: 1.25rem;
     border: var(--sx-sys-border-width-strong) solid var(--sx-sys-color-border);
-    border-radius: var(--sx-sys-radius-md);
+    border-radius: var(--sx-sys-radius-sm);
     background: var(--sx-sys-color-bg-surface);
     box-shadow: 4px 4px 0 var(--sx-entry-shadow);
     text-decoration: none;
@@ -98,44 +107,61 @@ const entries = [
       transform 140ms ease,
       box-shadow 140ms ease;
   }
+
   .entry:hover {
     transform: translate(-3px, -3px);
     box-shadow: 7px 7px 0 var(--sx-entry-shadow);
   }
 
+  .entry:focus-visible {
+    outline: var(--sx-sys-border-width) solid var(--sx-sys-color-action-primary);
+    outline-offset: 2px;
+  }
+
+  .entry__icon {
+    display: flex;
+    width: 3.5rem;
+    height: 3.5rem;
+    align-items: center;
+    justify-content: center;
+  }
+
   .entry__arrow {
     position: absolute;
     top: 1rem;
-    right: 1.125rem;
-    font-family: var(--sx-sys-font-family-mono), ui-monospace, monospace;
-    font-weight: 700;
-    color: var(--sx-sys-color-text-muted);
-    transition: transform 140ms ease;
+    right: 0.85rem;
+    opacity: 0.55;
+    transition:
+      opacity 140ms ease,
+      transform 140ms ease;
   }
+
   .entry:hover .entry__arrow {
+    opacity: 1;
     transform: translateX(3px);
   }
 
   .entry__label {
     margin-top: auto;
     font-family: var(--sx-sys-font-family-display), system-ui, sans-serif;
-    font-size: 1.625rem;
-    font-weight: 700;
+    font-size: var(--sx-sys-font-size-2xl);
+    font-weight: 800;
     color: var(--sx-sys-color-text-primary);
   }
 
   .entry__desc {
-    font-size: 0.9375rem;
-    line-height: 1.6;
+    font-size: var(--sx-sys-font-size-base);
+    line-height: 1.55;
     color: var(--sx-sys-color-text-soft);
   }
 
-  @media (max-width: 56rem) {
+  @media (max-width: 64rem) {
     .entries__grid {
       grid-template-columns: repeat(2, minmax(0, 1fr));
     }
   }
-  @media (max-width: 32rem) {
+
+  @media (max-width: 36rem) {
     .entries__grid {
       grid-template-columns: 1fr;
     }

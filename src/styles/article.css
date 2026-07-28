@@ -15,20 +15,20 @@
 
 .sx-article :where(h2) {
   margin-block: 4rem 1.5rem;
-  font-size: 2rem;
+  font-size: var(--sx-sys-font-size-3xl);
   line-height: 1.2;
   letter-spacing: -0.01em;
 }
 
 .sx-article :where(h3) {
   margin-block: 2.5rem 1rem;
-  font-size: 1.5rem;
+  font-size: var(--sx-sys-font-size-2xl);
   line-height: 1.25;
 }
 
 .sx-article :where(h4) {
   margin-block: 2rem 0.75rem;
-  font-size: 1.2rem;
+  font-size: var(--sx-sys-font-size-xl);
 }
 
 .sx-article :where(p) {
@@ -68,7 +68,7 @@
 }
 
 .sx-article :where(:not(pre) > code) {
-  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-family: var(--sx-sys-font-family-mono-system);
   font-size: 0.9em;
   background: var(--sx-sys-color-bg-surface);
   border: var(--sx-sys-border-width) solid var(--sx-sys-color-border);
@@ -84,7 +84,7 @@
 
 .sx-article :where(h1) {
   margin-block: 4rem 1.5rem;
-  font-size: 2.5rem;
+  font-size: var(--sx-sys-font-size-4xl);
   font-weight: 800;
   line-height: 1.1;
   letter-spacing: -0.02em;
@@ -92,7 +92,7 @@
 
 .sx-article :where(h5) {
   margin-block: 2rem 0.5rem;
-  font-size: 1rem;
+  font-size: var(--sx-sys-font-size-lg);
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.05em;
@@ -101,7 +101,7 @@
 
 .sx-article :where(h6) {
   margin-block: 2rem 0.5rem;
-  font-size: 0.9rem;
+  font-size: var(--sx-sys-font-size-base);
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.08em;
@@ -125,12 +125,12 @@
 }
 
 .sx-article :where(kbd) {
-  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-family: var(--sx-sys-font-family-mono-system);
   font-size: 0.85em;
   border: var(--sx-sys-border-width) solid var(--sx-sys-color-border);
   box-shadow: var(--sx-sys-shadow-sm);
   padding: 0.1em 0.4em;
-  border-radius: 2px;
+  border-radius: var(--sx-sys-radius-control);
   background: var(--sx-sys-color-bg-surface);
 }
 
@@ -168,7 +168,7 @@
 }
 
 .sx-article :where(figure:not([class]) > figcaption) {
-  font-size: 0.85rem;
+  font-size: var(--sx-sys-font-size-md); /* 原 0.85rem → md 0.8125rem */
   opacity: 0.7;
   text-align: center;
   margin-block-start: 0.5rem;
@@ -180,7 +180,7 @@
   width: 100%;
   border-collapse: collapse;
   margin-block: 1.5rem;
-  font-size: 0.95rem;
+  font-size: var(--sx-sys-font-size-base); /* 原 0.95rem → base 0.9rem */
   background: var(--sx-sys-color-bg-surface);
   box-shadow: var(--sx-sys-shadow-md);
 }
@@ -194,7 +194,7 @@
 
 .sx-article :where(thead th) {
   background: var(--sx-sys-color-accent);
-  font-size: 0.75rem;
+  font-size: var(--sx-sys-font-size-sm);
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.05em;
@@ -213,7 +213,7 @@
 .sx-article :where(summary) {
   cursor: pointer;
   font-weight: 700;
-  font-size: 0.95rem;
+  font-size: var(--sx-sys-font-size-base); /* 原 0.95rem → base 0.9rem */
 }
 
 .sx-article :where(details[open] > :not(summary)) {
@@ -247,7 +247,7 @@
   margin-block-start: 3rem;
   padding-block-start: 1rem;
   border-top: var(--sx-sys-border-width) solid var(--sx-sys-color-border);
-  font-size: 0.85rem;
+  font-size: var(--sx-sys-font-size-md); /* 原 0.85rem → md 0.8125rem */
   opacity: 0.75;
 }
 

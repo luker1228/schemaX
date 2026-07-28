@@ -644,7 +644,7 @@ const weatherSchema = z.object({
     margin-block-end: var(--sx-ref-space-12);
   }
   .group__title {
-    font-size: 1.4rem;
+    font-size: var(--sx-sys-font-size-2xl);
     font-weight: 800;
     margin-block-end: var(--sx-ref-space-2);
   }
@@ -654,7 +654,7 @@ const weatherSchema = z.object({
     max-width: 46rem;
   }
   .group__hint {
-    font-size: 0.9rem;
+    font-size: var(--sx-sys-font-size-base);
     opacity: 0.7;
     margin-block-end: var(--sx-ref-space-4);
   }
@@ -664,7 +664,7 @@ const weatherSchema = z.object({
     text-decoration: underline;
   }
   .sub-title {
-    font-size: 1.1rem;
+    font-size: var(--sx-sys-font-size-reading);
     font-weight: 700;
     margin-block: var(--sx-ref-space-6) var(--sx-ref-space-3);
   }
@@ -679,7 +679,7 @@ const weatherSchema = z.object({
     width: 100%;
     border-collapse: collapse;
     min-width: 24rem;
-    font-size: 0.9rem;
+    font-size: var(--sx-sys-font-size-base);
   }
   .spec-table th,
   .spec-table td {
@@ -689,7 +689,7 @@ const weatherSchema = z.object({
   }
   .spec-table thead th {
     background: var(--sx-sys-color-bg-page);
-    font-size: 0.75rem;
+    font-size: var(--sx-sys-font-size-sm);
     text-transform: uppercase;
     letter-spacing: 0.05em;
     font-weight: 700;
@@ -706,7 +706,7 @@ const weatherSchema = z.object({
   }
   .spec-note {
     display: block;
-    font-size: 0.72rem;
+    font-size: var(--sx-sys-font-size-sm);
     opacity: 0.6;
     font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
   }
@@ -725,7 +725,7 @@ const weatherSchema = z.object({
   }
   .demo-article__label {
     font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-    font-size: 0.72rem;
+    font-size: var(--sx-sys-font-size-sm);
     font-weight: 700;
     letter-spacing: 0.05em;
     text-transform: uppercase;
@@ -754,11 +754,11 @@ const weatherSchema = z.object({
   }
   .planned-card__name {
     font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-    font-size: 0.85rem;
+    font-size: var(--sx-sys-font-size-md);
     font-weight: 700;
   }
   .planned-card__desc {
-    font-size: 0.85rem;
+    font-size: var(--sx-sys-font-size-md);
     line-height: 1.5;
     opacity: 0.8;
     margin: 0;

@@ -109,8 +109,8 @@
   margin-inline-start: 0;
 }
 
-/* 窄屏：侧栏隐藏，主区全宽 */
-@media (max-width: 1024px) {
+/* 窄屏：侧栏隐藏，主区全宽。bp.xl = 64rem (1024px) */
+@media (max-width: 64rem) {
   .sx-doc-layout {
     grid-template-columns: minmax(0, 1fr);
   }

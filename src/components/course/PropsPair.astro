@@ -304,7 +304,7 @@ const partClass: Record<CodePart['kind'], string | null> = {
   }
   .props-pair__panel-label {
     font-family: var(--sx-sys-font-family-mono);
-    font-size: 0.6875rem;
+    font-size: var(--sx-sys-font-size-xs);
     font-weight: 800;
     letter-spacing: 0.06em;
     text-transform: uppercase;
@@ -312,7 +312,7 @@ const partClass: Record<CodePart['kind'], string | null> = {
   }
   .props-pair__fname {
     font-family: var(--sx-sys-font-family-mono);
-    font-size: 0.6875rem;
+    font-size: var(--sx-sys-font-size-xs);
     font-weight: 700;
     letter-spacing: 0.04em;
     color: var(--sx-sys-color-bg-surface);
@@ -320,7 +320,7 @@ const partClass: Record<CodePart['kind'], string | null> = {
   .props-pair__lang {
     margin-left: auto;
     font-family: var(--sx-sys-font-family-mono);
-    font-size: 0.625rem;
+    font-size: var(--sx-sys-font-size-xs);
     font-weight: 800;
     letter-spacing: 0.06em;
     text-transform: uppercase;
@@ -352,7 +352,7 @@ const partClass: Record<CodePart['kind'], string | null> = {
   .props-pair__section-title {
     padding: 0 0.35rem 0.35rem;
     font-family: var(--sx-sys-font-family-mono);
-    font-size: 0.625rem;
+    font-size: var(--sx-sys-font-size-xs);
     font-weight: 800;
     letter-spacing: 0.06em;
     text-transform: uppercase;
@@ -372,7 +372,7 @@ const partClass: Record<CodePart['kind'], string | null> = {
     flex-shrink: 0;
     width: 1.25rem;
     font-family: var(--sx-sys-font-family-mono);
-    font-size: 0.6875rem;
+    font-size: var(--sx-sys-font-size-xs);
     font-weight: 800;
     line-height: 1;
     text-align: center;
@@ -383,7 +383,7 @@ const partClass: Record<CodePart['kind'], string | null> = {
     min-width: 2.5rem;
     padding: 0.2rem 0.4rem;
     font-family: var(--sx-sys-font-family-mono);
-    font-size: 0.75rem;
+    font-size: var(--sx-sys-font-size-sm);
     font-weight: 700;
     line-height: 1.2;
     color: var(--sx-sys-color-text-primary);
@@ -404,7 +404,7 @@ const partClass: Record<CodePart['kind'], string | null> = {
   .props-pair__hex {
     flex: 0 0 auto;
     font-family: var(--sx-sys-font-family-mono);
-    font-size: 0.75rem;
+    font-size: var(--sx-sys-font-size-sm);
     font-weight: 700;
     letter-spacing: 0.02em;
     color: var(--sx-sys-color-text-primary);
@@ -412,7 +412,7 @@ const partClass: Record<CodePart['kind'], string | null> = {
   .props-pair__hint {
     margin-left: auto;
     font-family: var(--sx-sys-font-family-body);
-    font-size: 0.6875rem;
+    font-size: var(--sx-sys-font-size-xs);
     font-weight: 500;
     color: var(--sx-sys-color-text-muted);
     white-space: nowrap;
@@ -452,7 +452,7 @@ const partClass: Record<CodePart['kind'], string | null> = {
     padding: 0.75rem 0.5rem 0.875rem;
     flex: 1 1 auto;
     font-family: var(--sx-sys-font-family-mono);
-    font-size: 0.8125rem;
+    font-size: var(--sx-sys-font-size-md);
     line-height: 1.7;
     color: var(--sx-sys-color-text-primary);
     overflow-x: auto;
@@ -522,7 +522,7 @@ const partClass: Record<CodePart['kind'], string | null> = {
     gap: 0.4rem;
     margin-bottom: 0.45rem;
     font-family: var(--sx-sys-font-family-mono);
-    font-size: 0.6875rem;
+    font-size: var(--sx-sys-font-size-xs);
     font-weight: 800;
     letter-spacing: 0.05em;
     text-transform: uppercase;
@@ -538,7 +538,7 @@ const partClass: Record<CodePart['kind'], string | null> = {
   }
   .props-pair__cap p {
     margin: 0;
-    font-size: 0.875rem;
+    font-size: var(--sx-sys-font-size-base);
     line-height: 1.55;
     color: var(--sx-sys-color-text-soft);
   }
@@ -556,7 +556,7 @@ const partClass: Record<CodePart['kind'], string | null> = {
     border: var(--sx-sys-border-width) solid var(--sx-sys-color-border);
   }
 
-  @media (max-width: 720px) {
+   @media (max-width: 45rem) {
     .props-pair__panels,
     .props-pair__caption {
       grid-template-columns: 1fr;

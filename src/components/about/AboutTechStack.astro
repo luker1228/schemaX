@@ -68,7 +68,7 @@ const labelColor = (accent: Accent) =>
   .stack__title {
     margin: 0;
     font-family: var(--sx-sys-font-family-display), system-ui, sans-serif;
-    font-size: clamp(1.75rem, 3.5vw, 2.5rem);
+    font-size: var(--sx-sys-font-display-md);
     font-weight: 900;
     line-height: 1.05;
     letter-spacing: -0.02em;
@@ -79,7 +79,7 @@ const labelColor = (accent: Accent) =>
     margin: 0;
     max-width: 38.75rem;
     font-family: var(--sx-sys-font-family-body), system-ui, sans-serif;
-    font-size: 1.0625rem;
+    font-size: var(--sx-sys-font-size-reading);
     line-height: 1.55;
     color: var(--sx-sys-color-text-soft);
   }
@@ -112,7 +112,7 @@ const labelColor = (accent: Accent) =>
     border: var(--sx-sys-border-width) solid var(--sx-sys-color-border);
     border-radius: 2px;
     font-family: var(--sx-sys-font-family-mono), ui-monospace, monospace;
-    font-size: 0.8125rem;
+    font-size: var(--sx-sys-font-size-md);
     font-weight: 800;
     letter-spacing: 0.0375em;
     color: var(--sx-label, var(--sx-sys-color-text-primary));
@@ -134,12 +134,12 @@ const labelColor = (accent: Accent) =>
     border-radius: var(--sx-sys-radius-md);
     box-shadow: var(--sx-sys-shadow-sm);
     font-family: var(--sx-sys-font-family-mono), ui-monospace, monospace;
-    font-size: 0.8125rem;
+    font-size: var(--sx-sys-font-size-md);
     font-weight: 700;
     color: var(--sx-sys-color-text-primary);
   }
 
-  @media (max-width: 40rem) {
+   @media (max-width: 36rem) {
     .stack__row {
       flex-direction: column;
       align-items: flex-start;

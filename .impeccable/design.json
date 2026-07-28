@@ -1,13 +1,13 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-07-28T03:41:05Z",
+  "generatedAt": "2026-07-28T12:00:00Z",
   "title": "Design System: SchemaX UI",
   "extensions": {
     "colorMeta": {
       "paper": { "role": "neutral", "displayName": "Paper", "canonical": "#FFF7E8", "tonalRamp": ["#5a544a", "#8a8170", "#b8ad97", "#d9ceb0", "#efe2c6", "#f7edda", "#fdf6ea", "#fff7e8"] },
       "ink": { "role": "neutral", "displayName": "Ink", "canonical": "#000000", "tonalRamp": ["#000000", "#1a1a1a", "#333333", "#4d4d4d", "#6b6355", "#9a958a", "#cbccc9", "#eee9da"] },
       "surface": { "role": "neutral", "displayName": "Surface", "canonical": "#FFFFFF", "tonalRamp": ["#737373", "#adadad", "#e0e0e0", "#FFFFFF", "#fffefc", "#fffcf7", "#fffbf2", "#fff9ee"] },
-      "accent": { "role": "primary", "displayName": "Accent", "canonical": "#FFDC58", "tonalRamp": ["#736328", "#ad963c", "#e0c24d", "#FFDC58", "#ffe06c", "#ffe589", "#ffeba7", "#fff0c4"] },
+      "accent": { "role": "primary", "displayName": "Accent / Marker", "canonical": "#FFDC58", "tonalRamp": ["#736328", "#ad963c", "#e0c24d", "#FFDC58", "#ffe06c", "#ffe589", "#ffeba7", "#fff0c4"] },
       "action": { "role": "secondary", "displayName": "Action", "canonical": "#2F5BEA", "tonalRamp": ["#152969", "#203e9f", "#2950ce", "#2F5BEA", "#4c71ea", "#7690e9", "#a1b1e9", "#cbd0e9"] },
       "danger": { "role": "secondary", "displayName": "Danger", "canonical": "#F9575C", "tonalRamp": ["#702729", "#a93b3f", "#db4d51", "#F9575C", "#fa6d70", "#fb8d8c", "#fcafa9", "#fecfc5"] },
       "success": { "role": "secondary", "displayName": "Success", "canonical": "#35AD68", "tonalRamp": ["#184e2f", "#247647", "#2f985c", "#35AD68", "#51b77a", "#7ac694", "#a4d6ae", "#cde5c8"] },
@@ -21,26 +21,29 @@
       "terminal-text": { "role": "neutral", "displayName": "Terminal Text", "canonical": "#E6E6E6", "tonalRamp": ["#676767", "#9c9c9c", "#cacaca", "#E6E6E6", "#eae8e6", "#efece7", "#f4efe7", "#f9f3e8"] }
     },
     "typographyMeta": {
-      "display": { "displayName": "Display", "purpose": "Hero / 页面主标题。仅大标题用 Bricolage Grotesque。" },
-      "body": { "displayName": "Body", "purpose": "UI 与正文。Geist，干净中性，信息密度不被字形抢戏。" },
-      "article": { "displayName": "Article", "purpose": "长篇阅读正文 1.0625rem/1.8，行宽 ≤46rem。" },
-      "label": { "displayName": "Label", "purpose": "章节批注/小标题，uppercase + 字距。" },
-      "mono": { "displayName": "Mono", "purpose": "代码/导航/标签/终端的批注语言（Geist Mono / IBM Plex Mono）。" }
+      "display": { "displayName": "Display", "purpose": "Hero / 页面主标题。仅 Bricolage Grotesque，稀缺封面字。" },
+      "body": { "displayName": "Body", "purpose": "UI 文案。Geist，中性安静。" },
+      "article": { "displayName": "Article", "purpose": "长篇阅读 1.0625rem/1.8，行宽 ≤46rem——阅读感核心。" },
+      "label": { "displayName": "Label", "purpose": "uppercase 批注小标题；涂鸦语言的一部分。" },
+      "mono": { "displayName": "Mono / Annotation", "purpose": "代码、导航、tag、终端——页边涂鸦的主声部。" }
     },
     "shadows": [
-      { "name": "brutal-sm", "value": "2px 2px 0 #000000", "purpose": "默认静态阴影：按钮、卡片、内联 code/kbd、figure。" },
-      { "name": "brutal-md", "value": "4px 4px 0 #000000", "purpose": "卡片 hover 升级态、正文表格。" },
-      { "name": "brutal-lg", "value": "6px 6px 0 #000000", "purpose": "设计系统演示块、首页大卡。" },
-      { "name": "terminal", "value": "6px 6px 0 #FFDC58, 6px 6px 0 1px #000000", "purpose": "终端专属黄色硬阴影（黄偏移 + 黑描边），把它从暖纸世界切出为设备。" }
+      { "name": "brutal-sm", "value": "2px 2px 0 #000000", "purpose": "Resting 硬影：按钮、卡片、行内 code/kbd。" },
+      { "name": "brutal-md", "value": "4px 4px 0 #000000", "purpose": "卡片 hover 抬起、正文表格。" },
+      { "name": "brutal-lg", "value": "6px 6px 0 #000000", "purpose": "Demo 块、首页大卡。" },
+      { "name": "terminal", "value": "6px 6px 0 #FFDC58, 6px 6px 0 1px #000000", "purpose": "终端黄硬影：设备从暖纸世界切开。" }
     ],
     "motion": [
-      { "name": "press", "value": "transform 120ms ease, box-shadow 120ms ease", "purpose": "按钮按下 / 卡片抬起的位移反馈，靠 transform 改变位置与影长。" },
-      { "name": "reduced", "value": "0.01ms", "purpose": "prefers-reduced-motion 下所有过渡与动画降至近零。" }
+      { "name": "press", "value": "transform 120ms ease, box-shadow 120ms ease", "purpose": "按钮按下：translate(2px,2px) + 影消失。" },
+      { "name": "lift", "value": "transform 120ms ease, box-shadow 120ms ease", "purpose": "interactive 卡片抬起：translate(-3px,-3px) + 影升 md。" },
+      { "name": "reduced", "value": "0.01ms", "purpose": "prefers-reduced-motion 下过渡近零。" }
     ],
     "breakpoints": [
-      { "name": "sm", "value": "768px" },
-      { "name": "md", "value": "1024px" },
-      { "name": "lg", "value": "1312px" }
+      { "name": "sm", "value": "36rem" },
+      { "name": "md", "value": "45rem" },
+      { "name": "lg", "value": "48rem" },
+      { "name": "xl", "value": "64rem" },
+      { "name": "2xl", "value": "82rem" }
     ]
   },
   "components": [
@@ -48,7 +51,7 @@
       "name": "Primary Button",
       "kind": "button",
       "refersTo": "button-primary",
-      "description": "主操作按钮。可按压实体：resting 带 sm 硬阴影，hover/active 向右下位移 2px、阴影消失（贴底）。",
+      "description": "主操作。印泥黄底；hover 右下按下贴底——互动感核心。",
       "html": "<button class=\"ds-btn-primary\">Explore Projects</button>",
       "css": ".ds-btn-primary { display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; padding: 0.5rem 1rem; border: 1px solid var(--sx-sys-color-border); border-radius: 2px; background: var(--sx-sys-color-accent); color: var(--sx-sys-color-text-primary); font-weight: 700; font-size: 0.9rem; line-height: 1.2; box-shadow: var(--sx-sys-shadow-sm); transition: transform 120ms ease, box-shadow 120ms ease; cursor: pointer; } .ds-btn-primary:hover, .ds-btn-primary:active { transform: translate(2px, 2px); box-shadow: none; } .ds-btn-primary:focus-visible { outline: 1px solid var(--sx-sys-color-action-primary); outline-offset: 2px; }"
     },
@@ -61,77 +64,100 @@
       "css": ".ds-btn-secondary { display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; padding: 0.5rem 1rem; border: 1px solid var(--sx-sys-color-border); border-radius: 2px; background: var(--sx-sys-color-text-primary); color: var(--sx-sys-color-bg-surface); font-weight: 700; font-size: 0.9rem; line-height: 1.2; box-shadow: var(--sx-sys-shadow-sm); transition: transform 120ms ease, box-shadow 120ms ease; cursor: pointer; } .ds-btn-secondary:hover, .ds-btn-secondary:active { transform: translate(2px, 2px); box-shadow: none; } .ds-btn-secondary:focus-visible { outline: 1px solid var(--sx-sys-color-action-primary); outline-offset: 2px; }"
     },
     {
+      "name": "Outline Button",
+      "kind": "button",
+      "refersTo": "button-outline",
+      "description": "中性操作。白底墨字 + 硬边硬影，常见默认变体。",
+      "html": "<button class=\"ds-btn-outline\">View Source</button>",
+      "css": ".ds-btn-outline { display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; padding: 0.5rem 1rem; border: 1px solid var(--sx-sys-color-border); border-radius: 2px; background: var(--sx-sys-color-bg-surface); color: var(--sx-sys-color-text-primary); font-weight: 700; font-size: 0.9rem; line-height: 1.2; box-shadow: var(--sx-sys-shadow-sm); transition: transform 120ms ease, box-shadow 120ms ease; cursor: pointer; } .ds-btn-outline:hover, .ds-btn-outline:active { transform: translate(2px, 2px); box-shadow: none; } .ds-btn-outline:focus-visible { outline: 1px solid var(--sx-sys-color-action-primary); outline-offset: 2px; }"
+    },
+    {
       "name": "Card",
       "kind": "card",
       "refersTo": "card",
-      "description": "能抬起的硬纸板。interactive 卡片 hover 向左上抬起 3px、阴影升级到 4px；静态卡片不抬起。",
+      "description": "硬纸板。interactive 才抬起；静态不跳——No-Fake-Click。",
       "html": "<a class=\"ds-card\" href=\"#\"><h3 class=\"ds-card__title\">Tokens</h3><p class=\"ds-card__desc\">真实使用的 Reference / Semantic / Component Token。</p></a>",
       "css": ".ds-card { display: block; padding: 1rem; background: var(--sx-sys-color-bg-surface); border: 1px solid var(--sx-sys-color-border); box-shadow: 2px 2px 0 var(--sx-sys-color-border); text-decoration: none; color: inherit; transition: transform 120ms ease, box-shadow 120ms ease; } .ds-card:hover { transform: translate(-3px, -3px); box-shadow: 4px 4px 0 var(--sx-sys-color-border); } .ds-card:focus-visible { outline: 1px solid var(--sx-sys-color-action-primary); outline-offset: 2px; } .ds-card__title { margin: 0 0 0.5rem; font-size: 1.25rem; font-weight: 700; } .ds-card__desc { margin: 0; color: var(--sx-sys-color-text-soft); font-size: 0.9rem; }"
     },
     {
-      "name": "Badge",
+      "name": "Badge Accent",
       "kind": "chip",
       "refersTo": "badge-accent",
-      "description": "盖上去的戳。方角、uppercase、weight 800。accent 变体为黄底墨字（active/强调）。",
+      "description": "方角戳记——涂鸦感的印章。",
       "html": "<span class=\"ds-badge-accent\">Live</span>",
       "css": ".ds-badge-accent { display: inline-block; padding: 0.15em 0.55em; border: 1px solid var(--sx-sys-color-border); background: var(--sx-sys-color-accent); color: var(--sx-sys-color-text-primary); font-size: 0.7rem; font-weight: 800; letter-spacing: 0.04em; text-transform: uppercase; line-height: 1.4; }"
+    },
+    {
+      "name": "Tag",
+      "kind": "chip",
+      "refersTo": "tag",
+      "description": "等宽页边铅笔注记。",
+      "html": "<span class=\"ds-tag\">schema</span>",
+      "css": ".ds-tag { display: inline-block; padding: 0.1em 0.5em; border: 1px solid var(--sx-sys-color-border); font-size: 0.75rem; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; background: var(--sx-sys-color-bg-page); color: var(--sx-sys-color-text-primary); }"
     },
     {
       "name": "Navigation",
       "kind": "nav",
       "refersTo": "nav-link-active",
-      "description": "等宽批注式导航。默认透明无框；hover/active 整块黄底填充，无边框无阴影。",
-      "html": "<nav class=\"ds-nav\"><a class=\"ds-nav-link\" href=\"#\" aria-current=\"page\">System</a><a class=\"ds-nav-link\" href=\"#\">Blog</a><a class=\"ds-nav-link\" href=\"#\">Projects</a></nav>",
-      "css": ".ds-nav { display: flex; flex-wrap: wrap; gap: 0.65rem; } .ds-nav-link { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.78rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; padding: 0.5rem 0.8rem; border-radius: 2px; background: transparent; text-decoration: none; color: inherit; transition: background-color 120ms ease, color 120ms ease; } .ds-nav-link:hover, .ds-nav-link:focus-visible, .ds-nav-link[aria-current=\"page\"] { background: var(--sx-sys-color-accent); color: var(--sx-sys-color-text-primary); }"
+      "description": "等宽 uppercase 批注导航；active 黄马克笔块。",
+      "html": "<nav class=\"ds-nav\"><a class=\"ds-nav__link\" href=\"#\">Blog</a><a class=\"ds-nav__link ds-nav__link--active\" href=\"#\" aria-current=\"page\">Courses</a></nav>",
+      "css": ".ds-nav { display: flex; flex-wrap: wrap; gap: 0.65rem; } .ds-nav__link { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.8125rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; padding: 0.5rem 0.8rem; border-radius: 2px; background: transparent; text-decoration: none; color: inherit; transition: background-color 120ms ease; } .ds-nav__link:hover, .ds-nav__link--active { background: var(--sx-sys-color-accent); color: var(--sx-sys-color-text-primary); }"
     },
     {
       "name": "Terminal",
       "kind": "custom",
       "refersTo": "terminal",
-      "description": "签名组件——手册里的设备窗口。标题栏（暖纸 + 红黄绿圆点）+ 暗色屏幕（IBM Plex Mono）+ 专属黄色硬阴影。",
-      "html": "<div class=\"ds-term\"><div class=\"ds-term__bar\"><span class=\"ds-term__dot ds-term__dot--red\"></span><span class=\"ds-term__dot ds-term__dot--yellow\"></span><span class=\"ds-term__dot ds-term__dot--green\"></span><span class=\"ds-term__title\">schema.json</span></div><pre class=\"ds-term__screen\">{ \"name\": \"Luke\", \"role\": \"AI Agent Engineer\", \"status\": \"evolving\" }</pre></div>",
-      "css": ".ds-term { border: 1px solid var(--sx-sys-color-border); box-shadow: 6px 6px 0 var(--sx-sys-color-accent), 6px 6px 0 1px var(--sx-sys-color-border); background: var(--sx-sys-color-bg-surface); overflow: hidden; max-width: 100%; } .ds-term__bar { display: flex; align-items: center; gap: 0.75rem; padding: 0.45rem 0.75rem; background: var(--sx-sys-color-bg-page); border-bottom: 1px solid var(--sx-sys-color-border); } .ds-term__dot { display: inline-block; width: 0.7rem; height: 0.7rem; border: 1px solid var(--sx-sys-color-border); border-radius: 50%; } .ds-term__dot--red { background: var(--sx-sys-color-danger); } .ds-term__dot--yellow { background: var(--sx-sys-color-accent); } .ds-term__dot--green { background: var(--sx-sys-color-success); } .ds-term__title { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.78rem; font-weight: 700; opacity: 0.7; } .ds-term__screen { margin: 0; padding: 0.75rem 1rem; background: var(--sx-comp-term-screen-bg); color: var(--sx-comp-term-text); font-family: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.85rem; line-height: 1.65; white-space: pre-wrap; overflow-wrap: break-word; }"
+      "description": "暖纸本上的黑屏设备；黄硬影签名。",
+      "html": "<div class=\"ds-term\"><div class=\"ds-term__bar\"><span class=\"ds-term__dots\"><i class=\"ds-term__dot ds-term__dot--red\"></i><i class=\"ds-term__dot ds-term__dot--yellow\"></i><i class=\"ds-term__dot ds-term__dot--green\"></i></span><span class=\"ds-term__title\">schemax</span></div><div class=\"ds-term__screen\"><code>pnpm build</code></div></div>",
+      "css": ".ds-term { border: 1px solid var(--sx-sys-color-border); box-shadow: 6px 6px 0 var(--sx-sys-color-accent), 6px 6px 0 1px var(--sx-sys-color-border); background: var(--sx-sys-color-bg-surface); overflow: hidden; max-width: 28rem; } .ds-term__bar { display: flex; align-items: center; gap: 0.75rem; padding: 0.45rem 0.75rem; background: var(--sx-sys-color-bg-page); border-bottom: 1px solid var(--sx-sys-color-border); } .ds-term__dots { display: inline-flex; gap: 0.35rem; } .ds-term__dot { display: inline-block; width: 0.7rem; height: 0.7rem; border: 1px solid var(--sx-sys-color-border); border-radius: 50%; } .ds-term__dot--red { background: var(--sx-sys-color-danger); } .ds-term__dot--yellow { background: var(--sx-sys-color-accent); } .ds-term__dot--green { background: var(--sx-sys-color-success); } .ds-term__title { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.8125rem; font-weight: 700; opacity: 0.7; } .ds-term__screen { padding: 0.75rem 1rem; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.8125rem; line-height: 1.65; background: #0f1115; color: #e6e6e6; } .ds-term__screen code { font-family: inherit; }"
     }
   ],
   "narrative": {
-    "northStar": "The Engineer's Field Manual",
-    "overview": "SchemaX UI 是一本工程师的现场手册，不是一份精修的画册。它诚实、硬朗、可触摸——像一张被反复翻阅、盖过章、写满等宽批注的工作纸。粗黑边框、无模糊的硬阴影、暖纸背景，共同把界面当作有重量的实体来对待：按钮是能按下去的按键，卡片是能抬起来的硬纸板，标签是盖上去的戳。Schema 母题（花括号、字段名、类型标签、required 星号）是这本手册的批注语言，但它们只在品牌与设计系统区出场，绝不侵入长篇阅读。\n\n整套系统的视觉真相由令牌（DTCG JSON → Style Dictionary → 生成 CSS/TS）单一定义，业务代码只消费 --sx-sys-* / --sx-comp-*，不得硬编码品牌色、不得引用 --sx-ref-* 原语。CSS 分九层（reset, tokens, theme, base, layout, article, components, utilities, overrides），文章正文用 :where() 零特异性，保证组件与 overrides 能干净胜出。\n\n视觉强度按页面分级：设计系统 = 最强（母题全开），首页/项目 = 强，课程正文 = 中等，博客正文 = 最克制（Schema 母题退场，回归安静阅读）。这条分级是承重的：手册的装订感服务于内容，而非压过内容。",
+    "northStar": "The Marginal Sketchbook",
+    "overview": "SchemaX UI 是一本页边写满批注的暖纸速写本——中间是安静、耐久的阅读，四周是可按压的实体控件与等宽「涂鸦」注记。四柱承重且优先级固定：阅读感第一、互动感、涂鸦感（全局气质）、新粗野主义。视觉强度按页面分级：设计系统最强，博客正文最克制。",
     "keyCharacteristics": [
-      "暖纸 + 纯墨：#FFF7E8 纸面 + #000000 墨黑，是全站底色与文字/边框的唯一基线。",
-      "硬阴影无模糊：偏移纯黑实体阴影（2/4/6px），物体始终贴着纸面，交互靠位移而非渐变。",
-      "可按压的实体：按钮 hover「按下 2px」、卡片 hover「抬起 3px」——方向相反的物理反馈。",
-      "等宽即批注：Geist Mono / IBM Plex Mono 承载代码、导航、标签、终端——手册里的手写注记。",
-      "粗细两档边框：1px 默认，2px（--sx-sys-border-width-strong）用于强调（大卡、pill、终端）。",
-      "几乎无圆角：容器 0、控件 2px、仅状态 pill 用 9999px。"
+      "阅读优先的暖纸本：#FFF7E8 纸 + #000000 墨；正文 1.0625rem / 1.8、行宽 ≤46rem",
+      "页边涂鸦语言：等宽标签、方角戳记、黄底激活块、code 小硬边框",
+      "实体可按可抬：按钮右下 2px 贴底；interactive 卡片左上 3px 抬起",
+      "硬阴影无模糊：2 / 4 / 6px 纯黑偏移（终端黄影唯一彩色例外）",
+      "几乎无圆角：容器 0、控件 2px、仅 pill 9999px",
+      "粗细两档边框：1px 默认，2px 强调"
     ],
     "rules": [
-      { "name": "The One Stamp Rule", "body": "Accent（黄）是整页唯一的「印泥」——只用于主操作与激活态，单屏占用 ≤10%。它的稀少就是它的分量。", "section": "colors" },
-      { "name": "The Ink-Does-Double-Duty Rule", "body": "同一个 #000000 既是正文文字也是全站边框与阴影色。不要为边框/阴影引入第二种黑。", "section": "colors" },
-      { "name": "The Decorative-Only Rule", "body": "Mint / Lavender / Beige / Gray-light 是装饰色，只活在品牌区、首页 bento 与状态语义里，不得出现在正文阅读路径上。", "section": "colors" },
-      { "name": "The Mono-Is-Annotation Rule", "body": "等宽字是批注与数据的字体——代码、终端、导航、标签、技术栈小字。不要把它当装饰给普通文案装技术感。", "section": "typography" },
-      { "name": "The Display-Is-Rare Rule", "body": "Bricolage Grotesque 只用于 hero / 页面主标题；正文标题一律 Geist。", "section": "typography" },
-      { "name": "The Scale-Not-Ad-Hoc Rule", "body": "间距只用 --sx-ref-space-* 刻度值，不写脱刻度数字；组内/组间比例是节奏的承重设计。", "section": "layout" },
-      { "name": "The Contact-Not-Glow Rule", "body": "阴影是实体与纸面的接触，不是光晕。永远 offset 0 blur、纯黑、零模糊（终端黄影是唯一例外）。", "section": "elevation" },
-      { "name": "The Motion-Is-Displacement Rule", "body": "交互反馈靠 transform 位移改变物体位置与影长，不靠透明度或渐变；120ms ease，遵守 prefers-reduced-motion。", "section": "elevation" },
-      { "name": "The Square-Default Rule", "body": "默认方角。圆角是克制的例外（控件 2px、pill 9999px），不是默认。", "section": "shapes" },
-      { "name": "The Border-Or-Shadow-Not-Both-Soft Rule", "body": "边框与硬阴影可以并存（本系统签名），但不要在硬阴影之上再叠柔光阴影，也不要无边框只剩影子漂浮。", "section": "shapes" }
+      { "name": "The Reading-First Rule", "body": "配色决策先问：会不会伤害长文可读？会——退场。装饰色、大面积 accent、Schema 母题一律让位给段落对比与安静。", "section": "colors" },
+      { "name": "The One Stamp Rule", "body": "Accent 黄是整页唯一印泥/马克笔——主操作与激活态，单屏 ≤10%。", "section": "colors" },
+      { "name": "The Ink-Does-Triple-Duty Rule", "body": "同一个 #000000 是文字、边框、硬阴影。不为丰富引入第二种黑。", "section": "colors" },
+      { "name": "The Decorative-Only Rule", "body": "Mint / Lavender / Beige / Gray-light 是页边彩铅，不进正文阅读路径。", "section": "colors" },
+      { "name": "The Quiet-Prose Rule", "body": "正文段落用 Geist，行高 1.8，最大阅读宽 46rem。涂鸦停在 chrome、壳与组件。", "section": "typography" },
+      { "name": "The Mono-Is-Annotation Rule", "body": "等宽 = 批注与数据。禁止把整段营销文案设成 mono。", "section": "typography" },
+      { "name": "The Display-Is-Rare Rule", "body": "Bricolage 只用于 hero / 页主标题。H1–H4 一律 Geist。", "section": "typography" },
+      { "name": "The Reading-Column Rule", "body": "博客/长文主柱 ≤46rem；教程可更宽，但讲解段落仍按阅读节奏。", "section": "layout" },
+      { "name": "The Scale-Not-Ad-Hoc Rule", "body": "间距只用 --sx-ref-space-*，禁止脱刻度值。", "section": "layout" },
+      { "name": "The Shell-vs-Prose Rule", "body": "课程壳、设计系统、首页可以吵；.sx-article 段落必须静。", "section": "layout" },
+      { "name": "The Contact-Not-Glow Rule", "body": "阴影永远 offset 0 blur、默认纯黑。终端黄影是唯一彩色例外。", "section": "elevation" },
+      { "name": "The Motion-Is-Displacement Rule", "body": "状态反馈优先 transform + 影长，不靠透明度闪烁。", "section": "elevation" },
+      { "name": "The No-Fake-Click Rule", "body": "只有 interactive 卡片才抬起；静态卡不跳。", "section": "elevation" },
+      { "name": "The Square-Default Rule", "body": "默认方角。8–16px 圆角不属于这本速写本。", "section": "shapes" },
+      { "name": "The Border-Plus-Hard-Shadow Rule", "body": "1–2px 黑边 + 硬偏移影是签名；禁止无边只漂影或硬影上叠柔光。", "section": "shapes" },
+      { "name": "The Doodle-Is-Not-Scribble-Chaos Rule", "body": "涂鸦感 = 批注系统 + 手作实体，不是随机乱线铺满正文。", "section": "shapes" }
     ],
     "dos": [
-      "Do 用 --sx-sys-* / --sx-comp-* 令牌，绝不硬编码品牌色、绝不引用 --sx-ref-* 原语。",
-      "Do 让间距落在 --sx-ref-space-* 刻度上，用「组内紧、组间松」的 2× 比例建立节奏。",
-      "Do 让按钮按下、卡片抬起——交互反馈靠 transform 位移与阴影增减，120ms ease。",
-      "Do 把等宽字留给代码/数据/导航/标签/终端，把 display 字族留给 hero 主标题。",
-      "Do 按页面分级控制视觉强度：设计系统最强、博客正文最克制。",
-      "Do 让设计系统页读取令牌生成产物，而非手工拷贝文档。"
+      "Do 先保证阅读：46rem 柱、1.0625rem/1.8、对比足够，再叠加涂鸦与粗野。",
+      "Do 用 --sx-sys-* / --sx-article-* / --sx-comp-*，间距落在 --sx-ref-space-*。",
+      "Do 按钮按下、卡片抬起——transform + 硬影，120ms，尊重 reduced-motion。",
+      "Do 把涂鸦语言用在 chrome / 壳 / 戳记 / 等宽批注；正文保持 Geist 安静。",
+      "Do 按页面分级：设计系统最吵，博客正文最静。",
+      "Do 设计系统页读取令牌生成产物，不手抄色值。"
     ],
     "donts": [
-      "Don't 给阴影加 blur 或 rgba() 透明度——硬阴影必须 offset 0 blur 纯黑（终端黄影是唯一例外）。",
-      "Don't 给卡片/容器加 8–16px 圆角；默认方角。",
-      "Don't 把 Accent（黄）当背景大面积铺——它是单屏 ≤10% 的印泥。",
-      "Don't 让 Schema 母题侵入长篇阅读空间。",
-      "Don't 在硬阴影之上叠柔光阴影，或无边框只剩影子漂浮。",
+      "Don't 用涂鸦、bento 彩块或 Schema 花括号打断长文段落流。",
+      "Don't 给阴影加 blur 或 rgba 柔光；终端黄影除外。",
+      "Don't 给卡片默认 8–16px 圆角。",
+      "Don't 把 Accent 黄当大面积背景（单屏 ≤10%）。",
+      "Don't 让静态卡片 hover 抬起，制造假可点。",
       "Don't 引入 Tailwind preflight 或第二个 UI 框架。",
-      "Don't 把单页 surface brief 授权的视觉偏离当成全站规则。"
+      "Don't 把单页 surface brief 的实验配色写成全站规则。",
+      "Don't 用随机乱线 / 廉价贴纸风冒充涂鸦感。"
     ]
   }
 }

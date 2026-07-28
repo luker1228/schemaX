@@ -39,12 +39,12 @@ const { title, eyebrow, description } = Astro.props;
     margin-inline: auto;
   }
   .page-head__eyebrow {
-    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-family: var(--sx-sys-font-family-mono-system);
     color: var(--sx-sys-color-action-primary);
     font-weight: 700;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    font-size: 0.8rem;
+    font-size: var(--sx-sys-font-size-md);
   }
   .page-head__title {
     font-size: var(--sx-comp-page-head-title-size);
@@ -64,7 +64,7 @@ const { title, eyebrow, description } = Astro.props;
   }
   /* slot 里的描述（含富文本）沿用同样的间距 */
   .page-head__desc :global(code) {
-    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-family: var(--sx-sys-font-family-mono-system);
     font-size: 0.85em;
     background: var(--sx-sys-color-bg-surface);
     border: var(--sx-sys-border-width) solid var(--sx-sys-color-border);

@@ -57,7 +57,7 @@ import { roles, accentToken } from '../../data/about';
   .skills__title {
     margin: 0;
     font-family: var(--sx-sys-font-family-display), system-ui, sans-serif;
-    font-size: clamp(1.75rem, 3.5vw, 2.5rem);
+    font-size: var(--sx-sys-font-display-md);
     font-weight: 900;
     line-height: 1.05;
     letter-spacing: -0.02em;
@@ -100,7 +100,7 @@ import { roles, accentToken } from '../../data/about';
 
   .role-card__index {
     font-family: var(--sx-sys-font-family-display), system-ui, sans-serif;
-    font-size: 1.75rem;
+    font-size: var(--sx-sys-font-size-3xl);
     font-weight: 900;
     line-height: 1;
     color: var(--sx-sys-color-text-primary);
@@ -115,7 +115,7 @@ import { roles, accentToken } from '../../data/about';
 
   .role-card__eyebrow {
     font-family: var(--sx-sys-font-family-mono), ui-monospace, monospace;
-    font-size: 0.75rem;
+    font-size: var(--sx-sys-font-size-sm);
     font-weight: 800;
     color: var(--sx-sys-color-text-soft);
   }
@@ -123,7 +123,7 @@ import { roles, accentToken } from '../../data/about';
   .role-card__title {
     margin: 0;
     font-family: var(--sx-sys-font-family-display), system-ui, sans-serif;
-    font-size: 1.625rem;
+    font-size: var(--sx-sys-font-size-2xl);
     font-weight: 800;
     line-height: 1.15;
     color: var(--sx-sys-color-text-primary);
@@ -132,7 +132,7 @@ import { roles, accentToken } from '../../data/about';
   .role-card__desc {
     margin: 0;
     font-family: var(--sx-sys-font-family-body), system-ui, sans-serif;
-    font-size: 0.9375rem;
+    font-size: var(--sx-sys-font-size-base);
     line-height: 1.5;
     color: var(--sx-sys-color-text-primary);
   }
@@ -152,12 +152,12 @@ import { roles, accentToken } from '../../data/about';
     border: var(--sx-sys-border-width) solid var(--sx-sys-color-border);
     border-radius: 9999px;
     font-family: var(--sx-sys-font-family-mono), ui-monospace, monospace;
-    font-size: 0.6875rem;
+    font-size: var(--sx-sys-font-size-xs);
     font-weight: 800;
     color: var(--sx-sys-color-text-primary);
   }
 
-  @media (max-width: 56rem) {
+   @media (max-width: 64rem) {
     .skills__cards {
       grid-template-columns: 1fr;
     }

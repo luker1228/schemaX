@@ -67,11 +67,11 @@ if (stageClass === 'align') {
   .demo__label {
     font-family: var(--sx-sys-font-family-mono);
     font-weight: 800;
-    font-size: 0.75rem;
+    font-size: var(--sx-sys-font-size-sm);
   }
   .demo__attr {
     font-family: var(--sx-sys-font-family-mono);
-    font-size: 0.625rem;
+    font-size: var(--sx-sys-font-size-xs);
     background: var(--sx-sys-color-beige);
     border-radius: 3px;
     padding: 3px 7px;
@@ -102,7 +102,7 @@ if (stageClass === 'align') {
   /* 折叠说明：默认收起，点击展开。零 JS（原生 <details>）。 */
   .demo__details {
     border-top: var(--sx-sys-border-width) solid var(--sx-sys-color-border);
-    font-size: 0.85rem;
+    font-size: var(--sx-sys-font-size-md);
   }
   .demo__summary {
     padding: var(--sx-ref-space-2) var(--sx-ref-space-3);
@@ -110,7 +110,7 @@ if (stageClass === 'align') {
     user-select: none;
     opacity: 0.7;
     font-family: ui-monospace, monospace;
-    font-size: 0.78rem;
+    font-size: var(--sx-sys-font-size-md);
     letter-spacing: 0.04em;
     list-style: none;
     transition:
@@ -140,7 +140,7 @@ if (stageClass === 'align') {
   }
   .demo__note :global(code) {
     font-family: ui-monospace, monospace;
-    font-size: 0.82rem;
+    font-size: var(--sx-sys-font-size-md);
     background: var(--sx-sys-color-bg-page);
     padding: 0.05em 0.35em;
   }

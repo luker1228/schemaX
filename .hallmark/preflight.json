@@ -1,0 +1,10 @@
+{
+  "scanned_at": "2026-07-28",
+  "design_md": true,
+  "framework": "Astro 7",
+  "fonts": ["Bricolage Grotesque", "Geist", "Geist Mono", "IBM Plex Mono"],
+  "palette": "DTCG tokens (paper #FFF7E8, ink #000, accent #FFDC58)",
+  "motion": "motion-cut (no framer-motion/gsap/lottie)",
+  "spacing": "token-driven + Tailwind v4",
+  "preserve": ["font stack", "palette", "design.md system", "spacing tokens"]
+}
