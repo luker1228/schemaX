@@ -1,0 +1,331 @@
+---
+// VisualAnatomy —— 视觉解剖双联
+// 左:一张真实卡片(带颜色/字体/圆角/阴影 = 「装修」态)
+// 右:同一张卡剥掉装修后的「骨架」——全虚线描边,暴露出三类零件:
+//    框(包住区域的轮廓) · 文字 · 图形。
+// 教学示意件,同类于 LayerPair(手画 mock,零 JS)。
+// 目的:把「网页剥到底只剩框·字·图形,三样拼万物」一眼立住。
+---
+
+<div class="va">
+  <div class="va__panels">
+    {/* —— 左:真实(有装修) —— */}
+    <section class="va__panel" aria-label="真实卡片">
+      <header class="va__bar">
+        <span class="va__bar-label">真实 · 有装修</span>
+      </header>
+      <div class="va__stage">
+        <div class="va__card">
+          <div class="va__img" aria-hidden="true">
+            <svg
+              class="va__img-svg"
+              viewBox="0 0 120 96"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+            >
+              <path class="va__cup-steam" d="M42 27 Q 36 19 42 11"></path>
+              <path class="va__cup-steam" d="M60 27 Q 66 19 60 11"></path>
+              <path class="va__cup-body" d="M30 30 L80 30 L74 80 L36 80 Z"></path>
+              <path class="va__cup-handle" d="M80 40 C 98 40 98 70 80 70"></path>
+              <ellipse class="va__cup-coffee" cx="55" cy="40" rx="23" ry="5"></ellipse>
+            </svg>
+          </div>
+          <span class="va__badge">今日特价</span>
+          <h3 class="va__title">手冲咖啡 · 单品</h3>
+          <div class="va__meta">
+            <span class="va__price">¥28</span>
+            <span class="va__btn">立即购买</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    {/* —— 右:骨架(去装修) —— */}
+    <section class="va__panel" aria-label="骨架拆解">
+      <header class="va__bar va__bar--ghost">
+        <span class="va__bar-label">骨架 · 去装修</span>
+      </header>
+      <div class="va__stage">
+        <div class="va__card va__card--wire">
+          <span class="va__tag va__tag--corner">框</span>
+          <div class="va__wire va__wire--img">
+            <span class="va__tag">图形</span>
+          </div>
+          <div class="va__wire va__wire--pill">
+            <span class="va__tag">字</span>
+          </div>
+          <div class="va__wire va__wire--line">
+            <span class="va__tag">字</span>
+          </div>
+          <div class="va__meta">
+            <div class="va__wire va__wire--price">
+              <span class="va__tag">字</span>
+            </div>
+            <div class="va__wire va__wire--btn">
+              <span class="va__tag">字</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  {/* —— 底注 —— */}
+  <div class="va__caption">
+    <p>
+      右边只是把左边的<strong>颜色、字体、圆角、阴影</strong>全剥掉,只留描边轮廓。
+      骨架暴露出三类零件:<strong>框</strong>(包住一组东西的轮廓)、<strong>文字</strong>、<strong>图形</strong>——
+      网页上的一切,都是这三样的排列组合。
+    </p>
+  </div>
+</div>
+
+<style>
+  .va {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    width: 100%;
+  }
+
+  .va__panels {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    align-items: stretch;
+    gap: 1rem;
+    min-width: 0;
+  }
+
+  /* ── 共用顶栏:墨底黄字,与 LayerPair 同构 ── */
+  .va__panel {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
+  .va__bar {
+    display: flex;
+    align-items: center;
+    min-height: 2.25rem;
+    padding: 0.5rem 0.875rem;
+    box-sizing: border-box;
+    background: var(--sx-sys-color-border);
+    border-bottom: var(--sx-sys-border-width) solid var(--sx-sys-color-border);
+  }
+  .va__bar-label {
+    font-family: var(--sx-sys-font-family-mono);
+    font-size: 0.6875rem;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--sx-sys-color-accent);
+  }
+
+  /* ── 舞台:白底 + 居中卡片 ── */
+  .va__stage {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 1.5rem 1.25rem;
+    box-sizing: border-box;
+    background: var(--sx-sys-color-bg-surface);
+    border: var(--sx-sys-border-width) solid var(--sx-sys-color-border);
+    border-top: none;
+    flex: 1 1 auto;
+  }
+
+  /* ── 卡片共用骨架:左右同宽、同结构高度,严格对应 ── */
+  .va__card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 0.625rem;
+    width: 100%;
+    max-width: 17rem;
+    box-sizing: border-box;
+    padding: 0.875rem;
+  }
+
+  /* ── 左:真实装修态 ── */
+  .va__card:not(.va__card--wire) {
+    background: var(--sx-sys-color-bg-surface);
+    border: var(--sx-sys-border-width) solid var(--sx-sys-color-border);
+    box-shadow: var(--sx-sys-shadow-md);
+  }
+  .va__img {
+    width: 100%;
+    height: 5rem;
+    background: var(--sx-sys-color-accent);
+    border: var(--sx-sys-border-width) solid var(--sx-sys-color-border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.25rem;
+    box-sizing: border-box;
+  }
+  .va__img-svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+  /* 咖啡杯:Neo-brutalist 线条风 —— 黄底 + 白杯 + 棕咖啡 + 黑轮廓 */
+  .va__cup-body {
+    fill: var(--sx-sys-color-bg-surface);
+    stroke: var(--sx-sys-color-border);
+    stroke-width: 3;
+    stroke-linejoin: round;
+  }
+  .va__cup-handle {
+    fill: none;
+    stroke: var(--sx-sys-color-border);
+    stroke-width: 3;
+    stroke-linecap: round;
+  }
+  .va__cup-coffee {
+    fill: var(--sx-sys-color-text-soft);
+    stroke: var(--sx-sys-color-border);
+    stroke-width: 2;
+  }
+  .va__cup-steam {
+    fill: none;
+    stroke: var(--sx-sys-color-border);
+    stroke-width: 3;
+    stroke-linecap: round;
+  }
+  .va__badge {
+    align-self: flex-start;
+    padding: 0.15rem 0.6rem;
+    background: var(--sx-sys-color-accent);
+    color: var(--sx-sys-color-text-primary);
+    border: var(--sx-sys-border-width) solid var(--sx-sys-color-border);
+    border-radius: 9999px;
+    font-family: var(--sx-sys-font-family-body);
+    font-size: 0.75rem;
+    font-weight: 700;
+    line-height: 1.4;
+  }
+  .va__title {
+    margin: 0;
+    font-family: var(--sx-sys-font-family-display);
+    font-size: 1.0625rem;
+    font-weight: 700;
+    line-height: 1.25;
+    color: var(--sx-sys-color-text-primary);
+  }
+  .va__meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    min-height: 2rem;
+  }
+  .va__price {
+    font-family: var(--sx-sys-font-family-display);
+    font-size: 1.125rem;
+    font-weight: 800;
+    color: var(--sx-sys-color-text-primary);
+  }
+  .va__btn {
+    display: inline-block;
+    padding: 0.3rem 0.85rem;
+    background: var(--sx-sys-color-accent);
+    color: var(--sx-sys-color-text-primary);
+    border: var(--sx-sys-border-width) solid var(--sx-sys-color-border);
+    border-radius: 2px;
+    box-shadow: var(--sx-sys-shadow-sm);
+    font-family: var(--sx-sys-font-family-body);
+    font-size: 0.8125rem;
+    font-weight: 700;
+    line-height: 1.4;
+  }
+
+  /* ── 右:骨架(去装修)── 全虚线、无填充色(图形位除外) ── */
+  .va__card--wire {
+    background: transparent;
+    border: var(--sx-sys-border-width-strong) dashed var(--sx-sys-color-border);
+    box-shadow: none;
+  }
+  .va__wire {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: var(--sx-sys-border-width-strong) dashed var(--sx-sys-color-border);
+    box-sizing: border-box;
+  }
+  .va__wire--img {
+    height: 5rem;
+    /* 唯一带填充:代表「图形」是块色/图,不是空白轮廓 */
+    background: color-mix(
+      in srgb,
+      var(--sx-sys-color-border) 10%,
+      var(--sx-sys-color-bg-surface)
+    );
+  }
+  .va__wire--pill {
+    align-self: flex-start;
+    min-height: 1.5rem;
+    padding: 0.15rem 0.6rem;
+    border-radius: 9999px;
+  }
+  .va__wire--line {
+    min-height: 1.5rem;
+  }
+  .va__wire--price,
+  .va__wire--btn {
+    min-height: 2rem;
+  }
+  .va__wire--price {
+    flex: 0 0 3rem;
+  }
+  .va__wire--btn {
+    flex: 0 0 5.5rem;
+    border-radius: 2px;
+  }
+  /* 骨架的 meta 行也是一层「框」:外框里套两个字位,呼应「框套框」 */
+  .va__card--wire .va__meta {
+    border: var(--sx-sys-border-width-strong) dashed var(--sx-sys-color-border);
+    padding: 0.45rem;
+  }
+
+  /* ── 标注小标签 ── */
+  .va__tag {
+    font-family: var(--sx-sys-font-family-mono);
+    font-size: 0.6875rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    color: var(--sx-sys-color-text-muted);
+  }
+  /* 「框」角标:贴在外卡左上角,带底色让它压在虚线上可读 */
+  .va__tag--corner {
+    position: absolute;
+    top: -0.625rem;
+    left: 0.625rem;
+    padding: 0.05rem 0.4rem;
+    background: var(--sx-sys-color-bg-page);
+    color: var(--sx-sys-color-text-primary);
+    border: var(--sx-sys-border-width) solid var(--sx-sys-color-border);
+  }
+
+  /* ── 底注 ── */
+  .va__caption {
+    padding: 0.875rem 1.125rem;
+    border: var(--sx-sys-border-width) solid var(--sx-sys-color-border);
+    background: var(--sx-sys-color-bg-page);
+  }
+  .va__caption p {
+    margin: 0;
+    font-size: 0.9375rem;
+    line-height: 1.65;
+    color: var(--sx-sys-color-text-soft);
+  }
+  .va__caption strong {
+    color: var(--sx-sys-color-text-primary);
+    font-weight: 700;
+  }
+
+  @media (max-width: 720px) {
+    .va__panels {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

@@ -106,9 +106,11 @@ export function lessonFields(opts: CommonFieldOptions) {
     /**
      * 课时呈现方式：
      * - scroll：传统纵向滚动（默认）
-     * - board：白板翻页——一次只展示一节，顶栏 + 底部分页切换
+     * - board：白板翻页——一次只展示一节，顶栏 + 底部分页切换（每页塞一屏）
+     * - stepper：引导式 stepper——概念单元内部可滚动，←/→ 在单元之间跳，
+     *   sticky chrome 保持进度可见（Khan / Codecademy 风）
      */
-    presentation: z.enum(['scroll', 'board']).default('scroll'),
+    presentation: z.enum(['scroll', 'board', 'stepper']).default('scroll'),
   });
 }
 

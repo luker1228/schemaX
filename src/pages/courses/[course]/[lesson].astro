@@ -28,6 +28,8 @@ const {
   presentation = 'scroll',
 } = lesson.data;
 const isBoard = presentation === 'board';
+const isStepper = presentation === 'stepper';
+const usesBoardShell = isBoard || isStepper;
 
 const siblings = (await getCollection('lessons'))
   .filter((l) => courseIdOf(l.data.course) === courseId)
@@ -52,7 +54,7 @@ const readTime = durationMinutes
 const partLabel = { basics: '基础篇', advanced: '进阶篇' } as const;
 const partOrder = ['basics', 'advanced'] as const;
 const sideGroups: DocSideGroup[] = partOrder
-  .map((part) => {
+  .map((part): DocSideGroup | null => {
     const items = siblings
       .filter((l) => (l.data.part ?? 'basics') === part)
       .map((l) => ({
@@ -65,7 +67,7 @@ const sideGroups: DocSideGroup[] = partOrder
       title: partLabel[part],
       ariaLabel: `${partLabel[part]}课时`,
       items,
-    } satisfies DocSideGroup;
+    };
   })
   .filter((g): g is DocSideGroup => g !== null);
 ---
@@ -79,9 +81,10 @@ const sideGroups: DocSideGroup[] = partOrder
 
     <div class="sx-doc-main">
       {
-        isBoard ? (
-          /* 白板：无顶部 DocPager；末页可进下一章 */
+        usesBoardShell ? (
+          /* 白板 / 引导式 stepper：无顶部 DocPager；末页可进下一章 */
           <LessonBoard
+            mode={isStepper ? 'stepper' : 'board'}
             cover={hero}
             readTime={readTime}
             nextChapter={pagerNext}
@@ -92,13 +95,15 @@ const sideGroups: DocSideGroup[] = partOrder
           </LessonBoard>
         ) : (
           <>
-            <DocPager
-              prev={pagerPrev}
-              next={pagerNext}
-              centerHref={`/courses/${courseId}`}
-              centerLabel="课程目录"
-              label="课时前后导航"
-            />
+            <div class="lesson-pager">
+              <DocPager
+                prev={pagerPrev}
+                next={pagerNext}
+                centerHref={`/courses/${courseId}`}
+                centerLabel="课程目录"
+                label="课时前后导航"
+              />
+            </div>
             {hero ? (
               <LessonHero
                 line1={hero.line1}
@@ -142,9 +147,23 @@ const sideGroups: DocSideGroup[] = partOrder
   /* —— 页面专属：默认标题 / 正文间距（双栏壳见 layout.css；导航见 DocPager） —— */
 
   .lhead {
+    max-width: var(--sx-article-width-reading);
+    margin-inline: auto;
     margin-block-end: 0.5rem;
     padding-block-end: var(--sx-ref-space-6);
     border-bottom: var(--sx-sys-border-width) solid var(--sx-sys-color-border);
+  }
+
+  /* 顶部前后导航条：对齐到同一阅读栏（包裹 DocPager，覆盖其默认 75% 宽，
+     不改共享组件本身）。特异性 .lesson-pager[cid] .docs-nav (0,3,0) 盖过
+     DocPager 自身的 .docs-nav[cid] (0,2,0)。 */
+  .lesson-pager {
+    width: 100%;
+    max-width: var(--sx-article-width-reading);
+    margin-inline: auto;
+  }
+  .lesson-pager :global(.docs-nav) {
+    width: 100%;
   }
   .lhead__title {
     font-family: var(--sx-sys-font-family-display);
@@ -173,8 +192,11 @@ const sideGroups: DocSideGroup[] = partOrder
     /* 节与节明显换气：编号徽章认节 + 大留白分段 */
     gap: clamp(3rem, 5.5vw, 4rem);
     width: 100%;
-    max-width: none;
-    margin-inline: 0;
+    /* scroll 模式：收成居中阅读栏（参考 fanstudio lab，~46rem measure）。
+       board 模式走 .lesson-body--board（display:contents，无盒），此 max-width
+       不影响分页 slide 自有的 40/56/72rem 宽度。 */
+    max-width: var(--sx-article-width-reading);
+    margin-inline: auto;
   }
 
   /* 白板模式：节间距交给板内 stage，body 用 contents 把 step 提成 slide */
@@ -184,7 +206,6 @@ const sideGroups: DocSideGroup[] = partOrder
   }
 
   .lesson-body :global(.step),
-  .lesson-body :global(.ta),
   .lesson-body :global(.lhero) {
     max-width: none;
   }

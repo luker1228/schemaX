@@ -13,11 +13,23 @@
       "skillPath": "skills/brandkit/SKILL.md",
       "computedHash": "b63012f3c3d21197e0185d3e9cc7ec40c589fb10e0b5a32a561739de31aa3f20"
     },
+    "grill-me": {
+      "source": "mattpocock/skills",
+      "sourceType": "github",
+      "skillPath": "skills/productivity/grill-me/SKILL.md",
+      "computedHash": "f361db4e15e6bfd562a9282b1dccda513910a50061f9e838ce017be9c69dde3f"
+    },
     "guizang-ppt-skill": {
       "source": "op7418/guizang-ppt-skill",
       "sourceType": "github",
       "skillPath": "SKILL.md",
       "computedHash": "ad696d69fe2f7f120e6e739168751f9f39c69b9fdb2ed14f40ec1e1066a2cfe0"
+    },
+    "hallmark": {
+      "source": "nutlope/hallmark",
+      "sourceType": "github",
+      "skillPath": "skills/hallmark/SKILL.md",
+      "computedHash": "8a8ecafd613f09e701330b5aa4a591ac539abb2605596df4a2394f03628d1d76"
     },
     "impeccable": {
       "source": "pbakaus/impeccable",

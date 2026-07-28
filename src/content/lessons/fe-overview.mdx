@@ -8,7 +8,7 @@ order: 1
 part: basics
 durationMinutes: 8
 lessonType: lesson
-presentation: board
+presentation: scroll
 hero:
   line1: 页面
   badge: 三件套
@@ -34,12 +34,12 @@ import LayerMatchQuizIsland from '../../components/course/LayerMatchQuizIsland.a
     浏览器里的每一个页面，都可以拆成三层，就像开一家小店：  
     <strong>HTML 是骨架</strong>——店里有没有货架、收银台、购买按钮，先有这些「结构」，才知道店里有什么。  
     <strong>CSS 是装修</strong>——墙刷成黄色、灯箱字体多大、货架间距有多大，负责店里「长什么样」。  
-    <strong>JS 是神经</strong>——点橱窗弹出不同商品、点购买记下选择，让店「动起来」。  
+    <strong>JS 是神经</strong>——点橱窗弹出不同商品、选择购买商品数量，让店「动起来」。  
   </Note>
 </StepCard>
 
 <StepCard num="FM-02" label="HTML">
-  <StepSplit>
+  <StepSplit layout="aside">
     <SectionHead line1="HTML · 骨架" line2="先决定「店里有什么」" />
     <p class="m-0 text-base leading-relaxed">
       {'比如你想在小店里'}
@@ -47,11 +47,6 @@ import LayerMatchQuizIsland from '../../components/course/LayerMatchQuizIsland.a
       {
         '——这就是在动骨架，该改的是 HTML：多出一个可点击的结构，浏览器才知道「这里有一个购买动作入口」。'
       }
-    </p>
-    <p class="m-0 text-sm leading-relaxed opacity-80">
-      {'右边是'}
-      <strong>{'只有结构、还没装修'}</strong>
-      {'的店：标题、说明、货架列表、购买链接——全是 HTML 骨架。'}
     </p>
     <Preview slot="figure" label="骨架 · 无 CSS" lang="html">
       <div class="flex w-full max-w-xs flex-col gap-3">
@@ -71,18 +66,13 @@ import LayerMatchQuizIsland from '../../components/course/LayerMatchQuizIsland.a
 </StepCard>
 
 <StepCard num="FM-03" label="CSS">
-  <StepSplit>
+  <StepSplit layout="aside">
     <SectionHead line1="CSS · 装修" line2="决定店里「长什么样」" />
     <p class="m-0 text-base leading-relaxed">
       {'比如你想把'}
       <strong>{'店面改成黄色'}</strong>
       {
         '——这就是装修，该改的是 CSS：背景色、强调色、边框。购买按钮还在，商品列表还在，只是整店看起来换了风格。'
-      }
-    </p>
-    <p class="m-0 text-sm leading-relaxed opacity-80">
-      {
-        '右边是装修好的店：黄底、徽章、硬边列表、按钮——骨架没变，变的是「长什么样」。'
       }
     </p>
     <Card slot="figure" shadow="lg" class="w-full bg-primary">
@@ -134,47 +124,27 @@ import LayerMatchQuizIsland from '../../components/course/LayerMatchQuizIsland.a
 </StepCard>
 
 <StepCard num="FM-04" label="JS">
-  <StepSplit wide>
-    <SectionHead line1="JS · 神经" line2="感知输入，更新状态，驱动界面变化" />
+  <StepSplit layout="aside">
+    <SectionHead line1="JS · 神经" line2="监听事件，驱动状态" />
     <p class="m-0 text-base leading-relaxed">
       {
-        '神经回答的是行为：用户点了什么？当前是加载中还是失败？列表新增了一项后 DOM 怎么变？没有神经，页面只是海报；有了神经，它才是可操作的工具。'
+        '神经回答的是行为：用户点了什么？鼠标滑动到了哪里，这些被称为事件'
       }
     </p>
     <p class="m-0 text-base leading-relaxed">
       {'比如你想'}
-      <strong>{'点小店橱窗，弹出不同的商品'}</strong>
+      <strong>{'点小店橱窗的商品，下方显示商品的一段描述和购买按钮'}</strong>
       {
-        '——这就是神经在干活：监听到点击，换掉当前展示的商品数据，再刷新那一块界面。骨架上已有橱窗和商品位，装修决定弹层长什么样，但「点了 → 换成哪件货」是 JS。'
+        '——这就是神经在干活：监听到点击事件，驱动状态，触发界面发生新的变化。'
       }
-    </p>
-    <p class="m-0 text-sm leading-relaxed opacity-80">
-      {'对后端同学最有用的不是「背 API」，而是三件事：'}
-      <strong>{'事件'}</strong>
-      {'（谁触发了）、'}
-      <strong>{'状态'}</strong>
-      {'（现在记着什么）、'}
-      <strong>{'渲染'}</strong>
-      {'（状态变了界面怎么变）。这和接口里的 request → store → response 心智很像。'}
     </p>
     <ShopNerveDemoIsland slot="figure" />
   </StepSplit>
 </StepCard>
 
 <StepCard num="FM-05" label="练习">
-  <StepSplit wide>
+  <StepSplit layout="stack" class="step-split--centered">
     <SectionHead line1="小测 · 该改哪一层" line2="把需求连到 HTML / CSS / JS" />
-    <p class="m-0 text-base leading-relaxed">
-      {'老板丢来三条改店需求：'}
-      <strong>{'缺了商品'}</strong>
-      {'、'}
-      <strong>{'茶杯换成白色'}</strong>
-      {'、'}
-      <strong>{'蛋糕数量变多'}</strong>
-      {
-        '。先想清是骨架、装修还是神经，再动手或指挥 AI——右边点选连线，全对才过关。'
-      }
-    </p>
     <LayerMatchQuizIsland slot="figure" />
   </StepSplit>
 </StepCard>

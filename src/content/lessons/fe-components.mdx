@@ -1,20 +1,20 @@
 ---
-title: 组件认知·基础 UI 词汇表
-description: 只讲基础组件：Card、Button、Form、Input、Modal、Drawer、Table、Loading/Empty。用后端类比建立词汇，区块级（Hero / Navbar）见进阶。
+title: 框架与组件·基础 UI 词汇表
+description: 所有代码的本质是高效稳定的工程化，于是框架（React + TypeScript）应运而生——它把界面拆成组件。本节先认框架，再认最基础的 UI 组件词汇（Card、Button 详讲 + 速查表），末尾 quiz 把场景连到组件名。
 slug: fe-components
 status: published
 course: frontend-handbook
-order: 7
+order: 5
 part: basics
-durationMinutes: 10
+durationMinutes: 12
 lessonType: lesson
-presentation: board
+presentation: scroll
 hero:
-  line1: 先认基础组件
-  line2: 再和 AI 说
-  badge: 前端话
-  pillFill: 基础组件 · VOCAB
-  pillOutline: 基础篇 · 会叫名字
+  line1: 框架与组件
+  line2: 站在
+  badge: 前人肩膀
+  pillFill: React · 组件词汇
+  pillOutline: 基础篇 · 从框架到 UI
 ---
 
 import StepCard from '../../components/course/StepCard.astro';
@@ -22,256 +22,181 @@ import StepSplit from '../../components/course/StepSplit.astro';
 import SectionHead from '../../components/course/SectionHead.astro';
 import Note from '../../components/course/Note.astro';
 import Preview from '../../components/course/Preview.astro';
-import Takeaway from '../../components/course/Takeaway.astro';
+import DocTable from '../../components/design-system/DocTable.astro';
 import Card from '../../components/design-system/Card.astro';
 import Button from '../../components/design-system/Button.astro';
-import Badge from '../../components/design-system/Badge.astro';
 
 <StepCard num="CMP-01" label="核心">
-  <SectionHead line1="先认识基础组件" line2="可复用的最小零件" />
-  <Note tag="核心">
-    这页是<strong>基础组件词汇表</strong>——按钮、输入框、卡片这类能嵌进任何页面的小零件。
-    每个组件答三件事：1）是什么；2）后端怎么类比；3）怎么一句话告诉 AI。
-    <strong>区块级</strong>组件（Hero 主视觉、Navbar 顶栏、Sidebar 侧栏等）体积大、管整页骨架，放到进阶篇专门讲。
+  <SectionHead line1="框架为什么存在" line2="高效稳定的工程化催生出来的" />
+  <Note tag="本质">
+    所有代码的本质，都是为了<strong>高效、稳定的工程化</strong>——让人能更快把东西做出来、做稳，还能多人协作、长期维护。规模一大，光靠「三件套 + 原生 JS」从头手写就太累了，于是<strong>框架应运而生</strong>。
+  </Note>
+  <Note tag="智慧">
+    框架的本质就两件事：<strong>快速解决问题</strong>，以及<strong>积累前人的智慧</strong>。它把无数人踩过的坑、总结出来的最佳实践，沉淀成默认行为和现成的轮子——你不必重新发明一切，站在前人肩膀上往下走就行。
+  </Note>
+  <Note tag="组件化">
+    而前端框架最本质的一件事，是<strong>组件化</strong>——把页面拆成一块块独立的小积木，<strong>像搭积木一样拼出整页</strong>。到了 <strong>AI 时代</strong>，这一点被彻底放大：你不必亲手砌每一块积木，<strong>只需描述「我要什么组件、它该干什么」</strong>，剩下的交给 AI。所以认得组件、说清组件，比会写组件更重要——这正是这门课的重心。
+  </Note>
+  <Note tag="本节">
+    本节先认框架（具体就是 <strong>React + TypeScript</strong>），再认它拆出来的<strong>基础组件</strong>——按钮、卡片这些 UI 词汇。
   </Note>
 </StepCard>
 
-<StepCard num="CMP-02" label="Card 卡片">
-  <StepSplit>
-    <SectionHead line1="Card 卡片" line2="像接口返回的一条资源摘要" />
+<StepCard num="CMP-02" label="React">
+  <StepSplit layout="aside">
+    <SectionHead line1="React" line2="把界面拆成一个个组件" />
     <p class="m-0 text-base leading-relaxed">
-      {'展示对象的核心信息（头像/标题/元数据/操作）。'}
+      {'React 是目前最主流的前端框架之一。它的核心思想是把界面拆成一个个'}
+      <strong>{'组件（Component）'}</strong>
+      {'——每个组件管自己的一小块界面和状态，拼起来就是整页。你只需描述「界面现在该长什么样」，不必手动去改 DOM。'}
+    </p>
+    <p class="m-0 text-base leading-relaxed">
+      {'想入门，从 '}
+      <a href="https://react.dev" target="_blank" rel="noopener noreferrer">React 官网 ↗</a>
+      {' 的「Learn」教程开始。'}
+    </p>
+    <Preview slot="figure" label="一个组件长这样" lang="jsx" code={`function Button() {\n  return <button>购买</button>;\n}`} />
+  </StepSplit>
+</StepCard>
+
+<StepCard num="CMP-03" label="TypeScript">
+  <StepSplit layout="aside">
+    <SectionHead line1="TypeScript" line2="给 JavaScript 加类型护栏" />
+    <p class="m-0 text-base leading-relaxed">
+      {'TypeScript（TS）是 JavaScript 的超集——在 JS 上加了一套'}
+      <strong>{'类型系统'}</strong>
+      {'。变量标上类型，写错（比如把数字当字符串用）在编码时就能报错，不必等运行时才炸。大型项目几乎都用它，图的就是一个「稳」。'}
+    </p>
+    <p class="m-0 text-base leading-relaxed">
+      {'想入门，从 '}
+      <a href="https://www.typescriptlang.org" target="_blank" rel="noopener noreferrer">TypeScript 官网 ↗</a>
+      {' 开始。'}
+    </p>
+    <Preview slot="figure" label="类型标注长这样" lang="ts" code={`let count: number = 1;\nlet shopName: string = "邻里小卖部";`} />
+  </StepSplit>
+</StepCard>
+
+<StepCard num="CMP-04" label="组件">
+  <SectionHead line1="先认基础组件" line2="界面最小的可复用零件" />
+  <Note tag="承接">
+    React 把界面拆成一个个<strong>组件</strong>——这一节就认最基础的那几个：按钮、输入框、卡片这类能嵌进任何页面的小零件，是 UI 的「词汇表」。每个组件答三件事：是什么、怎么用、怎么一句话告诉 AI。
+  </Note>
+  <Note tag="范围">
+    本节<strong>只详讲一个最典型的组件</strong>（Card），其余常用组件用一张速查表带过。区块级组件（Hero 主视觉、Navbar 顶栏、Sidebar 侧栏）体积大、管整页骨架，放到进阶篇。
+  </Note>
+</StepCard>
+
+<StepCard num="CMP-05" label="Card 卡片">
+  <StepSplit layout="aside">
+    <SectionHead line1="Card 卡片" line2="把一个对象的信息打包成一块" />
+    <p class="m-0 text-base leading-relaxed">
+      {'展示一个对象的核心信息——商品图、名字、价格、操作。'}
+      <strong>{'一个卡片 = 一个对象'}</strong>
+      {'（一件商品、一个用户、一条订单）。它是 UI 词汇里最典型的组件，按钮、标签都能嵌进来。'}
     </p>
     <details style="margin-top: 0;">
       <summary style="cursor: pointer; font-weight: 600;">{'给 AI 的描述模板'}</summary>
       <p class="m-0 mt-2 text-sm leading-relaxed opacity-80">
-        {'请生成一个用户信息卡片，包含头像、用户名、角色、状态标签和操作按钮。卡片需要有边框和阴影效果。'}
+        {'请生成一个商品卡片，包含商品图、名称、价格和购买按钮，带黑边和硬阴影。'}
       </p>
     </details>
     <Preview slot="figure">
-      <Card style={{ maxWidth: '280px' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '12px' }}>
-          <div style={{ width: '40px', height: '40px', borderRadius: '50%', background: 'var(--sx-sys-color-beige)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 700 }}>张</div>
+      <Card style={{ maxWidth: '240px' }}>
+        <div style={{ height: '88px', background: 'var(--sx-sys-color-beige)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '2.25rem', marginBottom: '12px' }}>☕</div>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '12px' }}>
           <div>
-            <div style={{ fontWeight: 700 }}>张三</div>
-            <div style={{ fontSize: '0.85rem', opacity: 0.7 }}>管理员</div>
+            <div style={{ fontWeight: 700 }}>手冲咖啡</div>
+            <div style={{ fontFamily: 'var(--sx-sys-font-family-mono)', fontWeight: 700, fontSize: '0.95rem' }}>¥28</div>
           </div>
-          <Badge variant="success">在线</Badge>
-        </div>
-        <div style={{ display: 'flex', gap: '8px' }}>
-          <Button variant="primary" size="sm">编辑</Button>
-          <Button variant="outline" size="sm">详情</Button>
+          <Button variant="primary" size="sm">购买</Button>
         </div>
       </Card>
     </Preview>
   </StepSplit>
 </StepCard>
 
-<StepCard num="CMP-03" label="Button 按钮">
-  <StepSplit>
-    <SectionHead line1="Button 按钮" line2="像可触发动作的 RPC 入口" />
-    <p class="m-0 text-base leading-relaxed">
-      {'要区分主按钮（确认/提交）、次按钮（取消）、危险按钮（删除）。'}
-    </p>
-    <details style="margin-top: 0;">
-      <summary style="cursor: pointer; font-weight: 600;">{'给 AI 的描述模板'}</summary>
-      <p class="m-0 mt-2 text-sm leading-relaxed opacity-80">
-        {'请生成主按钮和次按钮两种样式，并包含默认、hover、disabled 三个状态。'}
-      </p>
-    </details>
-    <Preview slot="figure">
-      <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
-        <Button variant="primary">主操作</Button>
-        <Button variant="secondary">次要</Button>
-        <Button variant="outline">中性</Button>
-        <Button variant="danger">删除</Button>
-      </div>
-    </Preview>
-  </StepSplit>
+<StepCard num="CMP-06" label="速查" variant="reference">
+  <SectionHead line1="其余基础组件" line2="一行一句话，认名字就够" />
+  <DocTable label="基础组件速查">
+    <thead>
+      <tr>
+        <th>组件</th>
+        <th>干什么用</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="doc-props__name">Button 按钮</td>
+        <td class="doc-props__desc">触发动作，区分主 / 次 / 危险——一个界面里主按钮通常只有一个</td>
+      </tr>
+      <tr>
+        <td class="doc-props__name">Form 表单</td>
+        <td class="doc-props__desc">收集一组输入字段 + 校验 + 提交，像收集请求参数的结构体</td>
+      </tr>
+      <tr>
+        <td class="doc-props__name">Input 输入框</td>
+        <td class="doc-props__desc">用户往里填文字，常带 placeholder / 错误态 / 帮助文案</td>
+      </tr>
+      <tr>
+        <td class="doc-props__name">Modal 弹窗</td>
+        <td class="doc-props__desc">弹出挡住背景，必须先处理才能继续（删除 / 审批确认）</td>
+      </tr>
+      <tr>
+        <td class="doc-props__name">Drawer 抽屉</td>
+        <td class="doc-props__desc">从侧边滑出看详情，不阻断主流程</td>
+      </tr>
+      <tr>
+        <td class="doc-props__name">Table 表格</td>
+        <td class="doc-props__desc">成排成列展示用户 / 订单 / 日志等列表数据</td>
+      </tr>
+      <tr>
+        <td class="doc-props__name">Loading / Empty</td>
+        <td class="doc-props__desc">加载中骨架屏 / 空数据占位——页面状态机的一部分，<strong>提示词必须明说</strong></td>
+      </tr>
+    </tbody>
+  </DocTable>
+  <p class="m-0 text-base leading-relaxed">
+    {'不用记——认得名字、知道干什么用的，需要时能跟 AI 说清就行。'}
+  </p>
 </StepCard>
 
-<StepCard num="CMP-04" label="Form 表单">
-  <StepSplit>
-    <SectionHead line1="Form 表单" line2="像收集请求参数的结构体" />
-    <p class="m-0 text-base leading-relaxed">
-      {'承载输入字段、校验规则和提交动作。'}
-    </p>
-    <details style="margin-top: 0;">
-      <summary style="cursor: pointer; font-weight: 600;">{'给 AI 的描述模板'}</summary>
-      <p class="m-0 mt-2 text-sm leading-relaxed opacity-80">
-        {'请生成一个用户创建表单，包含名称、角色、邮箱和提交按钮，并在校验失败时显示错误信息。'}
-      </p>
-    </details>
-    <Preview slot="figure">
-      <form style={{ display: 'grid', gap: '12px', width: '100%', maxWidth: '320px' }}>
-        <div>
-          <label style={{ display: 'block', marginBottom: '4px', fontSize: '0.85rem', fontWeight: 600 }}>用户名</label>
-          <input type="text" placeholder="请输入用户名" style={{ width: '100%', padding: '8px 12px', border: '1px solid #000', boxSizing: 'border-box' }} />
-        </div>
-        <div>
-          <label style={{ display: 'block', marginBottom: '4px', fontSize: '0.85rem', fontWeight: 600 }}>邮箱</label>
-          <input type="email" placeholder="name@example.com" style={{ width: '100%', padding: '8px 12px', border: '1px solid #000', boxSizing: 'border-box' }} />
-        </div>
-        <div style={{ color: '#f9575c', fontSize: '0.85rem' }}>邮箱格式不正确</div>
-        <Button variant="primary">提交</Button>
-      </form>
-    </Preview>
-  </StepSplit>
-</StepCard>
-
-<StepCard num="CMP-05" label="Input 输入框">
-  <StepSplit>
-    <SectionHead line1="Input 输入框" line2="像结构体的可编辑字段" />
-    <p class="m-0 text-base leading-relaxed">
-      {'常常伴随 placeholder、错误态、帮助文本和焦点态。'}
-    </p>
-    <details style="margin-top: 0;">
-      <summary style="cursor: pointer; font-weight: 600;">{'给 AI 的描述模板'}</summary>
-      <p class="m-0 mt-2 text-sm leading-relaxed opacity-80">
-        {'请生成一个带 label、placeholder、错误提示和帮助文案的输入框组件。'}
-      </p>
-    </details>
-    <Preview slot="figure">
-      <div style={{ display: 'grid', gap: '16px' }}>
-        <input placeholder="默认输入框" style={{ padding: '8px 12px', border: '1px solid #000', minWidth: '200px' }} />
-        <input placeholder="错误状态" style={{ padding: '8px 12px', border: '2px solid #f9575c', minWidth: '200px' }} />
-        <input disabled placeholder="禁用状态" style={{ padding: '8px 12px', border: '1px solid #999', background: '#eee', minWidth: '200px' }} />
-      </div>
-    </Preview>
-  </StepSplit>
-</StepCard>
-
-<StepCard num="CMP-06" label="Modal 弹窗">
-  <StepSplit>
-    <SectionHead line1="Modal 弹窗" line2="像临时阻断流程的确认层" />
-    <p class="m-0 text-base leading-relaxed">
-      {'适合删除确认、审批确认、关键设置。弹出时背景变暗，必须先处理它才能继续。'}
-    </p>
-    <details style="margin-top: 0;">
-      <summary style="cursor: pointer; font-weight: 600;">{'给 AI 的描述模板'}</summary>
-      <p class="m-0 mt-2 text-sm leading-relaxed opacity-80">
-        {'点击删除按钮后弹出一个确认 Modal，包含标题、说明文案、取消按钮和确认按钮。点击遮罩或取消按钮关闭。'}
-      </p>
-    </details>
-    <Preview slot="figure">
-      <div style={{ position: 'relative', width: '100%', maxWidth: '400px', minHeight: '180px', background: 'rgba(0,0,0,0.3)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-        <Card style={{ width: '300px', zIndex: 2 }}>
-          <h4 style={{ margin: '0 0 8px' }}>确认删除</h4>
-          <p style={{ margin: '0 0 16px', fontSize: '0.9rem', opacity: 0.8 }}>此操作不可撤销，确定删除该用户吗？</p>
-          <div style={{ display: 'flex', gap: '8px', justifyContent: 'flex-end' }}>
-            <Button variant="outline" size="sm">取消</Button>
-            <Button variant="danger" size="sm">确认删除</Button>
-          </div>
-        </Card>
-      </div>
-    </Preview>
-  </StepSplit>
-</StepCard>
-
-<StepCard num="CMP-07" label="Drawer 抽屉">
-  <StepSplit>
-    <SectionHead line1="Drawer 抽屉" line2="像不跳转就展开的详情接口" />
-    <p class="m-0 text-base leading-relaxed">
-      {'从侧边滑出，适合查看详情、配置表单、日志。和 Modal 区别：不阻断主流程，可并排看上下文。'}
-    </p>
-    <details style="margin-top: 0;">
-      <summary style="cursor: pointer; font-weight: 600;">{'给 AI 的描述模板'}</summary>
-      <p class="m-0 mt-2 text-sm leading-relaxed opacity-80">
-        {'点击表格中的「查看详情」按钮后，从右侧打开一个 Drawer，展示当前用户的详细信息。'}
-      </p>
-    </details>
-    <Preview slot="figure">
-      <div style={{ position: 'relative', width: '100%', maxWidth: '400px', height: '180px', border: '1px solid #000', background: 'var(--sx-sys-color-bg-page)' }}>
-        <p style={{ padding: '12px', margin: 0 }}>主页面内容区...</p>
-        <div style={{ position: 'absolute', right: 0, top: 0, bottom: 0, width: '220px', borderLeft: '1px solid #000', background: '#fff', padding: '16px' }}>
-          <h4 style={{ margin: '0 0 8px' }}>用户详情</h4>
-          <p style={{ fontSize: '0.85rem', margin: '4px 0' }}>张三 · 管理员</p>
-          <p style={{ fontSize: '0.85rem', margin: '4px 0' }}>zhangsan@example.com</p>
-        </div>
-      </div>
-    </Preview>
-  </StepSplit>
-</StepCard>
-
-<StepCard num="CMP-08" label="Table 表格">
-  <StepSplit>
-    <SectionHead line1="Table 表格" line2="像批量资源视图" />
-    <p class="m-0 text-base leading-relaxed">
-      {'适合用户、订单、日志、任务等列表数据。'}
-    </p>
-    <details style="margin-top: 0;">
-      <summary style="cursor: pointer; font-weight: 600;">{'给 AI 的描述模板'}</summary>
-      <p class="m-0 mt-2 text-sm leading-relaxed opacity-80">
-        {'请生成一个用户列表 Table，包含头像、姓名、角色、状态、创建时间和操作列。支持分页。'}
-      </p>
-    </details>
-    <Preview slot="figure">
-      <table>
-        <thead>
-          <tr>
-            <th>姓名</th><th>角色</th><th>状态</th><th>操作</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>张三</td><td>管理员</td><td><Badge variant="success">在线</Badge></td><td><a href="javascript:void(0)">编辑</a></td>
-          </tr>
-          <tr>
-            <td>李四</td><td>编辑者</td><td><Badge variant="default">离线</Badge></td><td><a href="javascript:void(0)">编辑</a></td>
-          </tr>
-        </tbody>
-      </table>
-    </Preview>
-  </StepSplit>
-</StepCard>
-
-<StepCard num="CMP-09" label="Loading / Empty">
-  <StepSplit>
-    <SectionHead line1="Loading / Empty State" line2="页面状态机的一部分" />
-    <p class="m-0 text-base leading-relaxed">
-      {'它们不是装饰，而是页面状态机的一部分——'}
-      <strong>{'AI 提示词必须明确这些状态'}</strong>
-      {'，否则它只会给你「理想数据」的界面。'}
-    </p>
-    <details style="margin-top: 0;">
-      <summary style="cursor: pointer; font-weight: 600;">{'给 AI 的描述模板'}</summary>
-      <p class="m-0 mt-2 text-sm leading-relaxed opacity-80">
-        {'表格加载时显示 Loading 骨架屏，空数据时显示 Empty State（含图标和引导文案），错误时显示错误提示条。三个状态都要。'}
-      </p>
-    </details>
-    <Preview slot="figure">
-      <Card style={{ maxWidth: '280px', textAlign: 'center' }}>
-        <div style={{ fontSize: '2rem', opacity: 0.4 }}>∅</div>
-        <p style={{ margin: '8px 0 4px', fontWeight: 600 }}>暂无数据</p>
-        <p style={{ margin: 0, fontSize: '0.85rem', opacity: 0.7 }}>还没有创建任何任务</p>
-      </Card>
-    </Preview>
-  </StepSplit>
-</StepCard>
-
-<Takeaway
-  num="CMP-10"
-  label="总结"
-  line1="基础组件会叫名"
-  line2="区块级去进阶"
-  note="基础组件是可复用的小零件；Hero / Navbar / Sidebar 是整页区块，进阶篇单独建词。"
->
-  <ul>
-    <li>
-      <strong>展示 / 容器：</strong>
-      Card · Modal · Drawer · Table
+<StepCard num="CMP-07" label="指路">
+  <SectionHead line1="要用时回这里" line2="认得名字 + 点链接" />
+  <Note tag="记住">
+    现在不必全会——<strong>认得名字、想深入时知道去哪儿</strong>就行。下面分两组：学框架、看组件。
+  </Note>
+  <p class="m-0 text-sm font-bold">{'学框架'}</p>
+  <ul class="m-0 mb-3 list-disc pl-5">
+    <li class="m-0 mb-1">
+      <a href="https://react.dev" target="_blank" rel="noopener noreferrer">React 官网 ↗</a>
+      {' —— 组件化框架'}
     </li>
-    <li>
-      <strong>操作 / 输入：</strong>
-      Button · Form · Input
+    <li class="m-0 mb-1">
+      <a href="https://www.typescriptlang.org" target="_blank" rel="noopener noreferrer">TypeScript 官网 ↗</a>
+      {' —— JS 的类型层'}
     </li>
-    <li>
-      <strong>状态：</strong>
-      Loading · Empty · Badge——提示词要写全
-    </li>
-    <li>
-      <strong>不在本课：</strong>
-      Hero · Navbar · Sidebar 等区块 → 进阶「页面区块」
+    <li class="m-0">
+      <a href="https://developer.mozilla.org/zh-CN/docs/Web" target="_blank" rel="noopener noreferrer">MDN Web Docs ↗</a>
+      {' —— 三件套的权威字典'}
     </li>
   </ul>
-</Takeaway>
+  <p class="m-0 text-sm font-bold">{'看更多组件'}</p>
+  <ul class="m-0 list-disc pl-5">
+    <li class="m-0 mb-1">
+      <a href="/design-system/components">本站设计系统组件 ↗</a>
+      {' —— 你正在看的这套，Neo-brutalist 风'}
+    </li>
+    <li class="m-0 mb-1">
+      <a href="https://ui.shadcn.com" target="_blank" rel="noopener noreferrer">shadcn/ui ↗</a>
+      {' —— 当前最流行的 React 组件方案，复制即用'}
+    </li>
+    <li class="m-0 mb-1">
+      <a href="https://www.radix-ui.com" target="_blank" rel="noopener noreferrer">Radix UI ↗</a>
+      {' —— 无样式、可访问性强的底层组件'}
+    </li>
+    <li class="m-0">
+      <a href="https://retroui.dev/components" target="_blank" rel="noopener noreferrer">RetroUI ↗</a>
+      {' —— Neo-brutalist 风格组件库，本站视觉就参考它'}
+    </li>
+  </ul>
+</StepCard>

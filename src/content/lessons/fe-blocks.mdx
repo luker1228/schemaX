@@ -4,11 +4,11 @@ description: 进阶词汇：区块级（block）组件——Hero 主视觉、Nav
 slug: fe-blocks
 status: published
 course: frontend-handbook
-order: 11
+order: 9
 part: advanced
 durationMinutes: 10
 lessonType: lesson
-presentation: board
+presentation: scroll
 hero:
   line1: 区块级组件
   line2: 拼的是整页
@@ -22,7 +22,6 @@ import StepSplit from '../../components/course/StepSplit.astro';
 import SectionHead from '../../components/course/SectionHead.astro';
 import Note from '../../components/course/Note.astro';
 import Preview from '../../components/course/Preview.astro';
-import Takeaway from '../../components/course/Takeaway.astro';
 import Button from '../../components/design-system/Button.astro';
 import Badge from '../../components/design-system/Badge.astro';
 
@@ -36,7 +35,7 @@ import Badge from '../../components/design-system/Badge.astro';
 </StepCard>
 
 <StepCard num="BLK-02" label="Hero">
-  <StepSplit>
+  <StepSplit layout="aside">
     <SectionHead line1="Hero 主视觉" line2="像接口文档的 Overview 首屏" />
     <p class="m-0 text-base leading-relaxed">
       {'页面最上方的大块介绍区：大标题、一句价值主张、主 CTA、可选配图或徽章。官网首页、落地页几乎都有；后台系统通常'}
@@ -81,7 +80,7 @@ import Badge from '../../components/design-system/Badge.astro';
 </StepCard>
 
 <StepCard num="BLK-03" label="Navbar">
-  <StepSplit>
+  <StepSplit layout="aside">
     <SectionHead line1="Navbar 导航栏" line2="像系统的全局入口（API 网关）" />
     <p class="m-0 text-base leading-relaxed">
       {'顶栏全局导航：Logo、一级菜单、搜索/登录等。类似 API 网关暴露的一组顶层路径，几乎每页都在。'}
@@ -121,7 +120,7 @@ import Badge from '../../components/design-system/Badge.astro';
 </StepCard>
 
 <StepCard num="BLK-04" label="Sidebar">
-  <StepSplit>
+  <StepSplit layout="aside">
     <SectionHead line1="Sidebar 侧边栏" line2="像后台应用的路由索引" />
     <p class="m-0 text-base leading-relaxed">
       {'帮助用户在不同模块之间切换，常见于管理后台；和 Navbar 可以同时存在（顶栏全局 + 侧栏模块）。'}
@@ -181,7 +180,7 @@ import Badge from '../../components/design-system/Badge.astro';
 </StepCard>
 
 <StepCard num="BLK-05" label="Footer">
-  <StepSplit>
+  <StepSplit layout="aside">
     <SectionHead line1="Footer 页脚" line2="像响应里的 meta / 版权尾巴" />
     <p class="m-0 text-base leading-relaxed">
       {'页面最底部的信息区：链接组、版权、备案号。官网和内容站常见；纯工具后台可以极简或没有。'}
@@ -240,26 +239,3 @@ import Badge from '../../components/design-system/Badge.astro';
     {' 则是这些区块的槽位。'}
   </p>
 </StepCard>
-
-<Takeaway
-  num="BLK-07"
-  label="总结"
-  line1="Block 管整页"
-  line2="Atom 管零件"
-  note="和 AI 对齐时：先区块名，再区块内部的基础组件，少返工。"
->
-  <ul>
-    <li>
-      <strong>常见区块：</strong>
-      Hero · Navbar · Sidebar · Footer（还有 Banner / FAQ 区等）
-    </li>
-    <li>
-      <strong>后台常见：</strong>
-      Navbar + Sidebar + 内容区（通常没有 Hero）
-    </li>
-    <li>
-      <strong>官网常见：</strong>
-      Navbar + Hero + 多段内容 + Footer
-    </li>
-  </ul>
-</Takeaway>

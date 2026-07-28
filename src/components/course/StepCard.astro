@@ -2,19 +2,25 @@
 // StepCard —— 课时内步骤分区（轻量）
 // 无白底/硬阴影/分隔线；靠编号徽章 + 标签分节。
 // 演示块（Preview / Note / 交互岛）各自保留硬边，不在外壳再套一层重卡。
-// presentation=board 时：外壳成为白板一页（data-lboard-slide），顶栏接管 num/label。
+// presentation=board / stepper 时：外壳成为一页（data-lboard-slide），顶栏接管 num/label。
 interface Props {
   /** 步骤编号，如 "HTML-01" "CSS-03"；同时作为锚点 id（小写） */
   num: string;
   /** 步骤标签，如 "核心" "标题" "练习" */
   label: string;
+  /**
+   * 概念单元变体：
+   * - default：上短讲解 + 下互动件（主力版式）
+   * - reference：速查页——放宽 measure、压紧间距，给密列表 / 对照表用
+   */
+  variant?: 'default' | 'reference';
 }
-const { num, label } = Astro.props;
+const { num, label, variant = 'default' } = Astro.props;
 const anchorId = num.toLowerCase();
 ---
 
 <section
-  class="step"
+  class:list={['step', variant === 'reference' && 'step--reference']}
   id={anchorId}
   data-lboard-slide
   data-num={num}
@@ -84,5 +90,11 @@ const anchorId = num.toLowerCase();
     line-height: 1.75;
     color: var(--sx-sys-color-text-soft);
     margin: 0;
+  }
+
+  /* 速查变体：压紧间距（密列表 / 对照表用）；宽度由 LessonBoard 统一给 72rem，
+   * 这里不再设 max-width（会被 LessonBoard 的高特异性规则盖掉，反而误导） */
+  .step--reference .step__body {
+    gap: 0.75rem;
   }
 </style>

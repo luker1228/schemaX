@@ -4,11 +4,11 @@ description: 12 条现成提示词——按页面生成、页面修改、组件�
 slug: fe-prompts
 status: published
 course: frontend-handbook
-order: 12
+order: 10
 part: advanced
 durationMinutes: 8
 lessonType: lesson
-presentation: board
+presentation: scroll
 hero:
   line1: Prompt
   line2: 讲到 AI
@@ -20,7 +20,6 @@ hero:
 import StepCard from '../../components/course/StepCard.astro';
 import SectionHead from '../../components/course/SectionHead.astro';
 import Note from '../../components/course/Note.astro';
-import Takeaway from '../../components/course/Takeaway.astro';
 
 <StepCard num="PR-01" label="核心">
   <SectionHead line1="Prompt Library" line2="把需求讲到 AI 真能执行" />
@@ -151,26 +150,3 @@ POST /api/projects
 4. 失败后展示错误信息
 5. 校验缺失字段后再允许提交`}</code></pre>
 </StepCard>
-
-<Takeaway
-  num="PR-05"
-  label="总结"
-  line1="好提示词"
-  line2="按三层把需求说死"
-  note="骨架（结构）· 装饰（样式）· 神经（交互与状态）。再补上 loading / empty / error，AI 才改得对。"
->
-  <ul>
-    <li>
-      <strong>页面生成：</strong>
-      结构 + 关键组件 + 响应式
-    </li>
-    <li>
-      <strong>页面修改：</strong>
-      改哪里、保留哪里、验收标准
-    </li>
-    <li>
-      <strong>接口对接：</strong>
-      路径、字段、loading / 空 / 错
-    </li>
-  </ul>
-</Takeaway>

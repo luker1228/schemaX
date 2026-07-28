@@ -1,24 +1,19 @@
 ---
-// StepSplit —— 课时「讲解 + 示意」可变布局
+// StepSplit —— 课时「讲解 + 1～2 示意」三档布局（扫课统一）
 //
-// 不同课、不同节示意形态不同，用 layout 显式指定，或 layout="auto" 按 figure 内容推断。
+// layout（请显式写上，少用 auto）:
+//   aside —— 左文 · 右小图（单 Preview / 单 Card）
+//   rail  —— 左窄讲解 · 右大舞台（交互岛 / 宽 Demo / 练习）
+//   stack —— 上短文 · 下全宽（CodeCompare / LayerPair / 多 Preview）
+//   auto  —— 按 figure 内容推断（兜底）
+//   fill  —— 少用；讲解顶带 + figure 尽量满宽
 //
-// layout:
-//   auto  —— 默认。按 figure 内组件自动选 aside / rail / stack
-//   aside —— 左文右小图（Badge 卡、单 Preview）
-//   rail  —— 左窄讲解 + 右 1fr 大示意（交互岛、宽 Demo）
-//   stack —— 上讲解 + 下全宽舞台（CodeCompare / LayerPair 等）
-//   fill  —— 整页舞台感：讲解紧凑顶栏，figure 尽量满宽
+// 兼容：wide → rail；stack 布尔 → stack
 //
-// 兼容旧写法：wide → rail，stack 布尔 → stack
-//
-// 用法：
-//   <StepSplit>                         <!-- auto -->
-//   <StepSplit layout="stack">
-//   <StepSplit wide>                    <!-- = rail -->
+//   <StepSplit layout="aside">
 //     <SectionHead ... />
 //     <p>...</p>
-//     <Preview slot="figure" />         <!-- 或 CodeCompare / 多块 -->
+//     <Preview slot="figure" />
 //   </StepSplit>
 
 export type StepSplitLayout = 'auto' | 'aside' | 'rail' | 'stack' | 'fill';
@@ -221,5 +216,19 @@ const layoutClass = `step-split--${layout}`;
       > :global(p) {
       max-width: none;
     }
+  }
+
+  /*
+   * centered 修饰：讲解块水平居中（用于 stack 下「上文 + 居中交互」，
+   * 如练习题：讲解居中与下方 quiz 卡片对齐）。显式传入 class 才生效，
+   * 不影响其它 stack 页面。
+   */
+  .step-split--centered .step-split__copy {
+    align-items: center;
+    text-align: center;
+    margin-inline: auto;
+  }
+  .step-split--centered :global(.sec-head__title) {
+    align-items: center;
   }
 </style>

@@ -63,7 +63,10 @@ const hasMeta = Boolean(pillFill || pillOutline || readTime);
     justify-content: space-between;
     align-items: flex-end;
     width: 100%;
-    margin: 0;
+    /* 与 .lesson-body 同一阅读栏对齐（scroll 模式）；board 封面由
+       .lboard__slide--cover .lhero（特异性更高）覆盖为 52rem，不受影响 */
+    max-width: var(--sx-article-width-reading);
+    margin-inline: auto;
     padding: 1.75rem 0 1.75rem;
     box-sizing: border-box;
     border-bottom: var(--sx-sys-border-width) solid var(--sx-sys-color-border);

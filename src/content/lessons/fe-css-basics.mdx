@@ -1,20 +1,19 @@
 ---
-title: CSS 可以控制什么
-description: 不先背语法，先建立总图：CSS 管字号、颜色、留白、排列、状态反馈……改的是「长什么样」，不是「有什么结构」。
+title: CSS 入门
+description: 先从视觉理解 CSS——它决定页面「长什么样」。借 Figma 属性面板点破 CSS 就是「属性：值」，过一遍常见属性，再把每个元素看成盒子（内容→padding→border→margin），最后理解 CSS 属性如何顺着 HTML 父子结构继承。
 slug: fe-css-basics
 status: published
 course: frontend-handbook
-order: 4
+order: 3
 part: basics
 durationMinutes: 12
 lessonType: lesson
-presentation: board
+presentation: scroll
 hero:
-  line1: CSS
-  line2: 在控制
-  badge: 什么
-  pillFill: 外观 · 排版 · 状态
-  pillOutline: 基础篇 · CSS 能控什么
+  line1: CSS入门
+  line2: 装修
+  pillFill: 盒子 · 颜色 · 排列
+  pillOutline: 基础篇 · CSS 入门
 ---
 
 import StepCard from '../../components/course/StepCard.astro';
@@ -22,339 +21,158 @@ import StepSplit from '../../components/course/StepSplit.astro';
 import SectionHead from '../../components/course/SectionHead.astro';
 import Note from '../../components/course/Note.astro';
 import Preview from '../../components/course/Preview.astro';
-import Takeaway from '../../components/course/Takeaway.astro';
+import PropsPair from '../../components/course/PropsPair.astro';
 import DocTable from '../../components/design-system/DocTable.astro';
+import Card from '../../components/design-system/Card.astro';
 import Button from '../../components/design-system/Button.astro';
 
-<StepCard num="CSS-01" label="核心">
-  <SectionHead line1="CSS的作用是控制网站的装修" />
+<StepCard num="CSS-01" label="视觉">
+  <SectionHead line1="先看见" line2="网页「长什么样」由什么决定" />
+  <Note tag="视角">
+    上一节你学会了 <strong>HTML</strong>——它决定页面<strong>有什么</strong>（标题、段落、按钮）。
+    但同样一个按钮，可以长得朴素，也可以长得精致：颜色、大小、留白、圆角……这些<strong>「长什么样」</strong>的事，归 <strong>CSS</strong> 管。
+    先别管语法，只用眼睛看：下面是<strong>同一个卡片</strong>的素颜版和装修版——中间差的，就是 CSS。
+  </Note>
+  <Preview label="同一个卡片：素颜（默认样式） vs 装修后（加了 CSS）">
+    <div style={{ display: 'flex', gap: '20px', flexWrap: 'wrap', alignItems: 'flex-start' }}>
+      <div style={{ flex: '1 1 180px', minWidth: '180px' }}>
+        <div
+          style={{
+            fontFamily: 'var(--sx-sys-font-family-mono)',
+            fontSize: '0.6875rem',
+            fontWeight: 800,
+            letterSpacing: '0.04em',
+            marginBottom: '0.5rem',
+            color: 'var(--sx-sys-color-text-muted)',
+          }}
+        >
+          素颜 · 还没穿 CSS
+        </div>
+        <div style={{ border: '1px dashed var(--sx-sys-color-text-muted)', padding: '1rem' }}>
+          <h1 style={{ margin: '0 0 0.25rem', fontSize: '1.25rem', fontWeight: 700 }}>邻里小卖部</h1>
+          <p style={{ margin: '0 0 0.5rem' }}>手冲咖啡 · ¥28</p>
+          <button type="button">购买</button>
+        </div>
+      </div>
+      <div style={{ flex: '1 1 180px', minWidth: '180px' }}>
+        <div
+          style={{
+            fontFamily: 'var(--sx-sys-font-family-mono)',
+            fontSize: '0.6875rem',
+            fontWeight: 800,
+            letterSpacing: '0.04em',
+            marginBottom: '0.5rem',
+            color: 'var(--sx-sys-color-text-muted)',
+          }}
+        >
+          装修 · 穿上 CSS
+        </div>
+        <Card shadow="md" class="flex max-w-xs flex-col gap-2 bg-primary p-5">
+          <h1 class="m-0 border-b-2 border-ink pb-2 text-2xl font-extrabold tracking-tight">邻里小卖部</h1>
+          <p class="m-0 text-sm text-ink/70">手冲咖啡 · ¥28</p>
+          <div class="mt-1"><Button variant="outline" size="sm">购买</Button></div>
+        </Card>
+      </div>
+    </div>
+  </Preview>
   <Note tag="核心">
-    <strong>HTML</strong> 决定页面<strong>有什么</strong>（标题、段落、按钮……）。
-    <strong>CSS</strong> 决定这些东西<strong>颜色，大小，位置</strong>。
+    <strong>HTML</strong> 决定页面<strong>有什么</strong>；<strong>CSS</strong> 决定这些东西<strong>颜色、大小、位置</strong>——也就是「装修」。
+    接下来几节，就拆开看这层装修由哪些零件组成。
   </Note>
 </StepCard>
 
-<StepCard num="CSS-02" label="总表">
-  <SectionHead line1="一张控制清单" line2="CSS 管的几大类" />
-  <p class="m-0 text-base leading-relaxed">{'先记大类，属性名以后再查：'}</p>
-
-  <DocTable label="CSS 能控制什么">
-    <thead>
-      <tr>
-        <th>控制什么</th>
-        <th>常见属性（举例）</th>
-        <th>你在页面上看到的变化</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td class="doc-props__name">文字</td>
-        <td>
-          <code>font-size</code> · <code>font-weight</code> · <code>line-height</code>
-        </td>
-        <td class="doc-props__desc">标题多大、正文字多重、行距疏密</td>
-      </tr>
-      <tr>
-        <td class="doc-props__name">颜色</td>
-        <td>
-          <code>color</code> · <code>background</code> · <code>border-color</code> ·{' '}
-          <code>box-shadow</code>（含阴影色）
-        </td>
-        <td class="doc-props__desc">字色、底色、边框色、阴影色</td>
-      </tr>
-      <tr>
-        <td class="doc-props__name">留白与边框</td>
-        <td>
-          <code>padding</code> · <code>margin</code> · <code>border</code>
-        </td>
-        <td class="doc-props__desc">内部松紧、块与块间距、有没有描边</td>
-      </tr>
-      <tr>
-        <td class="doc-props__name">尺寸与形状</td>
-        <td>
-          <code>width</code> · <code>height</code> · <code>border-radius</code>
-        </td>
-        <td class="doc-props__desc">多宽多高、圆角还是直角</td>
-      </tr>
-      <tr>
-        <td class="doc-props__name">排列</td>
-        <td>
-          <code>display</code> · <code>flex-direction</code> · <code>gap</code>
-        </td>
-        <td class="doc-props__desc">横排/竖排、间距、是否并排</td>
-      </tr>
-      <tr>
-        <td class="doc-props__name">状态反馈</td>
-        <td>
-          <code>:hover</code> · <code>:focus</code> · <code>:disabled</code>
-        </td>
-        <td class="doc-props__desc">鼠标悬停、聚焦、禁用时外观变化</td>
-      </tr>
-    </tbody>
-  </DocTable>
-</StepCard>
-
-<StepCard num="CSS-03" label="文字">
-  <StepSplit wide>
-    <SectionHead line1="控制文字" line2="size 管多大 · weight 管多粗" />
-    <Note tag="区分">
-      <code>font-size</code> 和 <code>font-weight</code> 常被混成「字变大一点」——其实管的是两件事：
-      <br />
-      <strong>size（字号）</strong>：字占的面积——大 / 小。
-      <strong>weight（字重）</strong>：笔画的粗细——细 / 粗（如 400 常规、700 加粗）。
-      可以「大而细」，也可以「小而粗」；标题往往是<strong>又大又粗</strong>，说明文常常是<strong>中等字号 + 常规字重</strong>。
+<StepCard num="CSS-02" label="对照">
+  <StepSplit layout="stack">
+    <SectionHead line1="Figma 属性面板" line2="写成 CSS" />
+    <p class="m-0 text-base leading-relaxed">
+      {'选中一个按钮图层：左边是 Figma 右侧'}
+      <strong>{'属性面板'}</strong>
+      {
+        '，右边是对应的 CSS——字段和声明一一对应。悬停任一侧，另一侧会一起亮起。'
+      }
+    </p>
+    <PropsPair slot="figure" id="cssPair" propsTitle="Design · 属性" fileName="style.css" />
+    <Note tag="直觉">
+      CSS 的属性名几乎跟 Figma 一样：<code>padding</code> = 内边距、<code>border-radius</code> = 圆角、<code>background</code> = 填充色、<code>font-size</code> = 字号……
+      <strong>会用 Figma，就已经认识大半 CSS 属性了。</strong>
     </Note>
-    <p class="m-0 text-base leading-relaxed">
-      <strong>{'只改 size：'}</strong>
-      {'同一字重，字号从 16 → 32，占位变大，更抢视线。'}
-    </p>
-    <p class="m-0 text-base leading-relaxed">
-      <strong>{'只改 weight：'}</strong>
-      {'同一字号，从 400 → 700，笔画变粗，更「压得住」，但不一定更大。'}
-    </p>
-    <p class="m-0 text-base leading-relaxed">
-      <strong>{'一起用：'}</strong>
-      {'标题常用「较大 size + 较重 weight」；说明文用「较小 size + 常规 weight」。'}
-    </p>
-    <div slot="figure" class="flex flex-col gap-4">
-      <Preview label="字号 size（字重同为 400）">
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-          <div style={{ fontSize: '16px', fontWeight: 400 }}>用户资料 · size 16 / weight 400</div>
-          <div style={{ fontSize: '32px', fontWeight: 400, lineHeight: 1.15 }}>
-            用户资料 · size 32 / weight 400
-          </div>
-        </div>
-      </Preview>
-      <Preview label="字重 weight（字号同为 16px）">
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-          <div style={{ fontSize: '16px', fontWeight: 400 }}>用户资料 · size 16 / weight 400（常规）</div>
-          <div style={{ fontSize: '16px', fontWeight: 700 }}>用户资料 · size 16 / weight 700（加粗）</div>
-        </div>
-      </Preview>
-      <Preview label="标题 vs 说明">
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-          <div style={{ fontSize: '24px', fontWeight: 700, lineHeight: 1.2 }}>用户资料</div>
-          <div style={{ fontSize: '14px', fontWeight: 400, opacity: 0.75 }}>
-            姓名 · 张三 · 管理员（说明：小 + 细）
-          </div>
-        </div>
-      </Preview>
-    </div>
   </StepSplit>
 </StepCard>
 
-<StepCard num="CSS-04" label="颜色">
-  <StepSplit wide>
-    <SectionHead line1="控制颜色" line2="以前景色 · 背景色 · 边框色拆开看" />
-    <Note tag="四个槽位">
-      拿一个 <strong>button</strong> 举例：你看到的「按钮颜色」常拆成多块（CSS 各管一属性）：
-      <br />
-      <strong>前景色</strong> <code>color</code>——字 / 图标的颜色。
-      <strong>背景色</strong> <code>background</code>（或 <code>background-color</code>）——按钮底的颜色。
-      <strong>边框色</strong> <code>border-color</code>（常和 <code>border</code> 一起写）——描边的颜色。
-      <strong>阴影色</strong>——写在 <code>box-shadow</code> 里（偏移 + 模糊 + <strong>颜色</strong>），不是单独的
-      <code>shadow-color</code> 属性；本站硬阴影多是黑影，也可以是半透明灰、强调色。
-      四者可独立组合：结构仍是同一个 <code>{'<button>'}</code>。
-    </Note>
-    <p class="m-0 text-base leading-relaxed">
-      <strong>
-        {'只改前景色 '}
-        <code>color</code>
-        {'：'}
-      </strong>
-      {'底和边不变，字变色。'}
-    </p>
-    <p class="m-0 text-base leading-relaxed">
-      <strong>
-        {'只改背景色 '}
-        <code>background</code>
-        {'：'}
-      </strong>
-      {'字色可以固定，底变了气质就变（主按钮常靠这个）。'}
-    </p>
-    <p class="m-0 text-base leading-relaxed">
-      <strong>
-        {'只改边框色 '}
-        <code>border-color</code>
-        {'：'}
-      </strong>
-      {'线框按钮常靠描边定义身份，底可以透明或接近纸色。'}
-    </p>
-    <p class="m-0 text-base leading-relaxed">
-      <strong>
-        {'阴影色（写在 '}
-        <code>box-shadow</code>
-        {' 里）：'}
-      </strong>
-      {
-        '同一形状的按钮，阴影可以是纯黑硬影（粗野/立体）、半透明灰（柔和浮起），或带一点色相的影。改的是「光影颜色」，不是字也不是底。'
-      }
-    </p>
-    <p class="m-0 text-base leading-relaxed">
-      <strong>{'合在一起：'}</strong>
-      {
-        '主操作 = 强调底 + 对比字色 ± 硬/软影；危险 = 红系前景/边/底/影；线框 = 透明底 + 描边。都是多槽位组合。'
-      }
-    </p>
-    <div slot="figure" class="flex flex-col gap-4">
-      <Preview label="前景色 color（底/边相同）">
-        <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap', alignItems: 'center' }}>
-          <button
-            type="button"
-            style={{
-              padding: '8px 14px',
-              fontWeight: 700,
-              cursor: 'pointer',
-              background: 'var(--sx-sys-color-bg-surface)',
-              border: '1px solid var(--sx-sys-color-border)',
-              color: 'var(--sx-sys-color-text-primary)',
-            }}
-          >
-            编辑 · 黑字
-          </button>
-          <button
-            type="button"
-            style={{
-              padding: '8px 14px',
-              fontWeight: 700,
-              cursor: 'pointer',
-              background: 'var(--sx-sys-color-bg-surface)',
-              border: '1px solid var(--sx-sys-color-border)',
-              color: 'var(--sx-sys-color-danger)',
-            }}
-          >
-            编辑 · 红字
-          </button>
-        </div>
-      </Preview>
-      <Preview label="背景色 background（字色相同）">
-        <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap', alignItems: 'center' }}>
-          <button
-            type="button"
-            style={{
-              padding: '8px 14px',
-              fontWeight: 700,
-              cursor: 'pointer',
-              color: 'var(--sx-sys-color-text-primary)',
-              border: '1px solid var(--sx-sys-color-border)',
-              background: 'var(--sx-sys-color-bg-surface)',
-            }}
-          >
-            编辑 · 白底
-          </button>
-          <button
-            type="button"
-            style={{
-              padding: '8px 14px',
-              fontWeight: 700,
-              cursor: 'pointer',
-              color: 'var(--sx-sys-color-text-primary)',
-              border: '1px solid var(--sx-sys-color-border)',
-              background: 'var(--sx-sys-color-accent)',
-            }}
-          >
-            编辑 · 黄底
-          </button>
-        </div>
-      </Preview>
-      <Preview label="边框色 border-color（底透明）">
-        <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap', alignItems: 'center' }}>
-          <button
-            type="button"
-            style={{
-              padding: '8px 14px',
-              fontWeight: 700,
-              cursor: 'pointer',
-              background: 'transparent',
-              color: 'var(--sx-sys-color-text-primary)',
-              border: '2px solid var(--sx-sys-color-border)',
-            }}
-          >
-            编辑 · 黑边
-          </button>
-          <button
-            type="button"
-            style={{
-              padding: '8px 14px',
-              fontWeight: 700,
-              cursor: 'pointer',
-              background: 'transparent',
-              color: 'var(--sx-sys-color-danger)',
-              border: '2px solid var(--sx-sys-color-danger)',
-            }}
-          >
-            删除 · 红边
-          </button>
-        </div>
-      </Preview>
-      <Preview label="阴影色 box-shadow（底/字/边相同）">
-        <div style={{ display: 'flex', gap: '20px', flexWrap: 'wrap', alignItems: 'center', padding: '8px 0' }}>
-          <button
-            type="button"
-            style={{
-              padding: '8px 14px',
-              fontWeight: 700,
-              cursor: 'pointer',
-              color: 'var(--sx-sys-color-text-primary)',
-              background: 'var(--sx-sys-color-accent)',
-              border: '1px solid var(--sx-sys-color-border)',
-              boxShadow: '3px 3px 0 0 var(--sx-sys-color-border)',
-            }}
-          >
-            编辑 · 黑硬影
-          </button>
-          <button
-            type="button"
-            style={{
-              padding: '8px 14px',
-              fontWeight: 700,
-              cursor: 'pointer',
-              color: 'var(--sx-sys-color-text-primary)',
-              background: 'var(--sx-sys-color-accent)',
-              border: '1px solid var(--sx-sys-color-border)',
-              boxShadow: '0 4px 12px color-mix(in srgb, var(--sx-sys-color-border) 28%, transparent)',
-            }}
-          >
-            编辑 · 柔灰影
-          </button>
-          <button
-            type="button"
-            style={{
-              padding: '8px 14px',
-              fontWeight: 700,
-              cursor: 'pointer',
-              color: 'var(--sx-sys-color-text-primary)',
-              background: 'var(--sx-sys-color-bg-surface)',
-              border: '1px solid var(--sx-sys-color-border)',
-              boxShadow: '3px 3px 0 0 var(--sx-sys-color-danger)',
-            }}
-          >
-            编辑 · 红硬影
-          </button>
-        </div>
-      </Preview>
-      <Preview label="组合：主 / 线框 / 危险（设计系统按钮）">
-        <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
-          <Button variant="primary" size="sm">主操作</Button>
-          <Button variant="outline" size="sm">线框</Button>
-          <Button variant="danger" size="sm">危险</Button>
-        </div>
-      </Preview>
-    </div>
-  </StepSplit>
+<StepCard num="CSS-03" label="属性">
+  <SectionHead line1="最常见的两类" line2="文字 · 颜色" />
+  <Note tag="两类">
+    CSS 属性有上百个，但最常打交道的就两类：<strong>文字</strong>（<code>font-size</code> 字号、<code>font-weight</code> 字重、<code>line-height</code> 行距）和<strong>颜色</strong>（<code>color</code> 字色、<code>background</code> 底色、<code>border-color</code> 边框色）。其余的——留白、排列、状态…遇到再查。
+  </Note>
+  <p class="m-0 text-base leading-relaxed">
+    {'不用背，需要时查 '}
+    <a href="https://developer.mozilla.org/zh-CN/docs/Web/CSS/Reference" target="_blank" rel="noopener noreferrer">MDN 的 CSS 属性参考 ↗</a>
+    {' 即可。'}
+  </p>
 </StepCard>
 
-<StepCard num="CSS-05" label="留白">
-  <StepSplit wide>
-    <SectionHead line1="控制留白" line2="padding 怎么拆" />
-    <Note tag="是什么">
-      <code>padding</code> 是<strong>内容到边框之间</strong>的内边距（盒子「肚子里」的空白）。
-      小 = 挤，大 = 松。它不是元素之间的间距——元素与元素之间多用
-      <code>margin</code> 或 flex 的 <code>gap</code>。
+<StepCard num="CSS-04" label="盒子">
+  <StepSplit layout="stack">
+    <SectionHead line1="盒子的世界" line2="每个元素都是从里到外的四层" />
+    <Note tag="核心">
+      在 CSS 眼里，按钮、卡片、标题……每个元素都是一个<strong>盒子（box）</strong>。盒子从里到外四层：
+      <strong>内容 content</strong> →
+      <strong>内边距 padding</strong> →
+      <strong>边框 border</strong> →
+      <strong>外边距 margin</strong>。
+      改「松紧、描边、和邻居的距离」，改的就是这几层——不是另起一套宇宙。
     </Note>
     <p class="m-0 text-base leading-relaxed">
-      <strong>{'按方向拆成四边'}</strong>
-      {'（各写各的，或用简写一次写完）：'}
+      {'在 DevTools 里选中一个元素，看到的「套盒图」就是右边这张结构（数值为 0 只表示当前这层没厚度）：'}
+    </p>
+    <DocTable label="四层各管什么">
+      <thead>
+        <tr>
+          <th>层</th>
+          <th>CSS</th>
+          <th>是什么</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="doc-props__name">content</td>
+          <td>
+            <code>width</code> / <code>height</code>（内容区）
+          </td>
+          <td class="doc-props__desc">真正放字、图、子节点的区域</td>
+        </tr>
+        <tr>
+          <td class="doc-props__name">padding</td>
+          <td>
+            <code>padding</code> · 四边
+          </td>
+          <td class="doc-props__desc">内容到边框之间的「肚子」空白</td>
+        </tr>
+        <tr>
+          <td class="doc-props__name">border</td>
+          <td>
+            <code>border</code> · <code>border-width</code>
+          </td>
+          <td class="doc-props__desc">描边墙的厚度与样式</td>
+        </tr>
+        <tr>
+          <td class="doc-props__name">margin</td>
+          <td>
+            <code>margin</code> · 四边
+          </td>
+          <td class="doc-props__desc">这个盒子和<strong>外面邻居</strong>之间的空隙</td>
+        </tr>
+      </tbody>
+    </DocTable>
+    <Note tag="别混">
+      <strong>padding</strong> = 盒子<strong>里面</strong>鼓起来；
+      <strong>margin</strong> = 盒子<strong>外面</strong>推开别人。
+      设计稿里 Auto Layout 的「Padding」多半对应 CSS 的 padding；
+      图层与图层之间的间距，更接近 margin 或父级的 <code>gap</code>。
+    </Note>
+    <p class="m-0 text-base leading-relaxed">
+      <strong>{'落到 padding 这一层：它怎么写？'}</strong>
+      {'可以按方向拆成四边，各写各的；也可一次写完（简写）。'}
     </p>
     <DocTable label="padding 四边">
       <thead>
@@ -438,6 +256,87 @@ import Button from '../../components/design-system/Button.astro';
       {'（左+右，在横排里相当于左右）。初学先掌握四边 + 简写即可。'}
     </p>
     <div slot="figure" class="flex flex-col gap-4">
+      <Preview label="盒子模型示意（margin → border → padding → content）">
+        <div
+          style={{
+            width: '100%',
+            maxWidth: '28rem',
+            margin: '0 auto',
+            padding: '1.25rem',
+            border: '2px dashed var(--sx-sys-color-text-muted)',
+            background: 'color-mix(in srgb, var(--sx-sys-color-danger) 18%, var(--sx-sys-color-bg-page))',
+            boxSizing: 'border-box',
+          }}
+        >
+          <div
+            style={{
+              fontFamily: 'var(--sx-sys-font-family-mono)',
+              fontSize: '0.6875rem',
+              fontWeight: 800,
+              letterSpacing: '0.04em',
+              marginBottom: '0.5rem',
+              color: 'var(--sx-sys-color-text-soft)',
+            }}
+          >
+            margin · 外边距
+          </div>
+          <div
+            style={{
+              padding: '1rem',
+              border: '2px solid color-mix(in srgb, var(--sx-sys-color-accent) 70%, var(--sx-sys-color-border))',
+              background: 'color-mix(in srgb, var(--sx-sys-color-accent) 22%, var(--sx-sys-color-bg-page))',
+              boxSizing: 'border-box',
+            }}
+          >
+            <div
+              style={{
+                fontFamily: 'var(--sx-sys-font-family-mono)',
+                fontSize: '0.6875rem',
+                fontWeight: 800,
+                letterSpacing: '0.04em',
+                marginBottom: '0.5rem',
+                color: 'var(--sx-sys-color-text-soft)',
+              }}
+            >
+              border · 边框
+            </div>
+            <div
+              style={{
+                padding: '1.25rem',
+                border: '2px dashed var(--sx-sys-color-success)',
+                background: 'color-mix(in srgb, var(--sx-sys-color-success) 18%, var(--sx-sys-color-bg-page))',
+                boxSizing: 'border-box',
+              }}
+            >
+              <div
+                style={{
+                  fontFamily: 'var(--sx-sys-font-family-mono)',
+                  fontSize: '0.6875rem',
+                  fontWeight: 800,
+                  letterSpacing: '0.04em',
+                  marginBottom: '0.5rem',
+                  color: 'var(--sx-sys-color-text-soft)',
+                }}
+              >
+                padding · 内边距
+              </div>
+              <div
+                style={{
+                  padding: '0.75rem 1rem',
+                  border: '1px solid var(--sx-sys-color-border)',
+                  background: 'var(--sx-sys-color-bg-surface)',
+                  fontFamily: 'var(--sx-sys-font-family-mono)',
+                  fontSize: '0.8125rem',
+                  fontWeight: 700,
+                  textAlign: 'center',
+                }}
+              >
+                content · 内容（字 / 图 / 子元素）
+              </div>
+            </div>
+          </div>
+        </div>
+      </Preview>
       <Preview label="四边相同：紧 vs 松">
         <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap' }}>
           <div
@@ -478,131 +377,132 @@ import Button from '../../components/design-system/Button.astro';
   </StepSplit>
 </StepCard>
 
-<StepCard num="CSS-06" label="排列">
-  <StepSplit>
-    <SectionHead line1="控制排列" line2="flex-direction" />
-    <p class="m-0 text-base leading-relaxed">
-      {'按钮还是那两个，HTML 不用改：只把容器的 '}
-      <code>flex-direction</code>
-      {' 从 '}
-      <code>row</code>
-      {' 改成 '}
-      <code>column</code>
-      {'，横排变竖排。'}
-    </p>
-    <Preview slot="figure" label="横排 vs 竖排">
-      <div style={{ display: 'flex', gap: '24px', flexWrap: 'wrap', alignItems: 'flex-start' }}>
-        <div>
-          <p style={{ margin: '0 0 8px', fontSize: '0.8rem', opacity: 0.7 }}>row（横排）</p>
-          <div style={{ display: 'flex', flexDirection: 'row', gap: '10px' }}>
-            <Button size="sm" variant="outline">编辑</Button>
-            <Button size="sm" variant="outline">删除</Button>
-          </div>
-        </div>
-        <div>
-          <p style={{ margin: '0 0 8px', fontSize: '0.8rem', opacity: 0.7 }}>column（竖排）</p>
-          <div
-            style={{
-              display: 'flex',
-              flexDirection: 'column',
-              gap: '10px',
-              alignItems: 'flex-start',
-            }}
-          >
-            <Button size="sm" variant="outline">编辑</Button>
-            <Button size="sm" variant="outline">删除</Button>
-          </div>
-        </div>
-      </div>
-    </Preview>
-  </StepSplit>
-</StepCard>
-
-<StepCard num="CSS-07" label="状态">
-  <StepSplit>
-    <SectionHead line1="控制状态反馈" line2=":hover 等" />
+<StepCard num="CSS-05" label="父子">
+  <StepSplit layout="stack">
+    <SectionHead line1="CSS 属性与 HTML 的搭配" line2="父子关系 · 继承" />
+    <Note tag="核心">
+      上一节 HTML 你见过「框套框」的父子树。CSS 属性不是孤立生效的——它会跟这棵父子树<strong>搭配</strong>：
+      有些属性会从父亲<strong>传给</strong>孩子，这叫<strong>继承（inheritance）</strong>。
+      页面不是一堆平铺的盒子，而是<strong>套娃</strong>：大框里还有小框，CSS 顺着这层关系往下淌。
+    </Note>
     <p class="m-0 text-base leading-relaxed">
       {
-        '结构还是「一个按钮」，CSS 可以规定：鼠标悬停、键盘聚焦、禁用时各长什么样。把鼠标移到下面的按钮上，就是 '
+        '直觉：Figma 里父 Frame 改了字色，里面的 Text 常跟着变；但父 Frame 的 Padding，'
       }
-      <code>:hover</code>
-      {' 在起作用。'}
+      <strong>{'不会'}</strong>
+      {
+        '变成每个子层自己的 Padding。CSS 也一样——会传的、不会传的，要分清。'
+      }
     </p>
-    <Preview slot="figure" label="悬停试试">
-      <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
-        <Button variant="outline" size="sm">悬停看我</Button>
-        <Button variant="primary" size="sm">再试这个</Button>
-      </div>
-    </Preview>
-  </StepSplit>
-</StepCard>
-
-<StepCard num="CSS-08" label="装饰">
-  <StepSplit>
-    <SectionHead line1="控制分割与装饰" line2="线 · 阴影 · 圆角" />
-    <p class="m-0 text-base leading-relaxed">
-      {'章节之间的线、卡片阴影、圆角，多半不是「又写了一个 HTML 元素」，而是 CSS 用 '}
-      <code>height</code>
-      {' + '}
-      <code>background</code>
-      {'、'}
-      <code>box-shadow</code>
-      {'、'}
-      <code>border-radius</code>
-      {' 画出来的。'}
-    </p>
-    <Preview slot="figure" label="三条线：细 / 粗 / 短强调">
-      <div>
+    <DocTable label="常见：会传 vs 不传">
+      <thead>
+        <tr>
+          <th>类别</th>
+          <th>例子</th>
+          <th>记法</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="doc-props__name">会继承</td>
+          <td>
+            <code>color</code> · <code>font-*</code> · <code>line-height</code>
+          </td>
+          <td class="doc-props__desc">「文字怎么长」——顺着树往下淌</td>
+        </tr>
+        <tr>
+          <td class="doc-props__name">不继承</td>
+          <td>
+            <code>padding</code> · <code>margin</code> · <code>border</code> ·
+            <code>background</code> · <code>width</code>
+          </td>
+          <td class="doc-props__desc">「盒子自己的壳」——只贴在自己身上</td>
+        </tr>
+      </tbody>
+    </DocTable>
+    <Note tag="别混">
+      <strong>继承</strong> ≠ 子元素「住在父亲里面」。
+      嵌套（父子树）永远在；继承只决定：某些属性值要不要自动抄父亲的。
+      需要强制抄时，才写 <code>inherit</code>；需要掐断时，在子元素上自己写覆盖值。
+    </Note>
+    <div slot="figure" class="flex flex-col gap-4">
+      <Preview label="会继承：字色 · 字号写在父亲上">
         <div
           style={{
-            height: '1px',
-            background: 'var(--sx-sys-color-text-muted)',
-            margin: '12px 0',
+            padding: '1rem 1.25rem',
+            border: 'var(--sx-sys-border-width) solid var(--sx-sys-color-border)',
+            background: 'var(--sx-sys-color-bg-page)',
+            color: 'var(--sx-sys-color-text-primary)',
+            fontSize: '1rem',
+            fontFamily: 'var(--sx-sys-font-family-body)',
+            maxWidth: '22rem',
+            margin: '0 auto',
           }}
-        />
+        >
+          <div
+            style={{
+              fontFamily: 'var(--sx-sys-font-family-mono)',
+              fontSize: '0.6875rem',
+              fontWeight: 800,
+              letterSpacing: '0.04em',
+              color: 'var(--sx-sys-color-text-muted)',
+              marginBottom: '0.5rem',
+            }}
+          >
+            父 .card · color + font-size
+          </div>
+          <p style={{ margin: '0 0 0.5rem' }}>
+            这段字<strong>没写</strong>自己的 color / font-size，却跟父亲一样。
+          </p>
+          <span
+            style={{
+              display: 'inline-block',
+              padding: '0.35rem 0.75rem',
+              border: 'var(--sx-sys-border-width) solid var(--sx-sys-color-border)',
+              background: 'var(--sx-sys-color-accent)',
+              fontWeight: 700,
+              fontSize: '0.875rem',
+            }}
+          >
+            子按钮（字色也是继承来的）
+          </span>
+        </div>
+      </Preview>
+      <Preview label="不继承：padding · background 停在父亲身上">
         <div
           style={{
-            height: '4px',
-            background: 'var(--sx-sys-color-border)',
-            margin: '12px 0',
-          }}
-        />
-        <div
-          style={{
-            height: '4px',
-            width: '72px',
+            padding: '1.25rem',
+            border: 'var(--sx-sys-border-width) solid var(--sx-sys-color-border)',
             background: 'var(--sx-sys-color-accent)',
-            margin: '12px 0',
+            maxWidth: '22rem',
+            margin: '0 auto',
           }}
-        />
-      </div>
-    </Preview>
+        >
+          <div
+            style={{
+              fontFamily: 'var(--sx-sys-font-family-mono)',
+              fontSize: '0.6875rem',
+              fontWeight: 800,
+              letterSpacing: '0.04em',
+              marginBottom: '0.5rem',
+            }}
+          >
+            父 · padding + 黄底
+          </div>
+          <div
+            style={{
+              padding: '0.65rem 0.85rem',
+              border: 'var(--sx-sys-border-width) solid var(--sx-sys-color-border)',
+              background: 'var(--sx-sys-color-bg-surface)',
+              fontFamily: 'var(--sx-sys-font-family-body)',
+              fontSize: '0.875rem',
+              fontWeight: 600,
+            }}
+          >
+            子盒子：自己的底是白的——父亲的 background / padding 没传下来
+          </div>
+        </div>
+      </Preview>
+    </div>
   </StepSplit>
 </StepCard>
-
-<Takeaway
-  num="CSS-09"
-  label="总结"
-  line1="CSS 在回答三句话"
-  line2="长什么样 · 怎么摆 · 何时变"
-  note="不必背全属性表。能把需求归到「文字 / 颜色 / 留白 / 排列 / 状态」某一类，就够查文档或让 AI 写具体属性。"
->
-  <ul>
-    <li>
-      <strong>长什么样：</strong>
-      文字、颜色、边框、圆角、阴影、分割线……
-    </li>
-    <li>
-      <strong>怎么摆：</strong>
-      padding / margin、宽高、flex 方向与间距……
-    </li>
-    <li>
-      <strong>何时变：</strong>
-      hover / focus / disabled 等状态
-    </li>
-    <li>
-      <strong>不管什么：</strong>
-      结构有没有（HTML）、点了之后业务逻辑（JS）
-    </li>
-  </ul>
-</Takeaway>

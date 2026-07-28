@@ -60,7 +60,7 @@ export default function ShopNerveDemo() {
   }
 
   return (
-    <div className="shop-nerve card card--shadow-lg mx-auto w-full max-w-md bg-primary">
+    <div className="shop-nerve card card--shadow-lg w-full bg-primary">
       <div className="flex flex-col gap-4">
         <header className="flex flex-col gap-2">
           <div className="flex items-center justify-between gap-3">

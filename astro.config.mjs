@@ -18,4 +18,9 @@ export default defineConfig({
   vite: {
     plugins: [tailwindcss()],
   },
+  // 重定向（静态输出下 Astro 为旧路径生成 meta-refresh 跳转页，真正生效）。
+  // src/config/redirects.ts 是规范记录的中央表；要让某条真正跳转，需在此登记。
+  redirects: {
+    '/courses/frontend-handbook/fe-css-figma': '/courses/frontend-handbook/fe-css-basics',
+  },
 });

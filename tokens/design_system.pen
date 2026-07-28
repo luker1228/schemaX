@@ -18737,11 +18737,66 @@
               ],
               "children": [
                 {
+                  "type": "frame",
+                  "id": "VVN44",
+                  "name": "Sidebar Header",
+                  "width": "fill_container",
+                  "justifyContent": "space_between",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "dFXva",
+                      "name": "Sidebar Title",
+                      "fill": "$--retro-muted-ink",
+                      "content": "课程目录",
+                      "fontFamily": "$--sx-font-mono",
+                      "fontSize": 11,
+                      "fontWeight": "800",
+                      "letterSpacing": 1.5
+                    },
+                    {
+                      "type": "frame",
+                      "id": "d3pOU",
+                      "name": "Collapse Toggle",
+                      "width": 34,
+                      "height": 34,
+                      "fill": "$--sx-sys-color-bg-surface",
+                      "cornerRadius": 2,
+                      "stroke": "$--sx-sys-color-border",
+                      "strokeWidth": 1,
+                      "effect": {
+                        "type": "shadow",
+                        "shadowType": "outer",
+                        "color": "#000000",
+                        "offset": {
+                          "x": 3,
+                          "y": 3
+                        }
+                      },
+                      "justifyContent": "center",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "icon",
+                          "id": "nGGPO",
+                          "name": "Collapse Icon",
+                          "width": 18,
+                          "height": 18,
+                          "icon": "panel-left-close",
+                          "library": "lucide",
+                          "fill": "$--sx-sys-color-text-primary"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
                   "id": "tgaTn",
                   "type": "ref",
                   "ref": "CoHAT",
                   "x": 22,
-                  "y": 28,
+                  "y": 82,
                   "descendants": {
                     "eOSjz": {
                       "enabled": false
@@ -22239,6 +22294,763 @@
           ]
         }
       ]
+    },
+    {
+      "type": "frame",
+      "id": "NwXKU",
+      "x": -2782,
+      "y": 7412,
+      "name": "LearningObjectives",
+      "reusable": true,
+      "width": 720,
+      "fill": "$--sx-sys-color-bg-surface",
+      "cornerRadius": 2,
+      "effect": {
+        "type": "shadow",
+        "shadowType": "outer",
+        "color": "#000000",
+        "offset": {
+          "x": 4,
+          "y": 4
+        }
+      },
+      "layout": "vertical",
+      "gap": 18,
+      "padding": [
+        26,
+        28
+      ],
+      "children": [
+        {
+          "type": "frame",
+          "id": "q4Fhp",
+          "name": "Header",
+          "width": "fill_container",
+          "gap": 14,
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "frame",
+              "id": "agAet",
+              "name": "Icon Box",
+              "width": 40,
+              "height": 40,
+              "fill": "$--sx-sys-color-success",
+              "cornerRadius": 2,
+              "justifyContent": "center",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "icon",
+                  "id": "H1QWz",
+                  "name": "Icon",
+                  "width": 20,
+                  "height": 20,
+                  "icon": "target",
+                  "library": "lucide",
+                  "fill": "$--sx-sys-color-text-primary"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "Qpv3T",
+              "name": "Title Group",
+              "layout": "vertical",
+              "gap": 2,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "mD0O6",
+                  "name": "Eyebrow",
+                  "fill": "$--retro-muted-ink",
+                  "content": "学习目标 · OBJECTIVES",
+                  "fontFamily": "$--sx-font-mono",
+                  "fontSize": 11,
+                  "fontWeight": "800",
+                  "letterSpacing": 1.5
+                },
+                {
+                  "type": "text",
+                  "id": "eIDax",
+                  "name": "Title",
+                  "fill": "$--sx-sys-color-text-primary",
+                  "content": "学完这节，你将掌握",
+                  "fontFamily": "$--sx-font-display",
+                  "fontSize": 22,
+                  "fontWeight": "700"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "FnniC",
+          "name": "Objectives",
+          "width": "fill_container",
+          "layout": "vertical",
+          "gap": 12,
+          "children": [
+            {
+              "type": "frame",
+              "id": "p1c4RJ",
+              "name": "Objective",
+              "width": "fill_container",
+              "gap": 12,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "SJyLX",
+                  "name": "Marker",
+                  "width": 22,
+                  "height": 22,
+                  "fill": "$--sx-sys-color-success",
+                  "cornerRadius": "$--radius-pill",
+                  "stroke": "$--sx-sys-color-border",
+                  "strokeWidth": 1,
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "icon",
+                      "id": "zVjR4",
+                      "name": "Check",
+                      "width": 14,
+                      "height": 14,
+                      "icon": "check",
+                      "library": "lucide",
+                      "fill": "$--sx-sys-color-text-primary"
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "id": "t7Nz3z",
+                  "name": "Text",
+                  "fill": "$--sx-sys-color-text-primary",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "理解 HTML 与 Markdown 的本质关系",
+                  "lineHeight": 1.6,
+                  "fontFamily": "$--sx-font-body",
+                  "fontSize": 15,
+                  "fontWeight": "500"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "q7Z2EE",
+              "name": "Objective",
+              "width": "fill_container",
+              "gap": 12,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "oS0J0",
+                  "name": "Marker",
+                  "width": 22,
+                  "height": 22,
+                  "fill": "$--sx-sys-color-success",
+                  "cornerRadius": "$--radius-pill",
+                  "stroke": "$--sx-sys-color-border",
+                  "strokeWidth": 1,
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "icon",
+                      "id": "Q1a6gK",
+                      "name": "Check",
+                      "width": 14,
+                      "height": 14,
+                      "icon": "check",
+                      "library": "lucide",
+                      "fill": "$--sx-sys-color-text-primary"
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "id": "XlBmc",
+                  "name": "Text",
+                  "fill": "$--sx-sys-color-text-primary",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "用语义标签组织清晰的页面结构",
+                  "lineHeight": 1.6,
+                  "fontFamily": "$--sx-font-body",
+                  "fontSize": 15,
+                  "fontWeight": "500"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "rCKUp",
+              "name": "Objective",
+              "width": "fill_container",
+              "gap": 12,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "e6ansb",
+                  "name": "Marker",
+                  "width": 22,
+                  "height": 22,
+                  "fill": "$--sx-sys-color-success",
+                  "cornerRadius": "$--radius-pill",
+                  "stroke": "$--sx-sys-color-border",
+                  "strokeWidth": 1,
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "icon",
+                      "id": "S1vJNn",
+                      "name": "Check",
+                      "width": 14,
+                      "height": 14,
+                      "icon": "check",
+                      "library": "lucide",
+                      "fill": "$--sx-sys-color-text-primary"
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "id": "l19YL",
+                  "name": "Text",
+                  "fill": "$--sx-sys-color-text-primary",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "在两种语法之间自信地来回转换",
+                  "lineHeight": 1.6,
+                  "fontFamily": "$--sx-font-body",
+                  "fontSize": 15,
+                  "fontWeight": "500"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "F0VVc",
+      "x": -2782,
+      "y": 7689,
+      "name": "ConceptCard",
+      "reusable": true,
+      "width": 720,
+      "fill": "$--sx-sys-color-bg-surface",
+      "cornerRadius": 2,
+      "effect": {
+        "type": "shadow",
+        "shadowType": "outer",
+        "color": "#000000",
+        "offset": {
+          "x": 4,
+          "y": 4
+        }
+      },
+      "layout": "vertical",
+      "gap": 16,
+      "padding": [
+        26,
+        28
+      ],
+      "children": [
+        {
+          "type": "frame",
+          "id": "r1gpL",
+          "name": "Header",
+          "width": "fill_container",
+          "gap": 14,
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "frame",
+              "id": "C4GpcT",
+              "name": "Icon Box",
+              "width": 40,
+              "height": 40,
+              "fill": "$--sx-sys-color-accent",
+              "cornerRadius": 2,
+              "justifyContent": "center",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "icon",
+                  "id": "s24uqu",
+                  "name": "Icon",
+                  "width": 20,
+                  "height": 20,
+                  "icon": "lightbulb",
+                  "library": "lucide",
+                  "fill": "$--sx-sys-color-text-primary"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "BiBhw",
+              "name": "Title Group",
+              "layout": "vertical",
+              "gap": 2,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "IrTgn",
+                  "name": "Eyebrow",
+                  "fill": "$--retro-muted-ink",
+                  "content": "核心概念 · CONCEPT",
+                  "fontFamily": "$--sx-font-mono",
+                  "fontSize": 11,
+                  "fontWeight": "800",
+                  "letterSpacing": 1.5
+                },
+                {
+                  "type": "text",
+                  "id": "Y73Twr",
+                  "name": "Title",
+                  "fill": "$--sx-sys-color-text-primary",
+                  "content": "语义化标签",
+                  "fontFamily": "$--sx-font-display",
+                  "fontSize": 22,
+                  "fontWeight": "700"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "LGRMu",
+          "name": "Body",
+          "width": "fill_container",
+          "layout": "vertical",
+          "gap": 12,
+          "children": [
+            {
+              "type": "text",
+              "id": "N36A4d",
+              "name": "Lead",
+              "fill": "$--sx-sys-color-text-primary",
+              "textGrowth": "fixed-width",
+              "width": "fill_container",
+              "content": "语义化标签用含义明确的标签描述内容结构，而不只看外观。浏览器、搜索引擎、辅助技术都依赖它。",
+              "lineHeight": 1.7,
+              "fontFamily": "$--sx-font-body",
+              "fontSize": 15,
+              "fontWeight": "normal"
+            },
+            {
+              "type": "frame",
+              "id": "D42DJA",
+              "name": "Detail",
+              "width": "fill_container",
+              "fill": "$--retro-code-surface",
+              "cornerRadius": 2,
+              "layout": "vertical",
+              "gap": 6,
+              "padding": 16,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "X6gBf",
+                  "name": "Comment",
+                  "fill": "$--retro-muted-ink",
+                  "content": "// 例如",
+                  "fontFamily": "$--sx-font-mono",
+                  "fontSize": 12,
+                  "fontWeight": "500"
+                },
+                {
+                  "type": "text",
+                  "id": "XyBMc",
+                  "name": "Code",
+                  "fill": "$--sx-sys-color-text-primary",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "<article>、<nav>、<footer> 比 <div> 更有语义。",
+                  "lineHeight": 1.6,
+                  "fontFamily": "$--sx-font-mono",
+                  "fontSize": 14,
+                  "fontWeight": "normal"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "NQgPq",
+      "x": -2782,
+      "y": 8009,
+      "name": "CodeDemo",
+      "reusable": true,
+      "width": 720,
+      "fill": "$--sx-sys-color-bg-surface",
+      "cornerRadius": 2,
+      "effect": {
+        "type": "shadow",
+        "shadowType": "outer",
+        "color": "#000000",
+        "offset": {
+          "x": 4,
+          "y": 4
+        }
+      },
+      "layout": "vertical",
+      "children": [
+        {
+          "type": "frame",
+          "id": "kdKeA",
+          "name": "Header",
+          "width": "fill_container",
+          "gap": 14,
+          "padding": [
+            20,
+            24
+          ],
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "frame",
+              "id": "UjzrU",
+              "name": "Icon Box",
+              "width": 40,
+              "height": 40,
+              "fill": "$--sx-sys-color-text-primary",
+              "cornerRadius": 2,
+              "justifyContent": "center",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "icon",
+                  "id": "f7bamF",
+                  "name": "Icon",
+                  "width": 20,
+                  "height": 20,
+                  "icon": "terminal",
+                  "library": "lucide",
+                  "fill": "$--sx-sys-color-accent"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "u5HGTA",
+              "name": "Title Group",
+              "layout": "vertical",
+              "gap": 2,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "NOm2b",
+                  "name": "Eyebrow",
+                  "fill": "$--retro-muted-ink",
+                  "content": "代码演示 · DEMO",
+                  "fontFamily": "$--sx-font-mono",
+                  "fontSize": 11,
+                  "fontWeight": "800",
+                  "letterSpacing": 1.5
+                },
+                {
+                  "type": "text",
+                  "id": "caMRr",
+                  "name": "Title",
+                  "fill": "$--sx-sys-color-text-primary",
+                  "content": "试试这段代码",
+                  "fontFamily": "$--sx-font-display",
+                  "fontSize": 22,
+                  "fontWeight": "700"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "fNBgn",
+          "name": "Split",
+          "width": "fill_container",
+          "children": [
+            {
+              "type": "frame",
+              "id": "braNK",
+              "name": "Code Side",
+              "width": "fill_container",
+              "fill": "$--retro-code-surface",
+              "layout": "vertical",
+              "gap": 8,
+              "padding": [
+                16,
+                18
+              ],
+              "children": [
+                {
+                  "type": "text",
+                  "id": "xocBn",
+                  "name": "Code Label",
+                  "fill": "$--retro-muted-ink",
+                  "content": "// index.html",
+                  "fontFamily": "$--sx-font-mono",
+                  "fontSize": 12,
+                  "fontWeight": "500"
+                },
+                {
+                  "type": "text",
+                  "id": "idzZs",
+                  "name": "Code",
+                  "fill": "$--sx-sys-color-text-primary",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "<h1>你好</h1>\n<p>世界</p>",
+                  "lineHeight": 1.7,
+                  "fontFamily": "$--sx-font-mono",
+                  "fontSize": 14,
+                  "fontWeight": "normal"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "AGSk5",
+              "name": "Result Side",
+              "width": "fill_container",
+              "fill": "$--sx-sys-color-bg-page",
+              "layout": "vertical",
+              "gap": 8,
+              "padding": [
+                16,
+                18
+              ],
+              "children": [
+                {
+                  "type": "text",
+                  "id": "Hzhas",
+                  "name": "Result Label",
+                  "fill": "$--retro-muted-ink",
+                  "content": "// 渲染结果",
+                  "fontFamily": "$--sx-font-mono",
+                  "fontSize": 12,
+                  "fontWeight": "500"
+                },
+                {
+                  "type": "frame",
+                  "id": "l5hAXI",
+                  "name": "Result Box",
+                  "width": "fill_container",
+                  "fill": "$--sx-sys-color-bg-surface",
+                  "cornerRadius": 2,
+                  "stroke": "$--sx-sys-color-border",
+                  "strokeWidth": 1,
+                  "layout": "vertical",
+                  "gap": 6,
+                  "padding": 12,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "TrDWE",
+                      "name": "H1",
+                      "fill": "$--sx-sys-color-text-primary",
+                      "content": "你好",
+                      "fontFamily": "$--sx-font-display",
+                      "fontSize": 20,
+                      "fontWeight": "700"
+                    },
+                    {
+                      "type": "text",
+                      "id": "N51lMA",
+                      "name": "P",
+                      "fill": "$--sx-sys-color-text-primary",
+                      "content": "世界",
+                      "fontFamily": "$--sx-font-body",
+                      "fontSize": 15,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "pJxaE",
+      "x": -2782,
+      "y": 8297,
+      "name": "Callout",
+      "reusable": true,
+      "width": 720,
+      "fill": "$--sx-sys-color-bg-surface",
+      "cornerRadius": 2,
+      "effect": {
+        "type": "shadow",
+        "shadowType": "outer",
+        "color": "#000000",
+        "offset": {
+          "x": 4,
+          "y": 4
+        }
+      },
+      "layout": "vertical",
+      "children": [
+        {
+          "type": "frame",
+          "id": "S4j4i",
+          "name": "Left Bar",
+          "width": "fill_container",
+          "height": 4,
+          "fill": "$--sx-sys-color-accent"
+        },
+        {
+          "type": "frame",
+          "id": "cTE22",
+          "name": "Content",
+          "width": "fill_container",
+          "layout": "vertical",
+          "gap": 8,
+          "padding": [
+            18,
+            20
+          ],
+          "children": [
+            {
+              "type": "frame",
+              "id": "kUUxQ",
+              "name": "Head",
+              "gap": 10,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "icon",
+                  "id": "ySY2r",
+                  "name": "Icon",
+                  "width": 18,
+                  "height": 18,
+                  "icon": "megaphone",
+                  "library": "lucide",
+                  "fill": "$--sx-sys-color-text-primary"
+                },
+                {
+                  "type": "text",
+                  "id": "P7sOr",
+                  "name": "Label",
+                  "fill": "$--sx-sys-color-text-primary",
+                  "content": "注意 · NOTE",
+                  "fontFamily": "$--sx-font-mono",
+                  "fontSize": 11,
+                  "fontWeight": "800",
+                  "letterSpacing": 1.5
+                }
+              ]
+            },
+            {
+              "type": "text",
+              "id": "UvOVM",
+              "name": "Body",
+              "fill": "$--sx-sys-color-text-primary",
+              "textGrowth": "fixed-width",
+              "width": "fill_container",
+              "content": "语义化标签让结构更清晰，也让辅助技术更好地理解页面。",
+              "lineHeight": 1.6,
+              "fontFamily": "$--sx-font-body",
+              "fontSize": 15,
+              "fontWeight": "normal"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "aA1jb",
+      "type": "ref",
+      "ref": "pJxaE",
+      "name": "Callout · 提示",
+      "x": -2782,
+      "y": 8431,
+      "width": 720,
+      "descendants": {
+        "S4j4i": {
+          "fill": "$--sx-ref-color-blue-500",
+          "width": "fill_container",
+          "height": 4
+        },
+        "ySY2r": {
+          "icon": "info",
+          "fill": "$--sx-ref-color-blue-500"
+        },
+        "P7sOr": {
+          "content": "提示 · TIP",
+          "fill": "$--sx-ref-color-blue-500"
+        },
+        "UvOVM": {
+          "content": "一个小技巧：用 <strong> 代替 <b>，语义更明确。"
+        }
+      }
+    },
+    {
+      "id": "GLJon",
+      "type": "ref",
+      "ref": "pJxaE",
+      "name": "Callout · 注意",
+      "x": -2782,
+      "y": 8566,
+      "width": 720,
+      "descendants": {
+        "S4j4i": {
+          "fill": "$--sx-sys-color-accent",
+          "width": "fill_container",
+          "height": 4
+        },
+        "ySY2r": {
+          "icon": "megaphone",
+          "fill": "$--sx-sys-color-text-primary"
+        },
+        "P7sOr": {
+          "content": "注意 · NOTE",
+          "fill": "$--sx-sys-color-text-primary"
+        },
+        "UvOVM": {
+          "content": "语义化标签让结构更清晰，也让辅助技术更好地理解页面。"
+        }
+      }
+    },
+    {
+      "id": "WpeR1",
+      "type": "ref",
+      "ref": "pJxaE",
+      "name": "Callout · 警告",
+      "x": -2782,
+      "y": 8700,
+      "width": 720,
+      "descendants": {
+        "S4j4i": {
+          "fill": "$--sx-sys-color-danger",
+          "width": "fill_container",
+          "height": 4
+        },
+        "ySY2r": {
+          "icon": "triangle-alert",
+          "fill": "$--sx-sys-color-danger"
+        },
+        "P7sOr": {
+          "content": "警告 · WARNING",
+          "fill": "$--sx-sys-color-danger"
+        },
+        "UvOVM": {
+          "content": "避免用 <b>、<i> 这类纯样式标签，它们没有语义。"
+        }
+      }
     }
   ],
   "themes": {

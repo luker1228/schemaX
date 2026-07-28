@@ -4,11 +4,11 @@ description: 先看页面骨架，再看怎么排——三种最常见的页面�
 slug: fe-layout-recipes
 status: published
 course: frontend-handbook
-order: 9
+order: 7
 part: advanced
 durationMinutes: 12
 lessonType: lesson
-presentation: board
+presentation: scroll
 hero:
   line1: 先拆区域
   line2: 再谈
@@ -22,7 +22,6 @@ import StepSplit from '../../components/course/StepSplit.astro';
 import SectionHead from '../../components/course/SectionHead.astro';
 import Note from '../../components/course/Note.astro';
 import Preview from '../../components/course/Preview.astro';
-import Takeaway from '../../components/course/Takeaway.astro';
 
 <StepCard num="LAY-01" label="核心">
   <SectionHead line1="布局决定元素彼此的位置关系" line2="先拆区域，再看怎么排" />
@@ -32,7 +31,7 @@ import Takeaway from '../../components/course/Takeaway.astro';
 </StepCard>
 
 <StepCard num="LAY-02" label="传统门户/官网">
-  <StepSplit wide>
+  <StepSplit layout="rail">
     <SectionHead line1="传统门户 / 官网骨架" line2="header + nav + banner + main + footer" />
     <p class="m-0 text-base leading-relaxed">
       {'典型结构是 '}
@@ -77,7 +76,7 @@ import Takeaway from '../../components/course/Takeaway.astro';
 </StepCard>
 
 <StepCard num="LAY-03" label="后台管理系统">
-  <StepSplit wide>
+  <StepSplit layout="rail">
     <SectionHead line1="后台管理系统骨架" line2="header + aside + main" />
     <p class="m-0 text-base leading-relaxed">
       {'结构上通常是 '}
@@ -126,7 +125,7 @@ import Takeaway from '../../components/course/Takeaway.astro';
 </StepCard>
 
 <StepCard num="LAY-04" label="博客/文章详情">
-  <StepSplit wide>
+  <StepSplit layout="rail">
     <SectionHead line1="博客 / 文章详情页骨架" line2="header + article + aside + footer" />
     <p class="m-0 text-base leading-relaxed">
       {'主内容是文章，右侧是作者信息、目录和相关文章。'}
@@ -182,26 +181,3 @@ import Takeaway from '../../components/course/Takeaway.astro';
     <p style="margin: 8px 0 0; color: var(--sx-sys-color-text-soft);">因为在窄屏下，CSS 往往会把原来的两列布局改成单列——最常见做法是 flex-direction 从横向（row）改成纵向（column），或者重设 grid-template-columns。这样正文优先展示，aside 再往下堆叠，这叫<strong>响应式布局</strong>。</p>
   </details>
 </StepCard>
-
-<Takeaway
-  num="LAY-06"
-  label="总结"
-  line1="布局先分区"
-  line2="再决定左右上下"
-  note="HTML 负责表达「这里是 aside / main」；CSS 决定它在左还是右、横排还是竖排。先会画骨架图，再写属性。"
->
-  <ul>
-    <li>
-      <strong>官网：</strong>
-      header + nav + banner + main + footer
-    </li>
-    <li>
-      <strong>后台：</strong>
-      header + aside + main
-    </li>
-    <li>
-      <strong>博客：</strong>
-      header + article + aside + footer
-    </li>
-  </ul>
-</Takeaway>

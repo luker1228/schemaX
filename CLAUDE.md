@@ -94,7 +94,7 @@ pnpm gen:component Button 主要、次要、幽灵、强调变体。
 
 - **组件**：`src/components/design-system/*`（`Card` / `Button` / `Badge` 等）—— 课程 MDX 里演示 UI 时优先 import 这些
 - **工具类**：Tailwind v4 + `src/styles/tailwind.css` 的 token 桥接（`bg-primary` / `text-ink` / `shadow-brutal-md` 等 shadcn 标准色名）
-- **课程壳**：`src/components/course/*`（`StepCard` / `Preview` / `Note` / `Takeaway`）只负责教学版式，舞台内容里的按钮、卡片、标签走设计系统
+- **课程壳**：`src/components/course/*`（`StepCard` / `Preview` / `Note`）只负责教学版式，舞台内容里的按钮、卡片、标签走设计系统
 
 | 场景 | 做法 |
 |------|------|
@@ -118,6 +118,46 @@ import Badge from '../../components/design-system/Badge.astro';
   </Card>
 </Preview>
 ```
+
+### 课程呈现模式与概念单元（`presentation: scroll | board | stepper`）
+
+课时 frontmatter 的 `presentation` 决定呈现壳（`src/pages/courses/[course]/[lesson].astro` 据此路由进 `LessonBoard`）：
+
+- **`scroll`**（默认，**当前课程使用此模式**）：传统纵向滚动长页。frontend-handbook 课时均走 scroll。
+- **`board`**：白板翻页，每页塞一屏 + 垂直居中（老行为，保留向后兼容）。
+- **`stepper`**（可用，**当前未启用**）：引导式 stepper——每个**概念单元**内部可滚动，`←/→` 在单元间跳，topbar/pager sticky 保持进度常驻。代码就绪、留作备用；要启用把课时 `presentation` 改成 `stepper` 即可。
+
+**概念单元 = 一个完整学习闭环**，由 `<StepCard>` 承担（它已是天然的 slide 容器，`.step__body` 是「上讲解 + 下互动件」的纵向栈）。一个单元讲清**一个**概念，按需组合 {讲解 / 示例 / playground / quiz}，不必四件齐全。三种 canonical 写法：
+
+```mdx
+// (a) 讲解型（纯文字概念也是一等公民）
+<StepCard num="PR-01" label="核心">
+  <SectionHead line1="Prompt Library" line2="把需求讲到 AI 真能执行" />
+  <Note tag="核心">…短讲解，3–5 行…</Note>
+</StepCard>
+
+// (b) 讲解 + 互动型（主力版式：上短讲解 + 下全宽互动件）
+<StepCard num="FM-04" label="JS">
+  <SectionHead line1="JS · 神经" line2="监听事件，驱动状态" />
+  <Note tag="核心">…短讲解…</Note>
+  <DocPlayground file="shop-nerve.tsx" hint="点商品卡片看状态变化">
+    <ShopNerveDemoIsland />
+  </DocPlayground>
+</StepCard>
+
+// (c) 速查型（密列表 / 对照表，罕见）
+<StepCard num="CSS-02" label="总表" variant="reference">
+  <SectionHead line1="一张控制清单" line2="CSS 管的几大类" />
+  <DocTable paper>…</DocTable>
+</StepCard>
+```
+
+承重约定：
+
+- **一概念一单元**：别把多个独立概念塞进同一个 `<StepCard>`；若一个概念本身密度高（如「颜色拆四槽位」属同一概念），就让它作为一个**可滚动**的 stepper 单元长下去，**不要**为「省页数」硬压一屏——这是 stepper 存在的意义。
+- **互动件优先用 `DocPlayground` 壳**（`src/components/design-system/DocPlayground.astro`，全局 `.doc-playground`）；历史自造壳（`ShopNerveDemo` / `LayerMatchQuiz` 走 Tailwind + `.card`）是技术债，新互动件别再开第二套。**互动件永远经 `.astro` 包装器挂 `client:load`，不要在 MDX 里直接写 `client:*`**。
+- **quiz 形成性、不卡进度**：答错也给即时反馈，但不强制答对才能翻页。
+- **切换版式不痛苦**：定好一页内容形态后，直接选 (a)/(b)/(c) 三种 canonical 之一；不需要 `<StepCard>` + `<StepSplit>` 套娃——`StepSplit` 仅在确需「图文并排」时用，主力是 `.step__body` 纵向栈。VS Code 骨架 snippet 见 `.vscode/astro-course.code-snippets`。
 
 ## 架构：承重原则
 

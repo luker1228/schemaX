@@ -29,6 +29,12 @@ interface Props {
   readTime?: string;
   /** 本课最后一页后的下一章 */
   nextChapter?: ChapterLink | null;
+  /**
+   * 渲染模式：
+   * - board（默认）：一屏约束 + 垂直居中（老行为）
+   * - stepper：概念单元内可滚动 + sticky chrome + 切单元滚到顶（Khan / Codecademy 风）
+   */
+  mode?: 'board' | 'stepper';
 }
 
 const {
@@ -36,6 +42,7 @@ const {
   coverLabel = '封面 · 开篇',
   readTime,
   nextChapter = null,
+  mode = 'board',
 } = Astro.props;
 const hasCover = Boolean(cover);
 ---
@@ -43,6 +50,7 @@ const hasCover = Boolean(cover);
 <div
   class="lboard-root"
   data-lboard
+  data-mode={mode}
   data-has-cover={hasCover ? 'true' : 'false'}
   data-next-chapter-href={nextChapter?.href ?? ''}
   data-next-chapter-title={nextChapter?.title ?? ''}
@@ -271,7 +279,10 @@ const hasCover = Boolean(cover);
     };
     document.addEventListener('click', onDocClick);
 
-    function go(next: number, opts: { pushHash?: boolean } = {}) {
+    function go(
+      next: number,
+      opts: { pushHash?: boolean; scrollIntoView?: boolean } = {},
+    ) {
       const i = Math.max(0, Math.min(total - 1, next));
       index = i;
       const current = slides[i];
@@ -336,11 +347,26 @@ const hasCover = Boolean(cover);
         }
       }
 
-      // hash（封面用 cover，步骤用 id）；不自动 scroll，保持当前视口
+      // hash（封面用 cover，步骤用 id）；board 不自动 scroll，保持当前视口
       if (opts.pushHash !== false && current.id) {
         const url = new URL(window.location.href);
         url.hash = current.id;
         history.replaceState(null, '', url);
+      }
+
+      // stepper：单元内允许滚动，切单元时滚到单元顶（避让 sticky 顶栏）。
+      // board 模式 root.dataset.mode !== 'stepper'，保持原「不 scroll」行为。
+      // rAF 等 inactive slide 的 hidden 生效、布局稳定后再滚，避免滚错位置。
+      if (root.dataset.mode === 'stepper' && opts.scrollIntoView !== false) {
+        const reduceMotion = window.matchMedia(
+          '(prefers-reduced-motion: reduce)',
+        ).matches;
+        // 'instant' 是 CSSOM 合法值（离散跳转、无动画）；部分 TS lib 的
+        // ScrollBehavior 联合类型尚未收录，故以联合字面量断言规避类型报错。
+        const behavior = (reduceMotion ? 'auto' : 'instant') as ScrollBehavior;
+        requestAnimationFrame(() => {
+          current.el.scrollIntoView({ block: 'start', behavior });
+        });
       }
     }
 
@@ -409,7 +435,7 @@ const hasCover = Boolean(cover);
       if (hit >= 0) start = hit;
     }
 
-    go(start, { pushHash: Boolean(hash) });
+    go(start, { pushHash: Boolean(hash), scrollIntoView: Boolean(hash) });
     root.dataset.ready = 'true';
     root.setAttribute('tabindex', '0');
   }
@@ -442,7 +468,8 @@ const hasCover = Boolean(cover);
     display: flex;
     flex-direction: column;
     width: 100%;
-    min-height: min(70vh, 40rem);
+    /* 有底高，短页才能在框内垂直居中；过高会显空 */
+    min-height: min(60vh, 36rem);
     max-height: none;
     box-sizing: border-box;
     background: var(--sx-sys-color-bg-page);
@@ -697,14 +724,14 @@ const hasCover = Boolean(cover);
     opacity: 0.85;
   }
 
-  /* —— Stage：框内随内容增高，不锁视口滚动 —— */
+  /* —— Stage：吃满方框剩余高度，便于短页垂直居中 —— */
   .lboard__stage {
     flex: 1 1 auto;
     min-height: 0;
     overflow: visible;
     display: flex;
     flex-direction: column;
-    padding: 0.75rem 0 1rem;
+    padding: 0.5rem 0 0.75rem;
     box-sizing: border-box;
   }
 
@@ -714,9 +741,8 @@ const hasCover = Boolean(cover);
   }
 
   /*
-   * 活跃页：默认给足横向宽度。
-   * 布局由页内 StepSplit（aside/rail/stack/fill/auto）自行决定，
-   * 白板只提供舞台边界，不锁死某一种课型。
+   * 活跃页：在舞台内垂直居中（短页）；内容过长时方框随内容长高。
+   * 横向宽度仍由 aside / stack / rail 决定。
    */
   .lboard-root :global([data-lboard-slide][data-active='true']) {
     display: flex;
@@ -726,19 +752,39 @@ const hasCover = Boolean(cover);
     max-width: min(72rem, 100%);
     margin-inline: auto;
     flex: 1 1 auto;
-    justify-content: flex-start;
-    min-height: 0;
+    justify-content: center;
+    min-height: 100%;
     box-sizing: border-box;
-    padding-block: 0.25rem 0.75rem;
+    padding-block: 0.5rem;
   }
 
-  /* 纯文 / 小图页：略收 measure，阅读更稳 */
+  /* 纯文页（无 StepSplit / 对照 / 交互 / 表格 / reference）：收 measure + 水平居中。
+   * 表格(.doc-props/.doc-table-scroll) 与 reference 变体需要宽度，排除以免被挤窄。 */
   .lboard-root
     :global(
-      [data-lboard-slide][data-active='true']:has(
-          .step-split--aside,
-          .step-split--auto
-        ):not(:has(.cmp, .layer-pair, .props-pair, .doc-playground, .shop-nerve))
+      [data-lboard-slide][data-active='true']:not(.step--reference):not(
+          :has(
+            .step-split,
+            .cmp,
+            .layer-pair,
+            .props-pair,
+            .doc-playground,
+            .shop-nerve,
+            .doc-props,
+            .doc-table-scroll
+          )
+        )
+    ) {
+    max-width: min(40rem, 100%);
+    margin-inline: auto;
+  }
+
+  /* 旁注小图页 */
+  .lboard-root
+    :global(
+      [data-lboard-slide][data-active='true']:has(.step-split--aside):not(
+          :has(.cmp, .layer-pair, .props-pair, .doc-playground)
+        )
     ) {
     max-width: min(56rem, 100%);
   }
@@ -780,12 +826,12 @@ const hasCover = Boolean(cover);
     min-width: 0;
   }
 
-  /* 页内未包 StepSplit 的块（Note / 表 / 单 Preview）自然纵向流 */
+  /* 纯文块：跟 slide 同宽（slide 已限 40rem） */
   .lboard-root :global(.step__body > .sec-head),
   .lboard-root :global(.step__body > .doc-note),
   .lboard-root :global(.step__body > .doc-code),
   .lboard-root :global(.step__body > p) {
-    max-width: 48rem;
+    max-width: 100%;
   }
 
   .lboard-root :global(.step__body > .cmp),
@@ -1019,7 +1065,7 @@ const hasCover = Boolean(cover);
 
   @media (max-width: 720px) {
     .lboard {
-      min-height: min(60vh, 32rem);
+      min-height: min(52vh, 28rem);
       max-height: none;
       padding: 0.75rem 0.85rem 1rem;
     }
@@ -1090,6 +1136,65 @@ const hasCover = Boolean(cover);
     .lboard__slide--cover :global(.lhero__meta),
     .lboard__slide--cover :global(.lhero__pills) {
       align-items: flex-start;
+    }
+  }
+
+  /* ============================================================
+   * Stepper 模式（[data-mode='stepper']）
+   * 页面滚 + sticky chrome：概念单元该多高就多高，超出视口由页面滚动；
+   * topbar 顶吸、pager 底吸，进度常驻。board 模式不命中以下任何规则。
+   * ============================================================ */
+
+  /* Stage：不再吃满剩余高度，随内容长；给短单元一个底，pager 不至于贴 topbar */
+  .lboard-root[data-mode='stepper'] .lboard__stage {
+    flex: 0 0 auto;
+    min-height: min(50vh, 30rem);
+  }
+
+  /* 活跃概念页：撤掉一屏约束，顶对齐（board 是 center + min-height:100%）。
+   * 排除封面（封面仍居中）。max-width 的 :has() 自适应规则继续生效。 */
+  .lboard-root[data-mode='stepper']
+    :global(
+      [data-lboard-slide][data-active='true']:not(.lboard__slide--cover)
+    ) {
+    justify-content: flex-start;
+    min-height: 0;
+    flex: 0 0 auto;
+    padding-block: 0.5rem;
+  }
+
+  /* Topbar 顶吸（app-frame 感）；bg-page 与 .lboard 同色，content 滚过时不透。
+   * 顶吸基线复用 DocSide 同一 token（吸在 site Header 之下） */
+  .lboard-root[data-mode='stepper'] .lboard__topbar {
+    position: sticky;
+    top: var(--sx-doc-side-top, 6.05rem);
+    background: var(--sx-sys-color-bg-page);
+    padding-block: 0.4rem 0.5rem;
+    margin-block: 0 0.5rem;
+    z-index: 5;
+  }
+
+  /* Pager 底吸：长单元滚动时「下一概念」常驻视野 */
+  .lboard-root[data-mode='stepper'] .lboard__pager {
+    position: sticky;
+    bottom: 0;
+    background: var(--sx-sys-color-bg-page);
+    margin-top: 0.75rem;
+    padding-block: 0.5rem 0.4rem;
+    z-index: 5;
+  }
+
+  /* 窄屏：pager 退成顶吸在 topbar 下，避免键盘弹起遮挡；stage 让出空间 */
+  @media (max-width: 720px) {
+    .lboard-root[data-mode='stepper'] .lboard__pager {
+      position: sticky;
+      bottom: auto;
+      top: calc(var(--sx-doc-side-top, 6.05rem) + 2.2rem);
+      margin-top: 0.5rem;
+    }
+
+    .lboard-root[data-mode='stepper'] .lboard__stage {
+      padding-block-start: 2.5rem;
     }
   }
 </style>

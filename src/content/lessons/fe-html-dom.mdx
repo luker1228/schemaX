@@ -4,11 +4,11 @@ description: 进阶篇：基础篇用 Markdown 与视觉认结构后，再看 HT
 slug: fe-html-dom
 status: published
 course: frontend-handbook
-order: 10
+order: 8
 part: advanced
 durationMinutes: 10
 lessonType: lesson
-presentation: board
+presentation: scroll
 hero:
   line1: HTML 的本质
   line2: 是一棵树
@@ -22,7 +22,6 @@ import StepSplit from '../../components/course/StepSplit.astro';
 import SectionHead from '../../components/course/SectionHead.astro';
 import Note from '../../components/course/Note.astro';
 import Preview from '../../components/course/Preview.astro';
-import Takeaway from '../../components/course/Takeaway.astro';
 import DocTable from '../../components/design-system/DocTable.astro';
 import LayerPair from '../../components/course/LayerPair.astro';
 
@@ -47,7 +46,7 @@ import LayerPair from '../../components/course/LayerPair.astro';
 </StepCard>
 
 <StepCard num="DOM-03" label="对照">
-  <StepSplit wide>
+  <StepSplit layout="stack">
     <SectionHead line1="三棵树，同一套嵌套" line2="Markdown · 图层 · DOM" />
     <p class="m-0 text-base leading-relaxed">{'同一张卡片，三种说法：'}</p>
 
@@ -133,7 +132,7 @@ import LayerPair from '../../components/course/LayerPair.astro';
 </StepCard>
 
 <StepCard num="DOM-05" label="整页骨架">
-  <StepSplit>
+  <StepSplit layout="aside">
     <SectionHead line1="最小合法骨架" line2="html · head · body" />
     <p class="m-0 text-base leading-relaxed">
       {'浏览器眼里，一页大致长这样（缩进 = 父子）：'}
@@ -178,26 +177,3 @@ import LayerPair from '../../components/course/LayerPair.astro';
     现在只需记住：<strong>DOM 是 JS 操作页面的把手。</strong>
   </Note>
 </StepCard>
-
-<Takeaway
-  num="DOM-07"
-  label="总结"
-  line1="HTML 的本质"
-  line2="解析后的 DOM 树"
-  note="基础篇用隐喻进门；进阶篇认 DOM——浏览器里的真结构。"
->
-  <ul>
-    <li>
-      <strong>源码</strong>是文本；浏览器<strong>解析</strong>后得到 DOM
-    </li>
-    <li>
-      <strong>DOM</strong>是节点树：元素套元素，文本挂在叶子附近
-    </li>
-    <li>
-      <strong>显示 / 脚本 / 读屏</strong>都围绕这棵树，不是围绕字符串本身
-    </li>
-    <li>
-      <strong>Elements 面板</strong>就是 DOM 的可视化——请养成打开它的习惯
-    </li>
-  </ul>
-</Takeaway>

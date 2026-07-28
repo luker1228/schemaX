@@ -1,223 +1,109 @@
 ---
-title: JavaScript 交互课·让页面动起来
-description: 用 4 个最小交互案例理解 JS——点击改状态、输入实时镜像、动态添加列表项、删除与空状态。学会「事件→状态→界面变化」的流程。
+title: JavaScript 入门
+description: 先从视觉理解 JavaScript——它让静态的页面「活」起来：你做一个动作，页面就跟着变。动手点按钮感受「事件→状态→界面」，再认识事件系统（点击、输入、提交……都是事件），最后把前端三件套凑齐。本课只让你看见 JS 在干什么，不教语法。
 slug: fe-js-interaction
 status: published
 course: frontend-handbook
-order: 6
+order: 4
 part: basics
-durationMinutes: 12
-lessonType: practice
-presentation: board
+durationMinutes: 10
+lessonType: lesson
+presentation: scroll
 hero:
   line1: JavaScript
   line2: 是页面的
   badge: 神经
-  pillFill: 事件 · 状态 · 渲染
-  pillOutline: 基础篇 · 交互四练
+  pillFill: 事件 · 状态 · 界面
+  pillOutline: 基础篇 · JS 入门
 ---
 
 import StepCard from '../../components/course/StepCard.astro';
 import StepSplit from '../../components/course/StepSplit.astro';
 import SectionHead from '../../components/course/SectionHead.astro';
 import Note from '../../components/course/Note.astro';
-import Preview from '../../components/course/Preview.astro';
-import Takeaway from '../../components/course/Takeaway.astro';
+import DocTable from '../../components/design-system/DocTable.astro';
 import DocPlayground from '../../components/design-system/DocPlayground.astro';
 import JsDrillDemoIsland from '../../components/course/JsDrillDemoIsland.astro';
 
-<StepCard num="JS-01" label="核心">
-  <SectionHead line1="先理解一件事" line2="用户一动，页面就跟着变" />
-  <Note tag="核心">
-    JavaScript 的本质很简单：<strong>用户做了一个动作（事件），页面收到事件，然后你改一点状态或内容，界面马上跟着变</strong>。
-    本课 4 段都是<strong>真交互</strong>——黑框顶栏标了 <code>LIVE</code> 的是 playground，先动手点；米色框是代码，用来对照原生 JS。底部状态条会同步标出「事件 / 状态 / 界面」三步。
-  </Note>
-</StepCard>
-
-<StepCard num="JS-02" label="点击事件">
-  <StepSplit wide>
-    <SectionHead line1="监听点击事件" line2="改一个文字状态" />
-    <p class="m-0 text-base leading-relaxed">
-      {'最常见的交互：点按钮，改一块文字状态。先点右边两个按钮感受一下：'}
-    </p>
-    <ul class="m-0 pl-5 text-base leading-relaxed">
-      <li>
-        <strong>{'监听的动作'}</strong>
-        {'：两个按钮的 '}
-        <code>click</code>
-      </li>
-      <li>
-        <strong>{'改的内容'}</strong>
-        {'：状态变量（这里是 '}
-        <code>status</code>
-        {'）'}
-      </li>
-      <li>
-        <strong>{'行为'}</strong>
-        {'：点「更新状态」→ 变「已处理」；点「取消」→ 变回「待处理」'}
-      </li>
-    </ul>
-    <div slot="figure" class="flex flex-col gap-4">
-      <DocPlayground size="sm" label="点击改状态" hint="点两个按钮，看文字怎么跟着变">
+<StepCard num="JS-01" label="视觉">
+  <StepSplit layout="stack">
+    <SectionHead line1="先看见" line2="页面会『响应』你" />
+    <Note tag="视角">
+      前两节的 <strong>HTML</strong> 骨架、<strong>CSS</strong> 外观都是静态的「展品」——你只能看，不能跟它互动。
+      <strong>JavaScript</strong> 让页面「活」起来：<strong>你做一个动作，页面就跟着变</strong>。
+      先点右边两个按钮，亲身感受一下。
+    </Note>
+    <Note tag="核心">
+      把刚才的感觉拆成三步：<strong>事件</strong>（你点了）→ <strong>状态</strong>（改了一个值）→ <strong>界面</strong>（文字跟着变）。
+      这就是 JS 的本职：<strong>让页面响应用户</strong>。后面几个例子，都是这个套路的不同样子。
+    </Note>
+    <div slot="figure">
+      <DocPlayground size="sm" label="点按钮，页面跟着变" hint="点两个按钮，看文字怎么跟着你变">
         <JsDrillDemoIsland drill="status" />
       </DocPlayground>
-      <Preview label="原生 JS 写法" lang="js">
-        <pre><code>{`const status = document.querySelector('.status-value');
-document.querySelector('.update-btn').addEventListener('click', () => {
-  status.textContent = '已处理';
-});
-document.querySelector('.cancel-btn').addEventListener('click', () => {
-  status.textContent = '待处理';
-});`}</code></pre>
-      </Preview>
     </div>
   </StepSplit>
 </StepCard>
 
-<StepCard num="JS-03" label="输入事件">
-  <StepSplit wide>
-    <SectionHead line1="监听输入事件" line2="实时镜像文字" />
-    <p class="m-0 text-base leading-relaxed">
-      {'在输入框里打字，让下面的预览文字'}
-      <strong>{'实时同步'}</strong>
-      {'。'}
-      <code>input</code>
-      {' 事件每敲一个字就会触发——试着输入、清空：'}
-    </p>
-    <ul class="m-0 pl-5 text-base leading-relaxed">
-      <li>
-        <strong>{'监听的动作'}</strong>
-        {'：输入框的 '}
-        <code>input</code>
-      </li>
-      <li>
-        <strong>{'改的内容'}</strong>
-        {'：把 '}
-        <code>input.value</code>
-        {' 写进镜像节点'}
-      </li>
-      <li>
-        <strong>{'空值兜底'}</strong>
-        {'：没有字时显示「还没输入」'}
-      </li>
-    </ul>
-    <div slot="figure" class="flex flex-col gap-4">
-      <DocPlayground size="sm" label="输入实时镜像" hint="在输入框里打字，预览同步变">
-        <JsDrillDemoIsland drill="input" />
-      </DocPlayground>
-      <Preview label="原生 JS 写法" lang="js">
-        <pre><code>{`const input = document.querySelector('.demo-input');
-const mirror = document.querySelector('.mirror-text');
-input.addEventListener('input', () => {
-  mirror.textContent = input.value || '还没输入';
-});`}</code></pre>
-      </Preview>
-    </div>
-  </StepSplit>
+<StepCard num="JS-02" label="事件">
+  <SectionHead line1="事件系统" line2="浏览器时刻在听你的动作" />
+  <Note tag="机制">
+    上一节你点了按钮，页面就响应了——背后靠的是「事件」。浏览器时刻监听用户的每个动作，<strong>点击、按键、输入、提交……每个动作发生时，浏览器都发出一个「事件」</strong>。你预先告诉它「这个事件发生时执行这段」，页面就响应了。这套机制叫<strong>事件驱动</strong>。
+  </Note>
+  <p class="m-0 text-base leading-relaxed">{'最常见的几个事件：'}</p>
+  <DocTable label="常见事件">
+    <thead>
+      <tr>
+        <th>事件</th>
+        <th>什么时候触发</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="doc-props__name"><code>click</code></td>
+        <td class="doc-props__desc">鼠标点击（按钮、链接、卡片）</td>
+      </tr>
+      <tr>
+        <td class="doc-props__name"><code>input</code></td>
+        <td class="doc-props__desc">输入框里打字，每敲一个字触发一次</td>
+      </tr>
+      <tr>
+        <td class="doc-props__name"><code>change</code></td>
+        <td class="doc-props__desc">输入框失焦、值确定下来时</td>
+      </tr>
+      <tr>
+        <td class="doc-props__name"><code>submit</code></td>
+        <td class="doc-props__desc">提交表单（点提交 / 回车）</td>
+      </tr>
+      <tr>
+        <td class="doc-props__name"><code>keydown</code></td>
+        <td class="doc-props__desc">按下键盘任意键</td>
+      </tr>
+      <tr>
+        <td class="doc-props__name"><code>mouseenter</code></td>
+        <td class="doc-props__desc">鼠标移进某个元素</td>
+      </tr>
+    </tbody>
+  </DocTable>
+  <p class="m-0 text-base leading-relaxed">
+    {'事件有上百种，不用背——需要时查 '}
+    <a href="https://developer.mozilla.org/zh-CN/docs/Web/Events" target="_blank" rel="noopener noreferrer">MDN 的事件参考 ↗</a>
+    {'。'}
+  </p>
 </StepCard>
 
-<StepCard num="JS-04" label="动态添加">
-  <StepSplit wide>
-    <SectionHead line1="监听点击，动态添加" line2="创建节点插进页面" />
-    <p class="m-0 text-base leading-relaxed">
-      {'输入任务 → 点「添加」→ 新任务追加到列表。这里多了一步：'}
-      <strong>{'读取输入值，再创建一个新节点插进页面'}</strong>
-      {'。空输入会被忽略。'}
-    </p>
-    <ul class="m-0 pl-5 text-base leading-relaxed">
-      <li>
-        <strong>{'读取'}</strong>
-        {'：'}
-        <code>input.value.trim()</code>
-      </li>
-      <li>
-        <strong>{'创建'}</strong>
-        {'：'}
-        <code>document.createElement('li')</code>
-      </li>
-      <li>
-        <strong>{'插入'}</strong>
-        {'：'}
-        <code>list.appendChild(item)</code>
-        {'，再清空输入框'}
-      </li>
-    </ul>
-    <div slot="figure" class="flex flex-col gap-4">
-      <DocPlayground size="md" label="动态添加" hint="输入任务 → 点添加 → 列表多一项">
-        <JsDrillDemoIsland drill="add" />
-      </DocPlayground>
-      <Preview label="原生 JS 写法" lang="js">
-        <pre><code>{`const input = document.querySelector('.task-input');
-const button = document.querySelector('.add-button');
-const list = document.querySelector('.task-list');
-
-button.addEventListener('click', () => {
-  const text = input.value.trim();
-  if (!text) return;
-  const item = document.createElement('li');
-  item.textContent = text;
-  list.appendChild(item);
-  input.value = '';
-});`}</code></pre>
-      </Preview>
-    </div>
-  </StepSplit>
-</StepCard>
-
-<StepCard num="JS-05" label="删除事件">
-  <StepSplit wide>
-    <SectionHead line1="监听点击，删除与空状态" line2="条件判断 + 事件委托" />
-    <p class="m-0 text-base leading-relaxed">
-      {
-        '删掉任务以后，如果列表空了，就显示「暂无任务」。这里练的是'
-      }
-      <strong>{'删除动作 + 条件判断'}</strong>
-      {'。注意用了'}
-      <strong>{'事件委托'}</strong>
-      {
-        '——不用给每个按钮单独绑监听，在父容器上绑一次就行。试着把两条都删掉，看空状态出现：'
-      }
-    </p>
-    <ul class="m-0 pl-5 text-base leading-relaxed">
-      <li>
-        <strong>{'委托'}</strong>
-        {'：在列表容器上听 '}
-        <code>click</code>
-        {'，用 '}
-        <code>matches</code>
-        {' 判断是不是删除按钮'}
-      </li>
-      <li>
-        <strong>{'删除'}</strong>
-        {'：找到最近的任务项，调用 '}
-        <code>remove()</code>
-      </li>
-      <li>
-        <strong>{'空状态'}</strong>
-        {'：根据 '}
-        <code>children.length</code>
-        {' 决定是否显示「暂无任务」'}
-      </li>
-    </ul>
-    <div slot="figure" class="flex flex-col gap-4">
-      <DocPlayground size="md" label="删除与空状态" hint="删光列表后，空状态会出现">
-        <JsDrillDemoIsland drill="delete" />
-      </DocPlayground>
-      <Preview label="原生 JS 写法" lang="js">
-        <pre><code>{`const list = document.querySelector('.task-stack');
-const empty = document.querySelector('.empty-state');
-
-function syncEmptyState() {
-  empty.hidden = list.children.length > 0;
-}
-
-list.addEventListener('click', (event) => {
-  if (!event.target.matches('.delete-button')) return;
-  event.target.closest('.task-item')?.remove();
-  syncEmptyState();
-});
-syncEmptyState();`}</code></pre>
-      </Preview>
-    </div>
-  </StepSplit>
+<StepCard num="JS-03" label="三件套">
+  <SectionHead line1="HTML · CSS · JavaScript" line2="前端三件套到齐" />
+  <Note tag="凑齐">
+    到这里，前端三件套凑齐了：
+    <strong>HTML</strong> 决定页面<strong>有什么</strong>（结构）；
+    <strong>CSS</strong> 决定<strong>长什么样</strong>（外观）；
+    <strong>JavaScript</strong> 决定<strong>会做什么</strong>（行为、响应）。
+    静态的骨架与装修，加上会响应的「神经」，一个能看又能互动的页面就完整了。
+  </Note>
+  <p class="m-0 text-base leading-relaxed">
+    {'本课只是让你「看见」JS 在干什么，不教语法。真要学写，从 '}
+    <a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Guide" target="_blank" rel="noopener noreferrer">MDN 的 JavaScript 指南 ↗</a>
+    {' 开始。'}
+  </p>
 </StepCard>
