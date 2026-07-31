@@ -1,220 +1,77 @@
 ---
-// Badge 演示 —— V2 文档布局：States（Demo）/ Props（属性表）/ Code（用法卡片）。
-// 仅供 /design-system/components/badge 详情页的 doc-content 区使用。
+// Badge 演示 —— 左 code-block（.badge grammar + copy），右 live demo（5 变体）；
+// 下方状态语义映射。砍掉 Props 表 / 用法卡 / 折叠说明。
 import Badge from '../Badge.astro';
-import Demo from '../Demo.astro';
 import type { BadgeVariant } from '../Badge.astro';
 
-const variants: { name: string; value: BadgeVariant; desc: string }[] = [
-  { name: 'Default', value: 'default', desc: '中性标签' },
-  { name: 'Accent', value: 'accent', desc: '强调 / 活跃' },
-  { name: 'Action', value: 'action', desc: '计划中 / 进行中' },
-  { name: 'Danger', value: 'danger', desc: '危险 / 停用' },
-  { name: 'Success', value: 'success', desc: '成功 / 完成' },
+const variants: { name: string; value: BadgeVariant }[] = [
+  { name: 'Default', value: 'default' },
+  { name: 'Accent', value: 'accent' },
+  { name: 'Action', value: 'action' },
+  { name: 'Danger', value: 'danger' },
+  { name: 'Success', value: 'success' },
 ];
 
-// 状态→颜色映射：按内容 schema 里的真实状态值分组，
-// 让访客一眼看到「哪个状态该用哪个色」。
-const statusGroups: {
-  variant: BadgeVariant;
-  label: string;
-  statuses: string[];
-}[] = [
-  {
-    variant: 'action',
-    label: '蓝 · 计划 / 进行中',
-    statuses: ['planned', 'planning', 'writing', 'experimental', 'draft'],
-  },
-  {
-    variant: 'accent',
-    label: '黄 · 活跃',
-    statuses: ['active'],
-  },
-  {
-    variant: 'danger',
-    label: '红 · 停用 / 归档',
-    statuses: ['archived', 'paused'],
-  },
-  {
-    variant: 'success',
-    label: '绿 · 完成 / 已发布',
-    statuses: ['completed', 'published', 'maintained'],
-  },
+const statusGroups: { variant: BadgeVariant; label: string; statuses: string[] }[] = [
+  { variant: 'action', label: '计划 / 进行中', statuses: ['planned', 'planning', 'writing', 'draft'] },
+  { variant: 'accent', label: '活跃', statuses: ['active'] },
+  { variant: 'danger', label: '停用 / 归档', statuses: ['archived', 'paused'] },
+  { variant: 'success', label: '完成 / 已发布', statuses: ['completed', 'published', 'maintained'] },
 ];
 
-const apiRows = [
-  {
-    name: 'variant',
-    type: "'default' | 'accent' | 'action' | 'danger' | 'success'",
-    default: "'default'",
-    desc: '视觉变体，决定底色',
-  },
-];
+const badgeCode = `<span class="sel">.badge</span> {
+  <span class="prop">border</span>: <span class="val">3px solid var(--sx-sys-color-border)</span>;
+  <span class="prop">background</span>: <span class="val">var(--sx-sys-color-bg-surface)</span>;
+  <span class="prop">box-shadow</span>: <span class="val">var(--sx-sys-shadow-sm)</span>;
+  <span class="prop">text-transform</span>: <span class="val">uppercase</span>;
+}
 
-const usage = `<!-- 中性标签 -->
-<Badge>Beginner</Badge>
-
-<!-- 状态标记 -->
-<Badge variant="action">Planned</Badge>
-<Badge variant="accent">Active</Badge>
-<Badge variant="danger">Archived</Badge>
-<Badge variant="success">Published</Badge>`;
+<span class="sel">.badge--accent</span>  { <span class="prop">background</span>: <span class="val">var(--sx-sys-color-accent)</span>; }
+<span class="sel">.badge--success</span> { <span class="prop">background</span>: <span class="val">var(--sx-sys-color-success)</span>; }`;
 ---
 
-<>
-  {/* —— States：变体 / 状态映射 —— */}
-  <section class="doc-section">
-    <div class="doc-section__head">
-      <div class="doc-section__eyebrow">
-        <span class="doc-section__mark" aria-hidden="true"></span>
-        <h2 class="doc-section__title">状态演示</h2>
-      </div>
-      <p class="doc-section__sub">
-        五个变体，以及内容 schema 状态值到颜色的语义映射。用 Demo
-        组件封装：头部为标签与代码，舞台为实例，底部为可折叠说明。
-      </p>
+<div class="nb-grid2">
+  <div class="nb-codewrap">
+    <span class="nb-codelabel">CSS</span>
+    <pre class="nb-codeblock"><button class="nb-copy" type="button" data-copy="">Copy</button><code set:html={badgeCode} /></pre>
+  </div>
+  <div class="nb-demobox">
+    <div class="nb-row">
+      {variants.map((v) => <Badge variant={v.value}>{v.name}</Badge>)}
     </div>
-    <div class="doc-section__body">
-      <Demo label="变体 Variants" attr='variant="..."' stageClass="wrap">
-        {
-          variants.map((v) => (
-            <Badge variant={v.value}>
-              {v.name} · {v.desc}
-            </Badge>
-          ))
-        }
-        <Fragment slot="note">
-          <p>
-            5 个变体。<code>default</code> 白底（中性标签，如 type/level）/
-            <code>accent</code> 黄底（强调、活跃）/
-            <code>action</code> 蓝底（计划中、进行中）/
-            <code>danger</code> 红底（危险、停用）/
-            <code>success</code> 绿底（成功、完成）。
-          </p>
-        </Fragment>
-      </Demo>
+  </div>
+</div>
 
-      <Demo
-        label="状态映射 Status mapping"
-        attr="内容 schema 的状态值 → 颜色"
-        stageClass="wrap"
-      >
-        {
-          statusGroups.map((group) => (
-            <div class="status-row">
-              <Badge variant={group.variant}>{group.label}</Badge>
-              <span class="status-values">
-                {group.statuses.map((s) => (
-                  <code>{s}</code>
-                ))}
-              </span>
-            </div>
-          ))
-        }
-        <Fragment slot="note">
-          <p>
-            状态色遵循 <code>danger</code> / <code>success</code> token 的语义约定： 绿
-            = 完成 / 已发布（completed、published、maintained）， 红 = 停用 / 归档（archived、paused）。
-            蓝 / 黄区分「计划进行中」与「活跃」。中性 default 用于 type、level 等无状态语义的标签。
-          </p>
-        </Fragment>
-      </Demo>
-    </div>
-  </section>
-
-  {/* —— Props：真实属性表 —— */}
-  <section class="doc-section">
-    <div class="doc-section__head">
-      <div class="doc-section__eyebrow">
-        <span class="doc-section__mark" aria-hidden="true"></span>
-        <h2 class="doc-section__title">Props 属性</h2>
-      </div>
-      <p class="doc-section__sub">Badge 组件接受的属性。除特别说明外，所有属性均为可选。</p>
-    </div>
-    <div class="doc-section__body">
-      <div class="doc-table-scroll">
-        <table class="doc-props">
-          <thead>
-            <tr>
-              <th>Prop</th>
-              <th>Type</th>
-              <th>Default</th>
-              <th>Description</th>
-            </tr>
-          </thead>
-          <tbody>
-            {
-              apiRows.map((r) => (
-                <tr>
-                  <td class="doc-props__name">{r.name}</td>
-                  <td>
-                    <span class="doc-props__type">{r.type}</span>
-                  </td>
-                  <td>
-                    <span class="doc-props__type">{r.default}</span>
-                  </td>
-                  <td class="doc-props__desc">{r.desc}</td>
-                </tr>
-              ))
-            }
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </section>
-
-  {/* —— Code：用法示例卡片 —— */}
-  <section class="doc-section">
-    <div class="doc-section__head">
-      <div class="doc-section__eyebrow">
-        <span class="doc-section__mark" aria-hidden="true"></span>
-        <h2 class="doc-section__title">用法示例</h2>
-      </div>
-      <p class="doc-section__sub">在 Astro 页面中引入 Badge，按内容状态选择对应变体。</p>
-    </div>
-    <div class="doc-section__body">
-      <figure class="doc-code">
-        <figcaption class="doc-code__bar">
-          <span class="doc-code__file">Badge.astro</span>
-          <span class="doc-code__lang">astro</span>
-        </figcaption>
-        <pre class="doc-code__body"><code>{usage}</code></pre>
-      </figure>
-    </div>
-  </section>
-</>
+<div class="nb-demobox">
+  <div class="nb-stack">
+    {
+      statusGroups.map((g) => (
+        <div class="status-row">
+          <Badge variant={g.variant}>{g.label}</Badge>
+          <span class="status-vals">
+            {g.statuses.map((s) => (<code>{s}</code>))}
+          </span>
+        </div>
+      ))
+    }
+  </div>
+</div>
 
 <style>
-  /* doc-section__body 内的 Demo：去掉 Demo 自带的底部 margin，统一由 body gap 控制。 */
-  :global(.doc-section__body .demo) {
-    margin-block-end: 0;
-  }
-  /* props 表窄屏横向滚动防御 */
-  .doc-table-scroll {
-    overflow-x: auto;
-  }
-
-  /* 状态映射演示行：badge + 状态值列表横排 */
   .status-row {
-    /* 每行占满 stage 宽度，强制纵向堆叠（蓝/黄/红/绿各占一行） */
-    flex: 0 0 100%;
     display: flex;
-    align-items: center;
     flex-wrap: wrap;
+    align-items: center;
     gap: var(--sx-ref-space-3);
   }
-  /* badge 列等宽对齐，让右侧状态值列表纵向成列 */
-  .status-row :global(.badge) {
-    flex: 0 0 9.5rem;
-  }
-  .status-values {
-    display: inline-flex;
+  .status-vals {
+    display: flex;
     flex-wrap: wrap;
-    gap: 0.35rem;
+    gap: 0.25rem;
   }
-  .status-values :global(code) {
-    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-    font-size: var(--sx-sys-font-size-md);
+  .status-vals code {
+    font-family: var(--sx-sys-font-family-mono);
+    font-size: var(--sx-sys-font-size-sm);
     background: var(--sx-sys-color-bg-page);
     border: var(--sx-sys-border-width) solid var(--sx-sys-color-border);
     padding: 0.05em 0.4em;

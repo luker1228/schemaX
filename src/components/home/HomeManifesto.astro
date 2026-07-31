@@ -1,31 +1,33 @@
 ---
-import DoodleMark from './DoodleMark.astro';
+import GeoMark from '../design-system/GeoMark.astro';
 
-// 编辑式原则墙：黑白线稿为主，蓝/黄局部强调（非彩虹 bento）
+// 四原则墙：每条原则一张硬边贴纸卡，四色各一——
+// 蓝底白字 / 白底黑字 / 白底蓝字 / 黄底黑字。
+// 文字色继承卡色，靠 opacity 分层（标题纯色、编号/英文/正文弱化）。
 const principles = [
   {
     en: 'Structure before automation',
     cn: '先结构，后自动化',
     body: '先把意图、字段、边界和约束描述清楚，再让工具与 Agent 执行。',
-    accent: 'yellow' as const,
+    tone: 'coral' as const,
   },
   {
     en: 'Contract before integration',
     cn: '先契约，后集成',
     body: 'API、组件、内容和工具调用都先建立可验证契约，再进入系统连接。',
-    accent: 'blue' as const,
+    tone: 'white' as const,
   },
   {
     en: 'Constraints enable reliability',
     cn: '约束带来可靠性',
     body: '合理约束不是限制能力，而是让执行结果可以检查、复现和维护。',
-    accent: 'ink' as const,
+    tone: 'pop-green' as const,
   },
   {
     en: 'Small schemas, large systems',
     cn: '小 Schema，大系统',
     body: '用可组合的小契约组织复杂度，而不是一次写完整个世界。',
-    accent: 'yellow' as const,
+    tone: 'yellow' as const,
   },
 ];
 ---
@@ -35,27 +37,23 @@ const principles = [
     <header class="manifesto__intro">
       <div class="manifesto__intro-copy">
         <p class="manifesto__kicker">
-          <DoodleMark kind="spark" size="sm" />
+          <GeoMark kind="spark" size="sm" />
           <span>构建原则 · MANIFESTO</span>
         </p>
         <h2 class="manifesto__title" id="manifesto-title">
-          结构先于自动化，<br />
-          契约先于集成。
+          结构先于自动化，<br />契约先于集成。
         </h2>
-        <p class="manifesto__lede">
-          这不是口号墙——是我在 Agent、内容与设计系统里反复验证过的工作方式。
-        </p>
       </div>
       <div class="manifesto__sketch" aria-hidden="true">
-        <DoodleMark kind="brace" size="lg" />
-        <DoodleMark kind="star" size="md" class="manifesto__sketch-star" />
+        <GeoMark kind="brace" size="lg" />
+        <GeoMark kind="star" size="md" class="manifesto__sketch-star" />
       </div>
     </header>
 
     <ol class="manifesto__list">
       {
         principles.map((p, i) => (
-          <li class:list={['principle', `principle--${p.accent}`]}>
+          <li class:list={['principle', `principle--${p.tone}`]}>
             <span class="principle__index" aria-hidden="true">
               {String(i + 1).padStart(2, '0')}
             </span>
@@ -77,14 +75,20 @@ const principles = [
     grid-template-columns: minmax(0, 1.4fr) minmax(0, 0.6fr);
     gap: var(--sx-ref-space-8);
     align-items: end;
-    margin-bottom: var(--sx-ref-space-6);
+    margin-bottom: var(--sx-ref-space-8);
+  }
+
+  .manifesto__intro-copy {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sx-ref-space-3);
   }
 
   .manifesto__kicker {
     display: inline-flex;
     align-items: center;
     gap: var(--sx-ref-space-2);
-    margin: 0 0 var(--sx-ref-space-4);
+    margin: 0;
     font-family: var(--sx-sys-font-family-mono-system), ui-monospace, monospace;
     font-size: var(--sx-sys-font-size-sm);
     font-weight: 700;
@@ -94,21 +98,13 @@ const principles = [
   }
 
   .manifesto__title {
-    margin: 0 0 var(--sx-ref-space-4);
+    margin: 0;
     font-family: var(--sx-sys-font-family-display), system-ui, sans-serif;
     font-size: var(--sx-sys-font-display-md);
     font-weight: 800;
     line-height: 1.08;
     letter-spacing: -0.02em;
     color: var(--sx-sys-color-text-primary);
-  }
-
-  .manifesto__lede {
-    margin: 0;
-    max-width: 40ch;
-    font-size: var(--sx-sys-font-size-reading);
-    line-height: 1.65;
-    color: var(--sx-sys-color-text-soft);
   }
 
   .manifesto__sketch {
@@ -121,7 +117,7 @@ const principles = [
 
   .manifesto__list {
     list-style: none;
-    margin: var(--sx-ref-space-8) 0 0;
+    margin: 0;
     padding: 0;
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -132,26 +128,41 @@ const principles = [
 
   .principle {
     display: grid;
-    grid-template-columns: auto 1fr;
+    grid-template-columns: auto minmax(0, 1fr);
     gap: var(--sx-ref-space-4);
-    padding: var(--sx-ref-space-6) var(--sx-ref-space-6);
+    padding: var(--sx-ref-space-6);
     background: var(--sx-sys-color-bg-surface);
+    color: var(--sx-sys-color-text-primary);
     margin: 0;
   }
 
+  /* 四撞色矩阵（neubrutalism）：浅撞色一律黑字（对比度 ≥3:1），区分靠背景填充。 */
+  .principle--white {
+    background: var(--sx-sys-color-bg-surface);
+    color: var(--sx-sys-color-text-primary);
+  }
+
+  .principle--coral {
+    background: var(--sx-sys-color-coral);
+    color: var(--sx-sys-color-text-primary);
+  }
+
+  .principle--pop-green {
+    background: var(--sx-sys-color-pop-green);
+    color: var(--sx-sys-color-text-primary);
+  }
+
+  .principle--yellow {
+    background: var(--sx-sys-color-accent);
+    color: var(--sx-sys-color-text-primary);
+  }
+
   .principle__index {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 2.25rem;
-    height: 2.25rem;
-    border: var(--sx-sys-border-width-strong) solid var(--sx-sys-color-border);
-    border-radius: var(--sx-sys-radius-sm);
     font-family: var(--sx-sys-font-family-mono-system), ui-monospace, monospace;
     font-size: var(--sx-sys-font-size-sm);
     font-weight: 700;
-    background: var(--sx-sys-color-bg-page);
-    box-shadow: var(--sx-sys-shadow-sm);
+    letter-spacing: 0.06em;
+    opacity: 0.55;
   }
 
   .principle__body {
@@ -167,7 +178,7 @@ const principles = [
     font-size: var(--sx-sys-font-size-xl);
     font-weight: 800;
     line-height: 1.15;
-    color: var(--sx-sys-color-text-primary);
+    color: inherit;
   }
 
   .principle__en {
@@ -176,35 +187,14 @@ const principles = [
     font-size: var(--sx-sys-font-size-sm);
     font-weight: 700;
     letter-spacing: 0.03em;
-    color: var(--sx-sys-color-text-muted);
+    opacity: 0.7;
   }
 
   .principle__text {
-    margin: var(--sx-ref-space-2) 0 0;
+    margin: var(--sx-ref-space-1) 0 0;
     font-size: var(--sx-sys-font-size-base);
     line-height: 1.55;
-    color: var(--sx-sys-color-text-soft);
-  }
-
-  .principle--yellow {
-    background: color-mix(
-      in srgb,
-      var(--sx-sys-color-accent) 28%,
-      var(--sx-sys-color-bg-surface)
-    );
-  }
-
-  .principle--blue .principle__en {
-    color: var(--sx-sys-color-action-primary);
-  }
-
-  .principle--yellow .principle__index {
-    background: var(--sx-sys-color-accent);
-  }
-
-  .principle--blue .principle__index {
-    background: var(--sx-sys-color-action-primary);
-    color: var(--sx-sys-color-bg-surface);
+    opacity: 0.85;
   }
 
   @media (max-width: 48rem) {

@@ -17,10 +17,16 @@
       "border": { "$type": "color", "$value": "{ref.color.ink}" },
       "danger": { "$type": "color", "$value": "{ref.color.red.500}" },
       "success": { "$type": "color", "$value": "{ref.color.green.500}" },
+      "warning": { "$type": "color", "$value": "{ref.color.orange}", "$description": "警告语义色（neubrutalism 撞色橙 #FFA552）。Toast / Badge warning。" },
+      "info": { "$type": "color", "$value": "{ref.color.sky}", "$description": "信息语义色（neubrutalism 撞色天蓝 #74B9FF）。Toast / Badge info。" },
       "mint": { "$type": "color", "$value": "{ref.color.mint}" },
       "lavender": { "$type": "color", "$value": "{ref.color.lavender}" },
       "beige": { "$type": "color", "$value": "{ref.color.beige}" },
       "gray-light": { "$type": "color", "$value": "{ref.color.gray.200}" },
+      "coral": { "$type": "color", "$value": "{ref.color.coral}", "$description": "neubrutalism 撞色：珊瑚粉，贴纸 / 撞色卡强调。" },
+      "sky": { "$type": "color", "$value": "{ref.color.sky}", "$description": "neubrutalism 撞色：天蓝，focus outline / 撞色卡。" },
+      "pop-green": { "$type": "color", "$value": "{ref.color.pop-green}", "$description": "neubrutalism 撞色：柔绿，贴纸 / 状态撞色。" },
+      "orange": { "$type": "color", "$value": "{ref.color.orange}", "$description": "neubrutalism 撞色：橙，贴纸 / 强调。" },
       "terminal": {
         "bg": { "$type": "color", "$value": "{ref.color.terminal.bg}" },
         "surface": { "$type": "color", "$value": "{ref.color.terminal.surface}" },
@@ -57,23 +63,27 @@
       }
     },
     "border": {
-      "width": { "$type": "dimension", "$value": "1px" },
+      "width": { "$type": "dimension", "$value": "2px", "$description": "细笔触（neubrutalism border-thin：分割线 / 次级元素）。" },
       "width-strong": {
         "$type": "dimension",
-        "$value": "2px",
-        "$description": "粗边框（Neo-brutalist 强调元素：首页大卡 / pill / 终端）。"
+        "$value": "3px",
+        "$description": "Canonical 笔触（neubrutalism border：所有主组件默认边框，单一笔触宽度，border IS ornament）。"
       }
     },
     "radius": {
       "sm": { "$type": "dimension", "$value": "0" },
-      "md": { "$type": "dimension", "$value": "4px" },
-      "control": { "$type": "dimension", "$value": "2px", "$description": "控件机械圆角（按钮 / 标签 / 导航）。Card.radius 同源引用。" }
+      "md": { "$type": "dimension", "$value": "0" },
+      "control": { "$type": "dimension", "$value": "0", "$description": "恒 0 圆角（neubrutalism：所有控件 / 卡片 / 容器一律直角，无例外）。" }
     },
     "shadow": {
-      "color": { "$type": "color", "$value": "{sys.color.border}", "$description": "硬阴影默认颜色（= ink 黑）。组件可局部覆盖 --sx-sys-shadow-color 做彩色偏移（如 Card 黄阴影）。" },
-      "sm": { "$type": "shadow", "$value": "2px 2px 0 var(--sx-sys-shadow-color)" },
-      "md": { "$type": "shadow", "$value": "4px 4px 0 var(--sx-sys-shadow-color)" },
-      "lg": { "$type": "shadow", "$value": "6px 6px 0 var(--sx-sys-shadow-color)" }
+      "color": { "$type": "color", "$value": "{sys.color.border}", "$description": "硬影色（= ink 黑）。neubrutalism 零模糊硬偏移影；组件可局部覆盖 --sx-sys-shadow-color 做撞色偏移（黄 / 粉 / 蓝 / 绿）。" },
+      "sm": { "$type": "shadow", "$value": "3px 3px 0 var(--sx-sys-shadow-color)", "$description": "3/6/9 ramp 第一档：徽章 / chip / inline 控件。" },
+      "md": { "$type": "shadow", "$value": "6px 6px 0 var(--sx-sys-shadow-color)", "$description": "3/6/9 ramp 第二档：卡片 / 按钮 / 面板默认硬影。" },
+      "lg": { "$type": "shadow", "$value": "9px 9px 0 var(--sx-sys-shadow-color)", "$description": "3/6/9 ramp 第三档：hover 抬升态 / 强调面板。" },
+      "xl": { "$type": "shadow", "$value": "12px 12px 0 var(--sx-sys-shadow-color)", "$description": "hero / dialog 重硬影（neubrutalism shadow-xl，独立 hero 档，不在 3/6/9 ramp 内）。" }
+    },
+    "rotate": {
+      "sticker": { "$type": "other", "$value": "-2deg", "$description": "贴纸/戳记/CTA 微旋默认倾角（左倾 -2°）。反方向用 calc(var(--sx-sys-rotate-sticker) * -1)。仅 sticker 可旋，正文不可。" }
     },
     "layout": {
       "width": {
@@ -118,6 +128,9 @@
           "$value": "{ref.space.12}",
           "$description": "文档/课时双栏容器底部内边距。"
         }
+      },
+      "grid": {
+        "cell-min": { "$type": "dimension", "$value": "18rem", "$description": "auto-fill 卡片格单元最小宽（.sx-grid 的 minmax 下限）。" }
       }
     },
     "breakpoint": {

@@ -99,9 +99,11 @@ const { items, ariaLabel = 'Breadcrumb' } = Astro.props;
     background: var(--sx-sys-color-accent);
   }
 
-  /* 当前页（激活态）：满色强对比，作为视觉锚点 */
+  /* 当前页（激活态）：黄底黑字常驻，作为视觉锚点（与 Nav aria-current 一致） */
   .breadcrumb__current {
     opacity: 1;
+    background: var(--sx-sys-color-accent);
+    color: var(--sx-sys-color-text-primary);
   }
 
   /* 分隔符：比文字更暗，不抢视觉 */

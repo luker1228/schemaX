@@ -1,0 +1,322 @@
+/* nb.css —— /design-system/components 页展示样式（对齐 neubrutalism.com implementation 段）。
+   归入 components 层（global.css import）。
+   仅 components 页的 *Demo.astro 与 components.astro 用。
+
+   与 doc.css 的 doc-* 并行存在：doc-* 仍供课程页用；本文件专注 components 页
+   「代码块 + live demo 并排」的参考视觉对齐——深色高亮 code-block / copy 按钮 /
+   grid-2 并排 / demo-box / card 三联 / token 表 / form grid / playground 点阵。
+
+   全部颜色走 --sx-* token（规范 §17）；点阵用 SVG url()（绕开 stylelint 对
+   background gradient 的限制）。 */
+
+/* ── hero：section label + intro（对齐参考 .section-label / .section-intro）── */
+.nb-sectlabel {
+  display: inline-block;
+  font-family: var(--sx-sys-font-family-mono);
+  font-size: var(--sx-sys-font-size-md);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  padding: 0.4rem 0.8rem;
+  border: var(--sx-sys-border-width) solid var(--sx-sys-color-border);
+  background: var(--sx-sys-color-bg-surface);
+  box-shadow: var(--sx-sys-shadow-sm);
+  margin-bottom: var(--sx-ref-space-6);
+}
+.nb-intro {
+  margin: 0;
+  max-width: 45rem;
+  font-size: var(--sx-sys-font-size-reading);
+  line-height: 1.65;
+  color: var(--sx-sys-color-text-soft);
+}
+
+/* ── 代码块：深色高亮（对齐参考 .code-block + .code-label）── */
+.nb-codewrap {
+  position: relative;
+  margin: 0 0 var(--sx-ref-space-12) 0;
+}
+/* 代码块限宽（独占一行时，对齐参考 ~一半宽，不全宽拉满） */
+.nb-codewrap--narrow {
+  max-width: 38rem;
+}
+.nb-codelabel {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  background: var(--sx-sys-color-border);
+  color: var(--sx-sys-color-bg-surface);
+  font-family: var(--sx-sys-font-family-mono);
+  font-size: var(--sx-sys-font-size-sm);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  border: var(--sx-sys-border-width-strong) solid var(--sx-sys-color-border);
+  /* 叠在代码块上沿：负 margin 让 label 底边压住 code-block 顶边框 */
+  margin-bottom: -3px;
+  position: relative;
+  z-index: 1;
+}
+.nb-codeblock {
+  position: relative;
+  margin: 0;
+  background: var(--sx-comp-code-bg);
+  color: var(--sx-comp-code-fg);
+  border: var(--sx-sys-border-width-strong) solid var(--sx-sys-color-border);
+  padding: var(--sx-ref-space-4);
+  overflow-x: auto;
+  font-family: var(--sx-sys-font-family-mono);
+  font-size: var(--sx-sys-font-size-md);
+  line-height: 1.7;
+  box-shadow: var(--sx-sys-shadow-md);
+  white-space: pre;
+}
+.nb-codeblock .sel {
+  color: var(--sx-comp-code-highlight-selector);
+}
+.nb-codeblock .prop {
+  color: var(--sx-comp-code-highlight-property);
+}
+.nb-codeblock .val {
+  color: var(--sx-comp-code-highlight-value);
+}
+.nb-codeblock .com {
+  color: var(--sx-comp-code-highlight-comment);
+}
+.nb-codeblock .tag {
+  color: var(--sx-comp-code-highlight-tag);
+}
+.nb-codeblock .str {
+  color: var(--sx-comp-code-highlight-string);
+}
+
+/* copy 按钮（绝对定位；hover 黄 / copied 绿）—— 参考同款 */
+.nb-copy {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  padding: 0.3rem 0.7rem;
+  font-family: var(--sx-sys-font-family-mono);
+  font-size: var(--sx-sys-font-size-xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border: var(--sx-sys-border-width) solid color-mix(
+    in srgb,
+    var(--sx-sys-color-bg-surface) 25%,
+    transparent
+  );
+  background: color-mix(
+    in srgb,
+    var(--sx-sys-color-bg-surface) 8%,
+    transparent
+  );
+  color: var(--sx-sys-color-bg-surface);
+  cursor: pointer;
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease,
+    border-color 0.15s ease;
+  z-index: 2;
+}
+.nb-copy:hover {
+  background: var(--sx-sys-color-accent);
+  color: var(--sx-sys-color-text-primary);
+  border-color: var(--sx-sys-color-accent);
+}
+.nb-copy.is-copied {
+  background: var(--sx-sys-color-pop-green);
+  color: var(--sx-sys-color-text-primary);
+  border-color: var(--sx-sys-color-pop-green);
+}
+
+/* ── grid-2 并排（代码 + demo）── */
+.nb-grid2 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--sx-ref-space-6);
+  align-items: start;
+}
+@media (max-width: 48rem) {
+  .nb-grid2 {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ── demo 容器（对齐参考 .demo-box）── */
+.nb-demobox {
+  border: var(--sx-sys-border-width-strong) solid var(--sx-sys-color-border);
+  background: var(--sx-sys-color-bg-surface);
+  padding: var(--sx-ref-space-6);
+  box-shadow: var(--sx-sys-shadow-md);
+}
+.nb-demolabel {
+  display: block;
+  margin-bottom: var(--sx-ref-space-2);
+  font-family: var(--sx-sys-font-family-mono);
+  font-size: var(--sx-sys-font-size-sm);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--sx-sys-color-text-muted);
+}
+/* demo 内说明段落 */
+.nb-lead {
+  margin: 0 0 var(--sx-ref-space-4);
+  font-size: var(--sx-sys-font-size-base);
+  line-height: 1.6;
+  color: var(--sx-sys-color-text-soft);
+}
+.nb-lead strong {
+  color: var(--sx-sys-color-text-primary);
+}
+/* 区块内小节标题（分隔代码块与下方 variations 等，对齐参考 h4） */
+.nb-subtitle {
+  margin: var(--sx-ref-space-12) 0 var(--sx-ref-space-4);
+  font-family: var(--sx-sys-font-family-display);
+  font-size: var(--sx-sys-font-size-xl);
+  font-weight: 800;
+  color: var(--sx-sys-color-text-primary);
+}
+/* demo 内控件行：换行排列 */
+.nb-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sx-ref-space-3);
+  align-items: center;
+}
+.nb-stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sx-ref-space-3);
+}
+/* checkbox / radio / toggle 行容器 */
+.nb-checkrow {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+}
+
+/* ── Card 三联 variations（standard / colored / filled）── */
+.nb-cardgrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  gap: var(--sx-ref-space-6);
+}
+.nb-carddemo {
+  border: var(--sx-sys-border-width-strong) solid var(--sx-sys-color-border);
+  padding: var(--sx-ref-space-6);
+  background: var(--sx-sys-color-bg-surface);
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease;
+}
+.nb-carddemo--standard {
+  box-shadow: var(--sx-sys-shadow-md);
+}
+.nb-carddemo--standard:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: var(--sx-sys-shadow-lg);
+}
+/* colored：局部覆盖 sys 影色为撞色（与 .card 同款机制）+ 同色边框 */
+.nb-carddemo--colored {
+  --sx-sys-shadow-color: var(--sx-sys-color-coral);
+
+  border-color: var(--sx-sys-color-coral);
+  box-shadow: var(--sx-sys-shadow-md);
+}
+.nb-carddemo--filled {
+  background: var(--sx-sys-color-accent);
+  box-shadow: var(--sx-sys-shadow-lg);
+}
+.nb-carddemo h5 {
+  margin: 0 0 var(--sx-ref-space-2);
+  font-family: var(--sx-sys-font-family-display);
+  font-weight: 800;
+  font-size: var(--sx-sys-font-size-lg);
+  color: var(--sx-sys-color-text-primary);
+}
+.nb-carddemo p {
+  margin: 0 0 var(--sx-ref-space-3);
+  font-size: var(--sx-sys-font-size-md);
+  line-height: 1.5;
+  color: var(--sx-sys-color-text-primary);
+}
+
+/* ── token 表（黑表头 + 斑马纹，对齐参考 .token-table）── */
+.nb-tokentable {
+  width: 100%;
+  border-collapse: collapse;
+  border: var(--sx-sys-border-width-strong) solid var(--sx-sys-color-border);
+  font-size: var(--sx-sys-font-size-md);
+}
+.nb-tokentable th,
+.nb-tokentable td {
+  padding: 0.75rem 1rem;
+  border: var(--sx-sys-border-width) solid var(--sx-sys-color-border);
+  text-align: left;
+}
+.nb-tokentable thead th {
+  background: var(--sx-sys-color-border);
+  color: var(--sx-sys-color-bg-surface);
+  font-family: var(--sx-sys-font-family-mono);
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.nb-tokentable tbody tr:nth-child(even) {
+  background: var(--sx-sys-color-bg-page);
+}
+.nb-tokentable tbody td code,
+.nb-tokentable tbody td .tok {
+  font-family: var(--sx-sys-font-family-mono);
+  font-size: var(--sx-sys-font-size-sm);
+  font-weight: 700;
+}
+
+/* ── form grid（对齐参考 .form-demo-grid）── */
+.nb-formgrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  gap: var(--sx-ref-space-6);
+}
+
+/* ── playground（左点阵预览 + 右控件，对齐参考 .playground）── */
+.nb-playground {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border: var(--sx-sys-border-width-strong) solid var(--sx-sys-color-border);
+  box-shadow: var(--sx-sys-shadow-lg);
+  overflow: hidden;
+}
+@media (max-width: 48rem) {
+  .nb-playground {
+    grid-template-columns: 1fr;
+  }
+}
+.nb-playground__preview {
+  padding: var(--sx-ref-space-8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-right: var(--sx-sys-border-width-strong) solid var(--sx-sys-color-border);
+  min-height: 18rem;
+  background-color: var(--sx-sys-color-bg-page);
+  /* 点阵：SVG url() 绕开 stylelint 对 background gradient 的限制 */
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16'%3E%3Ccircle cx='1' cy='1' r='1' fill='%23CBCCC9'/%3E%3C/svg%3E");
+}
+.nb-playground__controls {
+  padding: var(--sx-ref-space-6);
+  background: var(--sx-sys-color-bg-surface);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sx-ref-space-4);
+  justify-content: center;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nb-carddemo--standard,
+  .nb-copy {
+    transition: none;
+  }
+}

@@ -1,0 +1,288 @@
+<!doctype html>
+<html lang="zh">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>SchemaX Icons · 基础集</title>
+<!--
+  可视化参考：4×4 基础图标 + 线框对照 + 配色/配比图例。
+  图标模型：透明底、黑色 currentColor 线框，统一 4px 粗线，不使用填色。
+  下方 :root 的色值「镜像」自 tokens/src/reference.json（paper #FFFCF4 / ink #000 /
+  blue-500 #2f5bea / yellow-400 #FFDC58 / red-500 #f9575c / green-500 #35ad68）。
+  真值以 `pnpm tokens:build` 生成产物为准；本文件仅为离线可视化，不参与站点构建。
+-->
+<style>
+  :root{
+    --sx-sys-color-bg-page:#FFFCF4;
+    --sx-sys-color-bg-surface:#ffffff;
+    --sx-sys-color-text-primary:#000000;
+    --sx-sys-color-action-primary:#2f5bea;
+    --sx-sys-color-accent:#FFDC58;
+    --sx-sys-color-danger:#f9575c;
+    --sx-sys-color-success:#35ad68;
+    --sx-sys-color-border:#000000;
+    --ink:var(--sx-sys-color-text-primary);
+    --paper:var(--sx-sys-color-bg-page);
+    --white:var(--sx-sys-color-bg-surface);
+    --blue:var(--sx-sys-color-action-primary);
+    --yellow:var(--sx-sys-color-accent);
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;background:var(--paper);color:var(--ink);
+    font-family:"Bricolage Grotesque","Inter",system-ui,-apple-system,sans-serif;
+    line-height:1.5;padding:36px 24px 96px;-webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:1080px;margin:0 auto;}
+  header{border-bottom:2px solid var(--ink);padding-bottom:22px;margin-bottom:36px;}
+  h1{margin:0;font-size:42px;letter-spacing:-.02em;line-height:1.04;}
+  h1 .accent{
+    background:var(--yellow);padding:0 .12em;margin:0 .04em;
+    box-shadow:3px 3px 0 var(--ink);border:1.5px solid var(--ink);display:inline-block;
+  }
+  .subtitle{margin:10px 0 0;color:#6B6355;font-size:15px;max-width:64ch;}
+  .subtitle code{font-family:"Geist Mono",ui-monospace,Menlo,monospace;font-size:13px;background:#EFE7D6;padding:1px 5px;border:1px solid var(--ink);}
+  section{margin-bottom:52px;}
+  .sec-head{display:flex;align-items:baseline;gap:10px;margin-bottom:4px;flex-wrap:wrap;}
+  h2{margin:0;font-size:13px;text-transform:uppercase;letter-spacing:.13em;}
+  .pill{background:var(--blue);color:var(--white);padding:2px 9px;font-size:11px;letter-spacing:.09em;text-transform:uppercase;font-weight:600;}
+  .pill.yellow{background:var(--yellow);color:var(--ink);border:1px solid var(--ink);}
+  .section-note{color:#6B6355;font-size:13px;margin:0 0 18px;max-width:72ch;}
+  .section-note code{font-family:"Geist Mono",ui-monospace,Menlo,monospace;font-size:12px;background:#EFE7D6;padding:1px 5px;border:1px solid var(--ink);}
+
+  /* 4×4 grid：1px 黑色分隔线（gap+底色技巧） */
+  .grid{
+    display:grid;grid-template-columns:repeat(4,1fr);gap:1px;
+    background:var(--ink);border:1.5px solid var(--ink);
+    box-shadow:4px 4px 0 var(--ink);
+  }
+  .cell{
+    background:var(--white);padding:22px 12px 16px;
+    display:flex;flex-direction:column;align-items:center;gap:10px;
+    transition:background .12s ease;
+  }
+  .cell:hover{background:var(--paper);}
+  /* 线统一黑：currentColor 由 .stage 决定；图标本体使用 4px 粗线 */
+  .stage{display:flex;align-items:center;justify-content:center;width:76px;height:76px;color:var(--ink);}
+  .icon{width:56px;height:56px;display:block;}
+  .label{font-size:14px;font-weight:600;letter-spacing:-.01em;}
+  .tag{font-family:"Geist Mono",ui-monospace,Menlo,monospace;font-size:10px;letter-spacing:.03em;color:#666;}
+  .tag.blue{color:var(--blue);}
+
+  /* 线框对照 */
+  .modes .cell.semantic .tag{color:var(--sx-sys-color-success);}
+
+  /* 图例 + 配比 */
+  .panel{border:1.5px solid var(--ink);background:var(--white);box-shadow:4px 4px 0 var(--ink);padding:18px 20px;}
+  .legend{display:flex;flex-wrap:wrap;gap:14px 24px;}
+  .swatch{display:flex;align-items:center;gap:9px;font-family:"Geist Mono",ui-monospace,Menlo,monospace;font-size:11px;}
+  .swatch i{width:18px;height:18px;border:1.5px solid var(--ink);display:block;flex:none;}
+  .swatch b{font-weight:600;color:var(--ink);}
+  .swatch span{color:#666;}
+  .ratio-label{font-size:12px;color:#6B6355;margin:18px 0 8px;font-family:"Geist Mono",ui-monospace,Menlo,monospace;}
+  .ratio{display:flex;height:30px;border:1.5px solid var(--ink);font-family:"Geist Mono",ui-monospace,Menlo,monospace;font-size:11px;font-weight:600;}
+  .ratio span{display:flex;align-items:center;justify-content:center;overflow:hidden;white-space:nowrap;}
+  .ratio .r-yellow{background:var(--yellow);color:var(--ink);flex:40;}
+  .ratio .r-blue{background:var(--blue);color:var(--white);flex:40;}
+  .ratio .r-other{background:var(--ink);color:var(--white);flex:20;}
+
+  footer{margin-top:44px;padding-top:14px;border-top:1.5px solid var(--ink);color:#666;font-size:12px;font-family:"Geist Mono",ui-monospace,Menlo,monospace;line-height:1.7;}
+  footer b{color:var(--ink);}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <h1>SchemaX <span class="accent">Icons</span></h1>
+  <p class="subtitle">基础图标集 · 4×4 · <b>透明底 + 4px 黑色粗线</b>。描边恒为 <code>currentColor</code>，不使用填色，适合直接导出 PNG。</p>
+</header>
+
+<!-- ========== 1. 基础图标集（4×4，黑线 + 蓝/黄涂色） ========== -->
+<section>
+  <div class="sec-head"><h2>基础图标集</h2><span class="pill yellow">统一 2px · 蓝黄面板</span></div>
+  <p class="section-note">默认形态：透明底 + 统一 4px 黑色线框。每个图标 24×24 画布、方形线帽、miter 拐角，本体收在 4–20 安全区内，适合按 4×4 网格导出。</p>
+
+  <!-- 共用 symbol sprite：透明底、黑色 currentColor、所有线条统一 4px。 -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <symbol id="i-schema" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter">
+      <rect x="5" y="5" width="14" height="6" fill="var(--sx-sys-color-accent)" stroke="none"/>
+      <rect x="4" y="4" width="16" height="16"/>
+      <path d="M8 12h8"/>
+      <path d="M8 16h5"/>
+    </symbol>
+    <symbol id="i-contract" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter">
+      <rect x="6" y="4" width="12" height="16"/>
+      <rect x="7" y="5" width="10" height="4" fill="var(--sx-sys-color-accent)" stroke="none"/>
+      <path d="M9 11h6"/>
+      <path d="M9 14h4"/>
+      <path d="M14 17l1.5 1.5L18 15"/>
+    </symbol>
+    <symbol id="i-validate" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter">
+      <rect x="5" y="5" width="14" height="14"/>
+      <rect x="6" y="6" width="12" height="5" fill="var(--sx-sys-color-action-primary)" stroke="none"/>
+      <path d="M8 13l3 3 5-6"/>
+    </symbol>
+    <symbol id="i-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter">
+      <rect x="6" y="6" width="8" height="8" fill="var(--sx-sys-color-accent)" stroke="none"/>
+      <circle cx="10" cy="10" r="6"/>
+      <path d="M14.5 14.5L20 20"/>
+    </symbol>
+    <symbol id="i-course" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter">
+      <rect x="6" y="4" width="12" height="16"/>
+      <rect x="7" y="5" width="10" height="5" fill="var(--sx-sys-color-action-primary)" stroke="none"/>
+      <path d="M10 4v7l2-1.5 2 1.5V4"/>
+      <path d="M9 15h6"/>
+    </symbol>
+    <symbol id="i-blog" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter">
+      <rect x="5" y="4" width="14" height="16"/>
+      <rect x="6" y="5" width="12" height="5" fill="var(--sx-sys-color-accent)" stroke="none"/>
+      <path d="M8 13h8"/>
+      <path d="M8 16h5"/>
+    </symbol>
+    <symbol id="i-project" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter">
+      <path d="M5 7h5l2 2h7v10H5z"/>
+      <rect x="6" y="10" width="12" height="4" fill="var(--sx-sys-color-accent)" stroke="none"/>
+      <path d="M4 10h16"/>
+    </symbol>
+    <symbol id="i-api" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter">
+      <path d="M9 5H7v5l-3 2 3 2v5h2"/>
+      <path d="M15 5h2v5l3 2-3 2v5h-2"/>
+      <rect x="10" y="9" width="4" height="6" fill="var(--sx-sys-color-action-primary)" stroke="none"/>
+      <path d="M12 8v8"/>
+    </symbol>
+    <symbol id="i-tokens" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter">
+      <path d="M12 4l7 3.5-7 3.5-7-3.5z"/>
+      <path d="M12 5.5l4 2-4 2-4-2z" fill="var(--sx-sys-color-accent)" stroke="none"/>
+      <path d="M4 12l8 4 8-4"/>
+      <path d="M4 16l8 4 8-4"/>
+    </symbol>
+    <symbol id="i-agent" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter">
+      <rect x="5" y="7" width="14" height="12"/>
+      <rect x="6" y="8" width="12" height="5" fill="var(--sx-sys-color-action-primary)" stroke="none"/>
+      <path d="M12 3v4"/>
+      <path d="M10 3h4"/>
+      <path d="M9 14h2"/>
+      <path d="M14 14h2"/>
+      <path d="M9 17h6"/>
+    </symbol>
+    <symbol id="i-workflow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter">
+      <rect x="4" y="4" width="5" height="5"/>
+      <rect x="15" y="4" width="5" height="5"/>
+      <rect x="9.5" y="15" width="5" height="5"/>
+      <rect x="5" y="5" width="3" height="3" fill="var(--sx-sys-color-action-primary)" stroke="none"/>
+      <path d="M6.5 9v3h11v-3"/>
+      <path d="M12 12v3"/>
+    </symbol>
+    <symbol id="i-connect" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter">
+      <rect x="4" y="9" width="7" height="6"/>
+      <rect x="13" y="9" width="7" height="6"/>
+      <rect x="5" y="10" width="5" height="4" fill="var(--sx-sys-color-accent)" stroke="none"/>
+      <path d="M11 12h2"/>
+    </symbol>
+    <symbol id="i-layout" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter">
+      <rect x="4" y="4" width="7" height="7"/>
+      <rect x="13" y="4" width="7" height="7"/>
+      <rect x="4" y="13" width="7" height="7"/>
+      <rect x="13" y="13" width="7" height="7"/>
+      <rect x="5" y="5" width="5" height="5" fill="var(--sx-sys-color-action-primary)" stroke="none"/>
+    </symbol>
+    <symbol id="i-home" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter">
+      <path d="M4 11l8-7 8 7v9H4z"/>
+      <path d="M5.5 11.5L12 6l6.5 5.5v2.5h-13z" fill="var(--sx-sys-color-accent)" stroke="none"/>
+      <path d="M10 20v-6h4v6"/>
+    </symbol>
+    <symbol id="i-mail" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter">
+      <rect x="4" y="6" width="16" height="12"/>
+      <rect x="5" y="7" width="14" height="4" fill="var(--sx-sys-color-action-primary)" stroke="none"/>
+      <path d="M3 7l9 6 9-6"/>
+    </symbol>
+    <symbol id="i-code" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter">
+      <path d="M8 7l-4 5 4 5"/>
+      <path d="M16 7l4 5-4 5"/>
+      <path d="M14 4l-4 16"/>
+    </symbol>
+
+    <!-- 填色对照用的变体：同一 schema 概念，换填色 -->
+    <symbol id="i-schema-blue" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter">
+      <rect x="5" y="5" width="14" height="6" fill="var(--sx-sys-color-action-primary)" stroke="none"/>
+      <rect x="4" y="4" width="16" height="16"/>
+      <path d="M8 12h8"/>
+      <path d="M8 16h5"/>
+    </symbol>
+    <symbol id="i-schema-line" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter">
+      <rect x="4" y="4" width="16" height="16"/>
+      <path d="M8 12h8"/>
+    </symbol>
+    <symbol id="i-success" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter">
+      <circle cx="12" cy="12" r="8"/>
+      <path d="M8.5 12.5l2.5 2.5 4.5-5.5" stroke="var(--sx-sys-color-success)"/>
+    </symbol>
+  </svg>
+
+  <div class="grid">
+    <div class="cell"><div class="stage"><svg class="icon" viewBox="0 0 24 24" role="img" aria-label="Schema"><use href="#i-schema"/></svg></div><div class="label">Schema</div><div class="tag">黄填</div></div>
+    <div class="cell"><div class="stage"><svg class="icon" viewBox="0 0 24 24" role="img" aria-label="Contract"><use href="#i-contract"/></svg></div><div class="label">Contract</div><div class="tag">黄填</div></div>
+    <div class="cell"><div class="stage"><svg class="icon" viewBox="0 0 24 24" role="img" aria-label="Validate"><use href="#i-validate"/></svg></div><div class="label">Validate</div><div class="tag blue">蓝填</div></div>
+    <div class="cell"><div class="stage"><svg class="icon" viewBox="0 0 24 24" role="img" aria-label="Search"><use href="#i-search"/></svg></div><div class="label">Search</div><div class="tag">黄填</div></div>
+
+    <div class="cell"><div class="stage"><svg class="icon" viewBox="0 0 24 24" role="img" aria-label="Course"><use href="#i-course"/></svg></div><div class="label">Course</div><div class="tag blue">蓝填</div></div>
+    <div class="cell"><div class="stage"><svg class="icon" viewBox="0 0 24 24" role="img" aria-label="Blog"><use href="#i-blog"/></svg></div><div class="label">Blog</div><div class="tag">黄填</div></div>
+    <div class="cell"><div class="stage"><svg class="icon" viewBox="0 0 24 24" role="img" aria-label="Project"><use href="#i-project"/></svg></div><div class="label">Project</div><div class="tag">黄填</div></div>
+    <div class="cell"><div class="stage"><svg class="icon" viewBox="0 0 24 24" role="img" aria-label="API"><use href="#i-api"/></svg></div><div class="label">API</div><div class="tag blue">蓝填</div></div>
+
+    <div class="cell"><div class="stage"><svg class="icon" viewBox="0 0 24 24" role="img" aria-label="Tokens"><use href="#i-tokens"/></svg></div><div class="label">Tokens</div><div class="tag">黄填</div></div>
+    <div class="cell"><div class="stage"><svg class="icon" viewBox="0 0 24 24" role="img" aria-label="Agent"><use href="#i-agent"/></svg></div><div class="label">Agent</div><div class="tag blue">蓝填</div></div>
+    <div class="cell"><div class="stage"><svg class="icon" viewBox="0 0 24 24" role="img" aria-label="Workflow"><use href="#i-workflow"/></svg></div><div class="label">Workflow</div><div class="tag blue">蓝填</div></div>
+    <div class="cell"><div class="stage"><svg class="icon" viewBox="0 0 24 24" role="img" aria-label="Connect"><use href="#i-connect"/></svg></div><div class="label">Connect</div><div class="tag">黄填</div></div>
+
+    <div class="cell"><div class="stage"><svg class="icon" viewBox="0 0 24 24" role="img" aria-label="Layout"><use href="#i-layout"/></svg></div><div class="label">Layout</div><div class="tag blue">蓝填</div></div>
+    <div class="cell"><div class="stage"><svg class="icon" viewBox="0 0 24 24" role="img" aria-label="Home"><use href="#i-home"/></svg></div><div class="label">Home</div><div class="tag">黄填</div></div>
+    <div class="cell"><div class="stage"><svg class="icon" viewBox="0 0 24 24" role="img" aria-label="Mail"><use href="#i-mail"/></svg></div><div class="label">Mail</div><div class="tag blue">蓝填</div></div>
+    <div class="cell"><div class="stage"><svg class="icon" viewBox="0 0 24 24" role="img" aria-label="Code"><use href="#i-code"/></svg></div><div class="label">Code</div><div class="tag">纯线</div></div>
+  </div>
+</section>
+
+<!-- ========== 2. 填色对照（同一概念 schema，黑线不变换涂色） ========== -->
+<section>
+  <div class="sec-head"><h2>填色对照</h2><span class="pill">同一概念 · 换涂色</span></div>
+  <p class="section-note">同一「Schema」概念，黑线不变，只换涂色：黄 / 蓝 / 无 / 语义。线恒为 <code>currentColor</code>（黑），涂色写在 glyph 里。</p>
+  <div class="grid modes">
+    <div class="cell"><div class="stage"><svg class="icon" viewBox="0 0 24 24" role="img" aria-label="Schema yellow"><use href="#i-schema"/></svg></div><div class="label">黄填</div><div class="tag">accent</div></div>
+    <div class="cell blue"><div class="stage"><svg class="icon" viewBox="0 0 24 24" role="img" aria-label="Schema blue"><use href="#i-schema-blue"/></svg></div><div class="label">蓝填</div><div class="tag blue">action</div></div>
+    <div class="cell"><div class="stage"><svg class="icon" viewBox="0 0 24 24" role="img" aria-label="Schema line"><use href="#i-schema-line"/></svg></div><div class="label">纯线</div><div class="tag">黑线 · 无涂色</div></div>
+    <div class="cell semantic"><div class="stage"><svg class="icon" viewBox="0 0 24 24" role="img" aria-label="success"><use href="#i-success"/></svg></div><div class="label">语义</div><div class="tag">绿 · 成功</div></div>
+  </div>
+</section>
+
+<!-- ========== 3. 配色与配比 ========== -->
+<section>
+  <div class="sec-head"><h2>配色与配比</h2><span class="pill yellow">--sx-sys-*</span></div>
+  <p class="section-note">线统一黑（<code>text-primary</code>）；涂色用蓝/黄；红/绿仅表状态。全部经 <code>var(--sx-sys-*)</code> 接线，业务代码不得硬编码 hex。</p>
+  <div class="panel">
+    <div class="legend">
+      <div class="swatch"><i style="background:var(--ink)"></i><b>text-primary</b><span>黑 · 线色</span></div>
+      <div class="swatch"><i style="background:var(--blue)"></i><b>action-primary</b><span>蓝 · 涂色</span></div>
+      <div class="swatch"><i style="background:var(--yellow)"></i><b>accent</b><span>黄 · 涂色</span></div>
+      <div class="swatch"><i style="background:var(--sx-sys-color-success)"></i><b>success</b><span>绿 · 成功</span></div>
+      <div class="swatch"><i style="background:var(--sx-sys-color-danger)"></i><b>danger</b><span>红 · 危险</span></div>
+      <div class="swatch"><i style="background:var(--white)"></i><b>bg-surface</b><span>白 · 留白/内嵌</span></div>
+      <div class="swatch"><i style="background:var(--paper)"></i><b>bg-page</b><span>纸 · 页面底</span></div>
+    </div>
+    <div class="ratio-label">涂色构成（约）</div>
+    <div class="ratio">
+      <span class="r-yellow">黄填 40%</span>
+      <span class="r-blue">蓝填 40%</span>
+      <span class="r-other">纯线·语义 20%</span>
+    </div>
+  </div>
+</section>
+
+<footer>
+  token 值镜像自 <b>tokens/src/reference.json</b>（paper <b>#FFFCF4</b> / ink <b>#000</b> / blue-500 <b>#2f5bea</b> / yellow-400 <b>#FFDC58</b> / red-500 <b>#f9575c</b> / green-500 <b>#35ad68</b>）。<br/>
+  真值以 <b>pnpm tokens:build</b> 生成产物为准；本文件仅为离线可视化，不参与站点构建。配套规范见 <b>spec.md</b> / 模板见 <b>examples.md</b>。
+</footer>
+
+</div>
+</body>
+</html>

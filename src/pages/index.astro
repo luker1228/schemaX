@@ -6,6 +6,7 @@ import HomeManifesto from '../components/home/HomeManifesto.astro';
 import HomeLatestPosts from '../components/home/HomeLatestPosts.astro';
 import HomeProjects from '../components/home/HomeProjects.astro';
 import HomeTechNote from '../components/home/HomeTechNote.astro';
+import HomeTicker from '../components/home/HomeTicker.astro';
 import { getCollection } from 'astro:content';
 import { site } from '../config/site';
 import '../styles/home.css';
@@ -30,6 +31,7 @@ const featuredProject = projects.find((p) => p.data.featured) ?? projects[0];
 <BaseLayout title={site.name} type="profile">
   <div class="home">
     <HomeHero />
+    <HomeTicker />
     <HomeEntries />
     <HomeManifesto />
     <HomeLatestPosts posts={recentPosts} />

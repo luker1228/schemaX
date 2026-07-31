@@ -1,0 +1,51 @@
+---
+// SectionDivider 演示 —— 平面黑条分割线（neubrutalism section divider）。
+// 承接被替换的涂鸦分割线：分割线职责已从 Rough.js 绘制层划归组件底层。
+// 左 code-block（grammar + copy），右 live demo（三档 thickness + 撞色）。
+import SectionDivider from '../SectionDivider.astro';
+
+const code = `<span class="sel">.sectiondivider</span> {
+  <span class="prop">height</span>: <span class="val">var(--sx-sd-weight)</span>;
+  <span class="prop">background</span>: <span class="val">var(--sx-sd-color)</span>;
+  <span class="prop">border</span>: <span class="val">0</span>;
+}
+
+<span class="com">/* weight → border token */</span>
+<span class="prop">thin</span>     <span class="val">var(--sx-sys-border-width)</span>         <span class="com">2px</span>
+<span class="prop">default</span>  <span class="val">var(--sx-sys-border-width-strong)</span>  <span class="com">3px</span>
+<span class="prop">thick</span>    <span class="val">calc(...strong × 2)</span>              <span class="com">6px</span>`;
+---
+
+<div class="nb-grid2">
+  <div class="nb-codewrap">
+    <span class="nb-codelabel">CSS</span>
+    <pre class="nb-codeblock"><button class="nb-copy" type="button" data-copy="">Copy</button><code set:html={code} /></pre>
+  </div>
+  <div class="nb-demobox">
+    <div class="nb-stack sd-stack">
+      <div class="sd-row"><span class="sd-tag">thin · 2px</span><SectionDivider weight="thin" /></div>
+      <div class="sd-row"><span class="sd-tag">default · 3px</span><SectionDivider /></div>
+      <div class="sd-row"><span class="sd-tag">thick · 6px</span><SectionDivider weight="thick" /></div>
+      <div class="sd-row">
+        <span class="sd-tag">撞色 · accent</span>
+        <SectionDivider weight="thick" color="var(--sx-sys-color-accent)" />
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .sd-stack {
+    gap: var(--sx-ref-space-4);
+  }
+  .sd-row {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .sd-tag {
+    font-family: var(--sx-sys-font-family-mono);
+    font-size: var(--sx-sys-font-size-xs);
+    opacity: 0.6;
+  }
+</style>

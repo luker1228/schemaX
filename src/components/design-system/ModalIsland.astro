@@ -1,0 +1,11 @@
+---
+// Modal 演示 island（client:load 保证交互可用）。
+// Modal 自带浏览器状态（open + focus trap + scroll lock），必须 React island；
+// 由 .astro 固定 client:load（MDX / Demo 直接写 client:* 有时会 hydrate 失败）。
+import Modal from './Modal.tsx';
+---
+
+<Modal client:load title="确认操作" triggerLabel="打开对话框">
+  <p>neubrutalism 对话框：3px 黑边 + shadow-xl 重硬影 + 恒 0 圆角。</p>
+  <p>点遮罩、点 ✕ 或按 ESC 关闭；Tab 在面板内循环，不会跑出去。</p>
+</Modal>

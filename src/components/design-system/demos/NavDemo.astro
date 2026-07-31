@@ -1,183 +1,45 @@
 ---
-// Navigation 演示 —— V2 文档布局：States（3 态 Demo）/ Props（真实属性表）/ Code（用法卡片）。
-// 仅供 /design-system/components/nav 详情页的 doc-content 区使用。
+// Navigation 演示 —— 左 code-block（.nav__link grammar + copy），右 live demo。
+// 一个导航混合默认 / 当前 / 禁用三种状态（一行，丰富），不拆 3 行。
 import Nav from '../Nav.astro';
-import Demo from '../Demo.astro';
 import type { NavItem } from '../Nav.astro';
 
-const demoItems: NavItem[] = [
-  { label: '课程', href: '/courses' },
-  { label: '博客', href: '/blog' },
-  { label: '作品', href: '/projects' },
-  { label: '设计系统', href: '/design-system' },
+const D = 'javascript:void(0)';
+const items: NavItem[] = [
+  { label: '课程', href: D },
+  { label: '博客', href: D, active: true },
+  { label: '作品', href: D },
+  { label: '设计系统', href: D },
+  { label: '关于', href: D, disabled: true },
+  { label: '日志', href: D },
 ];
 
-const activeItems: NavItem[] = [
-  { label: '课程', href: '/courses' },
-  { label: '博客', href: '/blog', active: true },
-  { label: '作品', href: '/projects' },
-  { label: '设计系统', href: '/design-system' },
-];
+const navCode = `<span class="sel">.nav__link</span> {
+  <span class="prop">font-family</span>: <span class="val">var(--sx-sys-font-family-mono-system)</span>;
+  <span class="prop">text-transform</span>: <span class="val">uppercase</span>;
+  <span class="prop">padding</span>: <span class="val">0.5rem 0.8rem</span>;
+  <span class="prop">background</span>: <span class="val">transparent</span>;
+}
 
-const disabledItems: NavItem[] = [
-  { label: '课程', href: '/courses' },
-  { label: '博客', href: '/blog' },
-  { label: '作品', href: '/projects', disabled: true },
-  { label: '设计系统', href: '/design-system' },
-];
+<span class="com">/* hover 与当前页都切黄底 */</span>
+<span class="sel">.nav__link:hover</span>,
+<span class="sel">.nav__link[aria-current='page']</span> {
+  <span class="prop">background</span>: <span class="val">var(--sx-sys-color-accent)</span>;
+}
 
-// 真实 Nav.astro 的 props（反映组件实际接口，非设计稿的 shadcn 占位）。
-// items / ariaLabel 为组件级 props；active / disabled 为 NavItem 字段（状态 API）。
-const props = [
-  {
-    name: 'items',
-    type: 'NavItem[]',
-    def: '—',
-    desc: '导航项数组，每项含 label / href / active / disabled。',
-  },
-  {
-    name: 'ariaLabel',
-    type: 'string',
-    def: "'Primary'",
-    desc: '导航的可访问性标签（aria-label）。',
-  },
-  {
-    name: 'active',
-    type: 'boolean',
-    def: '—',
-    desc: 'NavItem 字段：标记当前页，渲染为 aria-current="page" 黄底徽章。',
-  },
-  {
-    name: 'disabled',
-    type: 'boolean',
-    def: '—',
-    desc: 'NavItem 字段：禁用该项，渲染为 aria-disabled="true" 半透明不可点。',
-  },
-];
-
-// 用法示例（pre 内文本，不渲染为可点击元素，故 href 保持真实路由）。
-const usage = `---
-import { Nav } from '@schemax/ui';
-
-const items = [
-  { label: '课程', href: '/courses' },
-  { label: '博客', href: '/blog', active: true },
-  { label: '作品', href: '/projects', disabled: true },
-];
+<span class="com">/* 禁用：半透明不可点 */</span>
+<span class="sel">.nav__link[aria-disabled='true']</span> {
+  <span class="prop">opacity</span>: <span class="val">0.4</span>;
+}`;
 ---
 
-<Nav items={items} ariaLabel="Primary" />`;
----
+<div class="nb-grid2">
+  <div class="nb-codewrap">
+    <span class="nb-codelabel">CSS</span>
+    <pre class="nb-codeblock"><button class="nb-copy" type="button" data-copy="">Copy</button><code set:html={navCode} /></pre>
+  </div>
 
-<>
-  {/* —— States：默认 / 当前 / 禁用 三态 —— */}
-  <section class="doc-section">
-    <div class="doc-section__head">
-      <div class="doc-section__eyebrow">
-        <span class="doc-section__mark" aria-hidden="true"></span>
-        <h2 class="doc-section__title">状态演示</h2>
-      </div>
-      <p class="doc-section__sub">
-        nav__link 的默认、当前与禁用三种状态，用 Demo
-        组件封装：头部为标签与代码，舞台为实例，底部为可折叠说明。
-      </p>
-    </div>
-    <div class="doc-section__body">
-      <Demo label="默认态" attr='<a class="nav__link">'>
-        <Nav items={demoItems} ariaLabel="Demo default" />
-        <Fragment slot="note">
-          <p>所有项默认透明。鼠标悬停或聚焦时切换为黄底。</p>
-        </Fragment>
-      </Demo>
-
-      <Demo label="当前态" attr='aria-current="page"'>
-        <Nav items={activeItems} ariaLabel="Demo active" />
-        <Fragment slot="note">
-          <p>
-            「博客」项带 <code>aria-current="page"</code>，渲染为黄底徽章，标识当前所在页面。
-          </p>
-        </Fragment>
-      </Demo>
-
-      <Demo label="禁用态" attr='aria-disabled="true"'>
-        <Nav items={disabledItems} ariaLabel="Demo disabled" />
-        <Fragment slot="note">
-          <p>「作品」项带 <code>aria-disabled="true"</code>，半透明且不可点击。</p>
-        </Fragment>
-      </Demo>
-    </div>
-  </section>
-
-  {/* —— Props：真实属性表 —— */}
-  <section class="doc-section">
-    <div class="doc-section__head">
-      <div class="doc-section__eyebrow">
-        <span class="doc-section__mark" aria-hidden="true"></span>
-        <h2 class="doc-section__title">Props 属性</h2>
-      </div>
-      <p class="doc-section__sub">Nav 组件接受的属性。除特别说明外，所有属性均为可选。</p>
-    </div>
-    <div class="doc-section__body">
-      <div class="doc-table-scroll">
-        <table class="doc-props">
-          <thead>
-            <tr>
-              <th>Prop</th>
-              <th>Type</th>
-              <th>Default</th>
-              <th>Description</th>
-            </tr>
-          </thead>
-          <tbody>
-            {
-              props.map((p) => (
-                <tr>
-                  <td class="doc-props__name">{p.name}</td>
-                  <td>
-                    <span class="doc-props__type">{p.type}</span>
-                  </td>
-                  <td>
-                    <span class="doc-props__type">{p.def}</span>
-                  </td>
-                  <td class="doc-props__desc">{p.desc}</td>
-                </tr>
-              ))
-            }
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </section>
-
-  {/* —— Code：用法示例卡片 —— */}
-  <section class="doc-section">
-    <div class="doc-section__head">
-      <div class="doc-section__eyebrow">
-        <span class="doc-section__mark" aria-hidden="true"></span>
-        <h2 class="doc-section__title">用法示例</h2>
-      </div>
-      <p class="doc-section__sub">在 Astro 页面中引入 Nav，传入导航项数组。</p>
-    </div>
-    <div class="doc-section__body">
-      <figure class="doc-code">
-        <figcaption class="doc-code__bar">
-          <span class="doc-code__file">Nav.astro</span>
-          <span class="doc-code__lang">astro</span>
-        </figcaption>
-        <pre class="doc-code__body"><code>{usage}</code></pre>
-      </figure>
-    </div>
-  </section>
-</>
-
-<style>
-  /* doc-section__body 内的 Demo：去掉 Demo 自带的底部 margin，统一由 body gap(1rem) 控制，
-     对齐设计稿 demo 间 16px 间距。 */
-  :global(.doc-section__body .demo) {
-    margin-block-end: 0;
-  }
-  /* props 表窄屏横向滚动防御 */
-  .doc-table-scroll {
-    overflow-x: auto;
-  }
-</style>
+  <div class="nb-demobox">
+    <Nav items={items} ariaLabel="Demo" />
+  </div>
+</div>

@@ -20,7 +20,6 @@ export interface Principle {
 export const aboutHero = {
   title: '关于我',
   intro: '你好，我是人类大模型 Luke。',
-  description: '设计系统不是附属文档，而是 SchemaX 的重要作品。',
   copy: '我是 Luke，一名 AI Agent 工程师，全栈工程师。我把 schema、设计系统和个人知识库当作训练语料，记录被模型重塑的学习、表达与创作过程。',
   principles: [
     { label: 'SCHEMA-FIRST', accent: 'surface' },

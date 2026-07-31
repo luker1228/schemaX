@@ -1,10 +1,9 @@
 ---
-// DocSide 演示 —— V2 文档布局：States / Props / Code。
+// DocSide 演示 —— 左 code-block，右 live demo（默认 / 当前页+计划中）。
+// 多实例传 collapsible={false}，避免各自折叠 chrome 抢视觉、布局跳动。
 import DocSide from '../DocSide.astro';
-import Demo from '../Demo.astro';
 import type { DocSideGroup } from '../DocSide.astro';
 
-// 演示用链接不跳转（设计系统 demo 约定）
 const VOID = 'javascript:void(0)';
 
 const defaultGroups: DocSideGroup[] = [
@@ -14,7 +13,6 @@ const defaultGroups: DocSideGroup[] = [
       { label: '设计系统总览', href: VOID },
       { label: 'Foundations', href: VOID },
       { label: 'Tokens', href: VOID },
-      { label: 'Content', href: VOID },
       { label: 'Components', href: VOID },
     ],
   },
@@ -22,238 +20,63 @@ const defaultGroups: DocSideGroup[] = [
     title: '组件',
     items: [
       { label: 'Nav', href: VOID },
-      { label: 'Card', href: VOID },
       { label: 'Button', href: VOID },
-      { label: 'CodeCompare', href: VOID },
+      { label: 'Card', href: VOID },
     ],
   },
 ];
 
-const currentGroups: DocSideGroup[] = [
-  {
-    title: '概览',
-    items: [
-      { label: '设计系统总览', href: VOID },
-      { label: 'Components', href: VOID },
-    ],
-  },
+const stateGroups: DocSideGroup[] = [
   {
     title: '组件',
     items: [
       { label: 'Nav', href: VOID },
       { label: 'Button', href: VOID, current: true },
-      { label: 'CodeCompare', href: VOID },
-    ],
-  },
-];
-
-const plannedGroups: DocSideGroup[] = [
-  {
-    title: '组件',
-    items: [
-      { label: 'Nav', href: VOID },
       { label: 'Tag', planned: true },
       { label: 'Callout', planned: true },
-      { label: 'Button', href: VOID, current: true },
     ],
   },
 ];
 
-const apiRows = [
-  {
-    name: 'groups',
-    type: 'DocSideGroup[]',
-    default: '—',
-    desc: '导航分组。每组含 title / items，可选 ariaLabel',
-  },
-  {
-    name: 'label',
-    type: 'string',
-    default: "'文档目录'",
-    desc: 'aside 的 aria-label',
-  },
-  {
-    name: 'items[].label',
-    type: 'string',
-    default: '—',
-    desc: '链接显示文本',
-  },
-  {
-    name: 'items[].href',
-    type: 'string',
-    default: '—',
-    desc: '链接地址；planned 项可省略',
-  },
-  {
-    name: 'items[].current',
-    type: 'boolean',
-    default: 'false',
-    desc: '当前页：指示条加宽 + label 黄底徽章',
-  },
-  {
-    name: 'items[].planned',
-    type: 'boolean',
-    default: 'false',
-    desc: '计划中：灰显、不可点',
-  },
-];
+const sideCode = `<span class="sel">.doc-side__link</span> {
+  <span class="prop">font-family</span>: <span class="val">var(--sx-sys-font-family-mono)</span>;
+}
+<span class="sel">.doc-side__link[aria-current='page']</span> {
+  <span class="prop">label</span>: <span class="val">黄底徽章 + 指示条加粗</span>;
+}
 
-const usage = `---
-import DocSide from '@/components/design-system/DocSide.astro';
-
-const groups = [
-  {
-    title: '概览',
-    items: [
-      { label: '设计系统总览', href: '/design-system' },
-      { label: 'Components', href: '/design-system/components' },
-    ],
-  },
-  {
-    title: '组件',
-    items: [
-      { label: 'Nav', href: '/design-system/components/nav' },
-      { label: 'Button', href: '/design-system/components/button', current: true },
-      { label: 'Tag', planned: true },
-    ],
-  },
-];
+<span class="com">/* planned：灰显不可点 span */</span>`;
 ---
 
-<DocSide groups={groups} label="文档目录" />`;
----
-
-<>
-  <section class="doc-section">
-    <div class="doc-section__head">
-      <div class="doc-section__eyebrow">
-        <span class="doc-section__mark" aria-hidden="true"></span>
-        <h2 class="doc-section__title">状态演示</h2>
+<div class="nb-grid2">
+  <div class="nb-codewrap">
+    <span class="nb-codelabel">CSS</span>
+    <pre class="nb-codeblock"><button class="nb-copy" type="button" data-copy="">Copy</button><code set:html={sideCode} /></pre>
+  </div>
+  <div class="nb-demobox">
+    <div class="nb-sides">
+      <div class="nb-side">
+        <DocSide groups={defaultGroups} label="默认" collapsible={false} />
       </div>
-      <p class="doc-section__sub">
-        文档侧栏：多组导航 + eyebrow 色块标题。支持默认链接、当前页高亮、planned 灰显，以及顶栏「收起
-        / 目录」折叠（零 JS）。浮动由页面布局的 <code>.sx-doc-side-slot</code> 承担（sticky grid
-        子项）。
-      </p>
-    </div>
-    <div class="doc-section__body">
-      <Demo label="默认态" attr="groups={[...]}">
-        <div class="demo-side">
-          <DocSide groups={defaultGroups} label="Demo default" />
-        </div>
-        <Fragment slot="note">
-          <p>两组导航纵向排列。每项左侧有细指示条，hover 时文字与指示条加深。</p>
-        </Fragment>
-      </Demo>
-
-      <Demo label="当前页" attr="items[].current">
-        <div class="demo-side">
-          <DocSide groups={currentGroups} label="Demo current" />
-        </div>
-        <Fragment slot="note">
-          <p>
-            <code>current: true</code> 渲染为 <code>aria-current="page"</code>
-            ：指示条加宽变 accent，label 呈黄底徽章。
-          </p>
-        </Fragment>
-      </Demo>
-
-      <Demo label="计划中" attr="items[].planned">
-        <div class="demo-side">
-          <DocSide groups={plannedGroups} label="Demo planned" />
-        </div>
-        <Fragment slot="note">
-          <p>
-            <code>planned: true</code> 渲染为不可点 <code>span</code>，半透明灰显。用于尚未实现的组件项。
-          </p>
-        </Fragment>
-      </Demo>
-    </div>
-  </section>
-
-  <section class="doc-section">
-    <div class="doc-section__head">
-      <div class="doc-section__eyebrow">
-        <span class="doc-section__mark" aria-hidden="true"></span>
-        <h2 class="doc-section__title">Props 属性</h2>
-      </div>
-      <p class="doc-section__sub">
-        数据驱动：传入 <code>groups</code> 即可渲染完整侧栏，无内部硬编码路由。
-      </p>
-    </div>
-    <div class="doc-section__body">
-      <div class="doc-table-scroll">
-        <table class="doc-props">
-          <thead>
-            <tr>
-              <th>Prop</th>
-              <th>Type</th>
-              <th>Default</th>
-              <th>Description</th>
-            </tr>
-          </thead>
-          <tbody>
-            {
-              apiRows.map((r) => (
-                <tr>
-                  <td class="doc-props__name">{r.name}</td>
-                  <td>
-                    <span class="doc-props__type">{r.type}</span>
-                  </td>
-                  <td>
-                    <span class="doc-props__type">{r.default}</span>
-                  </td>
-                  <td class="doc-props__desc">{r.desc}</td>
-                </tr>
-              ))
-            }
-          </tbody>
-        </table>
+      <div class="nb-side">
+        <DocSide groups={stateGroups} label="当前+计划" collapsible={false} />
       </div>
     </div>
-  </section>
-
-  <section class="doc-section">
-    <div class="doc-section__head">
-      <div class="doc-section__eyebrow">
-        <span class="doc-section__mark" aria-hidden="true"></span>
-        <h2 class="doc-section__title">用法示例</h2>
-      </div>
-      <p class="doc-section__sub">
-        设计系统页通过 <code>DocSidebar</code> 装配数据后调用本组件；其他文档也可直接传
-        <code>groups</code>。
-      </p>
-    </div>
-    <div class="doc-section__body">
-      <figure class="doc-code">
-        <figcaption class="doc-code__bar">
-          <span class="doc-code__file">DocSide.astro</span>
-          <span class="doc-code__lang">astro</span>
-        </figcaption>
-        <pre class="doc-code__body"><code>{usage}</code></pre>
-      </figure>
-    </div>
-  </section>
-</>
+  </div>
+</div>
 
 <style>
-  :global(.doc-section__body .demo) {
-    margin-block-end: 0;
+  .nb-sides {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--sx-ref-space-4);
   }
-  .doc-table-scroll {
-    overflow-x: auto;
+  @media (max-width: 36rem) {
+    .nb-sides {
+      grid-template-columns: 1fr;
+    }
   }
-  /* 舞台内给侧栏一个合理宽度，避免被居中挤扁 */
-  .demo-side {
-    width: 100%;
-    max-width: 14rem;
-    text-align: left;
-  }
-  :global(.demo__stage .demo-side) {
-    margin-inline: 0;
-    align-self: flex-start;
-  }
-  :global(.demo__stage:has(.demo-side)) {
-    justify-content: flex-start;
+  .nb-side {
+    min-width: 0;
   }
 </style>

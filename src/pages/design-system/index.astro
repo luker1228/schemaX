@@ -2,16 +2,17 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import FeatureCard from '../../components/design-system/FeatureCard.astro';
 import Crumb from '../../components/design-system/Crumb.astro';
-import Doodle from '../../components/design-system/Doodle.astro';
+import GeoMark from '../../components/design-system/GeoMark.astro';
 
 /**
  * 设计系统枢纽页 —— SchemaX UI 作为作品本身的入口。
- * 视觉：RetroUI 硬卡底座 + Rough 涂鸦媒体 + 蓝/黄强调（不用彩虹装饰）。
+ * 视觉：neubrutalism 贴纸堆（北极星 neubrutalism.com）—— 3px 黑框 + 零模糊硬影 +
+ * 恒 0 圆角 + 撞色媒体条 + Bricolage 大字。装饰走几何 / 编号，不用手绘涂鸦。
  */
 
 // Figma Variables 装饰面板色块：语义 token + 文档 hex（纯装饰，非业务色）
 const figmaVars = [
-  { name: 'bg', value: '#FFF7E8', token: 'var(--sx-sys-color-bg-page)' },
+  { name: 'bg', value: '#FFFCF4', token: 'var(--sx-sys-color-bg-page)' },
   { name: 'ink', value: '#000000', token: 'var(--sx-sys-color-text-primary)' },
   { name: 'accent', value: '#FFDC58', token: 'var(--sx-sys-color-accent)' },
   {
@@ -19,7 +20,7 @@ const figmaVars = [
     value: '#2F5BEA',
     token: 'var(--sx-sys-color-action-primary)',
   },
-  { name: 'mint', value: '#01FFCC', token: 'var(--sx-sys-color-mint)' },
+  { name: 'coral', value: '#FF6B6B', token: 'var(--sx-sys-color-coral)' },
 ];
 
 type Entry = {
@@ -29,13 +30,8 @@ type Entry = {
   status: 'live' | 'planned';
   /** FeatureCard 媒体条底色 */
   media: string;
-  /** Rough 涂鸦 kind —— 与入口语义一一对应 */
-  doodle:
-    | 'icon-base'
-    | 'icon-palette'
-    | 'icon-component'
-    | 'icon-blog'
-    | 'icon-pattern';
+  /** 媒体条几何 icon kind —— GeoMark 语系（替代手绘 icon / 编号） */
+  icon: string;
 };
 
 // 阅读顺序：为什么 → 取值 → 零件 → 正文 → 模式
@@ -46,7 +42,7 @@ const entries: Entry[] = [
     href: '/design-system/foundations',
     status: 'live',
     media: 'var(--sx-sys-color-accent)',
-    doodle: 'icon-base',
+    icon: 'icon-foundations',
   },
   {
     title: 'Tokens',
@@ -54,15 +50,15 @@ const entries: Entry[] = [
     href: '/design-system/tokens',
     status: 'live',
     media: 'var(--sx-sys-color-bg-page)',
-    doodle: 'icon-palette',
+    icon: 'icon-tokens',
   },
   {
     title: 'Components',
-    desc: 'RetroUI 底座：Button、Card、Badge、Nav、Command……可按、可抬的实体控件。',
+    desc: 'neubrutalism 控件：Button、Card、Badge、Nav、Command……3px 框 + 抬升实体。',
     href: '/design-system/components',
     status: 'live',
     media: 'var(--sx-sys-color-action-primary)',
-    doodle: 'icon-component',
+    icon: 'icon-components',
   },
   {
     title: 'Content',
@@ -70,36 +66,39 @@ const entries: Entry[] = [
     href: '/design-system/content',
     status: 'live',
     media: 'var(--sx-sys-color-accent)',
-    doodle: 'icon-blog',
+    icon: 'icon-blog',
   },
   {
     title: 'Patterns',
     desc: '文章头、课程目录、项目 Hero、代码对比等组合模式。',
     status: 'planned',
     media: 'var(--sx-sys-color-beige)',
-    doodle: 'icon-pattern',
+    icon: 'icon-patterns',
   },
 ];
 
+// neubrutalism 两层承重（替代旧的 RetroUI + Rough.js 双层；去手绘后 Rough 退场）
 const layers = [
   {
-    kicker: 'Components',
-    title: 'RetroUI 底座',
-    body: '硬边框、硬阴影、按下/抬起。交互控件与容器的结构层。',
-    href: 'https://github.com/retroui/RetroUI',
+    kicker: 'Structure',
+    title: '3px 黑框 · 零模糊硬影',
+    body: '单一 canonical 笔触 + 3/5/8/12px 纯黑偏移影 + 恒 0 圆角 + 抬升式 hover。neubrutalism 的物理骨架。',
+    href: 'https://neubrutalism.com/',
+    go: '北极星 →',
   },
   {
-    kicker: 'Drawing',
-    title: 'Rough.js 绘制',
-    body: '涂鸦图标、装饰线稿、影线填充。画图，不替代控件。',
-    href: 'https://github.com/rough-stuff/rough',
+    kicker: 'Clash',
+    title: '撞色贴纸堆',
+    body: '黄 + 珊瑚粉 + 天蓝 + 柔绿 + 橙，贴纸并置 + Bricolage 大写 display + 几何符号 icon。人格与可读共存。',
+    href: '/design-system/foundations',
+    go: '详见 Foundations →',
   },
 ];
 ---
 
 <BaseLayout
   title="Design System"
-  description="SchemaX UI —— Token、组件与内容规范。RetroUI 底座 × Rough 涂鸦。"
+  description="SchemaX UI —— Token、组件与内容规范。neubrutalism 贴纸堆（北极星 neubrutalism.com）。"
 >
   <section class="sx-section ds">
     <div class="sx-container ds__inner">
@@ -112,7 +111,11 @@ const layers = [
 
           <div class="ds-hero__meta">
             <span class="ds-stamp">SchemaX UI</span>
-            <Doodle kind="spark" size="sm" />
+            <span class="ds-clash" aria-hidden="true">
+              <span class="ds-clash__dot"></span>
+              <span class="ds-clash__dot"></span>
+              <span class="ds-clash__dot"></span>
+            </span>
           </div>
 
           <h1 class="ds-hero__title">
@@ -127,7 +130,7 @@ const layers = [
 
           <ul class="ds-hero__stack" aria-label="技术栈">
             <li>Style Dictionary · DTCG JSON 令牌 · 生成 CSS / TS</li>
-            <li>Astro 静态 · RetroUI 组件 · Rough.js 涂鸦 · Tailwind 桥接</li>
+            <li>Astro 静态 · neubrutalism 组件 · 几何符号 · Tailwind 桥接</li>
           </ul>
 
           <div class="ds-hero__pills" aria-label="分区标签">
@@ -173,7 +176,7 @@ const layers = [
       <section class="ds-layers" aria-labelledby="ds-layers-title">
         <div class="ds-layers__head">
           <h2 class="ds-layers__title" id="ds-layers-title">视觉双层</h2>
-          <p class="ds-layers__sub">RetroUI 搭架子 · Rough.js 画图</p>
+          <p class="ds-layers__sub">Structure 搭骨架 · Clash 上撞色</p>
         </div>
         <div class="ds-layers__grid">
           {
@@ -188,8 +191,7 @@ const layers = [
                 <h3 class="ds-layer__name">{layer.title}</h3>
                 <p class="ds-layer__body">{layer.body}</p>
                 <span class="ds-layer__go" aria-hidden="true">
-                  <Doodle kind="icon-github" size="sm" />
-                  <span>GitHub →</span>
+                  <span>{layer.go}</span>
                 </span>
               </a>
             ))
@@ -210,11 +212,13 @@ const layers = [
               <FeatureCard
                 title={c.title}
                 description={c.desc}
-                status={c.status}
-                href={c.href}
-                mediaColor={c.media}
+                href={c.status === 'live' ? c.href : undefined}
+                iconBg={c.media}
+                shadowColor={c.status === 'live'
+                  ? 'var(--sx-sys-color-action-primary)'
+                  : 'var(--sx-sys-color-border)'}
               >
-                <Doodle kind={c.doodle} size="lg" />
+                <GeoMark kind={c.icon} size="lg" />
               </FeatureCard>
             ))
           }
@@ -581,10 +585,26 @@ const layers = [
     color: var(--sx-sys-color-action-primary);
   }
 
-  .ds-layer__go :global(.sx-doodle) {
-    width: 1.15rem;
-    height: 1.15rem;
-    color: var(--sx-sys-color-text-primary);
+  /* hero meta 撞色小方块串（neubrutalism 装饰，替代手绘火花） */
+  .ds-clash {
+    display: inline-flex;
+    gap: 0.25rem;
+  }
+
+  .ds-clash__dot {
+    display: inline-block;
+    width: 0.85rem;
+    height: 0.85rem;
+    border: var(--sx-sys-border-width-strong) solid var(--sx-sys-color-border);
+    background: var(--sx-sys-color-accent);
+  }
+
+  .ds-clash__dot:nth-child(2) {
+    background: var(--sx-sys-color-coral);
+  }
+
+  .ds-clash__dot:nth-child(3) {
+    background: var(--sx-sys-color-action-primary);
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -604,12 +624,7 @@ const layers = [
     grid-template-columns: 1fr;
   }
 
-  /* FeatureCard 内 Rough SVG：媒体条强制 4rem，涂鸦需 overflow visible */
-  .ds-cards :global(.featurecard__media .sx-doodle) {
-    width: 4rem;
-    height: 4rem;
-  }
-
+  /* FeatureCard 媒体条几何 icon（GeoMark svg，4rem 由 FeatureCard media :global(svg) 统一） */
   .ds-cards :global(.featurecard__media) {
     overflow: visible;
   }

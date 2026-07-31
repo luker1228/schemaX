@@ -1,200 +1,57 @@
 ---
-// Button 演示 —— V2 文档布局：States（Demo）/ Props（属性表）/ Code（用法卡片）。
-// 仅供 /design-system/components/button 详情页的 doc-content 区使用。
+// Button 演示 —— 对齐 neubrutalism.com Canonical Button：
+// 左深色高亮 code-block（.btn grammar + copy 按钮），右 live demo（hover/click 各变体）。
 import Button from '../Button.astro';
-import Demo from '../Demo.astro';
-import type { ButtonVariant, ButtonSize } from '../Button.astro';
 
-const variants: { name: string; value: ButtonVariant }[] = [
-  { name: 'Primary', value: 'primary' },
-  { name: 'Secondary', value: 'secondary' },
-  { name: 'Outline', value: 'outline' },
-  { name: 'Danger', value: 'danger' },
-  { name: 'Ghost', value: 'ghost' },
-];
+// code-block 内容（手写高亮 span：sel/prop/val/com）。set:html 注入。
+const btnCode = `<span class="sel">.btn</span> {
+  <span class="prop">border</span>: <span class="val">3px solid var(--sx-sys-color-border)</span>;
+  <span class="prop">background</span>: <span class="val">var(--sx-sys-color-accent)</span>;
+  <span class="prop">box-shadow</span>: <span class="val">var(--sx-sys-shadow-md)</span>;
+  <span class="prop">transition</span>: <span class="val">transform 0.1s, box-shadow 0.1s</span>;
+}
 
-const sizes: { name: string; value: ButtonSize }[] = [
-  { name: 'Small', value: 'sm' },
-  { name: 'Medium', value: 'md' },
-  { name: 'Large', value: 'lg' },
-];
+<span class="sel">.btn:hover</span> {
+  <span class="prop">transform</span>: <span class="val">translate(-2px, -2px)</span>;
+  <span class="prop">box-shadow</span>: <span class="val">var(--sx-sys-shadow-lg)</span>;
+}
 
-const apiRows = [
-  {
-    name: 'variant',
-    type: "'primary' | 'secondary' | 'outline' | 'danger' | 'ghost'",
-    default: "'primary'",
-    desc: '视觉变体',
-  },
-  { name: 'size', type: "'sm' | 'md' | 'lg'", default: "'md'", desc: '尺寸' },
-  {
-    name: 'href',
-    type: 'string',
-    default: '—',
-    desc: '提供则渲染 <a>，否则渲染 <button>',
-  },
-  {
-    name: 'type',
-    type: "'button' | 'submit' | 'reset'",
-    default: "'button'",
-    desc: 'button 的 type（仅 button 生效）',
-  },
-  {
-    name: 'disabled',
-    type: 'boolean',
-    default: 'false',
-    desc: '禁用：链接用 aria-disabled，按钮用 disabled',
-  },
-];
+<span class="sel">.btn:active</span> {
+  <span class="prop">transform</span>: <span class="val">translate(3px, 3px)</span>;
+  <span class="prop">box-shadow</span>: <span class="val">none</span>;
+}
 
-const usage = `<!-- 作为链接 -->
-<Button variant="primary" href="/projects">Explore Projects</Button>
-
-<!-- 作为按钮 -->
-<Button variant="danger" type="submit">删除</Button>
-
-<!-- 尺寸 -->
-<Button size="lg">大按钮</Button>`;
+<span class="com">/* focus 永远别忘了 */</span>
+<span class="sel">.btn:focus-visible</span> {
+  <span class="prop">outline</span>: <span class="val">3px solid var(--sx-sys-color-sky)</span>;
+  <span class="prop">outline-offset</span>: <span class="val">3px</span>;
+}`;
 ---
 
-<>
-  {/* —— States：变体 / 尺寸 / 交互 / 禁用 / 元素 —— */}
-  <section class="doc-section">
-    <div class="doc-section__head">
-      <div class="doc-section__eyebrow">
-        <span class="doc-section__mark" aria-hidden="true"></span>
-        <h2 class="doc-section__title">状态演示</h2>
-      </div>
-      <p class="doc-section__sub">
-        变体、尺寸、交互、禁用与元素类型。用 Demo
-        组件封装：头部为标签与代码，舞台为实例，底部为可折叠说明。
-      </p>
+<div class="nb-grid2">
+  {/* 左：代码块（深色高亮 + copy） */}
+  <div class="nb-codewrap">
+    <span class="nb-codelabel">CSS</span>
+    <pre class="nb-codeblock"><button class="nb-copy" type="button" data-copy="">Copy</button><code set:html={btnCode} /></pre>
+  </div>
+
+  {/* 右：live demo */}
+  <div class="nb-demobox">
+    <div class="nb-row">
+      <Button variant="outline">Default</Button>
+      <Button variant="primary">Primary</Button>
+      <Button variant="secondary">Inverted</Button>
+      <Button variant="danger">Danger</Button>
+      <Button variant="ghost">Ghost</Button>
     </div>
-    <div class="doc-section__body">
-      <Demo label="变体 Variants" attr='variant="..."' stageClass="wrap">
-        {variants.map((v) => <Button variant={v.value}>{v.name}</Button>)}
-        <Fragment slot="note">
-          <p>
-            primary 黄底（主操作）/ secondary 黑底（次要）/ outline 白底（中性）/
-            danger 红底（危险）/ ghost 透明（Hero 场景）。
-          </p>
-        </Fragment>
-      </Demo>
+  </div>
+</div>
 
-      <Demo label="尺寸 Sizes" attr='size="..."' stageClass="wrap">
-        {sizes.map((s) => <Button size={s.value}>{s.name}</Button>)}
-        <Fragment slot="note">
-          <p>sm / md（默认）/ lg。所有变体都支持三种尺寸。</p>
-        </Fragment>
-      </Demo>
-
-      <Demo label="交互态 hover / active" attr=":hover / :active" stageClass="wrap">
-        <Button variant="primary">鼠标移上来</Button>
-        <Button variant="outline">点击我</Button>
-        <Fragment slot="note">
-          <p>
-            默认带硬阴影（凸起）；hover 时向右下位移 2px，阴影消失 ——
-            像物理按键被按下的感觉。
-          </p>
-        </Fragment>
-      </Demo>
-
-      <Demo label="禁用态 Disabled" attr="disabled" stageClass="wrap">
-        <Button variant="primary" disabled>Primary 禁用</Button>
-        <Button variant="secondary" disabled>Secondary 禁用</Button>
-        <Button variant="danger" disabled>Danger 禁用</Button>
-        <Fragment slot="note">
-          <p>
-            半透明（opacity 0.4）+ 禁用指针。链接用 <code>aria-disabled</code
-            >，按钮用 <code>disabled</code>。
-          </p>
-        </Fragment>
-      </Demo>
-
-      <Demo label="链接 vs 按钮" attr="href 控制渲染元素" stageClass="wrap">
-        <Button variant="primary" href="javascript:void(0)"
-          >链接（&lt;a&gt;）</Button
-        >
-        <Button variant="outline" type="button">按钮（&lt;button&gt;）</Button>
-        <Fragment slot="note">
-          <p>
-            提供 <code>href</code> 渲染为 <code>&lt;a&gt;</code
-            >（用于导航），否则渲染为 <code>&lt;button&gt;</code>（用于动作）。
-          </p>
-        </Fragment>
-      </Demo>
-    </div>
-  </section>
-
-  {/* —— Props：真实属性表 —— */}
-  <section class="doc-section">
-    <div class="doc-section__head">
-      <div class="doc-section__eyebrow">
-        <span class="doc-section__mark" aria-hidden="true"></span>
-        <h2 class="doc-section__title">Props 属性</h2>
-      </div>
-      <p class="doc-section__sub">Button 组件接受的属性。除特别说明外，所有属性均为可选。</p>
-    </div>
-    <div class="doc-section__body">
-      <div class="doc-table-scroll">
-        <table class="doc-props">
-          <thead>
-            <tr>
-              <th>Prop</th>
-              <th>Type</th>
-              <th>Default</th>
-              <th>Description</th>
-            </tr>
-          </thead>
-          <tbody>
-            {
-              apiRows.map((r) => (
-                <tr>
-                  <td class="doc-props__name">{r.name}</td>
-                  <td>
-                    <span class="doc-props__type">{r.type}</span>
-                  </td>
-                  <td>
-                    <span class="doc-props__type">{r.default}</span>
-                  </td>
-                  <td class="doc-props__desc">{r.desc}</td>
-                </tr>
-              ))
-            }
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </section>
-
-  {/* —— Code：用法示例卡片 —— */}
-  <section class="doc-section">
-    <div class="doc-section__head">
-      <div class="doc-section__eyebrow">
-        <span class="doc-section__mark" aria-hidden="true"></span>
-        <h2 class="doc-section__title">用法示例</h2>
-      </div>
-      <p class="doc-section__sub">在 Astro 页面中引入 Button，按需选择变体与尺寸。</p>
-    </div>
-    <div class="doc-section__body">
-      <figure class="doc-code">
-        <figcaption class="doc-code__bar">
-          <span class="doc-code__file">Button.astro</span>
-          <span class="doc-code__lang">astro</span>
-        </figcaption>
-        <pre class="doc-code__body"><code>{usage}</code></pre>
-      </figure>
-    </div>
-  </section>
-</>
-
-<style>
-  /* doc-section__body 内的 Demo：去掉 Demo 自带的底部 margin，统一由 body gap 控制。 */
-  :global(.doc-section__body .demo) {
-    margin-block-end: 0;
-  }
-  /* props 表窄屏横向滚动防御 */
-  .doc-table-scroll {
-    overflow-x: auto;
-  }
-</style>
+<div class="nb-demobox">
+  <div class="nb-row">
+    <Button size="sm">Small</Button>
+    <Button size="md">Medium</Button>
+    <Button size="lg">Large</Button>
+    <Button size="sm" disabled>禁用</Button>
+  </div>
+</div>

@@ -762,8 +762,7 @@ const hasCover = Boolean(cover);
    * 表格(.doc-props/.doc-table-scroll) 与 reference 变体需要宽度，排除以免被挤窄。 */
   .lboard-root
     :global(
-      [data-lboard-slide][data-active='true']:not(.step--reference):not(
-          :has(
+      [data-lboard-slide][data-active='true']:not(.step--reference, :has(
             .step-split,
             .cmp,
             .layer-pair,
@@ -772,9 +771,7 @@ const hasCover = Boolean(cover);
             .shop-nerve,
             .doc-props,
             .doc-table-scroll
-          )
-        )
-    ) {
+          ))) {
     max-width: min(40rem, 100%);
     margin-inline: auto;
   }

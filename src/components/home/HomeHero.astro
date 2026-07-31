@@ -2,7 +2,7 @@
 import { site } from '../../config/site';
 import { profile } from '../../data/profile';
 import HeroTerminal from './HeroTerminal.tsx';
-import DoodleMark from './DoodleMark.astro';
+import GeoMark from '../design-system/GeoMark.astro';
 
 // 首页 hero 终端轮播内容（规范 §4.1）。纯视觉语言呈现，非真实 JSON 契约。
 const heroSlides = [
@@ -31,6 +31,12 @@ const heroSlides = [
   "next": "course: schema-first"
 }`,
   },
+  {
+    title: 'about.md',
+    code: `我是 Luke——AI Agent 工程师，也在自己的知识系统里当学生。
+SchemaX 是我公开的第二大脑：课程、笔记、作品与设计系统共用同一套契约。
+你从搜索掉进某篇文章时，看到的是可验证的结构，不是营销页。`,
+  },
 ];
 ---
 
@@ -39,30 +45,30 @@ const heroSlides = [
     <div class="hero__copy">
       <div class="hero__meta">
         <span class="hero__stamp-badge">Schema-Driven</span>
-        <DoodleMark kind="star" size="sm" class="hero__star" />
-        <DoodleMark kind="spark" size="sm" class="hero__spark" />
+        <GeoMark kind="star" size="sm" class="hero__star" />
+        <GeoMark kind="spark" size="sm" class="hero__spark" />
       </div>
 
       <h1 class="hero__title" id="hero-title">
         Structure
         <span class="hero__title-line">
           <span class="hero__title-hl">the Unknown.</span>
-          <DoodleMark kind="arrow" class="hero__arrow" />
+          <span class="hero__arrow-wrap" aria-hidden="true">
+            <GeoMark
+              kind="arrow"
+              size="md"
+              class="hero__arrow geo-arrow-draw"
+            />
+          </span>
         </span>
       </h1>
 
       <p class="hero__lede">用 Schema，为未知建立可执行的结构。</p>
 
-      {/* Marie 式个人叙事：第一人称，短而具体 */}
-      <p class="hero__bio">
-        我是 Luke——AI Agent 工程师，也在自己的知识系统里当学生。SchemaX
-        是我公开的第二大脑：课程、笔记、作品与设计系统共用同一套契约。你从搜索掉进某篇文章时，看到的是可验证的结构，不是营销页。
-      </p>
-
       <div class="hero__command" aria-hidden="true">
         <span class="hero__command-label">path</span>
         <code class="hero__command-code">schema → contract → tool call</code>
-        <DoodleMark kind="brace" size="sm" class="hero__brace" />
+        <GeoMark kind="brace" size="sm" class="hero__brace" />
       </div>
 
       <div class="hero__cta">
@@ -124,7 +130,7 @@ const heroSlides = [
     letter-spacing: 0.06em;
     text-transform: uppercase;
     box-shadow: var(--sx-sys-shadow-sm);
-    transform: rotate(-1.5deg);
+    transform: rotate(var(--sx-sys-rotate-sticker));
   }
 
   .hero__title {
@@ -134,19 +140,39 @@ const heroSlides = [
     font-weight: 800;
     line-height: 0.98;
     letter-spacing: -0.02em;
+    text-transform: uppercase;
     color: var(--sx-sys-color-text-primary);
   }
 
   .hero__title-line {
+    position: relative;
     display: inline-flex;
     align-items: center;
     gap: var(--sx-ref-space-3);
     flex-wrap: wrap;
   }
 
+  /* 马克笔印泥：黄底略宽于字身、上下留一丝呼吸，像盖下去的一笔高亮（标题端正不旋） */
   .hero__title-hl {
     background: var(--sx-sys-color-accent);
-    padding: 0 0.12em;
+    padding: 0.04em 0.16em;
+  }
+
+  /* 唯一 authored moment：手绘箭头 draw-in，从右下方斜指向高亮词。
+     wrap 只管旋转定位；内层 SVG 走 clip-path draw-in（在未旋转坐标系生效，
+     不受 transform 干扰）。pointer-events:none 避免遮挡标题选区。 */
+  .hero__arrow-wrap {
+    position: absolute;
+    right: -0.5rem;
+    bottom: -1.55rem;
+    transform: rotate(-132deg);
+    transform-origin: 65% 65%;
+    pointer-events: none;
+  }
+
+  .hero__arrow {
+    width: 4.25rem;
+    height: auto;
   }
 
   .hero__lede {
@@ -176,7 +202,7 @@ const heroSlides = [
     border: var(--sx-sys-border-width-strong) solid var(--sx-sys-color-border);
     border-radius: var(--sx-sys-radius-sm);
     background: var(--sx-sys-color-bg-surface);
-    box-shadow: 3px 3px 0 var(--sx-sys-color-action-primary);
+    box-shadow: var(--sx-sys-shadow-sm);
   }
 
   .hero__command-label {
@@ -216,9 +242,8 @@ const heroSlides = [
   }
 
   .hero__terminal :global(.term) {
-    border-width: var(--sx-sys-border-width-strong);
-    border-radius: var(--sx-sys-radius-sm);
-    box-shadow: 5px 5px 0 var(--sx-sys-color-accent);
+    /* 边框 / 圆角 / 黄+黑描边硬影走 .term 全局默认（3px 框 · 0 圆角 · comp 8px 双层影），
+       这里只覆盖宽度与终端字体。 */
     width: 100%;
     font-family: var(--sx-sys-font-family-terminal), ui-monospace, monospace;
   }
@@ -240,7 +265,7 @@ const heroSlides = [
     font-family: var(--sx-sys-font-family-mono-system), ui-monospace, monospace;
     font-size: var(--sx-sys-font-size-sm);
     color: var(--sx-sys-color-text-muted);
-    transform: rotate(-0.4deg);
+    transform: rotate(var(--sx-sys-rotate-sticker));
   }
 
   .hero__caption-mark {

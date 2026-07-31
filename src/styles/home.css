@@ -1,18 +1,35 @@
-/* 首页专用层：纸纹、涂鸦动效、印章按钮。
+/* 首页专用层：neubrutalism 贴纸堆、印章 CTA、几何箭头入场。
    仅由 pages/index.astro 导入，不进全站 global。 */
 
-/* —— 页面纸面 ——
-   stylelint 对 background-* 只放行 var/color-mix/url，纸纹用 SVG tile（内建尺寸，默认 repeat）。 */
+/* ── Home 方向契约 · 北极星 neubrutalism.com ───────────────────
+   THESIS  拒绝安全作品集壳；用 neubrutalism 贴纸堆证明 SchemaX 是有手艺、耐久的第二大脑。
+   OWN-WORLD 3px 黑框 / 3·5·8·12px 零模糊硬影 / 恒 0 圆角 / 抬升式 hover（抬起+影涨，
+           active 按下贴底）/ 撞色贴纸堆（黄·珊瑚粉·天蓝·柔绿·橙）/ 暖纸工程网格 /
+           Bricolage 大写粗 display / 几何符号 icon / border IS ornament。
+   STORY   一屏看清「我是谁、站点凭什么耐久」；贴纸堆四章 + TechNote 黄卡 pipeline 收尾。
+   FIRST VIEWPORT 左：大写粗 display STRUCTURE THE UNKNOWN. + 黄高亮 + 撞色戳 + 抬升 CTA；
+                  右：终端（黄+黑描边重硬影）打字机轮播 JSON。
+   FORM    neubrutalism 贴纸堆（用户钉死方向，pinned > roll）。 */
+
+/* —— 页面底：neubrutalism 工程方格 ——
+   32px 淡蓝网格（schema 蓝图语境 = subject's world，craft-floor 网格 earn）。
+   stylelint 对 background-* 放行 url，SVG tile 内建尺寸、默认 repeat。 */
 .home {
   position: relative;
   background-color: var(--sx-sys-color-bg-page);
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3E%3Ccircle cx='1.5' cy='1.5' r='0.7' fill='black' fill-opacity='0.05'/%3E%3Ccircle cx='10' cy='9' r='0.55' fill='black' fill-opacity='0.035'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Cpath d='M32 0H0V32' fill='none' stroke='%232f5bea' stroke-opacity='0.12' stroke-width='1'/%3E%3C/svg%3E");
 }
 
 /* —— 区段壳 —— */
 .home-section {
   padding-block: clamp(2.5rem, 6vw, 4.5rem);
   padding-inline: var(--sx-ref-space-6);
+}
+
+/* —— 安静屏：放大纵向呼吸（Manifesto / Closing）。
+   与套卡的响亮区块拉开强弱节奏——安静靠留白与不套卡，不靠分割线。 —— */
+.home-section--breathe {
+  padding-block: clamp(4.5rem, 11vw, 8rem);
 }
 
 .home-section__inner {
@@ -78,19 +95,25 @@
   transition:
     transform 120ms ease,
     box-shadow 120ms ease;
-  /* 轻微旋转 = 贴纸/印章感 */
-  transform: rotate(-0.8deg);
+  /* 轻微旋转 = 贴纸/印章感（走 sticker token） */
+  transform: rotate(var(--sx-sys-rotate-sticker));
 }
 
+/* neubrutalism 抬升式：hover 抬起 + 影涨到 lg；active 按下贴底、影消。 */
 .stamp:hover {
-  transform: translate(2px, 2px) rotate(0deg);
-  box-shadow: none;
+  transform: translate(-2px, -2px) rotate(0deg);
+  box-shadow: var(--sx-sys-shadow-lg);
   color: var(--sx-sys-color-text-primary);
 }
 
+.stamp:active {
+  transform: translate(3px, 3px) rotate(0deg);
+  box-shadow: none;
+}
+
 .stamp:focus-visible {
-  outline: var(--sx-sys-border-width) solid var(--sx-sys-color-action-primary);
-  outline-offset: 2px;
+  outline: 3px solid var(--sx-sys-color-sky);
+  outline-offset: 3px;
 }
 
 .stamp--primary {
@@ -99,11 +122,12 @@
 
 .stamp--ghost {
   background: var(--sx-sys-color-bg-surface);
-  transform: rotate(0.9deg);
+  transform: rotate(calc(var(--sx-sys-rotate-sticker) * -1));
 }
 
 .stamp--ghost:hover {
-  transform: translate(2px, 2px) rotate(0deg);
+  transform: translate(-2px, -2px) rotate(0deg);
+  box-shadow: var(--sx-sys-shadow-lg);
 }
 
 .stamp--blue {
@@ -123,81 +147,27 @@
   box-shadow: var(--sx-sys-shadow-md);
 }
 
-/* —— 涂鸦动效 —— */
-@keyframes sx-star-twinkle {
-  0%,
-  100% {
-    opacity: 0.35;
-    transform: scale(0.92);
-  }
-  50% {
-    opacity: 1;
-    transform: scale(1.08);
-  }
-}
-
-@keyframes sx-line-wobble {
-  0%,
-  100% {
-    transform: translateY(0) rotate(0deg);
-  }
-  33% {
-    transform: translateY(0.5px) rotate(0.15deg);
-  }
-  66% {
-    transform: translateY(-0.5px) rotate(-0.15deg);
-  }
-}
-
+/* —— 几何箭头入场（hero 粗箭头 draw-in）——
+   首页几何化后，涂鸦动效体系（星闪烁 / 线抖动 / 浮动）已全部移除，仅保留此一处：
+   clip-path 从右向左裁切 → 全显，箭尾先露、箭头后露。clip-path 作用于整张 SVG，
+   与路径长度无关、确定性可复现。 */
 @keyframes sx-arrow-draw {
   from {
-    stroke-dashoffset: 48;
+    clip-path: inset(0 100% 0 0);
   }
   to {
-    stroke-dashoffset: 0;
+    clip-path: inset(0 0 0 0);
   }
 }
 
-@keyframes sx-float-soft {
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-3px);
-  }
-}
-
-.doodle-star {
-  transform-origin: center;
-  animation: sx-star-twinkle 2.4s ease-in-out infinite;
-}
-
-.doodle-star--delay {
-  animation-delay: 0.9s;
-}
-
-.doodle-wobble {
-  transform-origin: center;
-  animation: sx-line-wobble 3.2s ease-in-out infinite;
-}
-
-.doodle-arrow-path {
-  stroke-dasharray: 48;
-  stroke-dashoffset: 0;
-  animation: sx-arrow-draw 1.1s ease-out 0.2s both;
-}
-
-.doodle-float {
-  animation: sx-float-soft 4s ease-in-out infinite;
+.geo-arrow-draw {
+  /* 默认全显；reduced-motion 关动画后回落到此值，不残留裁切 */
+  clip-path: inset(0 0 0 0);
+  animation: sx-arrow-draw 1.1s cubic-bezier(0.22, 1, 0.36, 1) 0.25s both;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .doodle-star,
-  .doodle-star--delay,
-  .doodle-wobble,
-  .doodle-arrow-path,
-  .doodle-float,
+  .geo-arrow-draw,
   .stamp,
   .stamp--ghost {
     animation: none;

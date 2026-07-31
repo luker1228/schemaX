@@ -1,35 +1,39 @@
 ---
-import DoodleMark from './DoodleMark.astro';
+import GeoMark from '../design-system/GeoMark.astro';
 
-// 四入口：手绘图标 + RetroUI 硬卡 + 蓝/黄交替硬影
+// 四入口：几何线条 icon + neubrutalism 撞色贴纸堆（icon 容器四撞色 + 撞色硬影）
 const entries = [
   {
     label: 'Courses',
     href: '/courses',
     desc: '体系化课程、章节与练习。从骨架到装修，一步可复现。',
     icon: 'icon-course' as const,
-    shadow: 'var(--sx-sys-color-accent)',
+    iconBg: 'var(--sx-sys-color-accent)' /* 黄 */,
+    shadow: 'var(--sx-sys-color-action-primary)' /* 蓝硬影 */,
   },
   {
     label: 'Blog',
     href: '/blog',
     desc: '技术文章与工程笔记。为搜索读者写的可执行结构。',
     icon: 'icon-blog' as const,
-    shadow: 'var(--sx-sys-color-action-primary)',
+    iconBg: 'var(--sx-sys-color-coral)' /* 珊瑚粉 */,
+    shadow: 'var(--sx-sys-color-border)' /* 黑硬影 */,
   },
   {
     label: 'Projects',
     href: '/projects',
     desc: '开源仓库、产品实验与工程作品。',
     icon: 'icon-code' as const,
-    shadow: 'var(--sx-sys-color-action-primary)',
+    iconBg: 'var(--sx-sys-color-sky)' /* 天蓝 */,
+    shadow: 'var(--sx-sys-color-accent)' /* 黄硬影 */,
   },
   {
     label: 'Design System',
     href: '/design-system',
     desc: 'Token、组件与内容规范——SchemaX 的活契约。',
     icon: 'icon-db' as const,
-    shadow: 'var(--sx-sys-color-accent)',
+    iconBg: 'var(--sx-sys-color-pop-green)' /* 柔绿 */,
+    shadow: 'var(--sx-sys-color-border)' /* 黑硬影 */,
   },
 ];
 ---
@@ -41,7 +45,7 @@ const entries = [
         <h2 class="home-head__title" id="entries-title">从这里走进 SchemaX</h2>
         <p class="entries__sub">四条路径 · 同一套结构</p>
       </div>
-      <DoodleMark kind="star" size="sm" />
+      <GeoMark kind="star" size="sm" />
     </header>
 
     <div class="entries__grid">
@@ -50,13 +54,10 @@ const entries = [
           <a
             class="entry"
             href={e.href}
-            style={`--sx-entry-shadow: ${e.shadow}`}
+            style={`--sx-entry-shadow: ${e.shadow}; --sx-entry-icon-bg: ${e.iconBg}`}
           >
             <span class="entry__icon">
-              <DoodleMark kind={e.icon} size="lg" />
-            </span>
-            <span class="entry__arrow" aria-hidden="true">
-              <DoodleMark kind="arrow" size="sm" />
+              <GeoMark kind={e.icon} size="lg" />
             </span>
             <span class="entry__label">{e.label}</span>
             <span class="entry__desc">{e.desc}</span>
@@ -100,17 +101,17 @@ const entries = [
     border: var(--sx-sys-border-width-strong) solid var(--sx-sys-color-border);
     border-radius: var(--sx-sys-radius-sm);
     background: var(--sx-sys-color-bg-surface);
-    box-shadow: 4px 4px 0 var(--sx-entry-shadow);
+    box-shadow: 6px 6px 0 var(--sx-entry-shadow);
     text-decoration: none;
     color: inherit;
     transition:
-      transform 140ms ease,
-      box-shadow 140ms ease;
+      transform 0.1s ease,
+      box-shadow 0.1s ease;
   }
 
   .entry:hover {
-    transform: translate(-3px, -3px);
-    box-shadow: 7px 7px 0 var(--sx-entry-shadow);
+    transform: translate(-2px, -2px);
+    box-shadow: 9px 9px 0 var(--sx-entry-shadow);
   }
 
   .entry:focus-visible {
@@ -118,27 +119,18 @@ const entries = [
     outline-offset: 2px;
   }
 
+  /* icon 容器：黄底黑边方块 + 硬影，凸显手绘 icon（贴纸印泥戳） */
   .entry__icon {
     display: flex;
-    width: 3.5rem;
-    height: 3.5rem;
+    width: 5rem;
+    height: 5rem;
     align-items: center;
     justify-content: center;
-  }
-
-  .entry__arrow {
-    position: absolute;
-    top: 1rem;
-    right: 0.85rem;
-    opacity: 0.55;
-    transition:
-      opacity 140ms ease,
-      transform 140ms ease;
-  }
-
-  .entry:hover .entry__arrow {
-    opacity: 1;
-    transform: translateX(3px);
+    flex-shrink: 0;
+    border: var(--sx-sys-border-width-strong) solid var(--sx-sys-color-border);
+    border-radius: var(--sx-sys-radius-sm);
+    background: var(--sx-entry-icon-bg, var(--sx-sys-color-accent));
+    box-shadow: var(--sx-sys-shadow-sm);
   }
 
   .entry__label {

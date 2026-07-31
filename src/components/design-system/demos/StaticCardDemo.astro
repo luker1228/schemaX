@@ -1,0 +1,35 @@
+---
+// StaticCard 演示 —— 静态展示卡（满色底 · 不可点 · 无 hover）。
+// 与 FeatureCard（交互卡）是两个独立组件。
+import StaticCard from '../StaticCard.astro';
+import GeoMark from '../GeoMark.astro';
+
+const code = `<span class="sel">.staticcard</span> {
+  <span class="prop">background</span>: <span class="val">var(--sx-sc-fill)</span>;
+  <span class="prop">border</span>: <span class="val">3px solid var(--sx-sys-color-border)</span>;
+  <span class="prop">box-shadow</span>: <span class="val">var(--sx-sys-shadow-md)</span>;
+}
+
+<span class="com">/* 满色底 · 无 hover · 纯展示（不可点） */</span>`;
+---
+
+<div class="nb-codewrap nb-codewrap--narrow">
+  <span class="nb-codelabel">CSS</span>
+  <pre class="nb-codeblock"><button class="nb-copy" type="button" data-copy="">Copy</button><code set:html={code} /></pre>
+</div>
+
+<div class="nb-cardgrid">
+  <StaticCard title="Patterns" description="组合模式 · 纯展示。" fill="var(--sx-sys-color-accent)">
+    <GeoMark kind="icon-patterns" size="lg" />
+  </StaticCard>
+  <StaticCard title="Content" description="排版规范 · 纯展示。" fill="var(--sx-sys-color-coral)">
+    <GeoMark kind="icon-blog" size="lg" />
+  </StaticCard>
+  <StaticCard
+    title="Foundations"
+    description="设计语言 · 纯展示。"
+    fill="var(--sx-sys-color-sky)"
+    shadowColor="var(--sx-sys-color-border)">
+    <GeoMark kind="icon-foundations" size="lg" />
+  </StaticCard>
+</div>

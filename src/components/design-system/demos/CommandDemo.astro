@@ -1,146 +1,33 @@
 ---
-// Command 演示 —— V2 文档布局：States（Demo）/ Props（属性表）/ Code（用法卡片）。
-// 仅供 /design-system/components/command 详情页的 doc-content 区使用。
+// Command 演示 —— 左 code-block（.term grammar），右 live demo（light / dark）。
 import Command from '../Command.astro';
-import Demo from '../Demo.astro';
 
-const example = 'npx run this-is-example';
+const example = `$ npx astro dev --host
 
-const apiRows = [
-  {
-    name: 'theme',
-    type: "'light' | 'dark'",
-    default: "'dark'",
-    desc: '屏幕主题。light = 浅色屏幕；dark = 黑色屏幕',
-  },
-  {
-    name: 'title',
-    type: 'string',
-    default: "'bash'",
-    desc: '标题栏显示的文件名 / shell 名',
-  },
-];
+  ↳ Local    http://127.0.0.1:4321
+  ↳ Network  http://192.168.1.5:4321`;
 
-const usage = `---
-import Command from '@/components/design-system/Command.astro';
+const termCode = `<span class="sel">.term</span> {
+  <span class="prop">border</span>: <span class="val">3px solid var(--sx-sys-color-border)</span>;
+  <span class="prop">box-shadow</span>: <span class="val">var(--sx-comp-term-shadow)</span>;
+}
+<span class="sel">.term__screen</span> {
+  <span class="prop">font-family</span>: <span class="val">var(--sx-sys-font-family-mono-system)</span>;
+  <span class="prop">overflow-x</span>: <span class="val">auto</span>;
+}
+
+<span class="com">/* light：浅屏黑字（默认）/ dark：黑屏浅字 */</span>`;
 ---
 
-<!-- 默认 dark -->
-<Command>
-  <code>npx run this-is-example</code>
-</Command>
-
-<!-- light -->
-<Command theme="light" title="output.log">
-  <code>ready in 1.2s</code>
-</Command>`;
----
-
-<>
-  {/* —— States：Dark / Light 两种主题 —— */}
-  <section class="doc-section">
-    <div class="doc-section__head">
-      <div class="doc-section__eyebrow">
-        <span class="doc-section__mark" aria-hidden="true"></span>
-        <h2 class="doc-section__title">状态演示</h2>
-      </div>
-      <p class="doc-section__sub">
-        仿终端窗口的纯展示容器，Dark / Light 两种主题共享同一外观与标题栏。用 Demo
-        组件封装：头部为标签与代码，舞台为实例，底部为可折叠说明。
-      </p>
+<div class="nb-grid2">
+  <div class="nb-codewrap">
+    <span class="nb-codelabel">CSS</span>
+    <pre class="nb-codeblock"><button class="nb-copy" type="button" data-copy="">Copy</button><code set:html={termCode} /></pre>
+  </div>
+  <div class="nb-demobox">
+    <div class="nb-stack">
+      <Command title="bash"><code>{example}</code></Command>
+      <Command theme="dark" title="output.log"><code>{example}</code></Command>
     </div>
-    <div class="doc-section__body">
-      <Demo label="Dark（默认）" attr='theme="dark"'>
-        <Command title="bash">
-          <code>{example}</code>
-        </Command>
-        <Fragment slot="note">
-          <p>
-            黑色屏幕。内容完全由默认 slot 自由决定 —— 命令、输出、任意文本都行。
-          </p>
-        </Fragment>
-      </Demo>
-
-      <Demo label="Light" attr='theme="light"'>
-        <Command theme="light" title="output.log">
-          <code>{example}</code>
-        </Command>
-        <Fragment slot="note">
-          <p>浅色（暖纸）屏幕，黑字。两种主题共享同一外观与标题栏。</p>
-        </Fragment>
-      </Demo>
-    </div>
-  </section>
-
-  {/* —— Props：真实属性表 —— */}
-  <section class="doc-section">
-    <div class="doc-section__head">
-      <div class="doc-section__eyebrow">
-        <span class="doc-section__mark" aria-hidden="true"></span>
-        <h2 class="doc-section__title">Props 属性</h2>
-      </div>
-      <p class="doc-section__sub">Command 组件接受的属性。除特别说明外，所有属性均为可选。</p>
-    </div>
-    <div class="doc-section__body">
-      <div class="doc-table-scroll">
-        <table class="doc-props">
-          <thead>
-            <tr>
-              <th>Prop</th>
-              <th>Type</th>
-              <th>Default</th>
-              <th>Description</th>
-            </tr>
-          </thead>
-          <tbody>
-            {
-              apiRows.map((r) => (
-                <tr>
-                  <td class="doc-props__name">{r.name}</td>
-                  <td>
-                    <span class="doc-props__type">{r.type}</span>
-                  </td>
-                  <td>
-                    <span class="doc-props__type">{r.default}</span>
-                  </td>
-                  <td class="doc-props__desc">{r.desc}</td>
-                </tr>
-              ))
-            }
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </section>
-
-  {/* —— Code：用法示例卡片 —— */}
-  <section class="doc-section">
-    <div class="doc-section__head">
-      <div class="doc-section__eyebrow">
-        <span class="doc-section__mark" aria-hidden="true"></span>
-        <h2 class="doc-section__title">用法示例</h2>
-      </div>
-      <p class="doc-section__sub">在 Astro 页面中引入 Command，内容通过默认 slot 自由决定。</p>
-    </div>
-    <div class="doc-section__body">
-      <figure class="doc-code">
-        <figcaption class="doc-code__bar">
-          <span class="doc-code__file">Command.astro</span>
-          <span class="doc-code__lang">astro</span>
-        </figcaption>
-        <pre class="doc-code__body"><code>{usage}</code></pre>
-      </figure>
-    </div>
-  </section>
-</>
-
-<style>
-  /* doc-section__body 内的 Demo：去掉 Demo 自带的底部 margin，统一由 body gap 控制。 */
-  :global(.doc-section__body .demo) {
-    margin-block-end: 0;
-  }
-  /* props 表窄屏横向滚动防御 */
-  .doc-table-scroll {
-    overflow-x: auto;
-  }
-</style>
+  </div>
+</div>

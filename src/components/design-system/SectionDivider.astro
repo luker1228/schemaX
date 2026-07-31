@@ -1,0 +1,51 @@
+---
+// SectionDivider 组件 —— SchemaX UI
+// 平面黑条结构分隔线（neubrutalism section divider）。
+// 承接被替换的涂鸦分割线：分割线职责已从 Rough.js 绘制层划归组件底层（见 CLAUDE.md §14）。
+// 语义化 <hr>，零 JS。thickness 走 border token，颜色可撞色覆盖。
+//
+// 维度：
+//   weight  厚度档：'thin'(2px) / 'default'(3px canonical) / 'thick'(6px 重档)
+//   color   黑条颜色（--sx-* token），默认纯黑 border；可传撞色做强调分割
+
+type DividerWeight = 'thin' | 'default' | 'thick';
+
+interface Props {
+  /** 厚度档。thin=2px 次级；default=3px canonical；thick=6px 重档结构分隔 */
+  weight?: DividerWeight;
+  /** 黑条颜色（--sx-* token）。默认纯黑，可传撞色（如 var(--sx-sys-color-accent)） */
+  color?: string;
+  /** 透传到根元素的额外类名 */
+  class?: string;
+}
+
+const {
+  weight = 'default',
+  color = 'var(--sx-sys-color-border)',
+  class: extra,
+} = Astro.props;
+
+const weightToken: Record<DividerWeight, string> = {
+  thin: 'var(--sx-sys-border-width)',
+  default: 'var(--sx-sys-border-width-strong)',
+  thick: 'calc(var(--sx-sys-border-width-strong) * 2)',
+};
+
+const styleVars = `--sx-sd-weight: ${weightToken[weight]}; --sx-sd-color: ${color}`;
+const classes = ['sectiondivider', extra].filter(Boolean).join(' ');
+---
+
+<hr class={classes} style={styleVars} />
+
+<style>
+  /* 平面黑条：reset <hr> 默认样式，height + background 实现实心条（非 border-top，避免双线） */
+  .sectiondivider {
+    flex: none;
+    width: 100%;
+    height: var(--sx-sd-weight);
+    margin: 0;
+    border: 0;
+    border-radius: var(--sx-sys-radius-sm);
+    background: var(--sx-sd-color);
+  }
+</style>

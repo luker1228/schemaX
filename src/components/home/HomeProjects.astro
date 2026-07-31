@@ -1,6 +1,6 @@
 ---
 import type { CollectionEntry } from 'astro:content';
-import DoodleMark from './DoodleMark.astro';
+import GeoMark from '../design-system/GeoMark.astro';
 
 interface Props {
   /** featured 项目（大卡）。无则省略大卡，仅展示双特性小卡。 */
@@ -9,11 +9,28 @@ interface Props {
 const { project } = Astro.props;
 
 const statusLabel = project?.data.status.toUpperCase();
+const year = project?.data.startedAt
+  ? new Date(project.data.startedAt).getFullYear()
+  : null;
+let demoDomain: string | null = null;
+if (project?.data.demo) {
+  try {
+    demoDomain = new URL(project.data.demo).host.replace(/^www\./, '');
+  } catch {
+    demoDomain = null;
+  }
+}
+// featured 项目（SchemaX 本站）的核心能力——作 highlights 固定展示
+const highlights = [
+  '内容集合由 Schema 校验——错误无法构建',
+  '设计 Token 由 DTCG 源自动生成',
+  '静态优先 · 零 JS 渲染（Astro Islands）',
+];
 
 const labFlow = [
-  { label: 'SCHEMA', bg: 'var(--sx-sys-color-bg-surface)' },
+  { label: 'SCHEMA', bg: 'var(--sx-sys-color-coral)' },
   { label: 'SLUG', bg: 'var(--sx-sys-color-accent)' },
-  { label: 'REDIRECT', bg: 'var(--sx-sys-color-action-primary)' },
+  { label: 'REDIRECT', bg: 'var(--sx-sys-color-sky)' },
 ];
 const stackList = [
   'expressive code → static highlighting',
@@ -32,18 +49,43 @@ const stackList = [
     {
       project && (
         <a class="project-card" href={`/projects/${project.id}`}>
-          <div class="project-card__side" aria-hidden="true">
+          <div class="project-card__side">
             {statusLabel && (
               <span class="project-card__status">{statusLabel} / V1</span>
             )}
-            <div class="project-card__doodles">
-              <DoodleMark kind="icon-code" size="lg" />
-              <DoodleMark kind="brace" size="md" />
+            <div class="project-card__doodles" aria-hidden="true">
+              <GeoMark kind="icon-code" size="lg" />
+              <GeoMark kind="brace" size="md" />
             </div>
+            <dl class="project-card__meta">
+              {year && (
+                <div class="project-card__meta-row">
+                  <dt>Built</dt>
+                  <dd>{year}</dd>
+                </div>
+              )}
+              <div class="project-card__meta-row">
+                <dt>Stack</dt>
+                <dd>{project.data.stack.length}</dd>
+              </div>
+            </dl>
           </div>
           <div class="project-card__copy">
-            <h3 class="project-card__name">{project.data.title}</h3>
+            <div class="project-card__head">
+              <h3 class="project-card__name">{project.data.title}</h3>
+              {demoDomain && (
+                <span class="project-card__demo">{demoDomain}</span>
+              )}
+            </div>
             <p class="project-card__desc">{project.data.description}</p>
+            <ul class="project-card__highlights">
+              {highlights.map((h) => (
+                <li class="project-card__highlight">
+                  <span class="project-card__highlight-mark" aria-hidden="true">✦</span>
+                  <span>{h}</span>
+                </li>
+              ))}
+            </ul>
             {project.data.stack.length > 0 && (
               <div class="project-card__tags">
                 {project.data.stack.map((s) => (
@@ -59,7 +101,7 @@ const stackList = [
     <div class="project-archive">
       <div class="feature-card feature-card--lab">
         <span class="feature-card__eyebrow">
-          <DoodleMark kind="icon-db" size="sm" />
+          <GeoMark kind="icon-db" size="sm" />
           System lab
         </span>
         <h3 class="feature-card__title">
@@ -80,7 +122,7 @@ const stackList = [
 
       <div class="feature-card feature-card--stack">
         <span class="feature-card__eyebrow">
-          <DoodleMark kind="icon-code" size="sm" />
+          <GeoMark kind="icon-code" size="sm" />
           Toolchain
         </span>
         <h3 class="feature-card__title">Build Chain / Search / Code Blocks</h3>
@@ -118,17 +160,17 @@ const stackList = [
     border: var(--sx-sys-border-width-strong) solid var(--sx-sys-color-border);
     border-radius: var(--sx-sys-radius-sm);
     background: var(--sx-sys-color-bg-surface);
-    box-shadow: var(--sx-sys-shadow-lg);
+    box-shadow: var(--sx-sys-shadow-md);
     text-decoration: none;
     color: inherit;
     transition:
-      transform 140ms ease,
-      box-shadow 140ms ease;
+      transform 0.1s ease,
+      box-shadow 0.1s ease;
   }
 
   .project-card:hover {
-    transform: translate(-3px, -3px);
-    box-shadow: 8px 8px 0 var(--sx-sys-color-border);
+    transform: translate(-2px, -2px);
+    box-shadow: 9px 9px 0 var(--sx-sys-color-border);
   }
 
   .project-card:focus-visible {
@@ -136,29 +178,32 @@ const stackList = [
     outline-offset: 2px;
   }
 
+  /* 大卡内的侧栏：纸色分区（无 border / shadow，非嵌套卡），承载 status + doodle + meta。
+     侧栏背景取纸色，与卡面 surface 形成微妙层次；gap 与 copy 分区。 */
   .project-card__side {
     position: relative;
-    flex: 0 0 16rem;
+    flex: 0 0 15rem;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    padding: var(--sx-ref-space-4);
-    border: var(--sx-sys-border-width-strong) solid var(--sx-sys-color-border);
+    gap: var(--sx-ref-space-4);
+    padding: var(--sx-ref-space-5);
     border-radius: var(--sx-sys-radius-sm);
-    background: color-mix(
-      in srgb,
-      var(--sx-sys-color-action-primary) 12%,
-      var(--sx-sys-color-bg-page)
-    );
-    box-shadow: 3px 3px 0 var(--sx-sys-color-action-primary);
-    min-height: 10rem;
+    background: var(--sx-sys-color-bg-page);
+    min-height: 12rem;
   }
 
   .project-card__status {
+    align-self: flex-start;
+    padding: 0.3rem 0.55rem;
+    border: var(--sx-sys-border-width-strong) solid var(--sx-sys-color-border);
+    border-radius: var(--sx-sys-radius-sm);
+    background: var(--sx-sys-color-sky);
     font-family: var(--sx-sys-font-family-mono-system), ui-monospace, monospace;
-    font-size: var(--sx-sys-font-size-sm);
+    font-size: var(--sx-sys-font-size-xs);
     font-weight: 700;
-    letter-spacing: 0.04em;
+    letter-spacing: 0.06em;
+    box-shadow: var(--sx-sys-shadow-sm);
+    transform: rotate(var(--sx-sys-rotate-sticker));
   }
 
   .project-card__doodles {
@@ -167,12 +212,47 @@ const stackList = [
     gap: var(--sx-ref-space-3);
   }
 
+  .project-card__meta {
+    margin: auto 0 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--sx-ref-space-2);
+  }
+
+  .project-card__meta-row {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--sx-ref-space-3);
+    font-family: var(--sx-sys-font-family-mono-system), ui-monospace, monospace;
+    font-size: var(--sx-sys-font-size-xs);
+  }
+
+  .project-card__meta-row dt {
+    color: var(--sx-sys-color-text-muted);
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .project-card__meta-row dd {
+    margin: 0;
+    color: var(--sx-sys-color-text-primary);
+    font-weight: 700;
+  }
+
   .project-card__copy {
     display: flex;
     flex-direction: column;
     gap: var(--sx-ref-space-3);
     min-width: 0;
     justify-content: center;
+  }
+
+  .project-card__head {
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: var(--sx-ref-space-3);
   }
 
   .project-card__name {
@@ -184,11 +264,41 @@ const stackList = [
     color: var(--sx-sys-color-text-primary);
   }
 
+  .project-card__demo {
+    font-family: var(--sx-sys-font-family-mono-system), ui-monospace, monospace;
+    font-size: var(--sx-sys-font-size-sm);
+    font-weight: 700;
+    color: var(--sx-sys-color-action-primary);
+  }
+
   .project-card__desc {
     margin: 0;
     font-size: var(--sx-sys-font-size-reading);
     line-height: 1.55;
     color: var(--sx-sys-color-text-soft);
+  }
+
+  .project-card__highlights {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: var(--sx-ref-space-2);
+  }
+
+  .project-card__highlight {
+    display: flex;
+    align-items: baseline;
+    gap: var(--sx-ref-space-2);
+    font-size: var(--sx-sys-font-size-base);
+    line-height: 1.5;
+    color: var(--sx-sys-color-text-soft);
+  }
+
+  .project-card__highlight-mark {
+    color: var(--sx-sys-color-accent);
+    font-weight: 700;
   }
 
   .project-card__tags {
@@ -199,19 +309,18 @@ const stackList = [
 
   .project-card__tag {
     padding: 0.3rem 0.55rem;
-    border: var(--sx-sys-border-width) solid var(--sx-sys-color-border);
+    border: var(--sx-sys-border-width-strong) solid var(--sx-sys-color-border);
     border-radius: var(--sx-sys-radius-sm);
     background: var(--sx-sys-color-bg-page);
     font-family: var(--sx-sys-font-family-mono-system), ui-monospace, monospace;
     font-size: var(--sx-sys-font-size-sm);
     font-weight: 700;
     box-shadow: var(--sx-sys-shadow-sm);
-    transform: rotate(-0.5deg);
+    transform: rotate(var(--sx-sys-rotate-sticker));
   }
 
   .project-card__tag:nth-child(even) {
-    transform: rotate(0.8deg);
-    background: var(--sx-sys-color-accent);
+    transform: rotate(calc(var(--sx-sys-rotate-sticker) * -1));
   }
 
   .project-archive {
@@ -231,7 +340,7 @@ const stackList = [
   }
 
   .feature-card--lab {
-    background: var(--sx-sys-color-accent);
+    background: var(--sx-sys-color-bg-surface);
   }
 
   .feature-card--stack {
@@ -266,7 +375,7 @@ const stackList = [
   }
 
   .feature-card__desc--ink {
-    color: var(--sx-sys-color-text-primary);
+    color: var(--sx-sys-color-text-soft);
   }
 
   .feature-card__flow {
@@ -278,7 +387,7 @@ const stackList = [
   .flow-chip {
     flex: 1;
     padding: 0.55rem 0.4rem;
-    border: var(--sx-sys-border-width) solid var(--sx-sys-color-border);
+    border: var(--sx-sys-border-width-strong) solid var(--sx-sys-color-border);
     border-radius: var(--sx-sys-radius-sm);
     background: var(--sx-flow-bg);
     font-family: var(--sx-sys-font-family-mono-system), ui-monospace, monospace;

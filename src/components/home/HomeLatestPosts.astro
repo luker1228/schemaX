@@ -1,7 +1,7 @@
 ---
 import type { CollectionEntry } from 'astro:content';
 import { getCollection } from 'astro:content';
-import DoodleMark from './DoodleMark.astro';
+import GeoMark from '../design-system/GeoMark.astro';
 
 interface Props {
   /** 已按发布时间倒序的已发布文章（取前 N 篇：第 1 篇大卡，其余归档行）。 */
@@ -45,19 +45,19 @@ const latestMeta = [latestDate, latestTopicLabel].filter(Boolean).join(' / ');
         <a class="latest-card" href={`/blog/${latest.id}`}>
           <div class="latest-card__meta">
             <span class="post-badge">
-              <DoodleMark kind="icon-blog" size="sm" />
+              <GeoMark kind="icon-blog" size="sm" />
               POST
             </span>
             {latestMeta && (
               <span class="latest-card__date">{latestMeta}</span>
             )}
-            <DoodleMark kind="star" size="sm" class="latest-card__star" />
+            <GeoMark kind="star" size="sm" class="latest-card__star" />
           </div>
           <h3 class="latest-card__title">{latest.data.title}</h3>
           <p class="latest-card__desc">{latest.data.description}</p>
           <span class="latest-card__cta">
             继续阅读
-            <DoodleMark kind="arrow" size="sm" />
+            <GeoMark kind="arrow" size="sm" />
           </span>
         </a>
 
@@ -95,17 +95,17 @@ const latestMeta = [latestDate, latestTopicLabel].filter(Boolean).join(' / ');
     border: var(--sx-sys-border-width-strong) solid var(--sx-sys-color-border);
     border-radius: var(--sx-sys-radius-sm);
     background: var(--sx-sys-color-bg-surface);
-    box-shadow: var(--sx-sys-shadow-lg);
+    box-shadow: var(--sx-sys-shadow-md);
     text-decoration: none;
     color: inherit;
     transition:
-      transform 140ms ease,
-      box-shadow 140ms ease;
+      transform 0.1s ease,
+      box-shadow 0.1s ease;
   }
 
   .latest-card:hover {
-    transform: translate(-3px, -3px);
-    box-shadow: 8px 8px 0 var(--sx-sys-color-border);
+    transform: translate(-2px, -2px);
+    box-shadow: 9px 9px 0 var(--sx-sys-color-border);
   }
 
   .latest-card:focus-visible {
@@ -125,15 +125,16 @@ const latestMeta = [latestDate, latestTopicLabel].filter(Boolean).join(' / ');
     align-items: center;
     gap: 0.35rem;
     padding: 0.3rem 0.55rem;
-    border: var(--sx-sys-border-width) solid var(--sx-sys-color-border);
+    border: var(--sx-sys-border-width-strong) solid var(--sx-sys-color-border);
     border-radius: var(--sx-sys-radius-sm);
-    background: var(--sx-sys-color-accent);
+    background: var(--sx-sys-color-coral);
+    color: var(--sx-sys-color-text-primary);
     font-family: var(--sx-sys-font-family-mono-system), ui-monospace, monospace;
     font-size: var(--sx-sys-font-size-sm);
     font-weight: 700;
     letter-spacing: 0.05em;
     box-shadow: var(--sx-sys-shadow-sm);
-    transform: rotate(-1deg);
+    transform: rotate(var(--sx-sys-rotate-sticker));
   }
 
   .latest-card__date {
@@ -175,27 +176,25 @@ const latestMeta = [latestDate, latestTopicLabel].filter(Boolean).join(' / ');
     color: var(--sx-sys-color-action-primary);
   }
 
+  /* 裸 editorial 索引：不套卡、行间无分割线，靠留白与 hover 反应区分条目。
+     head 用 muted 文字而非黄底——黄只留 hero/closing，且 Never-Dark 禁暗色填充。 */
   .archive {
-    margin-top: var(--sx-ref-space-6);
-    border: var(--sx-sys-border-width-strong) solid var(--sx-sys-color-border);
-    border-radius: var(--sx-sys-radius-sm);
-    background: var(--sx-sys-color-bg-surface);
-    box-shadow: var(--sx-sys-shadow-md);
-    overflow: hidden;
+    margin-top: var(--sx-ref-space-8);
+    display: flex;
+    flex-direction: column;
   }
 
   .archive__head {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0.75rem 1.25rem;
-    background: var(--sx-sys-color-accent);
-    border-bottom: var(--sx-sys-border-width) solid var(--sx-sys-color-border);
+    padding: 0 0.5rem var(--sx-ref-space-3);
     font-family: var(--sx-sys-font-family-mono-system), ui-monospace, monospace;
     font-size: var(--sx-sys-font-size-sm);
     font-weight: 700;
     letter-spacing: 0.05em;
     text-transform: uppercase;
+    color: var(--sx-sys-color-text-muted);
   }
 
   .archive__row {
@@ -203,25 +202,19 @@ const latestMeta = [latestDate, latestTopicLabel].filter(Boolean).join(' / ');
     align-items: center;
     justify-content: space-between;
     gap: var(--sx-ref-space-4);
-    padding: 1.1rem 1.25rem;
-    border-bottom: var(--sx-sys-border-width) dashed
-      color-mix(in srgb, var(--sx-sys-color-border) 55%, transparent);
+    padding: var(--sx-ref-space-4) 0.5rem;
     text-decoration: none;
     color: inherit;
     transition: background-color 120ms ease;
   }
 
-  .archive__row:last-child {
-    border-bottom: 0;
-  }
-
   .archive__row:hover {
-    background: var(--sx-sys-color-bg-page);
+    background: var(--sx-sys-color-bg-surface);
   }
 
   .archive__row:focus-visible {
     outline: var(--sx-sys-border-width) solid var(--sx-sys-color-action-primary);
-    outline-offset: -2px;
+    outline-offset: 2px;
   }
 
   .archive__copy {

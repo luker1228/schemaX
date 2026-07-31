@@ -3,7 +3,7 @@
   "ref": {
     "color": {
       "ink": { "$type": "color", "$value": "#000000" },
-      "paper": { "$type": "color", "$value": "#FFF7E8" },
+      "paper": { "$type": "color", "$value": "#FFFCF4" },
       "white": { "$type": "color", "$value": "#ffffff" },
       "blue": {
         "500": { "$type": "color", "$value": "#2f5bea" }
@@ -18,8 +18,13 @@
         "500": { "$type": "color", "$value": "#35ad68" }
       },
       "mint": { "$type": "color", "$value": "#01FFCC" },
-      "lavender": { "$type": "color", "$value": "#C7B7FF" },
+      "lavender": { "$type": "color", "$value": "#B8A9FA" },
       "beige": { "$type": "color", "$value": "#EFE7D6" },
+      "coral": { "$type": "color", "$value": "#FF6B6B" },
+      "sky": { "$type": "color", "$value": "#74B9FF" },
+      "pop-green": { "$type": "color", "$value": "#88D498" },
+      "cyan": { "$type": "color", "$value": "#7FDBDA", "$description": "代码语法高亮 property 色（neubrutalism code-block 青绿）。" },
+      "orange": { "$type": "color", "$value": "#FFA552" },
       "warm-gray": { "$type": "color", "$value": "#6B6355" },
       "gray": {
         "200": { "$type": "color", "$value": "#CBCCC9" },

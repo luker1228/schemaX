@@ -5,8 +5,11 @@
  *
  * @example
  *   <Doodle kind="star" size="md" />
- *   <Doodle kind="wave" class="doodle-rule" />
  *   <Doodle kind="icon-course" size="lg" animated />
+ *
+ * 注意：分割线已划归 <SectionDivider>（平面黑条，见 CLAUDE.md §14A）。
+ * wave / pencil / dash / underline 等 rule kind 仅供既有装饰，
+ * 新分割线一律用 SectionDivider，不要用 Doodle 冒充。
  */
 import {
   getMark,
@@ -38,7 +41,15 @@ const {
   label,
 } = Astro.props;
 
-const mark = getMark(kind, { size, span, seed });
+const rasterIconByKind: Partial<Record<DoodleMarkKind, string>> = {
+  'icon-code': '/images/schemax-icon-code.png',
+  'icon-db': '/images/schemax-icon-tokens.png',
+  'icon-course': '/images/schemax-icon-course.png',
+  'icon-blog': '/images/schemax-icon-blog.png',
+};
+const rasterIcon = rasterIconByKind[kind];
+const rasterSizePx: Record<DoodleSize, number> = { sm: 28, md: 40, lg: 56 };
+const mark = rasterIcon ? null : getMark(kind, { size, span, seed });
 
 const isRule = kind === 'wave' || kind === 'pencil' || kind === 'dash' || kind === 'underline';
 
@@ -65,6 +76,8 @@ const classes = [
   'sx-doodle',
   isRule ? 'sx-doodle--rule' : 'sx-doodle--mark',
   `sx-doodle--${kind}`,
+  rasterIcon ? 'sx-doodle--raster' : '',
+  `sx-doodle--${size}`,
   animClass,
   className,
 ]
@@ -74,30 +87,42 @@ const classes = [
 const decorative = !label;
 ---
 
-<svg
-  class={classes}
-  viewBox={mark.viewBox}
-  width={isRule ? undefined : mark.width}
-  height={isRule ? undefined : mark.height}
-  preserveAspectRatio={isRule ? 'none' : 'xMidYMid meet'}
-  role={decorative ? 'presentation' : 'img'}
-  aria-hidden={decorative ? 'true' : undefined}
-  aria-label={label}
-  focusable="false"
->
-  {
-    mark.paths.map((p) => (
-      <path
-        d={p.d}
-        stroke={p.stroke}
-        stroke-width={p.strokeWidth}
-        fill={p.fill && p.fill !== 'none' ? p.fill : 'none'}
-        stroke-linecap="round"
-        stroke-linejoin="round"
-      />
-    ))
-  }
-</svg>
+{rasterIcon ? (
+  <img
+    class={classes}
+    src={rasterIcon}
+    width={rasterSizePx[size]}
+    height={rasterSizePx[size]}
+    alt={label ?? ''}
+    role={decorative ? 'presentation' : undefined}
+    aria-hidden={decorative ? 'true' : undefined}
+  />
+) : (
+  <svg
+    class={classes}
+    viewBox={mark?.viewBox}
+    width={isRule ? undefined : mark?.width}
+    height={isRule ? undefined : mark?.height}
+    preserveAspectRatio={isRule ? 'none' : 'xMidYMid meet'}
+    role={decorative ? 'presentation' : 'img'}
+    aria-hidden={decorative ? 'true' : undefined}
+    aria-label={label}
+    focusable="false"
+  >
+    {
+      mark?.paths.map((p) => (
+        <path
+          d={p.d}
+          stroke={p.stroke}
+          stroke-width={p.strokeWidth}
+          fill={p.fill && p.fill !== 'none' ? p.fill : 'none'}
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+      ))
+    }
+  </svg>
+)}
 
 <style>
   .sx-doodle {
@@ -127,5 +152,9 @@ const decorative = !label;
 
   .sx-doodle--mark {
     max-width: 100%;
+  }
+
+  .sx-doodle--raster {
+    object-fit: contain;
   }
 </style>

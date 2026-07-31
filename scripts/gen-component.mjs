@@ -51,7 +51,7 @@ const componentTemplate = (name, title) => `---
 // ${title} 组件 —— SchemaX UI
 // TODO: 实现组件。下面的模板是一个最小可运行的占位，请按需替换。
 //
-// 设计语言：1px 边框 + 纯黑硬阴影 + 暖纸背景。状态用属性切换，非类名。
+// 设计语言：3px canonical 边框（border IS ornament）+ 纯黑零模糊硬影（3/6/9 ramp）+ paper 背景。状态用属性切换，非类名。
 // 样式优先放入 src/styles/components.css 的全局类，组件文件只放组件私有的 scoped 微调。
 
 interface Props {
@@ -69,7 +69,7 @@ const { label = '${title}' } = Astro.props;
 <style>
   .${name.toLowerCase()} {
     padding: var(--sx-ref-space-4);
-    border: var(--sx-sys-border-width) solid var(--sx-sys-color-border);
+    border: var(--sx-sys-border-width-strong) solid var(--sx-sys-color-border);
     background: var(--sx-sys-color-bg-surface);
   }
 </style>

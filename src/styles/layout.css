@@ -22,7 +22,7 @@
 .sx-grid {
   display: grid;
   gap: var(--sx-ref-space-8);
-  grid-template-columns: repeat(auto-fill, minmax(min(100%, 18rem), 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, var(--sx-sys-layout-grid-cell-min)), 1fr));
 }
 
 /* ══════════════════════════════════════════════════════════════
@@ -90,6 +90,7 @@
  */
 .sx-doc-layout:has(.lboard) {
   --sx-doc-side-shift: 10rem;
+
   grid-template-columns: max(
       0px,
       calc(var(--sx-sys-layout-sidebar-width) - var(--sx-doc-side-shift))

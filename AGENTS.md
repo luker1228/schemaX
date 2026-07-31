@@ -143,7 +143,7 @@ import Badge from '../../components/design-system/Badge.astro';
 
 SchemaX 的 UI 是 RetroUI / 新粗野主义（Neo-brutalist）风格。当前已锁定的视觉基线（参考 `retroui.dev.md` / `retroui.dev.json`）：
 
-- **配色**：暖纸背景 `#FFF7E8`（paper）+ 纯黑墨 `#000000`（ink/border）+ 亮黄强调 `#FFDC58`（accent，唯一主操作色）+ 蓝 `#2f5bea`（action，仅用于链接 hover/focus）+ 红 `#f9575c`（danger）+ 绿 `#35ad68`（success）
+- **配色**：暖纸背景 `#FFF7E8`（paper）+ 纯黑墨 `#000000`（ink/border）+ 亮黄强调 `#FFDC58`（accent，唯一主操作色）+ 蓝 `#2f5bea`（action，交互态与图标品牌线色）+ 红 `#f9575c`（danger）+ 绿 `#35ad68`（success）
 - **边框**：全站统一 `1px`（`--sx-sys-border-width`，业务代码必须引用此 token）
 - **圆角**：卡片/容器默认 `0`（`--sx-sys-radius-sm`）；按钮 `2px`；仅 pill 用 `9999px`
 - **阴影**：纯黑硬阴影无模糊，三档 `2px / 3px / 4px 0 #000`（`--sx-sys-shadow-sm/md/lg`）

@@ -146,7 +146,7 @@ const layoutClass = `step-split--${layout}`;
     /* rail：讲解窄轨 + 示意吃剩余 */
     .step-split--rail {
       grid-template-columns: minmax(13rem, 17rem) minmax(0, 1fr);
-      gap: 1.5rem 1.5rem;
+      gap: 1.5rem;
     }
 
     .step-split--rail .step-split__copy > :global(p) {
@@ -197,7 +197,7 @@ const layoutClass = `step-split--${layout}`;
       :has(.step-split__figure :is(.cmp, .layer-pair, .props-pair))
     ) {
       grid-template-columns: minmax(13rem, 17rem) minmax(0, 1fr);
-      gap: 1.5rem 1.5rem;
+      gap: 1.5rem;
     }
 
     .step-split--auto:has(

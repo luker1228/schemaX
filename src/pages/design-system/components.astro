@@ -1,38 +1,94 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import Command from '../../components/design-system/Command.astro';
 import Crumb from '../../components/design-system/Crumb.astro';
-import FeatureCard from '../../components/design-system/FeatureCard.astro';
 import { componentsRegistry } from '../../data/components-registry';
+import tokens from '../../generated/tokens';
 
-// 本页现为「组件目录索引」：live 组件以卡片展示，点击进入详情页
-// /design-system/components/<name>（详情页只渲染该组件的 <Demo/>）。
-// glob 加载与 demo 渲染已移至 [name].astro；新增组件后本页自动出现卡片（数据驱动）。
-const liveComponents = componentsRegistry.filter((c) => c.status === 'live');
-const plannedComponents = componentsRegistry.filter(
-  (c) => c.status === 'planned',
+/**
+ * 组件页 —— 单页合并展示（对齐 neubrutalism.com implementation 段视觉）。
+ * 每个 live 组件 = 一个 comp-block（h2 标题 + 一句描述 + demo），demo 内部走
+ * nb 展示样式（深色高亮 code-block + copy 按钮 + live demo 并排 / 三联 / grid）。
+ * 顶部锚点目录跳转；页底 Token 速查表（nb-tokentable）。
+ */
+const live = componentsRegistry.filter((c) => c.status === 'live');
+const planned = componentsRegistry.filter((c) => c.status === 'planned');
+
+// glob 加载所有 *Demo.astro，按组件名索引
+// astro 未把组件工厂类型作为公共导出，demo 无 props 透传，用 any 承载 default。
+type DemoComponent = any; // eslint-disable-line @typescript-eslint/no-explicit-any
+const demoModules = import.meta.glob<{ default: DemoComponent }>(
+  '../../components/design-system/demos/*Demo.astro',
+);
+const demoByName = new Map<
+  string,
+  () => Promise<{ default: DemoComponent }>
+>();
+for (const [path, loader] of Object.entries(demoModules)) {
+  const match = path.match(/\/([^/]+)Demo\.astro$/);
+  if (match) demoByName.set(match[1], loader);
+}
+
+// 预加载每个 live 组件的 demo 模块
+const liveWithDemo = await Promise.all(
+  live.map(async (entry) => {
+    const loader = demoByName.get(entry.name);
+    const mod = loader ? await loader() : null;
+    return {
+      entry,
+      Demo: mod?.default ?? null,
+      anchor: entry.name.toLowerCase(),
+    };
+  }),
 );
 
-const BASE = '/design-system/components';
-const detailHref = (name: string) => `${BASE}/${name.toLowerCase()}`;
-
-// live 目录卡 media 装饰色轮换（呼应首页 bento 的装饰色系）
-const MEDIA_COLORS = [
-  'var(--sx-sys-color-accent)',
-  'var(--sx-sys-color-mint)',
-  'var(--sx-sys-color-lavender)',
-  'var(--sx-sys-color-beige)',
-  'var(--sx-sys-color-gray-light)',
+// Token 速查表数据（border / shadow / radius 三组）—— 直接读 generated/tokens.ts，
+// 根除手抄漂移（§15：设计系统页必须读生成产物，非手工拷贝）。
+const T = tokens.sys;
+const tokenRows: { token: string; value: string; use: string }[] = [
+  {
+    token: '--sx-sys-border-width',
+    value: T.border.width,
+    use: '细笔触 · 次级元素 / SectionDivider thin 档',
+  },
+  {
+    token: '--sx-sys-border-width-strong',
+    value: T.border['width-strong'],
+    use: '主组件默认（按钮 / 卡片 / 输入 / toast / 分割线）',
+  },
+  {
+    token: '--sx-sys-shadow-sm',
+    value: T.shadow.sm,
+    use: '小硬影 · badge / 输入 / 卡片默认',
+  },
+  {
+    token: '--sx-sys-shadow-md',
+    value: T.shadow.md,
+    use: '中硬影 · toast / 输入 focus 升级',
+  },
+  {
+    token: '--sx-sys-shadow-lg',
+    value: T.shadow.lg,
+    use: '大硬影 · hover 抬升档',
+  },
+  {
+    token: '--sx-sys-shadow-xl',
+    value: T.shadow.xl,
+    use: '重硬影 · hero / dialog',
+  },
+  {
+    token: '--sx-sys-radius-control',
+    value: T.radius.control,
+    use: '恒 0 圆角（全站控件 / 容器无例外）',
+  },
 ];
-const mediaColor = (i: number) => MEDIA_COLORS[i % MEDIA_COLORS.length];
 ---
 
 <BaseLayout
   title="Design System · Components"
-  description="SchemaX UI 组件库 —— 数据驱动展示。"
+  description="SchemaX UI 组件库 —— 单页合并展示：3px 黑框 + 零模糊硬影 + 抬升 hover。"
 >
-  <section class="sx-section">
-    <div class="sx-container">
+  <section class="sx-section comp">
+    <div class="sx-container comp__inner">
       <Crumb
         items={[
           { label: 'Home', href: '/' },
@@ -41,56 +97,100 @@ const mediaColor = (i: number) => MEDIA_COLORS[i % MEDIA_COLORS.length];
         ]}
       />
 
-      <header class="page-head">
-        <p class="eyebrow">SchemaX UI</p>
+      <header class="comp__hero">
+        <span class="nb-sectlabel">Design System · Components</span>
         <h1>组件 Components</h1>
-        <p>组件库按真实使用方式展示。新增组件：</p>
-        <div class="page-head__cmd">
-          <Command theme="light" title="bash">
-            pnpm gen:component &lt;Name&gt;
-          </Command>
-        </div>
+        <p class="nb-intro">
+          所有控件单页合展——3px 黑框 + 零模糊硬影 + 抬升 hover 的 neubrutalism
+          实体。每个组件 = 代码块 + live demo，按真实使用方式展示。
+        </p>
+        <nav class="comp__toc" aria-label="组件目录">
+          {
+            liveWithDemo.map(({ entry, anchor }) => (
+              <a class="comp__toc-link" href={`#${anchor}`}>
+                {entry.name}
+              </a>
+            ))
+          }
+        </nav>
       </header>
 
-      {/* —— Live 组件：卡片目录，点击进入详情页 —— */}
-      <div class="sx-grid">
-        {
-          liveComponents.map((entry, i) => (
-            <FeatureCard
-              title={entry.title}
-              description={entry.description}
-              status="live"
-              href={detailHref(entry.name)}
-              mediaColor={mediaColor(i)}
-            >
-              <span class="comp-card__name">{entry.name}</span>
-            </FeatureCard>
-          ))
-        }
-      </div>
-
-      {/* —— Planned 组件：占位卡（不可点），附生成命令 —— */}
+      {/* —— live 组件合并展示（每个一个 block）—— */}
       {
-        plannedComponents.length > 0 && (
-          <section class="planned-group">
-            <h2 class="planned-group__title">Planned</h2>
-            <div class="sx-grid">
-              {plannedComponents.map((entry) => (
-                <FeatureCard
-                  title={entry.title}
-                  status="planned"
-                  mediaColor="var(--sx-sys-color-beige)"
-                >
-                  <span class="comp-card__name">{entry.name}</span>
-                  <Fragment slot="description">
-                    <p>{entry.description}</p>
-                    <code class="comp-card__cmd">
-                      pnpm gen:component {entry.name}
-                    </code>
-                  </Fragment>
-                </FeatureCard>
-              ))}
+        liveWithDemo.map(({ entry, Demo, anchor }) => (
+          <section
+            class="comp-block"
+            id={anchor}
+            aria-labelledby={`${anchor}-title`}
+          >
+            <div class="comp-block__head">
+              <h2 id={`${anchor}-title`} class="comp-block__title">
+                {entry.title}
+              </h2>
+              <p class="comp-block__desc">{entry.description}</p>
             </div>
+            {Demo ? (
+              <Demo />
+            ) : (
+              <p class="comp-block__missing">
+                组件 {entry.name} 标记为 live，但未找到 demos/{entry.name}
+                Demo.astro。
+              </p>
+            )}
+          </section>
+        ))
+      }
+
+      {/* —— Token 速查表：border / shadow / radius 一张表 —— */}
+      <section class="comp-block" id="tokens" aria-labelledby="tokens-title">
+        <div class="comp-block__head">
+          <h2 id="tokens-title" class="comp-block__title">Token 速查</h2>
+          <p class="comp-block__desc">
+            neubrutalism grammar 的全部参数——边框两档、硬影四档、圆角恒 0。硬影色由
+            <code>--sx-sys-shadow-color</code> 控制（默认 ink 黑，组件可局部覆盖做撞色偏移）。
+          </p>
+        </div>
+        <div class="doc-table-scroll">
+          <table class="nb-tokentable">
+            <thead>
+              <tr><th>Token</th><th>取值</th><th>用途</th></tr>
+            </thead>
+            <tbody>
+              {
+                tokenRows.map((r) => (
+                  <tr>
+                    <td><code>{r.token}</code></td>
+                    <td><code>{r.value}</code></td>
+                    <td>{r.use}</td>
+                  </tr>
+                ))
+              }
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      {/* —— Planned 占位（无 demo，附生成命令）—— */}
+      {
+        planned.length > 0 && (
+          <section class="comp-block comp-block--planned" id="planned">
+            <div class="comp-block__head">
+              <h2 class="comp-block__title">计划中</h2>
+              <p class="comp-block__desc">
+                尚未实现。用脚手架生成本体 + demo 后，把 registry 条目改 live 即可出现在上方。
+              </p>
+            </div>
+            <ul class="comp-planned">
+              {planned.map((entry) => (
+                <li class="comp-planned__item">
+                  <span class="comp-planned__name">{entry.name}</span>
+                  <span class="comp-planned__desc">{entry.description}</span>
+                  <code class="comp-planned__cmd">
+                    pnpm gen:component {entry.name}
+                  </code>
+                </li>
+              ))}
+            </ul>
           </section>
         )
       }
@@ -98,72 +198,175 @@ const mediaColor = (i: number) => MEDIA_COLORS[i % MEDIA_COLORS.length];
   </section>
 </BaseLayout>
 
+<script>
+  // 代码块 copy 按钮：点 [data-copy] → 复制同 .nb-codewrap 内 <pre> 文本 →
+  // 切 .is-copied + 文案改 Copied，1.5s 后还原。零依赖、SSR 友好（模块 defer）。
+  const buttons = document.querySelectorAll<HTMLButtonElement>('[data-copy]');
+  buttons.forEach((btn) => {
+    btn.addEventListener('click', async () => {
+      const wrap = btn.closest('.nb-codewrap');
+      const code = wrap?.querySelector('pre');
+      if (!code) return;
+      try {
+        await navigator.clipboard.writeText(code.textContent ?? '');
+        const original = btn.textContent;
+        btn.classList.add('is-copied');
+        btn.textContent = 'Copied';
+        window.setTimeout(() => {
+          btn.classList.remove('is-copied');
+          btn.textContent = original;
+        }, 1500);
+      } catch {
+        /* clipboard 不可用（如非 HTTPS）时静默 */
+      }
+    });
+  });
+</script>
+
 <style>
-  /* 本页内容容器收窄至 960px（默认全站 --sx-layout-width-page: 78rem）。
-     用 :global() 穿透到 layout 层的 .sx-container；scoped style 处于更高层
-     自动胜出，且只影响本页。 */
+  /* 本页内容容器：加宽以容纳代码块 + demo 并排 */
   :global(.sx-container) {
-    max-width: 60rem;
+    max-width: 72rem;
   }
 
-  .page-head {
-    margin-block: var(--sx-ref-space-4) var(--sx-ref-space-8);
+  .comp__inner {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sx-ref-space-8);
   }
-  /* header 里的 Command：限制宽度，左对齐而非撑满容器。
-     不覆盖阴影 —— Command 的黄色阴影是其固有特征，永远跟随组件自身。 */
-  .page-head__cmd {
-    margin-block-start: var(--sx-ref-space-3);
-    max-width: 28rem;
+
+  /* —— Hero —— */
+  .comp__hero {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sx-ref-space-3);
+    padding-block: var(--sx-ref-space-4) var(--sx-ref-space-6);
   }
-  .eyebrow {
-    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-    color: var(--sx-sys-color-action-primary);
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    font-size: var(--sx-sys-font-size-md);
-  }
-  .page-head h1 {
+  .comp__hero h1 {
+    margin: 0;
+    font-family: var(--sx-sys-font-family-display), system-ui, sans-serif;
     font-size: var(--sx-sys-font-size-4xl);
     font-weight: 800;
     letter-spacing: -0.02em;
-    margin-block-start: var(--sx-ref-space-2);
+    color: var(--sx-sys-color-text-primary);
   }
-  .page-head p {
-    opacity: 0.8;
-    margin-block-start: var(--sx-ref-space-2);
+
+  /* —— 锚点目录（neubrutalism chip 串，抬升 hover）—— */
+  .comp__toc {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--sx-ref-space-2);
+    margin-top: var(--sx-ref-space-4);
   }
-  .page-head code {
-    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  .comp__toc-link {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.35rem 0.65rem;
+    border: var(--sx-sys-border-width-strong) solid var(--sx-sys-color-border);
     background: var(--sx-sys-color-bg-surface);
+    box-shadow: var(--sx-sys-shadow-sm);
+    font-family: var(--sx-sys-font-family-mono-system), ui-monospace, monospace;
+    font-size: var(--sx-sys-font-size-sm);
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--sx-sys-color-text-primary);
+    transition:
+      transform 0.1s ease,
+      box-shadow 0.1s ease,
+      background-color 0.1s ease;
+  }
+  .comp__toc-link:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: var(--sx-sys-shadow-lg);
+    background: var(--sx-sys-color-accent);
+  }
+  .comp__toc-link:focus-visible {
+    outline: 3px solid var(--sx-sys-color-sky);
+    outline-offset: 3px;
+  }
+
+  /* —— 组件 block（无分隔线，靠 padding 间距区分）—— */
+  .comp-block {
+    padding-block: var(--sx-ref-space-12);
+    scroll-margin-top: 6rem;
+  }
+  .comp-block__head {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sx-ref-space-2);
+    margin-block-end: var(--sx-ref-space-8);
+  }
+  .comp-block__title {
+    margin: 0;
+    font-family: var(--sx-sys-font-family-display), system-ui, sans-serif;
+    font-size: var(--sx-sys-font-size-2xl);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    color: var(--sx-sys-color-text-primary);
+  }
+  .comp-block__desc {
+    margin: 0;
+    max-width: 46rem;
+    color: var(--sx-sys-color-text-soft);
+    line-height: 1.55;
+  }
+  .comp-block__desc code {
+    font-family: var(--sx-sys-font-family-mono);
+    font-size: var(--sx-sys-font-size-sm);
+    background: var(--sx-sys-color-beige);
+    padding: 0.05em 0.4em;
+  }
+  .comp-block__missing {
+    opacity: 0.7;
+    font-family: var(--sx-sys-font-family-mono-system), ui-monospace, monospace;
+    font-size: var(--sx-sys-font-size-md);
+  }
+
+  /* —— Planned 占位列表 —— */
+  .comp-planned {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--sx-ref-space-3);
+  }
+  .comp-planned__item {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--sx-ref-space-3);
+    padding: var(--sx-ref-space-3) var(--sx-ref-space-4);
+    border: var(--sx-sys-border-width-strong) solid var(--sx-sys-color-border);
+    background: var(--sx-sys-color-bg-surface);
+    box-shadow: var(--sx-sys-shadow-sm);
+  }
+  .comp-planned__name {
+    font-family: var(--sx-sys-font-family-mono), ui-monospace, monospace;
+    font-weight: 800;
+    font-size: var(--sx-sys-font-size-md);
+  }
+  .comp-planned__desc {
+    flex: 1;
+    min-width: 16rem;
+    color: var(--sx-sys-color-text-soft);
+    font-size: var(--sx-sys-font-size-base);
+    line-height: 1.5;
+  }
+  .comp-planned__cmd {
+    font-family: var(--sx-sys-font-family-mono-system), ui-monospace, monospace;
+    font-size: var(--sx-sys-font-size-md);
+    background: var(--sx-sys-color-bg-page);
     border: var(--sx-sys-border-width) solid var(--sx-sys-color-border);
     padding: 0.05em 0.4em;
   }
 
-  /* 目录卡 media：等宽大字组件名，契合 schema 视觉母题（字段名 / 类型标签）。
-     span 由本页传入 FeatureCard 的 media slot，带本页 cid，故 scoped style 可匹配。 */
-  .comp-card__name {
-    font-family: var(--sx-sys-font-family-mono);
-    font-size: var(--sx-sys-font-size-2xl);
-    font-weight: 700;
-    letter-spacing: -0.02em;
-  }
-  /* planned 卡 description slot 内的生成命令 */
-  .comp-card__cmd {
-    display: inline-block;
-    margin-block-start: var(--sx-ref-space-2);
-    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-    font-size: var(--sx-sys-font-size-md);
-    background: var(--sx-sys-color-bg-page);
-    padding: 0.05em 0.4em;
-  }
-
-  .planned-group {
-    margin-block-start: var(--sx-ref-space-12);
-  }
-  .planned-group__title {
-    font-size: var(--sx-sys-font-size-2xl);
-    font-weight: 800;
-    margin-block-end: var(--sx-ref-space-6);
+  @media (prefers-reduced-motion: reduce) {
+    .comp__toc-link:hover {
+      transform: none;
+      box-shadow: var(--sx-sys-shadow-sm);
+    }
   }
 </style>

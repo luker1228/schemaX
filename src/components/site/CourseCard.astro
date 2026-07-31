@@ -65,7 +65,7 @@ const isActive = status === 'active' || status === 'completed';
 <a
   class="coursecard"
   href={`/courses/${course.id}`}
-  style={`--sx-coursecard-shadow: ${shadowColor}`}
+  style={`--sx-sys-shadow-color: ${shadowColor}`}
 >
   {/* 身份列：涂鸦印章 ——  squint 下的「这是哪类课」锚点 */}
   <div class="coursecard__identity" aria-hidden="true">
@@ -101,7 +101,7 @@ const isActive = status === 'active' || status === 'completed';
    * - 组内紧（meta/title/desc gap-2～3）；描述 flex 推底，卡片等高
    */
   .coursecard {
-    --sx-coursecard-shadow: var(--sx-sys-color-border);
+    --sx-sys-shadow-color: var(--sx-sys-color-border);
 
     display: grid;
     grid-template-columns: auto minmax(0, 1fr);
@@ -114,7 +114,7 @@ const isActive = status === 'active' || status === 'completed';
     background: var(--sx-sys-color-bg-surface);
     border: var(--sx-sys-border-width-strong) solid var(--sx-sys-color-border);
     border-radius: var(--sx-sys-radius-sm);
-    box-shadow: 4px 4px 0 var(--sx-coursecard-shadow);
+    box-shadow: var(--sx-sys-shadow-sm);
     text-decoration: none;
     color: inherit;
     transition:
@@ -124,7 +124,7 @@ const isActive = status === 'active' || status === 'completed';
 
   .coursecard:hover {
     transform: translate(-3px, -3px);
-    box-shadow: 7px 7px 0 var(--sx-coursecard-shadow);
+    box-shadow: var(--sx-sys-shadow-md);
   }
 
   .coursecard:focus-visible {
@@ -146,6 +146,10 @@ const isActive = status === 'active' || status === 'completed';
     height: 4rem;
     border: var(--sx-sys-border-width-strong) solid var(--sx-sys-color-border);
     border-radius: var(--sx-sys-radius-sm);
+
+    /* 重置回黑：抵消卡片根上覆盖的撞色 shadow-color，stamp 保持黑色小硬影 */
+    --sx-sys-shadow-color: var(--sx-sys-color-border);
+
     box-shadow: var(--sx-sys-shadow-sm);
   }
 

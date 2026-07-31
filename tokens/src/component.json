@@ -6,19 +6,19 @@
       "radius": {
         "$type": "dimension",
         "$value": "{sys.radius.control}",
-        "$description": "圆角卡片半径，同源 sys.radius.control（2px）。none 变体为 0。"
+        "$description": "同源 sys.radius.control（neubrutalism 恒 0）。none 变体亦为 0。"
       },
       "hover-shadow": {
         "$type": "shadow",
-        "$value": "{sys.shadow.md}",
-        "$description": "interactive 卡片 hover 时的阴影。"
+        "$value": "{sys.shadow.lg}",
+        "$description": "interactive 卡片 hover 时的阴影（neubrutalism 抬升 + 影涨到 lg）。"
       }
     },
     "demo": {
       "shadow": {
         "$type": "shadow",
         "$value": "{sys.shadow.lg}",
-        "$description": "演示块阴影，对齐全局 sys.shadow.lg（6px）。"
+        "$description": "演示块阴影，对齐全局 sys.shadow.lg（3/6/9 ramp 第三档 9px）。"
       }
     },
     "term": {
@@ -28,8 +28,8 @@
       "light-text": { "$type": "color", "$value": "{ref.color.ink}" },
       "shadow": {
         "$type": "shadow",
-        "$value": "6px 6px 0 {ref.color.yellow.400}, 6px 6px 0 1px {ref.color.ink}",
-        "$description": "Command 私有：黄色偏移 + 黑色描边。尺寸与全局 sys.shadow.lg 对齐（6px）。"
+        "$value": "9px 9px 0 {ref.color.yellow.400}, 9px 9px 0 1px {ref.color.ink}",
+        "$description": "Command 私有：黄色偏移 + 黑色描边。尺寸与全局 sys.shadow.lg 对齐（3/6/9 ramp 第三档 9px）。"
       }
     },
     "header": {
@@ -73,6 +73,26 @@
         "$type": "dimension",
         "$value": "{ref.space.3}",
         "$description": "标题与描述之间的间距。"
+      }
+    },
+    "code": {
+      "bg": {
+        "$type": "color",
+        "$value": "#1a1a2e",
+        "$description": "代码块深蓝紫底（= neubrutalism.com .code-block #1a1a2e，深色终端感）。"
+      },
+      "fg": {
+        "$type": "color",
+        "$value": "{ref.color.terminal.text}",
+        "$description": "代码块默认文字色。"
+      },
+      "highlight": {
+        "selector": { "$type": "color", "$value": "{ref.color.coral}" },
+        "property": { "$type": "color", "$value": "{ref.color.cyan}" },
+        "value": { "$type": "color", "$value": "{ref.color.yellow.400}" },
+        "comment": { "$type": "color", "$value": "{ref.color.gray.500}" },
+        "tag": { "$type": "color", "$value": "{ref.color.sky}" },
+        "string": { "$type": "color", "$value": "{ref.color.pop-green}" }
       }
     }
   }

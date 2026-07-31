@@ -1,301 +1,51 @@
 ---
-// Card 演示 —— V2 文档布局：States（Demo）/ Props（属性表）/ Code（用法卡片）。
-// 仅供 /design-system/components/card 详情页的 doc-content 区使用。
-import Card from '../Card.astro';
-import Demo from '../Demo.astro';
-import type { CardRadius, CardShadow } from '../Card.astro';
+// Card 演示 —— 对齐 neubrutalism.com Canonical Card：
+// 代码块限宽独占一行（无右侧 demo），下方 Card Variations 三联。
+const cardCode = `<span class="sel">.card</span> {
+  <span class="prop">border</span>: <span class="val">3px solid var(--sx-sys-color-border)</span>;
+  <span class="prop">background</span>: <span class="val">var(--sx-sys-color-bg-surface)</span>;
+  <span class="prop">box-shadow</span>: <span class="val">var(--sx-sys-shadow-md)</span>;
+  <span class="prop">padding</span>: <span class="val">var(--sx-comp-card-padding)</span>;
+  <span class="prop">transition</span>: <span class="val">transform 0.15s, box-shadow 0.15s</span>;
+}
 
-const radii: { name: string; value: CardRadius }[] = [
-  { name: 'None (0)', value: 'none' },
-  { name: 'Rounded (2px)', value: 'rounded' },
-];
+<span class="sel">.card--interactive:hover</span> {
+  <span class="prop">transform</span>: <span class="val">translate(-2px, -2px)</span>;
+  <span class="prop">box-shadow</span>: <span class="val">var(--sx-sys-shadow-lg)</span>;
+}
 
-const shadows: { name: string; value: CardShadow }[] = [
-  { name: 'None', value: 'none' },
-  { name: 'Small (2px)', value: 'sm' },
-  { name: 'Medium (4px)', value: 'md' },
-  { name: 'Large (6px)', value: 'lg' },
-];
-
-const apiRows = [
-  {
-    name: 'radius',
-    type: "'none' | 'rounded'",
-    default: "'none'",
-    desc: '圆角。none=0 / rounded=2px',
-  },
-  {
-    name: 'bordered',
-    type: 'boolean',
-    default: 'true',
-    desc: '是否有 1px 黑边',
-  },
-  {
-    name: 'shadow',
-    type: "'none' | 'sm' | 'md' | 'lg'",
-    default: "'sm'",
-    desc: '硬阴影档位（偏移量）',
-  },
-  {
-    name: 'shadowColor',
-    type: 'string (CSS color)',
-    default: '黑 (ink)',
-    desc: '阴影颜色。任意 CSS 颜色，如 var(--sx-sys-color-accent)',
-  },
-  {
-    name: 'href',
-    type: 'string',
-    default: '—',
-    desc: '有则渲染 <a>（默认 interactive），无则渲染 <div>（默认 static）',
-  },
-  {
-    name: 'interactive',
-    type: 'boolean',
-    default: '随 href',
-    desc: 'hover 抬起 + 阴影升级。默认有 href 即 true，可显式覆盖',
-  },
-];
-
-const usage = `<!-- 链接卡片（自动 interactive，hover 抬起） -->
-<Card href="/blog">
-  <h3>标题</h3>
-  <p>描述</p>
-</Card>
-
-<!-- 静态容器（无 href，不抬起） -->
-<Card>
-  <h3>信息块</h3>
-  <p>不可点击的内容</p>
-</Card>
-
-<!-- 圆角 + 无边框 + 大阴影 -->
-<Card radius="rounded" bordered={false} shadow="lg">
-  特殊样式
-</Card>
-
-<!-- 彩色阴影 -->
-<Card shadow="md" shadowColor="var(--sx-sys-color-accent)">
-  黄色偏移阴影
-</Card>`;
+<span class="com">/* 撞色偏移影：局部覆盖 --sx-card-shadow-color */</span>
+<span class="prop">--sx-card-shadow-color</span>: <span class="val">var(--sx-sys-color-coral)</span>;`;
 ---
 
-<>
-  {/* —— States：圆角 / 边框 / 阴影 / 阴影色 / 交互 / 元素 —— */}
-  <section class="doc-section">
-    <div class="doc-section__head">
-      <div class="doc-section__eyebrow">
-        <span class="doc-section__mark" aria-hidden="true"></span>
-        <h2 class="doc-section__title">状态演示</h2>
-      </div>
-      <p class="doc-section__sub">
-        圆角、边框、阴影、阴影色、交互与元素类型。用 Demo
-        组件封装：头部为标签与代码，舞台为实例，底部为可折叠说明。
-      </p>
-    </div>
-    <div class="doc-section__body">
-      <Demo label="圆角 Radius" attr='radius="..."' stageClass="wrap">
-        {
-          radii.map((r) => (
-            <Card radius={r.value}>
-              <strong>{r.name}</strong>
-            </Card>
-          ))
-        }
-        <Fragment slot="note">
-          <p>
-            只有两种：<code>none</code>（0，默认）和 <code>rounded</code>（2px）。
-            圆角值由 <code>--sx-comp-card-radius</code> token 控制。
-          </p>
-        </Fragment>
-      </Demo>
+<div class="nb-codewrap nb-codewrap--narrow">
+  <span class="nb-codelabel">CSS</span>
+  <pre class="nb-codeblock"><button class="nb-copy" type="button" data-copy="">Copy</button><code set:html={cardCode} /></pre>
+</div>
 
-      <Demo label="边框 Border" attr="bordered" stageClass="wrap">
-        <Card bordered={true}>
-          <strong>有边框</strong>
-          <p>默认 1px 黑边。</p>
-        </Card>
-        <Card bordered={false}>
-          <strong>无边框</strong>
-          <p>bordered={'{false}'}，仅靠阴影区分。</p>
-        </Card>
-        <Fragment slot="note">
-          <p>
-            <code>bordered</code> 默认 true。<code>false</code> 时移除边框，保留 padding
-            与阴影。
-          </p>
-        </Fragment>
-      </Demo>
+<h3 class="nb-subtitle">卡片变体 Card Variations</h3>
 
-      <Demo label="阴影 Shadow" attr='shadow="..."' stageClass="wrap">
-        {
-          shadows.map((s) => (
-            <Card shadow={s.value} interactive={false}>
-              <strong>{s.name}</strong>
-            </Card>
-          ))
-        }
-        <Fragment slot="note">
-          <p>
-            纯黑硬阴影（无模糊），四档：<code>none</code> / <code>sm</code
-            >（2px，默认）/
-            <code>md</code>（4px）/ <code>lg</code>（6px）。
-          </p>
-        </Fragment>
-      </Demo>
-
-      <Demo
-        label="阴影颜色 Shadow color"
-        attr='shadowColor="..."'
-        stageClass="wrap"
-      >
-        <Card shadow="md" interactive={false}>
-          <strong>黑（默认）</strong>
-        </Card>
-        <Card
-          shadow="md"
-          shadowColor="var(--sx-sys-color-accent)"
-          interactive={false}
-        >
-          <strong>黄</strong>
-        </Card>
-        <Card
-          shadow="md"
-          shadowColor="var(--sx-sys-color-action-primary)"
-          interactive={false}
-        >
-          <strong>蓝</strong>
-        </Card>
-        <Fragment slot="note">
-          <p>
-            <code>shadowColor</code> 接收任意 CSS 颜色，通过 inline 覆盖
-            <code>--sx-card-shadow-color</code
-            >。默认黑色。可做彩色偏移阴影（如黄色，呼应 Command 的视觉）。
-          </p>
-        </Fragment>
-      </Demo>
-
-      <Demo
-        label="交互 Interactive vs Static"
-        attr="interactive（hover 抬起）"
-        stageClass="wrap"
-      >
-        <Card interactive={true}>
-          <strong>Interactive</strong>
-          <p>鼠标移上来 → 抬起 + 阴影升级。</p>
-        </Card>
-        <Card interactive={false}>
-          <strong>Static</strong>
-          <p>静态容器，hover 不动。</p>
-        </Card>
-        <Fragment slot="note">
-          <p>
-            hover 抬起只作用于 <code>.card--interactive</code>。 默认行为：有 <code
-              >href</code
-            > 即 interactive（链接卡片）， 无 <code>href</code> 即 static（容器卡片）——
-            避免不可点的卡片误导性地跳一下。
-          </p>
-        </Fragment>
-      </Demo>
-
-      <Demo label="链接 vs 容器" attr="href 控制渲染元素" stageClass="wrap">
-        <Card href="javascript:void(0)">
-          <strong>链接（&lt;a&gt;）</strong>
-          <p>提供 href 渲染为可点击链接。</p>
-        </Card>
-        <Card>
-          <strong>容器（&lt;div&gt;）</strong>
-          <p>无 href 渲染为纯容器。</p>
-        </Card>
-        <Fragment slot="note">
-          <p>
-            <code>href</code> 决定元素类型：<code>&lt;a&gt;</code>（导航）或 <code
-              >&lt;div&gt;</code
-            >（内容容器）。 同时也决定默认的 interactive 行为。
-          </p>
-        </Fragment>
-      </Demo>
-    </div>
-  </section>
-
-  {/* —— Props：真实属性表 —— */}
-  <section class="doc-section">
-    <div class="doc-section__head">
-      <div class="doc-section__eyebrow">
-        <span class="doc-section__mark" aria-hidden="true"></span>
-        <h2 class="doc-section__title">Props 属性</h2>
-      </div>
-      <p class="doc-section__sub">Card 组件接受的属性。除特别说明外，所有属性均为可选。</p>
-    </div>
-    <div class="doc-section__body">
-      <div class="doc-table-scroll">
-        <table class="doc-props">
-          <thead>
-            <tr>
-              <th>Prop</th>
-              <th>Type</th>
-              <th>Default</th>
-              <th>Description</th>
-            </tr>
-          </thead>
-          <tbody>
-            {
-              apiRows.map((r) => (
-                <tr>
-                  <td class="doc-props__name">{r.name}</td>
-                  <td>
-                    <span class="doc-props__type">{r.type}</span>
-                  </td>
-                  <td>
-                    <span class="doc-props__type">{r.default}</span>
-                  </td>
-                  <td class="doc-props__desc">{r.desc}</td>
-                </tr>
-              ))
-            }
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </section>
-
-  {/* —— Code：用法示例卡片 —— */}
-  <section class="doc-section">
-    <div class="doc-section__head">
-      <div class="doc-section__eyebrow">
-        <span class="doc-section__mark" aria-hidden="true"></span>
-        <h2 class="doc-section__title">用法示例</h2>
-      </div>
-      <p class="doc-section__sub">在 Astro 页面中引入 Card，按需配置圆角、阴影与交互。</p>
-    </div>
-    <div class="doc-section__body">
-      <figure class="doc-code">
-        <figcaption class="doc-code__bar">
-          <span class="doc-code__file">Card.astro</span>
-          <span class="doc-code__lang">astro</span>
-        </figcaption>
-        <pre class="doc-code__body"><code>{usage}</code></pre>
-      </figure>
-    </div>
-  </section>
-</>
+<div class="nb-cardgrid">
+  <div class="nb-carddemo nb-carddemo--standard">
+    <h5>Standard Card</h5>
+    <p>黑边 + 黑影。百搭主力，任何背景上都成立。</p>
+    <span class="badge">Default</span>
+  </div>
+  <div class="nb-carddemo nb-carddemo--colored">
+    <h5>Colored Shadow</h5>
+    <p>同色边框 + 撞色偏移影，保留结构的同时加点个性。</p>
+    <span class="badge badge--danger">Accent</span>
+  </div>
+  <div class="nb-carddemo nb-carddemo--filled">
+    <h5>Filled Card</h5>
+    <p>满色底 + 黑框黑影把能量框住。适合 CTA。</p>
+    <span class="badge badge--accent">Highlight</span>
+  </div>
+</div>
 
 <style>
-  /* doc-section__body 内的 Demo：去掉 Demo 自带的底部 margin，统一由 body gap 控制。 */
-  :global(.doc-section__body .demo) {
-    margin-block-end: 0;
-  }
-  /* props 表窄屏横向滚动防御 */
-  .doc-table-scroll {
-    overflow-x: auto;
-  }
-  /* demo 卡片统一宽度，便于横向对比 */
-  .demo__stage :global(.card) {
-    min-width: 11rem;
-    max-width: 14rem;
-  }
-  .demo__stage :global(.card p) {
-    margin-block-start: 0.25rem;
-    font-size: var(--sx-sys-font-size-md);
-    opacity: 0.8;
+  /* 三联卡内 badge 间距 */
+  :global(.nb-carddemo .badge) {
+    margin-top: var(--sx-ref-space-2);
   }
 </style>

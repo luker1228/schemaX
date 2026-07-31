@@ -15,7 +15,7 @@
   justify-content: center;
   gap: var(--sx-ref-space-2);
   padding: var(--sx-ref-space-2) var(--sx-ref-space-4);
-  border: var(--sx-sys-border-width) solid var(--sx-sys-color-border);
+  border: var(--sx-sys-border-width-strong) solid var(--sx-sys-color-border);
   border-radius: var(--sx-sys-radius-control);
   font-family: inherit;
   font-weight: 700;
@@ -25,29 +25,29 @@
   color: var(--sx-sys-color-text-primary);
   box-shadow: var(--sx-sys-shadow-sm);
   transition:
-    transform 120ms ease,
-    box-shadow 120ms ease,
-    background-color 120ms ease;
+    transform 0.1s ease,
+    box-shadow 0.1s ease,
+    background-color 0.1s ease;
   cursor: pointer;
   text-decoration: none;
   white-space: nowrap;
 }
 
-/* hover：像物理按键被按下 —— 向右下位移 2px，阴影消失（贴底） */
+/* neubrutalism 物理感：hover 抬起（左上位移）+ 阴影涨到 lg；active 才按下贴底、影消。 */
 .btn:hover {
-  transform: translate(2px, 2px);
-  box-shadow: none;
+  transform: translate(-2px, -2px);
+  box-shadow: var(--sx-sys-shadow-lg);
   color: var(--sx-sys-color-text-primary);
 }
 
 .btn:active {
-  transform: translate(2px, 2px);
+  transform: translate(3px, 3px);
   box-shadow: none;
 }
 
 .btn:focus-visible {
-  outline: var(--sx-sys-border-width) solid var(--sx-sys-color-action-primary);
-  outline-offset: 2px;
+  outline: 3px solid var(--sx-sys-color-sky);
+  outline-offset: 3px;
 }
 
 .btn:disabled,
@@ -110,13 +110,14 @@
 .badge {
   display: inline-block;
   padding: 0.15em 0.55em;
-  border: var(--sx-sys-border-width) solid var(--sx-sys-color-border);
+  border: var(--sx-sys-border-width-strong) solid var(--sx-sys-color-border);
   font-size: var(--sx-sys-font-size-xs); /* 原 0.7rem → xs 0.6875rem */
   font-weight: 800;
   letter-spacing: 0.04em;
   text-transform: uppercase;
   background: var(--sx-sys-color-bg-surface);
   line-height: 1.4;
+  box-shadow: var(--sx-sys-shadow-sm);
 }
 .badge--accent {
   background: var(--sx-sys-color-accent);
@@ -137,7 +138,7 @@
 .tag {
   display: inline-block;
   padding: 0.1em 0.5em;
-  border: var(--sx-sys-border-width) solid var(--sx-sys-color-border);
+  border: var(--sx-sys-border-width-strong) solid var(--sx-sys-color-border);
   font-size: var(--sx-sys-font-size-sm); /* 原 0.72rem → sm 0.75rem */
   font-family: var(--sx-sys-font-family-mono-system);
   background: var(--sx-sys-color-bg-page);
@@ -160,7 +161,7 @@
 
   display: block;
   background: var(--sx-sys-color-bg-surface);
-  border: var(--sx-sys-border-width) solid var(--sx-sys-color-border);
+  border: var(--sx-sys-border-width-strong) solid var(--sx-sys-color-border);
   box-shadow: var(--sx-sys-shadow-sm);
   padding: var(--sx-comp-card-padding);
   transition:
@@ -195,8 +196,8 @@
 /* 交互：只有 interactive 卡片 hover 时抬起 + 阴影升级。
    无 href 的静态卡片默认不抬起，避免误导（不可点却跳一下）。 */
 .card--interactive:hover {
-  transform: translate(-3px, -3px);
-  box-shadow: var(--sx-sys-shadow-md);
+  transform: translate(-2px, -2px);
+  box-shadow: var(--sx-sys-shadow-lg);
 }
 
 /* ── Navigation ─────────────────────────────────────────────
@@ -256,13 +257,13 @@
 
 /* ── Terminal ──────────────────────────────────────────────
    仿终端窗口：标题栏（红黄绿圆点 + 标题）+ 屏幕主体。被两处复用：
-   - Command（.astro 纯展示容器，slot 自由内容，dark 为默认主题，屏幕 overflow-x auto）
+   - Command（.astro 纯展示容器，slot 自由内容，light 为默认主题、dark 为可选 opt-in，屏幕 overflow-x auto）
    - HeroTerminal（React island，light 主题打字机，加 .term--hero 拿主视觉尺寸 + 光标）
    设计语言：1px 黑边 + 黄色硬阴影（--sx-comp-term-shadow，区别于站点默认纯黑阴影）。 */
 
 .term {
   margin: 0;
-  border: var(--sx-sys-border-width) solid var(--sx-sys-color-border);
+  border: var(--sx-sys-border-width-strong) solid var(--sx-sys-color-border);
   /* 黄色硬阴影（组件级令牌，区别于站点默认的纯黑阴影） */
   box-shadow: var(--sx-comp-term-shadow);
   background: var(--sx-sys-color-bg-surface);
@@ -287,7 +288,7 @@
   display: inline-block;
   width: 0.7rem;
   height: 0.7rem;
-  border: var(--sx-sys-border-width) solid var(--sx-sys-color-border);
+  border: var(--sx-sys-border-width-strong) solid var(--sx-sys-color-border);
   border-radius: 50%;
 }
 .term__dot--red {
@@ -306,13 +307,15 @@
   opacity: 0.7;
 }
 
-/* 屏幕主体：等宽字体；颜色由主题切换；默认横向滚动以容纳宽命令（Command） */
+/* 屏幕主体：等宽字体；默认 light（浅屏 paper + 墨字），.term--dark 覆盖为黑屏；默认横向滚动以容纳宽命令（Command） */
 .term__screen {
   padding: var(--sx-ref-space-3) var(--sx-ref-space-4);
   font-family: var(--sx-sys-font-family-mono-system);
   font-size: var(--sx-sys-font-size-md); /* 原 0.85rem → md 0.8125rem */
   line-height: 1.65;
   overflow-x: auto;
+  background: var(--sx-comp-term-light-screen-bg);
+  color: var(--sx-comp-term-light-text);
 }
 
 /* light 主题：浅色屏幕，黑字（组件级令牌） */
@@ -367,4 +370,424 @@
   font-size: var(--sx-sys-font-size-reading); /* 原 1.1rem → reading 1.0625rem */
   font-weight: 700;
   margin-block: var(--sx-ref-space-8) var(--sx-ref-space-3);
+}
+
+/* ── Field（input / select / textarea）──────────────────────
+   neubrutalism 表单控件：3px 黑框 + 恒 0 圆角 + 纸底 + 小硬影；
+   focus 用 action-primary 蓝色 outline + 微抬升 + 影涨（与 .btn 同款物理感）。
+   视觉对齐 .doc-playground__input（doc.css），全站表单语言统一。 */
+
+.field {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0.625rem 0.8125rem;
+  border: var(--sx-sys-border-width-strong) solid var(--sx-sys-color-border);
+  border-radius: var(--sx-sys-radius-control);
+  background: var(--sx-sys-color-bg-page);
+  color: var(--sx-sys-color-text-primary);
+  font: inherit;
+  font-size: var(--sx-sys-font-size-base);
+  line-height: 1.4;
+  box-shadow: var(--sx-sys-shadow-sm);
+  transition:
+    transform 0.1s ease,
+    box-shadow 0.1s ease,
+    background-color 0.1s ease;
+}
+.field::placeholder {
+  color: var(--sx-sys-color-text-muted);
+  opacity: 1;
+}
+.field:focus {
+  outline: 2px solid var(--sx-sys-color-action-primary);
+  outline-offset: 1px;
+  background: var(--sx-sys-color-bg-surface);
+  transform: translate(-1px, -1px);
+  box-shadow: var(--sx-sys-shadow-md);
+}
+.field:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+/* textarea 不限行高 */
+textarea.field {
+  min-height: 5rem;
+  resize: vertical;
+}
+
+/* 字段标签：等宽大写小字，与 .badge 同族排版 */
+.field__label {
+  display: block;
+  margin-block-end: 0.4rem;
+  font-family: var(--sx-sys-font-family-mono);
+  font-size: var(--sx-sys-font-size-sm);
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--sx-sys-color-text-soft);
+}
+
+/* ── Check（checkbox / radio）───────────────────────────────
+   原生 input 用 appearance:none 隐去，自绘 neubrutalism 方框；
+   :checked 切 accent 黄底 + 内嵌实心标记。checkbox 标记为方块、radio 为圆点
+   以区分类型（外框统一恒 0 圆角，符合 neubrutalism 直角信条）。 */
+
+.check {
+  appearance: none;
+  display: inline-grid;
+  place-content: center;
+  width: 1.25rem;
+  height: 1.25rem;
+  flex-shrink: 0;
+  border: var(--sx-sys-border-width-strong) solid var(--sx-sys-color-border);
+  border-radius: var(--sx-sys-radius-control);
+  background: var(--sx-sys-color-bg-page);
+  box-shadow: var(--sx-sys-shadow-sm);
+  cursor: pointer;
+  transition: background-color 0.1s ease;
+}
+.check:checked {
+  background: var(--sx-sys-color-accent);
+}
+.check[type='checkbox']:checked::before {
+  content: '';
+  width: 0.55rem;
+  height: 0.55rem;
+  background: var(--sx-sys-color-border);
+}
+.check[type='radio']:checked::before {
+  content: '';
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  background: var(--sx-sys-color-border);
+}
+.check:focus-visible {
+  outline: 2px solid var(--sx-sys-color-action-primary);
+  outline-offset: 2px;
+}
+
+/* ── Toggle（开关）──────────────────────────────────────────
+   隐藏原生 input，由 .toggle-track + .toggle-thumb 自绘；
+   :checked（input 是 track 的前一个兄弟，用 ~ 选择器）时 track 切黄底 + thumb 右滑。
+   结构：<label><input class="toggle"><span class="toggle-track"><span class="toggle-thumb"/></span>...</label> */
+
+.toggle {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+.toggle-track {
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+  width: 2.75rem;
+  height: 1.5rem;
+  padding: 0.15rem;
+  box-sizing: border-box;
+  border: var(--sx-sys-border-width-strong) solid var(--sx-sys-color-border);
+  border-radius: var(--sx-sys-radius-control);
+  background: var(--sx-sys-color-bg-page);
+  box-shadow: var(--sx-sys-shadow-sm);
+  cursor: pointer;
+  transition: background-color 0.1s ease;
+}
+.toggle-thumb {
+  display: block;
+  width: 1rem;
+  height: 1rem;
+  background: var(--sx-sys-color-border);
+  transition: transform 0.1s ease;
+}
+.toggle:checked ~ .toggle-track {
+  background: var(--sx-sys-color-accent);
+}
+.toggle:checked ~ .toggle-track .toggle-thumb {
+  transform: translateX(1.25rem);
+}
+.toggle:focus-visible ~ .toggle-track {
+  outline: 2px solid var(--sx-sys-color-action-primary);
+  outline-offset: 2px;
+}
+
+/* ── Toast（通知）───────────────────────────────────────────
+   满色底（变体语义色）+ 黑框 + 中硬影，对齐 neubrutalism.com nb-toast。
+   颜色映射参考：success→green / error→pink / info→blue / warning→yellow，
+   用对应 --sx-* token（pop-green / coral / info / accent）。 */
+
+.toast {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem var(--sx-ref-space-6);
+  border: var(--sx-sys-border-width-strong) solid var(--sx-sys-color-border);
+  border-radius: var(--sx-sys-radius-control);
+  box-shadow: var(--sx-sys-shadow-md);
+  font-family: var(--sx-sys-font-family-display), system-ui, sans-serif;
+  font-weight: 700;
+  font-size: var(--sx-sys-font-size-base);
+  line-height: 1.4;
+  color: var(--sx-sys-color-text-primary);
+  max-width: 340px;
+  width: 100%;
+}
+.toast--success {
+  background: var(--sx-sys-color-pop-green);
+}
+.toast--error {
+  background: var(--sx-sys-color-coral);
+}
+.toast--info {
+  background: var(--sx-sys-color-info);
+}
+.toast--warning {
+  background: var(--sx-sys-color-accent);
+}
+.toast--empty {
+  justify-content: center;
+  border-style: dashed;
+  background: var(--sx-sys-color-bg-surface);
+  box-shadow: var(--sx-sys-shadow-sm);
+  opacity: 0.8;
+}
+.toast__icon {
+  flex-shrink: 0;
+  font-size: var(--sx-sys-font-size-xl);
+  line-height: 1;
+}
+.toast__msg {
+  flex: 1;
+  min-width: 0;
+}
+.toast__msg strong {
+  display: block;
+  font-weight: 800;
+}
+.toast__dismiss {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 1.5rem;
+  height: 1.5rem;
+  background: transparent;
+  border: var(--sx-sys-border-width) solid var(--sx-sys-color-border);
+  font-size: var(--sx-sys-font-size-sm);
+  font-weight: 700;
+  color: var(--sx-sys-color-text-primary);
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+.toast__dismiss:hover {
+  background: var(--sx-sys-color-border);
+  color: var(--sx-sys-color-bg-surface);
+}
+
+/* ── Range（滑块）───────────────────────────────────────────
+   原生 input[type=range] 重置：黑框纸底轨道 + 黄底方块 thumb（accent + 硬影）。
+   供 Playground 调参；webkit / moz 双前缀伪元素。 */
+
+.range {
+  appearance: none;
+  width: 100%;
+  height: 0.5rem;
+  margin: 0;
+  padding: 0;
+  background: var(--sx-sys-color-bg-page);
+  border: var(--sx-sys-border-width-strong) solid var(--sx-sys-color-border);
+  cursor: pointer;
+}
+.range::-webkit-slider-thumb {
+  /* Chrome 自定义滑块 thumb 必需 webkit 前缀：标准 appearance 无法重置该 webkit 伪元素的默认外观 */
+  /* stylelint-disable-next-line property-no-vendor-prefix */
+  -webkit-appearance: none;
+  appearance: none;
+  width: 1rem;
+  height: 1.25rem;
+  background: var(--sx-sys-color-accent);
+  border: var(--sx-sys-border-width-strong) solid var(--sx-sys-color-border);
+  box-shadow: var(--sx-sys-shadow-sm);
+  cursor: pointer;
+}
+.range::-moz-range-thumb {
+  width: 1rem;
+  height: 1.25rem;
+  background: var(--sx-sys-color-accent);
+  border: var(--sx-sys-border-width-strong) solid var(--sx-sys-color-border);
+  box-shadow: var(--sx-sys-shadow-sm);
+  cursor: pointer;
+}
+.range:focus-visible {
+  outline: 2px solid var(--sx-sys-color-action-primary);
+  outline-offset: 4px;
+}
+
+/* ── Modal（对话框）───────────────────────────────────────────
+   遮罩 + 居中面板：3px 黑边 + shadow-xl 重硬影（neubrutalism overlay / dialog）。
+   关闭交互（点遮罩 / ✕ / ESC）与 focus trap 在 Modal.tsx island；
+   此处只管视觉：遮罩半透明、面板 paper 底、恒 0 圆角、入场动画。 */
+
+.modal__overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--sx-ref-space-4);
+  background: color-mix(in srgb, var(--sx-sys-color-border) 55%, transparent);
+  animation: modal-fade 120ms ease;
+}
+.modal__panel {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 32rem;
+  max-height: 85vh;
+  overflow: auto;
+  border: var(--sx-sys-border-width-strong) solid var(--sx-sys-color-border);
+  border-radius: var(--sx-sys-radius-control);
+  background: var(--sx-sys-color-bg-surface);
+  box-shadow: var(--sx-sys-shadow-xl);
+  animation: modal-pop 140ms ease;
+}
+.modal__panel:focus-visible {
+  outline: none;
+}
+.modal__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sx-ref-space-3);
+  padding: var(--sx-ref-space-4) var(--sx-ref-space-5);
+  border-bottom: var(--sx-sys-border-width-strong) solid var(--sx-sys-color-border);
+  background: var(--sx-sys-color-bg-page);
+}
+.modal__title {
+  margin: 0;
+  font-family: var(--sx-sys-font-family-display), system-ui, sans-serif;
+  font-size: var(--sx-sys-font-size-xl);
+  font-weight: 800;
+  color: var(--sx-sys-color-text-primary);
+}
+.modal__close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 2rem;
+  height: 2rem;
+  background: var(--sx-sys-color-bg-surface);
+  border: var(--sx-sys-border-width-strong) solid var(--sx-sys-color-border);
+  box-shadow: var(--sx-sys-shadow-sm);
+  font-size: var(--sx-sys-font-size-base);
+  font-weight: 800;
+  color: var(--sx-sys-color-text-primary);
+  cursor: pointer;
+  transition:
+    transform 0.1s ease,
+    box-shadow 0.1s ease;
+}
+.modal__close:hover {
+  transform: translate(-1px, -1px);
+  box-shadow: var(--sx-sys-shadow-md);
+}
+.modal__close:active {
+  transform: translate(2px, 2px);
+  box-shadow: none;
+}
+.modal__body {
+  padding: var(--sx-ref-space-5);
+  color: var(--sx-sys-color-text-soft);
+}
+.modal__body :global(p) {
+  margin: 0 0 var(--sx-ref-space-2);
+}
+.modal__body :global(p):last-child {
+  margin-bottom: 0;
+}
+@keyframes modal-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes modal-pop {
+  from {
+    transform: translateY(8px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .modal__overlay,
+  .modal__panel,
+  .modal__close {
+    animation: none;
+    transition: none;
+  }
+}
+
+/* ── ContrastChecker（对比度检查器）────────────────────────────
+   双 hex 输入 → WCAG 比值 + AA/AAA 徽章 + 实时预览。
+   计算与交互在 ContrastChecker.tsx island；此处只管布局。 */
+
+.cc {
+  gap: var(--sx-ref-space-4);
+}
+.cc__inputs {
+  flex-wrap: wrap;
+  gap: var(--sx-ref-space-4);
+}
+.cc__field {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.cc__cap {
+  font-family: var(--sx-sys-font-family-mono);
+  font-size: var(--sx-sys-font-size-xs);
+  font-weight: 800;
+  text-transform: uppercase;
+  opacity: 0.7;
+}
+.cc__swatch {
+  width: 1.25rem;
+  height: 1.25rem;
+  flex-shrink: 0;
+  border: var(--sx-sys-border-width) solid var(--sx-sys-color-border);
+}
+.cc__result {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--sx-ref-space-4);
+}
+.cc__ratio {
+  font-family: var(--sx-sys-font-family-display), system-ui, sans-serif;
+  font-size: var(--sx-sys-font-size-3xl);
+  font-weight: 800;
+  color: var(--sx-sys-color-text-primary);
+}
+.cc__badges {
+  gap: 0.5rem;
+}
+.cc__sub {
+  font-size: var(--sx-sys-font-size-xs);
+  opacity: 0.75;
+}
+.cc__preview {
+  padding: var(--sx-ref-space-4);
+  border: var(--sx-sys-border-width-strong) solid var(--sx-sys-color-border);
+  border-radius: var(--sx-sys-radius-control);
+  font-size: var(--sx-sys-font-size-md);
+  line-height: 1.5;
 }

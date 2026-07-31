@@ -5,21 +5,21 @@
 // 通过默认 slot 自由决定（可以是命令、输出、任意文本 / 标记）。
 //
 // 两个主题：
-//   light —— 屏幕为暖纸背景（浅色）
-//   dark  —— 屏幕为深底（黑色），文字默认浅色
+//   light —— 屏幕为暖纸背景（浅色），默认
+//   dark  —— 屏幕为深底（黑色），文字默认浅色（opt-in）
 //
 // 设计语言：1px 黑边 + 黄色硬阴影（brutalist），等宽字体。
 
 export type CommandTheme = 'light' | 'dark';
 
 interface Props {
-  /** 屏幕主题。light = 浅色屏幕；dark = 黑色屏幕（默认） */
+  /** 屏幕主题。light = 浅色屏幕（默认）；dark = 黑色屏幕（opt-in） */
   theme?: CommandTheme;
   /** 标题栏显示的文件名 / shell 名 */
   title?: string;
 }
 
-const { theme = 'dark', title = 'bash' } = Astro.props;
+const { theme = 'light', title = 'bash' } = Astro.props;
 ---
 
 <figure class:list={['term', `term--${theme}`]}>
@@ -40,5 +40,5 @@ const { theme = 'dark', title = 'bash' } = Astro.props;
 <!--
   样式提升到全局：src/styles/components.css 的 .term 系列。
   Command（本组件）与 HeroTerminal（React island）共享同一套终端外观，
-  避免两处 scoped 副本。Command 默认 dark 主题、屏幕 overflow-x auto。
+  避免两处 scoped 副本。Command 默认 light 主题、屏幕 overflow-x auto。
 -->

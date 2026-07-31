@@ -1,208 +1,35 @@
 ---
-// CodeCompare 演示 —— V2 文档布局：States（Demo）/ Props（属性表）/ Code（用法卡片）。
+// CodeCompare 演示 —— 双窗口代码转换（深 / 浅顶栏），下方 code-block。
+// CodeCompare 本身较宽，用全宽 nb-demobox 而非 grid2 并排。
 import CodeCompare from '../CodeCompare.astro';
-import Demo from '../Demo.astro';
 
-const apiRows = [
-  {
-    name: 'from',
-    type: 'string',
-    default: "'INPUT'",
-    desc: '左侧源窗口标题（通常是文件名/格式名）',
-  },
-  {
-    name: 'to',
-    type: 'string',
-    default: "'OUTPUT'",
-    desc: '右侧目标窗口标题（通常是文件名/格式名）',
-  },
-  {
-    name: 'bar',
-    type: "'dark' | 'light'",
-    default: "'dark'",
-    desc: '顶栏主题：dark = 黑底白字；light = 米色底墨字',
-  },
-  {
-    name: 'source',
-    type: 'string',
-    default: '—',
-    desc: '左侧源代码（字符串）。与 source slot 二选一，slot 优先',
-  },
-  {
-    name: 'target',
-    type: 'string',
-    default: '—',
-    desc: '右侧目标代码（字符串）。与 target slot 二选一，slot 优先',
-  },
-];
+const cmpCode = `<span class="sel">.cmp</span> {
+  <span class="prop">display</span>: <span class="val">flex</span>;
+  <span class="prop">gap</span>: <span class="val">1.25rem</span>;
+}
+<span class="sel">.win</span> {
+  <span class="prop">border</span>: <span class="val">2px solid var(--sx-sys-color-border)</span>;
+  <span class="prop">background</span>: <span class="val">var(--sx-sys-color-beige)</span>;
+}
 
-const usage = `---
-import CodeCompare from '@/components/design-system/CodeCompare.astro';
+<span class="com">/* 中间黑底黄箭头连接源 ↔ 目标 */</span>`;
 ---
 
-<!-- 默认：黑顶栏 -->
-<CodeCompare from="MARKDOWN.MD" to="INDEX.HTML">
-  <Fragment slot="source"># 一级标题</Fragment>
-  <Fragment slot="target"><h1>一级标题</h1></Fragment>
-</CodeCompare>
+<div class="nb-demobox">
+  <CodeCompare from="MARKDOWN.MD" to="INDEX.HTML" bar="dark">
+    <Fragment slot="source">{'# 标题\n## 副标题\n- 项目一\n- 项目二'}</Fragment>
+    <Fragment slot="target">{'<h1>标题</h1>\n<h2>副标题</h2>\n<ul>\n  <li>项目一</li>\n  <li>项目二</li>\n</ul>'}</Fragment>
+  </CodeCompare>
+</div>
 
-<!-- 浅色顶栏 -->
-<CodeCompare from="MARKDOWN.MD" to="INDEX.HTML" bar="light">
-  <Fragment slot="source">- 第一项</Fragment>
-  <Fragment slot="target"><ul><li>第一项</li></ul></Fragment>
-</CodeCompare>`;
----
+<div class="nb-demobox">
+  <CodeCompare from="MARKDOWN.MD" to="INDEX.HTML" bar="light">
+    <Fragment slot="source">{'**粗体** _斜体_ `code`'}</Fragment>
+    <Fragment slot="target">{'<strong>粗体</strong>\n<em>斜体</em>\n<code>code</code>'}</Fragment>
+  </CodeCompare>
+</div>
 
-<>
-  {/* —— States：默认态 —— */}
-  <section class="doc-section">
-    <div class="doc-section__head">
-      <div class="doc-section__eyebrow">
-        <span class="doc-section__mark" aria-hidden="true"></span>
-        <h2 class="doc-section__title">状态演示</h2>
-      </div>
-      <p class="doc-section__sub">
-        代码转换对比展示块：左侧源窗口 + 中间双箭头 + 右侧目标窗口。通过
-        <code>bar</code> 切换顶栏深浅。
-      </p>
-    </div>
-    <div class="doc-section__body">
-      <Demo label="深色顶栏（默认）" attr='bar="dark"'>
-        <CodeCompare from="MARKDOWN.MD" to="INDEX.HTML" bar="dark">
-          <Fragment slot="source">{'# 一级标题\n## 二级标题\n### 三级标题'}</Fragment>
-          <Fragment slot="target"
-            >{'<h1>一级标题</h1>\n<h2>二级标题</h2>\n<h3>三级标题</h3>'}</Fragment
-          >
-        </CodeCompare>
-        <Fragment slot="note">
-          <p>
-            默认 <code>bar="dark"</code>：黑顶栏 + 白字文件名 + 米色代码区。课程页主视觉。
-          </p>
-        </Fragment>
-      </Demo>
-
-      <Demo label="浅色顶栏" attr='bar="light"'>
-        <CodeCompare from="MARKDOWN.MD" to="INDEX.HTML" bar="light">
-          <Fragment slot="source">{'- 第一项\n- 第二项\n- 第三项'}</Fragment>
-          <Fragment slot="target"
-            >{'<ul>\n  <li>第一项</li>\n  <li>第二项</li>\n  <li>第三项</li>\n</ul>'}</Fragment
-          >
-        </CodeCompare>
-        <Fragment slot="note">
-          <p>
-            <code>bar="light"</code>：米色顶栏 + 墨字，底部分隔线区分代码区。
-          </p>
-        </Fragment>
-      </Demo>
-    </div>
-  </section>
-
-  {/* —— Props：属性表 —— */}
-  <section class="doc-section">
-    <div class="doc-section__head">
-      <div class="doc-section__eyebrow">
-        <span class="doc-section__mark" aria-hidden="true"></span>
-        <h2 class="doc-section__title">Props 属性</h2>
-      </div>
-      <p class="doc-section__sub">
-        CodeCompare 组件接受的属性。代码内容可通过 props 或 <code>source</code> /
-        <code>target</code> 命名 slot 传入。
-      </p>
-    </div>
-    <div class="doc-section__body">
-      <div class="doc-table-scroll">
-        <table class="doc-props">
-          <thead>
-            <tr>
-              <th>Prop</th>
-              <th>Type</th>
-              <th>Default</th>
-              <th>Description</th>
-            </tr>
-          </thead>
-          <tbody>
-            {
-              apiRows.map((r) => (
-                <tr>
-                  <td class="doc-props__name">{r.name}</td>
-                  <td>
-                    <span class="doc-props__type">{r.type}</span>
-                  </td>
-                  <td>
-                    <span class="doc-props__type">{r.default}</span>
-                  </td>
-                  <td class="doc-props__desc">{r.desc}</td>
-                </tr>
-              ))
-            }
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </section>
-
-  {/* —— Slots：插槽说明 —— */}
-  <section class="doc-section">
-    <div class="doc-section__head">
-      <div class="doc-section__eyebrow">
-        <span class="doc-section__mark" aria-hidden="true"></span>
-        <h2 class="doc-section__title">Slots 插槽</h2>
-      </div>
-      <p class="doc-section__sub">代码内容通过命名 slot 传入，保持纯文本格式（不含多余包裹元素）。</p>
-    </div>
-    <div class="doc-section__body">
-      <div class="doc-table-scroll">
-        <table class="doc-props">
-          <thead>
-            <tr>
-              <th>Slot</th>
-              <th>Description</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td class="doc-props__name">source</td>
-              <td class="doc-props__desc">左侧源窗口的代码文本内容</td>
-            </tr>
-            <tr>
-              <td class="doc-props__name">target</td>
-              <td class="doc-props__desc">右侧目标窗口的代码文本内容</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </section>
-
-  {/* —— Code：用法示例 —— */}
-  <section class="doc-section">
-    <div class="doc-section__head">
-      <div class="doc-section__eyebrow">
-        <span class="doc-section__mark" aria-hidden="true"></span>
-        <h2 class="doc-section__title">用法示例</h2>
-      </div>
-      <p class="doc-section__sub">在 Astro 页面中引入 CodeCompare，用 <code>bar</code> 控制顶栏深浅。</p>
-    </div>
-    <div class="doc-section__body">
-      <figure class="doc-code">
-        <figcaption class="doc-code__bar">
-          <span class="doc-code__file">CodeCompare.astro</span>
-          <span class="doc-code__lang">astro</span>
-        </figcaption>
-        <pre class="doc-code__body"><code>{usage}</code></pre>
-      </figure>
-    </div>
-  </section>
-</>
-
-<style>
-  :global(.doc-section__body .demo) {
-    margin-block-end: 0;
-  }
-  :global(.demo__stage .cmp) {
-    width: 100%;
-  }
-  .doc-table-scroll {
-    overflow-x: auto;
-  }
-</style>
+<div class="nb-codewrap">
+  <span class="nb-codelabel">CSS</span>
+  <pre class="nb-codeblock"><button class="nb-copy" type="button" data-copy="">Copy</button><code set:html={cmpCode} /></pre>
+</div>

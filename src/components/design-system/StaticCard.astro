@@ -1,0 +1,96 @@
+---
+// StaticCard 组件 —— SchemaX UI
+// 静态展示卡：满色底 + icon 方块 + 标题 + 描述 + 撞色偏移硬影。
+// 不可点、无 hover——纯展示用。与可点的 FeatureCard（白底 + hover）是两个独立组件。
+//
+// 维度：
+//   title        必填，卡片标题
+//   description  描述文字（可选）
+//   fill         卡片满色底（--sx-* token），默认品牌强调黄
+//   iconBg       icon 方块底色（--sx-* token），默认白（在满色底上对比）
+//   shadowColor  撞色偏移硬影色（--sx-* token），默认黑
+//   class        透传额外类名
+
+interface Props {
+  /** 卡片标题（必填） */
+  title: string;
+  /** 描述文字 */
+  description?: string;
+  /** 卡片满色底（--sx-* token）。默认品牌强调黄 */
+  fill?: string;
+  /** icon 方块底色（--sx-* token）。默认白（在满色底上对比） */
+  iconBg?: string;
+  /** 撞色偏移硬影色（--sx-* token）。默认黑 */
+  shadowColor?: string;
+  /** 透传到根元素的额外类名 */
+  class?: string;
+}
+
+const {
+  title,
+  description,
+  fill = 'var(--sx-sys-color-accent)',
+  iconBg = 'var(--sx-sys-color-bg-surface)',
+  shadowColor = 'var(--sx-sys-color-border)',
+  class: extra,
+} = Astro.props;
+
+// 撞色机制：局部覆盖全局 --sx-sys-shadow-color，偏移量走 sys shadow token（3/6/9 ramp）。
+const styleVars = `--sx-sc-fill: ${fill}; --sx-sc-icon-bg: ${iconBg}; --sx-sys-shadow-color: ${shadowColor}`;
+const classes = ['staticcard', extra].filter(Boolean).join(' ');
+---
+
+<div class={classes} style={styleVars}>
+  <span class="staticcard__icon">
+    <slot />
+  </span>
+  <span class="staticcard__label">{title}</span>
+  <span class="staticcard__desc">{description}</span>
+</div>
+
+<style>
+  /* 满色底展示卡：无 href、无 hover。fill 控制底色，iconBg 默认白作对比 */
+  .staticcard {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: var(--sx-ref-space-3);
+    min-height: 13.5rem;
+    padding: 1.25rem;
+    border: var(--sx-sys-border-width-strong) solid var(--sx-sys-color-border);
+    border-radius: var(--sx-sys-radius-sm);
+    background: var(--sx-sc-fill);
+    box-shadow: var(--sx-sys-shadow-md);
+  }
+
+  .staticcard__icon {
+    display: flex;
+    width: 5rem;
+    height: 5rem;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    border: var(--sx-sys-border-width-strong) solid var(--sx-sys-color-border);
+    border-radius: var(--sx-sys-radius-sm);
+    background: var(--sx-sc-icon-bg);
+
+    /* 重置回黑：抵消卡片根上覆盖的撞色 shadow-color，icon 保持黑色小硬影 */
+    --sx-sys-shadow-color: var(--sx-sys-color-border);
+
+    box-shadow: var(--sx-sys-shadow-sm);
+  }
+
+  .staticcard__label {
+    margin-top: auto;
+    font-family: var(--sx-sys-font-family-display), system-ui, sans-serif;
+    font-size: var(--sx-sys-font-size-2xl);
+    font-weight: 800;
+    color: var(--sx-sys-color-text-primary);
+  }
+
+  .staticcard__desc {
+    font-size: var(--sx-sys-font-size-base);
+    line-height: 1.55;
+    color: var(--sx-sys-color-text-soft);
+  }
+</style>
