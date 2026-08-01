@@ -59,18 +59,18 @@ pnpm gen:component Button 主要、次要、幽灵、强调变体。
 
 一条命令完成三件事：
 
-1. 生成 `src/components/design-system/<Name>.astro` —— 组件本体（带 lint 安全的最小模板）
-2. 生成 `src/components/design-system/demos/<Name>Demo.astro` —— 展示页演示（已用 `<Demo>` 组件封装）
+1. 生成 `src/components/design-system/<Name>.tsx` —— React 组件本体
+2. 生成 `src/components/design-system/demos/<Name>Demo.tsx` —— React 展示页演示
 3. 更新 `src/data/components-registry.ts` —— 把对应条目标记为 `live`（或更新已有 `planned` 条目）
 
 **数据驱动机制（无需改展示页）：**
 
 - `src/data/components-registry.ts` 是组件清单（`name` / `title` / `description` / `status: 'live' | 'planned'`）
-- `src/pages/design-system/components.astro` 用 `import.meta.glob('../../components/design-system/demos/*Demo.astro')` **自动捕获**所有 demo 文件
+- `src/pages/design-system/components.astro` 用 `import.meta.glob('../../components/design-system/demos/*Demo.tsx')` **自动捕获**所有 demo 文件
 - `status: 'live'` 的条目自动渲染演示；`planned` 的显示占位卡片（含对应的 `pnpm gen:component <Name>` 命令提示）
 - 新增 demo 文件后**刷新即生效**，展示页代码不动
 
-**`<Demo>` 组件是展示块的唯一封装（src/components/design-system/Demo.astro）：**
+**`<Demo>` 组件是展示块的唯一封装（src/components/design-system/Demo.tsx）：**
 
 ```astro
 <Demo label="默认态" attr='variant="primary"' stageClass="wrap">
@@ -115,9 +115,9 @@ pnpm gen:component Button 主要、次要、幽灵、强调变体。
 示例（导览课「小店装修」）：
 
 ```astro
-import Card from '../../components/design-system/Card.astro';
-import Button from '../../components/design-system/Button.astro';
-import Badge from '../../components/design-system/Badge.astro';
+import Card from '../../components/design-system/Card';
+import Button from '../../components/design-system/Button';
+import Badge from '../../components/design-system/Badge';
 
 <Preview label="骨架 + 装修后">
   <Card shadow="md" class="mx-auto flex max-w-sm flex-col gap-3.5 bg-primary">

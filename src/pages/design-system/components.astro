@@ -1,6 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import Crumb from '../../components/design-system/Crumb.astro';
+import Crumb from '../../components/design-system/Crumb';
 import { componentsRegistry } from '../../data/components-registry';
 import tokens from '../../generated/tokens';
 
@@ -13,18 +13,18 @@ import tokens from '../../generated/tokens';
 const live = componentsRegistry.filter((c) => c.status === 'live');
 const planned = componentsRegistry.filter((c) => c.status === 'planned');
 
-// glob 加载所有 *Demo.astro，按组件名索引
+// glob 加载所有 React demo，按组件名索引
 // astro 未把组件工厂类型作为公共导出，demo 无 props 透传，用 any 承载 default。
 type DemoComponent = any; // eslint-disable-line @typescript-eslint/no-explicit-any
 const demoModules = import.meta.glob<{ default: DemoComponent }>(
-  '../../components/design-system/demos/*Demo.astro',
+  '../../components/design-system/demos/*Demo.tsx',
 );
 const demoByName = new Map<
   string,
   () => Promise<{ default: DemoComponent }>
 >();
 for (const [path, loader] of Object.entries(demoModules)) {
-  const match = path.match(/\/([^/]+)Demo\.astro$/);
+  const match = path.match(/\/([^/]+)Demo\.tsx$/);
   if (match) demoByName.set(match[1], loader);
 }
 
@@ -101,8 +101,8 @@ const tokenRows: { token: string; value: string; use: string }[] = [
         <span class="nb-sectlabel">Design System · Components</span>
         <h1>组件 Components</h1>
         <p class="nb-intro">
-          所有控件单页合展——3px 黑框 + 零模糊硬影 + 抬升 hover 的 neubrutalism
-          实体。每个组件 = 代码块 + live demo，按真实使用方式展示。
+          一套可以直接落地的组件语法：3px 黑框、5px 中硬影、直角平面和明确的交互反馈。
+          每个组件都把实现代码和 live demo 放在同一条阅读路径上。
         </p>
         <nav class="comp__toc" aria-label="组件目录">
           {
@@ -134,7 +134,7 @@ const tokenRows: { token: string; value: string; use: string }[] = [
             ) : (
               <p class="comp-block__missing">
                 组件 {entry.name} 标记为 live，但未找到 demos/{entry.name}
-                Demo.astro。
+                React Demo。
               </p>
             )}
           </section>
@@ -146,7 +146,7 @@ const tokenRows: { token: string; value: string; use: string }[] = [
         <div class="comp-block__head">
           <h2 id="tokens-title" class="comp-block__title">Token 速查</h2>
           <p class="comp-block__desc">
-            neubrutalism grammar 的全部参数——边框两档、硬影四档、圆角恒 0。硬影色由
+            neubrutalism grammar 的全部参数——边框两档、硬影 3/5/8/12 四档、圆角恒 0。硬影色由
             <code>--sx-sys-shadow-color</code> 控制（默认 ink 黑，组件可局部覆盖做撞色偏移）。
           </p>
         </div>
@@ -232,7 +232,7 @@ const tokenRows: { token: string; value: string; use: string }[] = [
   .comp__inner {
     display: flex;
     flex-direction: column;
-    gap: var(--sx-ref-space-8);
+    gap: 0;
   }
 
   /* —— Hero —— */
@@ -240,12 +240,12 @@ const tokenRows: { token: string; value: string; use: string }[] = [
     display: flex;
     flex-direction: column;
     gap: var(--sx-ref-space-3);
-    padding-block: var(--sx-ref-space-4) var(--sx-ref-space-6);
+    padding-block: var(--sx-ref-space-4) var(--sx-ref-space-12);
   }
   .comp__hero h1 {
     margin: 0;
     font-family: var(--sx-sys-font-family-display), system-ui, sans-serif;
-    font-size: var(--sx-sys-font-size-4xl);
+    font-size: var(--sx-sys-font-display-lg);
     font-weight: 800;
     letter-spacing: -0.02em;
     color: var(--sx-sys-color-text-primary);
@@ -287,16 +287,17 @@ const tokenRows: { token: string; value: string; use: string }[] = [
     outline-offset: 3px;
   }
 
-  /* —— 组件 block（无分隔线，靠 padding 间距区分）—— */
+  /* —— 组件 block：用留白建立章节节奏 —— */
   .comp-block {
-    padding-block: var(--sx-ref-space-12);
+    padding-block: var(--sx-ref-space-8) var(--sx-ref-space-12);
     scroll-margin-top: 6rem;
   }
   .comp-block__head {
     display: flex;
     flex-direction: column;
+    align-items: flex-start;
     gap: var(--sx-ref-space-2);
-    margin-block-end: var(--sx-ref-space-8);
+    margin-block-end: var(--sx-ref-space-6);
   }
   .comp-block__title {
     margin: 0;
@@ -367,6 +368,15 @@ const tokenRows: { token: string; value: string; use: string }[] = [
     .comp__toc-link:hover {
       transform: none;
       box-shadow: var(--sx-sys-shadow-sm);
+    }
+  }
+
+  @media (max-width: 48rem) {
+    .comp__inner {
+      padding-inline: var(--sx-ref-space-4);
+    }
+    .comp__hero h1 {
+      font-size: var(--sx-sys-font-display-md);
     }
   }
 </style>

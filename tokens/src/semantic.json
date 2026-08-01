@@ -77,10 +77,10 @@
     },
     "shadow": {
       "color": { "$type": "color", "$value": "{sys.color.border}", "$description": "硬影色（= ink 黑）。neubrutalism 零模糊硬偏移影；组件可局部覆盖 --sx-sys-shadow-color 做撞色偏移（黄 / 粉 / 蓝 / 绿）。" },
-      "sm": { "$type": "shadow", "$value": "3px 3px 0 var(--sx-sys-shadow-color)", "$description": "3/6/9 ramp 第一档：徽章 / chip / inline 控件。" },
-      "md": { "$type": "shadow", "$value": "6px 6px 0 var(--sx-sys-shadow-color)", "$description": "3/6/9 ramp 第二档：卡片 / 按钮 / 面板默认硬影。" },
-      "lg": { "$type": "shadow", "$value": "9px 9px 0 var(--sx-sys-shadow-color)", "$description": "3/6/9 ramp 第三档：hover 抬升态 / 强调面板。" },
-      "xl": { "$type": "shadow", "$value": "12px 12px 0 var(--sx-sys-shadow-color)", "$description": "hero / dialog 重硬影（neubrutalism shadow-xl，独立 hero 档，不在 3/6/9 ramp 内）。" }
+      "sm": { "$type": "shadow", "$value": "3px 3px 0 var(--sx-sys-shadow-color)", "$description": "3px 小硬影：徽章 / chip / inline 控件。" },
+      "md": { "$type": "shadow", "$value": "5px 5px 0 var(--sx-sys-shadow-color)", "$description": "5px 中硬影：卡片 / 按钮 / 面板默认硬影。" },
+      "lg": { "$type": "shadow", "$value": "8px 8px 0 var(--sx-sys-shadow-color)", "$description": "8px 大硬影：hover 抬升态 / 强调面板。" },
+      "xl": { "$type": "shadow", "$value": "12px 12px 0 var(--sx-sys-shadow-color)", "$description": "12px 重硬影：hero / dialog 等覆盖层。" }
     },
     "rotate": {
       "sticker": { "$type": "other", "$value": "-2deg", "$description": "贴纸/戳记/CTA 微旋默认倾角（左倾 -2°）。反方向用 calc(var(--sx-sys-rotate-sticker) * -1)。仅 sticker 可旋，正文不可。" }

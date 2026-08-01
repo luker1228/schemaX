@@ -1,0 +1,5 @@
+import type { CollectionEntry } from 'astro:content';
+import Card from '../design-system/Card';
+interface Props { project: CollectionEntry<'projects'> }
+const styles = `.projectcard{display:flex;flex-direction:column;gap:var(--sx-ref-space-2);height:100%}.projectcard__title{font-size:var(--sx-sys-font-size-xl);font-weight:700;line-height:1.2}.projectcard__desc{flex:1;opacity:.85}.projectcard__stack{display:flex;flex-wrap:wrap;gap:var(--sx-ref-space-1)}`;
+export default function ProjectCard({ project }: Props) { const { title, description, status, stack } = project.data; return <><style dangerouslySetInnerHTML={{ __html: styles }} /><Card href={`/projects/${project.id}`} className="projectcard"><div className="projectcard__head"><span className="badge badge--action">{status}</span></div><h3 className="projectcard__title">{title}</h3><p className="projectcard__desc">{description}</p>{stack.length > 0 && <p className="projectcard__stack">{stack.map((item) => <span className="tag" key={item}>{item}</span>)}</p>}</Card></>; }

@@ -1,11 +1,11 @@
 // 设计系统组件清单（数据驱动 /design-system/components 展示页）。
 // 每个组件对应：
-//   1. 组件本体 src/components/design-system/<Pascal>.astro
-//   2. 演示文件 src/components/design-system/demos/<Pascal>Demo.astro
+//   1. 组件本体 src/components/design-system/<Pascal>.tsx
+//   2. 演示文件 src/components/design-system/demos/<Pascal>Demo.tsx
 //   3. 本文件中的一条记录
 // 用 pnpm gen:component <Name> 一键生成上述全部文件与本记录。
 // 例外：交互型组件（Playground / Toasts 等 React island）不走脚手架——
-// 手动建 .tsx + *Island.astro(client:load) + *Demo.astro。
+// 交互组件同样使用 .tsx，并按需在 Astro 页面中添加 client:*。
 
 export interface ComponentEntry {
   /** PascalCase 名称，如 'Nav' / 'Button'。同时用作文件名与 import 标识 */

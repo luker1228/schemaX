@@ -1,8 +1,8 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import CourseCard from '../../components/site/CourseCard.astro';
-import Crumb from '../../components/design-system/Crumb.astro';
-import Doodle from '../../components/design-system/Doodle.astro';
+import CourseCard from '../../components/site/CourseCard';
+import Crumb from '../../components/design-system/Crumb';
+import Doodle from '../../components/design-system/Doodle';
 import { getCollection } from 'astro:content';
 
 const courses = (
@@ -289,7 +289,7 @@ const courses = (
   }
 
   /* 窄屏不显示四角涂鸦，避免与居中文案重叠 */
-  @media (min-width: 60rem) {
+  @media (min-width: 64rem) {
     .courses-hero__deco {
       display: block;
     }

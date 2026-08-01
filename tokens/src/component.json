@@ -12,13 +12,23 @@
         "$type": "shadow",
         "$value": "{sys.shadow.lg}",
         "$description": "interactive 卡片 hover 时的阴影（neubrutalism 抬升 + 影涨到 lg）。"
+      },
+      "colored-shadow": {
+        "$type": "shadow",
+        "$value": "5px 5px 0 {sys.color.coral}",
+        "$description": "Card Colored Shadow 变体：珊瑚色边框与珊瑚色偏移影。"
+      },
+      "colored-border": {
+        "$type": "color",
+        "$value": "{sys.color.coral}",
+        "$description": "Card Colored Shadow 变体边框色，与 colored-shadow 同源。"
       }
     },
     "demo": {
       "shadow": {
         "$type": "shadow",
         "$value": "{sys.shadow.lg}",
-        "$description": "演示块阴影，对齐全局 sys.shadow.lg（3/6/9 ramp 第三档 9px）。"
+        "$description": "演示块阴影，对齐全局 sys.shadow.lg（3/5/8 ramp 第三档 8px）。"
       }
     },
     "term": {
@@ -28,8 +38,8 @@
       "light-text": { "$type": "color", "$value": "{ref.color.ink}" },
       "shadow": {
         "$type": "shadow",
-        "$value": "9px 9px 0 {ref.color.yellow.400}, 9px 9px 0 1px {ref.color.ink}",
-        "$description": "Command 私有：黄色偏移 + 黑色描边。尺寸与全局 sys.shadow.lg 对齐（3/6/9 ramp 第三档 9px）。"
+        "$value": "8px 8px 0 {ref.color.yellow.400}",
+        "$description": "Command 私有：仅黄色偏移阴影，不叠加外框。尺寸与全局 sys.shadow.lg 对齐（3/5/8 ramp 第三档 8px）。"
       }
     },
     "header": {

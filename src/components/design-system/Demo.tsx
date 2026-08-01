@@ -1,0 +1,3 @@
+import type { ReactNode } from 'react';
+interface Props { label: string; attr?: string; stageClass?: 'wrap' | 'align'; children?: ReactNode; note?: ReactNode }
+export default function Demo({ label, attr, stageClass, children, note }: Props) { const stage = ['demo__stage', stageClass === 'wrap' ? 'demo__stage--wrap' : '', stageClass === 'align' ? 'demo__stage--align' : ''].filter(Boolean).join(' '); return <div className="demo"><div className="demo__head"><span className="demo__label">{label}</span>{attr && <code className="demo__attr">{attr}</code>}</div><div className={stage}>{children}</div><details className="demo__details"><summary className="demo__summary">说明</summary><div className="demo__note">{note}</div></details></div>; }

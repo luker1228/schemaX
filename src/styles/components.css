@@ -6,15 +6,15 @@
           outline（白底黑字，默认变体）/ danger（红底白字，危险操作）
           ghost（透明，用于 Hero 等特殊场景，outline 的无背景版本）
    3 尺寸：sm / md（默认）/ lg
-   交互：默认凸起（带硬阴影）；hover 像被按下（向右下位移 + 阴影消失）。
-   设计语言：1px 黑边 + 2px 圆角 + 纯黑硬阴影（无模糊），物理按键感。 */
+   交互：默认凸起；hover 抬起并增大硬影；active 才按下贴底。
+   设计语言：3px 黑边 + 0 圆角 + 5px 纯黑硬影（无模糊），物理按键感。 */
 
 .btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: var(--sx-ref-space-2);
-  padding: var(--sx-ref-space-2) var(--sx-ref-space-4);
+  padding: 0.75rem 1.5rem;
   border: var(--sx-sys-border-width-strong) solid var(--sx-sys-color-border);
   border-radius: var(--sx-sys-radius-control);
   font-family: inherit;
@@ -23,7 +23,7 @@
   line-height: 1.2;
   background: var(--sx-sys-color-bg-surface);
   color: var(--sx-sys-color-text-primary);
-  box-shadow: var(--sx-sys-shadow-sm);
+  box-shadow: var(--sx-sys-shadow-md);
   transition:
     transform 0.1s ease,
     box-shadow 0.1s ease,
@@ -94,16 +94,16 @@
 }
 .btn--ghost:hover {
   box-shadow: none;
-  transform: translate(2px, 2px);
+  transform: translate(-2px, -2px);
 }
 
 /* 尺寸 */
 .btn--sm {
-  padding: 0.3rem 0.7rem;
+  padding: 0.5rem 0.875rem;
   font-size: var(--sx-sys-font-size-md); /* 原 0.78rem → md 0.8125rem */
 }
 .btn--lg {
-  padding: 0.75rem 1.4rem;
+  padding: 0.875rem 1.75rem;
   font-size: var(--sx-sys-font-size-lg);
 }
 
@@ -142,6 +142,78 @@
   font-size: var(--sx-sys-font-size-sm); /* 原 0.72rem → sm 0.75rem */
   font-family: var(--sx-sys-font-family-mono-system);
   background: var(--sx-sys-color-bg-page);
+}
+
+/* ── Feature card / geometric mark ────────────────────────
+   These styles are shared by every instance. Keeping them here avoids
+   repeating static style tags in the rendered component HTML. */
+.featurecard {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--sx-ref-space-3);
+  min-height: 13.5rem;
+  padding: 1.25rem;
+  border: var(--sx-sys-border-width-strong) solid var(--sx-sys-color-border);
+  border-radius: var(--sx-sys-radius-sm);
+  background: var(--sx-sys-color-bg-surface);
+  box-shadow: var(--sx-sys-shadow-md);
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.1s ease, box-shadow 0.1s ease;
+}
+
+.featurecard:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: var(--sx-sys-shadow-lg);
+}
+
+.featurecard:focus-visible {
+  outline: var(--sx-sys-border-width-strong) solid var(--sx-sys-color-action-primary);
+  outline-offset: 2px;
+}
+
+.featurecard__icon {
+  display: flex;
+  width: 5rem;
+  height: 5rem;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  border: var(--sx-sys-border-width-strong) solid var(--sx-sys-color-border);
+  border-radius: var(--sx-sys-radius-sm);
+  background: var(--sx-fc-icon-bg);
+
+  --sx-sys-shadow-color: var(--sx-sys-color-border);
+
+  box-shadow: var(--sx-sys-shadow-sm);
+}
+
+.featurecard__label {
+  margin-top: auto;
+  font-family: var(--sx-sys-font-family-display), system-ui, sans-serif;
+  font-size: var(--sx-sys-font-size-2xl);
+  font-weight: 800;
+  color: var(--sx-sys-color-text-primary);
+}
+
+.featurecard__desc {
+  font-size: var(--sx-sys-font-size-base);
+  line-height: 1.55;
+  color: var(--sx-sys-color-text-soft);
+}
+
+.geomark {
+  display: block;
+  flex-shrink: 0;
+  color: var(--sx-sys-color-border);
+  overflow: visible;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .featurecard:hover {
+    transform: none;
+  }
 }
 
 /* ── Card ──────────────────────────────────────────────────
@@ -255,16 +327,75 @@
   background: var(--sx-sys-color-accent);
 }
 
+/* Header 与 Toast demo 对齐：同一套 3px 黑框、直角、中硬影和实体按键反馈。
+   Header 内联样式负责布局，组件层负责共享的 Neo-brutalist 视觉语言。 */
+.site-header {
+  /* 低对比度工程网格：让 header 有“结构网络”感，但不抢导航可读性。 */
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Cpath d='M32 0H0V32' fill='none' stroke='%232f5bea' stroke-opacity='0.10' stroke-width='1'/%3E%3Ccircle cx='0' cy='0' r='1.5' fill='%232f5bea' fill-opacity='0.18'/%3E%3C/svg%3E");
+}
+
+.site-header .brand-logo {
+  border: var(--sx-sys-border-width-strong) solid var(--sx-sys-color-border);
+  border-radius: var(--sx-sys-radius-control);
+  box-shadow: var(--sx-sys-shadow-md);
+  transition:
+    transform 100ms ease,
+    box-shadow 100ms ease;
+}
+
+.site-header .brand:hover .brand-logo,
+.site-header .brand:focus-visible .brand-logo {
+  transform: translate(-2px, -2px);
+  box-shadow: var(--sx-sys-shadow-lg);
+}
+
+.site-header .brand:active .brand-logo {
+  transform: translate(3px, 3px);
+  box-shadow: none;
+}
+
+.site-header .nav__link {
+  border: var(--sx-sys-border-width-strong) solid transparent;
+  transition:
+    transform 100ms ease,
+    background-color 100ms ease,
+    box-shadow 100ms ease,
+    color 100ms ease;
+}
+
+.site-header .nav__link:hover,
+.site-header .nav__link:focus-visible,
+.site-header .nav__link[aria-current='page'] {
+  border-color: var(--sx-sys-color-border);
+  box-shadow: var(--sx-sys-shadow-md);
+}
+
+.site-header .nav__link:hover,
+.site-header .nav__link:focus-visible {
+  transform: translate(-2px, -2px);
+}
+
+.site-header .nav__link:active {
+  transform: translate(3px, 3px);
+  box-shadow: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .site-header .brand-logo,
+  .site-header .nav__link {
+    transition: none;
+  }
+}
+
 /* ── Terminal ──────────────────────────────────────────────
    仿终端窗口：标题栏（红黄绿圆点 + 标题）+ 屏幕主体。被两处复用：
    - Command（.astro 纯展示容器，slot 自由内容，light 为默认主题、dark 为可选 opt-in，屏幕 overflow-x auto）
    - HeroTerminal（React island，light 主题打字机，加 .term--hero 拿主视觉尺寸 + 光标）
-   设计语言：1px 黑边 + 黄色硬阴影（--sx-comp-term-shadow，区别于站点默认纯黑阴影）。 */
+   设计语言：无外框 + 黄色硬阴影（--sx-comp-term-shadow，区别于站点默认纯黑阴影）。 */
 
 .term {
   margin: 0;
-  border: var(--sx-sys-border-width-strong) solid var(--sx-sys-color-border);
-  /* 黄色硬阴影（组件级令牌，区别于站点默认的纯黑阴影） */
+  /* 仅保留黄色硬阴影，不叠加外框或黑色轮廓。 */
   box-shadow: var(--sx-comp-term-shadow);
   background: var(--sx-sys-color-bg-surface);
   overflow: hidden;
@@ -338,6 +469,12 @@
   line-height: 1.7;
   overflow: hidden;
 }
+
+/* Hero terminal 是主视觉变体：恢复主体黑框，但继续只使用黄色偏移阴影。 */
+.term--hero {
+  border: var(--sx-sys-border-width-strong) solid var(--sx-sys-color-border);
+}
+
 .term__code {
   margin: 0;
   font-family: var(--sx-sys-font-family-mono-system);

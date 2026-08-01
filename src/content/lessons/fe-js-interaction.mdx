@@ -17,13 +17,13 @@ hero:
   pillOutline: 基础篇 · JS 入门
 ---
 
-import StepCard from '../../components/course/StepCard.astro';
-import StepSplit from '../../components/course/StepSplit.astro';
-import SectionHead from '../../components/course/SectionHead.astro';
-import Note from '../../components/course/Note.astro';
-import DocTable from '../../components/design-system/DocTable.astro';
-import DocPlayground from '../../components/design-system/DocPlayground.astro';
-import JsDrillDemoIsland from '../../components/course/JsDrillDemoIsland.astro';
+import StepCard from '../../components/course/StepCard';
+import StepSplit from '../../components/course/StepSplit';
+import SectionHead from '../../components/course/SectionHead';
+import Note from '../../components/course/Note';
+import DocTable from '../../components/design-system/DocTable';
+import DocPlayground from '../../components/design-system/DocPlayground';
+import JsDrillDemoIsland from '../../components/course/JsDrillDemoIsland';
 
 <StepCard num="JS-01" label="视觉">
   <StepSplit layout="stack">
@@ -39,7 +39,7 @@ import JsDrillDemoIsland from '../../components/course/JsDrillDemoIsland.astro';
     </Note>
     <div slot="figure">
       <DocPlayground size="sm" label="点按钮，页面跟着变" hint="点两个按钮，看文字怎么跟着你变">
-        <JsDrillDemoIsland drill="status" />
+        <JsDrillDemoIsland drill="status" client:load />
       </DocPlayground>
     </div>
   </StepSplit>

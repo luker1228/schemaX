@@ -1,0 +1,2 @@
+interface Props { className?: string; class?: string; label?: string; children?: React.ReactNode }
+export default function DocTable({ className, class: classProp, label = '对照表', children }: Props) { return <div className={['doc-table-scroll', className ?? classProp].filter(Boolean).join(' ')} role="region" aria-label={label} tabIndex={0}><table className="doc-props doc-props--paper">{children}</table></div>; }

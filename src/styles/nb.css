@@ -189,6 +189,48 @@
   flex-direction: column;
   gap: var(--sx-ref-space-3);
 }
+
+/* Toast demo：顶部是操作栏，底部是带点阵的通知舞台。
+   只作用于包含 toast 的 demo box，不改变其他组件演示块。 */
+.nb-demobox:has(.toast) {
+  padding: 0;
+  overflow: hidden;
+}
+
+.nb-demobox:has(.toast) > .nb-stack > .nb-row {
+  min-height: 6.25rem;
+  padding: var(--sx-ref-space-6);
+  border-bottom: var(--sx-sys-border-width-strong) solid var(--sx-sys-color-border);
+}
+
+.nb-demobox:has(.toast) > .nb-stack > .nb-stack {
+  min-height: 21rem;
+  padding: var(--sx-ref-space-8);
+  align-items: center;
+  justify-content: center;
+  background-color: var(--sx-sys-color-bg-page);
+  /* 点阵舞台：使用 SVG 避免渐变背景，也与 Playground 的点阵一致。 */
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16'%3E%3Ccircle cx='1' cy='1' r='1' fill='%23CBCCC9'/%3E%3C/svg%3E");
+}
+
+.nb-demobox:has(.toast) .toast--empty {
+  justify-content: center;
+  width: auto;
+  max-width: min(100%, 34rem);
+  margin: 0;
+  border-style: solid;
+  background: var(--sx-sys-color-pop-green);
+  box-shadow: var(--sx-sys-shadow-md);
+  opacity: 1;
+}
+
+.nb-demobox:has(.toast) .toast--empty::before {
+  content: '✓';
+  flex-shrink: 0;
+  font-size: var(--sx-sys-font-size-xl);
+  line-height: 1;
+}
+
 /* checkbox / radio / toggle 行容器 */
 .nb-checkrow {
   display: flex;
@@ -202,6 +244,25 @@
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
   gap: var(--sx-ref-space-6);
+}
+
+/* StaticCard 提取自 2×3 案例网格：固定三列，外层和卡片都不承担阴影。 */
+.staticcard-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--sx-ref-space-6);
+}
+
+@media (max-width: 48rem) {
+  .staticcard-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 36rem) {
+  .staticcard-grid {
+    grid-template-columns: 1fr;
+  }
 }
 .nb-carddemo {
   border: var(--sx-sys-border-width-strong) solid var(--sx-sys-color-border);
@@ -220,10 +281,8 @@
 }
 /* colored：局部覆盖 sys 影色为撞色（与 .card 同款机制）+ 同色边框 */
 .nb-carddemo--colored {
-  --sx-sys-shadow-color: var(--sx-sys-color-coral);
-
-  border-color: var(--sx-sys-color-coral);
-  box-shadow: var(--sx-sys-shadow-md);
+  border: var(--sx-sys-border-width-strong) solid var(--sx-comp-card-colored-border);
+  box-shadow: var(--sx-comp-card-colored-shadow);
 }
 .nb-carddemo--filled {
   background: var(--sx-sys-color-accent);
@@ -319,4 +378,14 @@
   .nb-copy {
     transition: none;
   }
+}
+
+/* 组件展示页的 demo 是实体样本，不是漂浮卡片：统一直角、3px 轮廓和 5px 接触影。 */
+.comp-block > .nb-grid2,
+.comp-block > .nb-codewrap,
+.comp-block > .nb-demobox,
+.comp-block > .nb-cardgrid,
+.comp-block > .nb-fccards,
+.comp-block > .nb-playground {
+  margin-block-end: var(--sx-ref-space-6);
 }

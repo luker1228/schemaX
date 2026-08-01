@@ -1,0 +1,4 @@
+import type { ReactNode } from 'react';
+export type DocPlaygroundSize = 'sm' | 'md';
+interface Props { label?: string; hint?: string; badge?: string; size?: DocPlaygroundSize; className?: string; class?: string; children?: ReactNode }
+export default function DocPlayground({ label = 'Playground', hint, badge = 'LIVE', size = 'sm', className, class: classProp, children }: Props) { return <figure className={['doc-playground', `doc-playground--${size}`, className ?? classProp].filter(Boolean).join(' ')}><figcaption className="doc-playground__bar"><div className="doc-playground__meta"><span className="doc-playground__file">{label}</span>{hint ? <span className="doc-playground__hint">{hint}</span> : null}</div><span className="doc-playground__badge">{badge}</span></figcaption><div className="doc-playground__stage">{children}</div></figure>; }

@@ -1,10 +1,10 @@
 ---
 import BaseLayout from '../../../layouts/BaseLayout.astro';
-import DocSide from '../../../components/design-system/DocSide.astro';
-import type { DocSideGroup } from '../../../components/design-system/DocSide.astro';
-import DocPager from '../../../components/design-system/DocPager.astro';
-import LessonHero from '../../../components/course/LessonHero.astro';
-import LessonBoard from '../../../components/course/LessonBoard.astro';
+import DocSide from '../../../components/design-system/DocSide';
+import type { DocSideGroup } from '../../../components/design-system/DocSide';
+import DocPager from '../../../components/design-system/DocPager';
+import LessonHero from '../../../components/course/LessonHero';
+import LessonBoard from '../../../components/course/LessonBoard';
 import { getCollection, render } from 'astro:content';
 import { courseIdOf } from '../../../lib/content';
 
@@ -83,7 +83,7 @@ const sideGroups: DocSideGroup[] = partOrder
       {
         usesBoardShell ? (
           /* 白板 / 引导式 stepper：无顶部 DocPager；末页可进下一章 */
-          <LessonBoard
+          <LessonBoard client:load
             mode={isStepper ? 'stepper' : 'board'}
             cover={hero}
             readTime={readTime}

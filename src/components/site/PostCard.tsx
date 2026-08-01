@@ -1,0 +1,5 @@
+import type { CollectionEntry } from 'astro:content';
+import Card from '../design-system/Card';
+interface Props { post: CollectionEntry<'posts'> }
+const styles = `.postcard{display:flex;flex-direction:column;gap:var(--sx-ref-space-2);height:100%}.postcard__title{font-size:var(--sx-sys-font-size-xl);font-weight:700;line-height:1.2}.postcard__desc{flex:1;opacity:.85}.postcard__meta{font-size:var(--sx-sys-font-size-md);font-family:ui-monospace,monospace;opacity:.7}`;
+export default function PostCard({ post }: Props) { const { title, description, publishedAt } = post.data; const date = publishedAt ? publishedAt.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }) : ''; return <><style dangerouslySetInnerHTML={{ __html: styles }} /><Card href={`/blog/${post.id}`} className="postcard"><span className="badge">Post</span><h3 className="postcard__title">{title}</h3><p className="postcard__desc">{description}</p>{date && <p className="postcard__meta">{date}</p>}</Card></>; }

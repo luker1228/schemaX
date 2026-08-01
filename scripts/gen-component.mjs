@@ -6,8 +6,8 @@
 //   pnpm gen:component Button 按钮描述...  # 命令行直接传参
 //
 // 生成：
-//   1. src/components/design-system/<Name>.astro        组件本体
-//   2. src/components/design-system/demos/<Name>Demo.astro  展示页演示
+//   1. src/components/design-system/<Name>.tsx        组件本体
+//   2. src/components/design-system/demos/<Name>Demo.tsx  展示页演示
 //   3. 更新 src/data/components-registry.ts            标记为 live
 //
 // 展示页 /design-system/components 是数据驱动的：
@@ -15,9 +15,7 @@
 //   - 新增 demo 文件会被 import.meta.glob 自动捕获
 //   - 因此本脚本无需修改展示页本身。
 //
-// 分层约定：本脚本面向静态展示组件（.astro，零 JS）。
-// 交互型组件（需要浏览器状态，如 Command / Dialog / Tabs / 搜索 / 主题切换 /
-// Playground）用 React island（.tsx + client:*），不在本脚本范围。
+// 组件统一使用 React SSR；需要浏览器状态时由页面决定是否使用 client:*。
 
 import { readFileSync, writeFileSync, existsSync } from 'node:fs';
 import { createInterface } from 'node:readline/promises';
@@ -47,51 +45,34 @@ const ask = async (rl, question, defaultValue) => {
 };
 
 // ── 模板：组件本体 ────────────────────────────────────────
-const componentTemplate = (name, title) => `---
-// ${title} 组件 —— SchemaX UI
-// TODO: 实现组件。下面的模板是一个最小可运行的占位，请按需替换。
-//
-// 设计语言：3px canonical 边框（border IS ornament）+ 纯黑零模糊硬影（3/6/9 ramp）+ paper 背景。状态用属性切换，非类名。
-// 样式优先放入 src/styles/components.css 的全局类，组件文件只放组件私有的 scoped 微调。
+const componentTemplate = (name, title) => `import type { ReactNode } from 'react';
 
 interface Props {
-  /** TODO: 按需定义 props。示例：label?: string */
   label?: string;
+  children?: ReactNode;
 }
 
-const { label = '${title}' } = Astro.props;
----
+export default function ${name}({ label = '${title}', children }: Props) {
+  return (
+    <div className="${name.toLowerCase()}">
+      {children ?? label}
+    </div>
+  );
+}
 
-<div class="${name.toLowerCase()}">
-  {label}
-</div>
-
-<style>
-  .${name.toLowerCase()} {
-    padding: var(--sx-ref-space-4);
-    border: var(--sx-sys-border-width-strong) solid var(--sx-sys-color-border);
-    background: var(--sx-sys-color-bg-surface);
-  }
-</style>
 `;
 
 // ── 模板：演示文件 ────────────────────────────────────────
-const demoTemplate = (name) => `---
-// ${name} 演示 —— 仅供 /design-system/components 展示页使用。
-// 展示页通过 import.meta.glob 自动捕获本文件。
-// 演示块结构封装在 Demo.astro（head + stage + 折叠说明）。
-import ${name} from '../${name}.astro';
-import Demo from '../Demo.astro';
----
+const demoTemplate = (name) => `import ${name} from '../${name}';
+import Demo from '../Demo';
 
-<>
-  <Demo label="默认态" attr={'<${name} />'}>
-    <${name} />
-    <Fragment slot="note">
-      <p>TODO: 补充 ${name} 的演示说明与状态变体。参考 demos/NavDemo.astro 的多状态结构。</p>
-    </Fragment>
-  </Demo>
-</>
+export default function ${name}Demo() {
+  return (
+    <Demo label="默认态" attr="<${name} />" note={<p>TODO: 补充演示说明与状态变体。</p>}>
+      <${name} />
+    </Demo>
+  );
+}
 `;
 
 // ── 主流程 ────────────────────────────────────────────────
@@ -122,8 +103,8 @@ async function main() {
       process.exit(1);
     }
 
-    const componentPath = join(COMPONENTS_DIR, `${name}.astro`);
-    const demoPath = join(DEMOS_DIR, `${name}Demo.astro`);
+    const componentPath = join(COMPONENTS_DIR, `${name}.tsx`);
+    const demoPath = join(DEMOS_DIR, `${name}Demo.tsx`);
 
     // 2. 检查是否已存在
     if (existsSync(componentPath)) {
@@ -161,7 +142,7 @@ async function main() {
     console.log('');
     console.log('完成！访问 /design-system/components 查看演示。');
     console.log(
-      `下一步：编辑 ${name}.astro 实现组件逻辑，编辑 ${name}Demo.astro 完善演示。`,
+      `下一步：编辑 ${name}.tsx 实现组件逻辑，编辑 ${name}Demo.tsx 完善演示。`,
     );
   } finally {
     rl?.close();

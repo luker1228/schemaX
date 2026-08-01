@@ -1,8 +1,8 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import FeatureCard from '../../components/design-system/FeatureCard.astro';
-import Crumb from '../../components/design-system/Crumb.astro';
-import GeoMark from '../../components/design-system/GeoMark.astro';
+import FeatureCard from '../../components/design-system/FeatureCard';
+import Crumb from '../../components/design-system/Crumb';
+import GeoMark from '../../components/design-system/GeoMark';
 
 /**
  * 设计系统枢纽页 —— SchemaX UI 作为作品本身的入口。
@@ -384,7 +384,7 @@ const layers = [
 
   .ds-vars__title {
     font-family: var(--sx-sys-font-family-mono);
-    font-size: 0.6875rem;
+    font-size: var(--sx-sys-font-size-xs);
     font-weight: 800;
     letter-spacing: 0.05em;
     color: var(--sx-sys-color-text-primary);
@@ -392,7 +392,7 @@ const layers = [
 
   .ds-vars__add {
     font-family: var(--sx-sys-font-family-mono);
-    font-size: 0.9375rem;
+    font-size: var(--sx-sys-font-size-base);
     font-weight: 800;
     line-height: 1;
     color: var(--sx-sys-color-text-soft);
@@ -405,7 +405,7 @@ const layers = [
 
   .ds-vars__collection {
     font-family: var(--sx-sys-font-family-mono);
-    font-size: 0.625rem;
+    font-size: var(--sx-sys-font-size-xs);
     font-weight: 800;
     letter-spacing: 0.04em;
     color: var(--sx-sys-color-text-soft);
@@ -432,14 +432,14 @@ const layers = [
 
   .ds-vars__name {
     font-family: var(--sx-sys-font-family-mono);
-    font-size: 0.6875rem;
+    font-size: var(--sx-sys-font-size-xs);
     font-weight: 800;
     color: var(--sx-sys-color-text-primary);
   }
 
   .ds-vars__value {
     font-family: var(--sx-sys-font-family-mono);
-    font-size: 0.625rem;
+    font-size: var(--sx-sys-font-size-xs);
     font-weight: 700;
     color: var(--sx-sys-color-text-soft);
   }
@@ -451,14 +451,14 @@ const layers = [
   }
 
   .ds-vars__modeicon {
-    font-size: 0.6875rem;
+    font-size: var(--sx-sys-font-size-xs);
     line-height: 1;
     color: var(--sx-sys-color-text-soft);
   }
 
   .ds-vars__modelabel {
     font-family: var(--sx-sys-font-family-mono);
-    font-size: 0.625rem;
+    font-size: var(--sx-sys-font-size-xs);
     font-weight: 800;
     letter-spacing: 0.03em;
     color: var(--sx-sys-color-text-soft);

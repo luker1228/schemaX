@@ -67,23 +67,6 @@
   scrollbar-width: thin;
 }
 
-/* DocSide 收起：侧栏缩成窄把手，主区占满剩余宽度（零 JS，:has + checkbox） */
-.sx-doc-layout:has(.doc-side__check:not(:checked)) {
-  grid-template-columns: 2.75rem minmax(0, 1fr);
-  gap: var(--sx-ref-space-4);
-}
-.sx-doc-layout:has(.doc-side__check:not(:checked)) .sx-doc-side-slot {
-  overflow: visible;
-  max-height: none;
-}
-
-.sx-doc-main {
-  display: flex;
-  flex-direction: column;
-  gap: var(--sx-sys-layout-gap-main);
-  min-width: 0;
-}
-
 /*
  * 课时白板页：目录左移 10rem，列宽同步收缩，
  * 主区（白板）吃掉这 10rem，中间 gap 仍由 --sx-sys-layout-gap-doc 控制。
@@ -100,6 +83,23 @@
 .sx-doc-layout:has(.lboard) .sx-doc-side-slot {
   width: var(--sx-sys-layout-sidebar-width);
   margin-inline-start: calc(-1 * var(--sx-doc-side-shift));
+}
+
+.sx-doc-main {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sx-sys-layout-gap-main);
+  min-width: 0;
+}
+
+/* DocSide 收起：侧栏缩成窄把手，主区占满剩余宽度（零 JS，:has + checkbox） */
+.sx-doc-layout:has(.doc-side__check:not(:checked)) {
+  grid-template-columns: 2.75rem minmax(0, 1fr);
+  gap: var(--sx-ref-space-4);
+}
+.sx-doc-layout:has(.doc-side__check:not(:checked)) .sx-doc-side-slot {
+  overflow: visible;
+  max-height: none;
 }
 /* 收起侧栏时仍用窄把手，不叠左移 */
 .sx-doc-layout:has(.lboard):has(.doc-side__check:not(:checked)) {

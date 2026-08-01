@@ -16,16 +16,16 @@ hero:
   pillOutline: 第一课 · 建立心智模型
 ---
 
-import StepCard from '../../components/course/StepCard.astro';
-import StepSplit from '../../components/course/StepSplit.astro';
-import SectionHead from '../../components/course/SectionHead.astro';
-import Note from '../../components/course/Note.astro';
-import Preview from '../../components/course/Preview.astro';
-import Card from '../../components/design-system/Card.astro';
-import Button from '../../components/design-system/Button.astro';
-import Badge from '../../components/design-system/Badge.astro';
-import ShopNerveDemoIsland from '../../components/course/ShopNerveDemoIsland.astro';
-import LayerMatchQuizIsland from '../../components/course/LayerMatchQuizIsland.astro';
+import StepCard from '../../components/course/StepCard';
+import StepSplit from '../../components/course/StepSplit';
+import SectionHead from '../../components/course/SectionHead';
+import Note from '../../components/course/Note';
+import Preview from '../../components/course/Preview';
+import Card from '../../components/design-system/Card';
+import Button from '../../components/design-system/Button';
+import Badge from '../../components/design-system/Badge';
+import ShopNerveDemoIsland from '../../components/course/ShopNerveDemoIsland';
+import LayerMatchQuizIsland from '../../components/course/LayerMatchQuizIsland';
 
 <StepCard num="FM-01" label="总图">
   <SectionHead line1="把网页想成一家商品小店" line2="三层分工，各管一件事" />
@@ -138,13 +138,13 @@ import LayerMatchQuizIsland from '../../components/course/LayerMatchQuizIsland.a
         '——这就是神经在干活：监听到点击事件，驱动状态，触发界面发生新的变化。'
       }
     </p>
-    <ShopNerveDemoIsland slot="figure" />
+    <ShopNerveDemoIsland slot="figure" client:load />
   </StepSplit>
 </StepCard>
 
 <StepCard num="FM-05" label="练习">
   <StepSplit layout="stack" class="step-split--centered">
     <SectionHead line1="小测 · 该改哪一层" line2="把需求连到 HTML / CSS / JS" />
-    <LayerMatchQuizIsland slot="figure" />
+    <LayerMatchQuizIsland slot="figure" client:load />
   </StepSplit>
 </StepCard>

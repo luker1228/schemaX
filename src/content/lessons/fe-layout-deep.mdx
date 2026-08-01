@@ -17,11 +17,11 @@ hero:
   pillOutline: 工程实践 · CLAUDE.md
 ---
 
-import StepCard from '../../components/course/StepCard.astro';
-import SectionHead from '../../components/course/SectionHead.astro';
-import Note from '../../components/course/Note.astro';
-import Preview from '../../components/course/Preview.astro';
-import DocTable from '../../components/design-system/DocTable.astro';
+import StepCard from '../../components/course/StepCard';
+import SectionHead from '../../components/course/SectionHead';
+import Note from '../../components/course/Note';
+import Preview from '../../components/course/Preview';
+import DocTable from '../../components/design-system/DocTable';
 
 <StepCard num="CM-01" label="骨架" variant="reference">
   <SectionHead line1="一份完整项目提示词长什么样" line2="九个模块，重点是「承重约定」" />
@@ -146,8 +146,8 @@ import DocTable from '../../components/design-system/DocTable.astro';
   </Note>
   <Preview label="终端" lang="sh" code={`$ pnpm gen:component Button 主要、次要、幽灵变体
 
-✔ 生成 src/components/design-system/Button.astro          （组件本体）
-✔ 生成 src/components/design-system/demos/ButtonDemo.astro （演示）
+✔ 生成 src/components/design-system/Button.tsx          （React 组件本体）
+✔ 生成 src/components/design-system/demos/ButtonDemo.tsx （React 演示）
 ✔ 更新 src/data/components-registry.ts                    （标记 live）`} />
   <Note tag="为什么承重">
     手写绕过脚手架，registry 和文件就会脱节——展示页要么漏组件、要么 demo 找不到报错。一条命令保证<strong>三处永远同步</strong>，AI 不必去理解三者的关联，照着规矩跑命令就行。

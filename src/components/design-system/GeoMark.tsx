@@ -1,0 +1,93 @@
+
+interface Props {
+  kind: string;
+  size?: 'sm' | 'md' | 'lg';
+  className?: string;
+  class?: string;
+  /** 兼容旧 DoodleMark，几何无随机 —— 忽略 */
+  span?: number;
+  /** 兼容旧 DoodleMark，几何无随机 —— 忽略 */
+  seed?: number;
+}
+
+export default function GeoMark(props: Props) {
+/**
+ * GeoMark —— SchemaX 几何符号 icon 系统（neubrutalism 装饰语系）。
+ *
+ * 归属 design-system 组件库，全站共用（home / design-system / 未来其他 surface）。
+ * 替代已退役的 Rough.js 手绘涂鸦层（Doodle / DoodleMark）—— DESIGN.md 规定：
+ * 装饰走几何符号，禁止手绘涂鸦 / sketch-style SVG / feTurbulence 颗粒。
+ *
+ * 视觉约定（与 schemax-icons 同源）：
+ *   - 32×32 viewBox，3px 黑墨描边（currentColor，默认墨黑，外层 color 可覆盖）
+ *   - hard edges（miter / square 端点），无曲线抖动
+ *   - 局部实心填充走 token：黄 / 蓝 / 珊瑚粉 / 纸白
+ *   - 纯 SSR inline SVG，零客户端 JS（阅读区零 JS 约束）
+ *
+ * kind 目录：
+ *   - 形状：star（四角几何星）/ spark（实心十字）/ arrow（粗几何箭头）/ brace（方括号）
+ *   - 入口 icon：icon-course（书+书签）/ icon-blog（文档+蓝行）/ icon-code（</>）/
+ *     icon-db（圆柱）/ icon-foundations（坐标十字）/ icon-tokens（2×2 调色板）/
+ *     icon-components（按钮+卡）/ icon-patterns（节点连接）
+ *
+ * 接口兼容旧 DoodleMark（kind / size / class 透传，span / seed 接受但忽略）。
+ */
+const { kind, size = 'md', className, class: classProp = '' } = props;
+
+const sizePx: Record<'sm' | 'md' | 'lg', number> = {
+  sm: 28,
+  md: 40,
+  lg: 56,
+};
+const px = sizePx[(size as 'sm' | 'md' | 'lg') ?? 'md'] ?? sizePx.md;
+
+// 描边走 currentColor（默认墨黑，外层 color 可覆盖）；填充走语义 token。
+const INK = 'currentColor';
+const YELLOW = 'var(--sx-sys-color-accent)';
+const BLUE = 'var(--sx-sys-color-action-primary)';
+const CORAL = 'var(--sx-sys-color-coral)';
+const PAPER = 'var(--sx-sys-color-bg-surface)';
+
+const SW = 3; // 黑墨描边宽度（32 viewBox 下 ≈ 2–3px 实际，与全站 3px canonical 同语系）
+
+const marks: Record<string, string> = {
+  // 四角几何星（带凹），黄填充黑描边 —— star 的几何对应
+  star: `<path d="M16 2 L19.5 12.5 L30 16 L19.5 19.5 L16 30 L12.5 19.5 L2 16 L12.5 12.5 Z" fill="${YELLOW}" stroke="${INK}" stroke-width="${SW}" stroke-linejoin="miter"/>`,
+  // 实心粗十字（几何加号）—— spark 的几何对应
+  spark: `<path d="M13 3 H19 V13 H29 V19 H19 V29 H13 V19 H3 V13 H13 Z" fill="${INK}" stroke="${INK}" stroke-width="${SW}" stroke-linejoin="miter"/>`,
+  // 粗几何箭头（杆 + 三角头），实心黑 —— arrow 的几何对应
+  arrow: `<path d="M3 13 H19 V8 L29 16 L19 24 V19 H3 Z" fill="${INK}" stroke="${INK}" stroke-width="${SW}" stroke-linejoin="miter"/>`,
+  // 几何方括号 [ ] —— brace 的几何对应（直角折线，无曲线）
+  brace: `<polyline points="10,4 15,4 15,28 10,28" fill="none" stroke="${INK}" stroke-width="${SW}" stroke-linejoin="miter" stroke-linecap="square"/><polyline points="22,4 17,4 17,28 22,28" fill="none" stroke="${INK}" stroke-width="${SW}" stroke-linejoin="miter" stroke-linecap="square"/>`,
+  // 课程：方框书 + 三横页 + 右上黄书签
+  'icon-course': `<rect x="5" y="5" width="22" height="22" fill="${PAPER}" stroke="${INK}" stroke-width="${SW}"/><line x1="10" y1="12" x2="21" y2="12" stroke="${INK}" stroke-width="2.5" stroke-linecap="square"/><line x1="10" y1="16.5" x2="21" y2="16.5" stroke="${INK}" stroke-width="2.5" stroke-linecap="square"/><line x1="10" y1="21" x2="17" y2="21" stroke="${INK}" stroke-width="2.5" stroke-linecap="square"/><path d="M21 5 L27 5 L27 11 L24 8.5 L21 11 Z" fill="${YELLOW}" stroke="${INK}" stroke-width="2.5" stroke-linejoin="miter"/>`,
+  // 博客：方框文档 + 横线（首行蓝）
+  'icon-blog': `<rect x="5" y="4" width="22" height="24" fill="${PAPER}" stroke="${INK}" stroke-width="${SW}"/><line x1="10" y1="11" x2="22" y2="11" stroke="${BLUE}" stroke-width="3" stroke-linecap="square"/><line x1="10" y1="16.5" x2="22" y2="16.5" stroke="${INK}" stroke-width="2.5" stroke-linecap="square"/><line x1="10" y1="22" x2="18" y2="22" stroke="${INK}" stroke-width="2.5" stroke-linecap="square"/>`,
+  // 代码 </> ：双尖括号 + 中蓝斜线
+  'icon-code': `<polyline points="12,8 5,16 12,24" fill="none" stroke="${INK}" stroke-width="${SW}" stroke-linejoin="miter" stroke-linecap="square"/><polyline points="20,8 27,16 20,24" fill="none" stroke="${INK}" stroke-width="${SW}" stroke-linejoin="miter" stroke-linecap="square"/><line x1="18" y1="7" x2="14" y2="25" stroke="${BLUE}" stroke-width="${SW}" stroke-linecap="square"/>`,
+  // 数据库圆柱：顶椭圆 + 两侧竖线 + 底前弧 + 中蓝环
+  'icon-db': `<ellipse cx="16" cy="7" rx="10" ry="3.5" fill="${PAPER}" stroke="${INK}" stroke-width="${SW}"/><line x1="6" y1="7" x2="6" y2="25" stroke="${INK}" stroke-width="${SW}" stroke-linecap="square"/><line x1="26" y1="7" x2="26" y2="25" stroke="${INK}" stroke-width="${SW}" stroke-linecap="square"/><path d="M6 25 A10 3.5 0 0 0 26 25" fill="none" stroke="${INK}" stroke-width="${SW}" stroke-linejoin="miter"/><path d="M6 16 A10 3.5 0 0 0 26 16" fill="none" stroke="${BLUE}" stroke-width="${SW}"/>`,
+  // Foundations：方框 + 内十字坐标 + 右下黄方块（基础 / 方向）
+  'icon-foundations': `<rect x="5" y="5" width="22" height="22" fill="${PAPER}" stroke="${INK}" stroke-width="${SW}"/><line x1="8" y1="16" x2="24" y2="16" stroke="${INK}" stroke-width="2.5" stroke-linecap="square"/><line x1="16" y1="8" x2="16" y2="24" stroke="${INK}" stroke-width="2.5" stroke-linecap="square"/><rect x="21" y="21" width="5" height="5" fill="${YELLOW}" stroke="${INK}" stroke-width="2.5"/>`,
+  // Tokens：2×2 调色板（黄 / 粉 / 蓝 / 纸 四撞色格）
+  'icon-tokens': `<rect x="5" y="5" width="22" height="22" fill="${PAPER}" stroke="${INK}" stroke-width="${SW}"/><rect x="5" y="5" width="11" height="11" fill="${YELLOW}" stroke="${INK}" stroke-width="2.5"/><rect x="16" y="5" width="11" height="11" fill="${CORAL}" stroke="${INK}" stroke-width="2.5"/><rect x="5" y="16" width="11" height="11" fill="${BLUE}" stroke="${INK}" stroke-width="2.5"/>`,
+  // Components：黄按钮 + 白卡（控件堆叠）
+  'icon-components': `<rect x="5" y="6" width="22" height="11" fill="${YELLOW}" stroke="${INK}" stroke-width="${SW}"/><line x1="11" y1="12" x2="21" y2="12" stroke="${INK}" stroke-width="2.5" stroke-linecap="square"/><rect x="9" y="20" width="14" height="7" fill="${PAPER}" stroke="${INK}" stroke-width="${SW}"/>`,
+  // Patterns：节点 + 连线 + 蓝点（组合模式）
+  'icon-patterns': `<rect x="4" y="4" width="9" height="9" fill="${PAPER}" stroke="${INK}" stroke-width="${SW}"/><rect x="19" y="6" width="9" height="9" fill="${YELLOW}" stroke="${INK}" stroke-width="${SW}"/><rect x="8" y="19" width="9" height="9" fill="${PAPER}" stroke="${INK}" stroke-width="${SW}"/><line x1="13" y1="9" x2="19" y2="11" stroke="${INK}" stroke-width="2.5" stroke-linecap="square"/><line x1="12" y1="13" x2="12" y2="19" stroke="${INK}" stroke-width="2.5" stroke-linecap="square"/><rect x="20" y="20" width="6" height="6" fill="${BLUE}" stroke="${INK}" stroke-width="2.5"/>`,
+};
+
+// 未知 kind 回落几何星，不崩
+const inner = marks[kind] ?? marks.star;
+  return (
+<svg
+  className={['geomark', className ?? classProp].filter(Boolean).join(' ')}
+  viewBox="0 0 32 32"
+  width={px}
+  height={px}
+  role="img"
+  aria-hidden="true"
+  dangerouslySetInnerHTML={{ __html: inner }}
+/>
+  );
+}
