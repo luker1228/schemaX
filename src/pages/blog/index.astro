@@ -1,8 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import PostCard from '../../components/site/PostCard';
-import PageHeader from '../../components/site/PageHeader';
-import Crumb from '../../components/design-system/Crumb';
 import { getCollection } from 'astro:content';
 
 const posts = (
@@ -11,15 +9,28 @@ const posts = (
   (a, b) =>
     (b.data.publishedAt?.getTime() ?? 0) - (a.data.publishedAt?.getTime() ?? 0),
 );
+
+const topicCount = new Set(
+  posts.flatMap((p) =>
+    (p.data.topics ?? []).map((t) => (t as { id: string }).id),
+  ),
+).size;
 ---
 
 <BaseLayout title="Blog" description="技术文章、工程总结与观点记录。">
+  <section class="blog-hero">
+    <div class="sx-container blog-hero__inner">
+      <p class="blog-hero__kicker">/ blog — writing</p>
+      <h1 class="blog-hero__title">技术文章与工程思考</h1>
+      <p class="blog-hero__desc">
+        Agent 工程、后端设计、建模实践，以及一些不谈技术的随想。为搜索读者写的可执行结构——不是营销页。
+      </p>
+      <p class="blog-hero__stat">{posts.length} 篇 · 跨 {topicCount} 个主题</p>
+    </div>
+  </section>
+
   <section class="sx-section">
     <div class="sx-container">
-      <Crumb items={[{ label: 'Home', href: '/' }, { label: 'Blog' }]} />
-
-      <PageHeader title="Blog" description="技术文章、工程总结与观点记录。" />
-
       {
         posts.length > 0 ? (
           <div class="sx-grid">
@@ -36,6 +47,56 @@ const posts = (
 </BaseLayout>
 
 <style>
+  /* 撞色 hero（lavender 紫，区分首页黄；紫温和适合阅读入口）。黑字（紫底黑字 ~10:1）。 */
+  .blog-hero {
+    background: var(--sx-sys-color-lavender);
+    border-bottom: 4px solid var(--sx-sys-color-border);
+  }
+  .blog-hero__inner {
+    padding-block: clamp(2.5rem, 6vw, 4.5rem);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--sx-ref-space-3);
+  }
+  .blog-hero__kicker {
+    margin: 0;
+    font-family: var(--sx-sys-font-family-mono-system), ui-monospace, monospace;
+    font-size: var(--sx-sys-font-size-sm);
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--sx-sys-color-text-primary);
+    opacity: 0.7;
+  }
+  .blog-hero__title {
+    margin: 0;
+    font-family: var(--sx-sys-font-family-display), system-ui, sans-serif;
+    font-size: var(--sx-sys-font-display-md);
+    font-weight: 800;
+    line-height: 1.02;
+    letter-spacing: -0.03em;
+    color: var(--sx-sys-color-text-primary);
+  }
+  .blog-hero__desc {
+    margin: 0;
+    max-width: 46rem;
+    font-size: var(--sx-sys-font-size-reading);
+    line-height: 1.55;
+    color: var(--sx-sys-color-text-primary);
+    opacity: 0.85;
+  }
+  .blog-hero__stat {
+    margin: 0;
+    margin-top: var(--sx-ref-space-2);
+    font-family: var(--sx-sys-font-family-mono-system), ui-monospace, monospace;
+    font-size: var(--sx-sys-font-size-sm);
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--sx-sys-color-text-primary);
+    opacity: 0.7;
+  }
   .empty {
     border: var(--sx-sys-border-width) dashed var(--sx-sys-color-border);
     padding: var(--sx-ref-space-8);

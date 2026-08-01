@@ -166,6 +166,38 @@
   animation: sx-arrow-draw 1.1s cubic-bezier(0.22, 1, 0.36, 1) 0.25s both;
 }
 
+/* —— Landing 色块节奏（参考 design/reference.pen）————
+   每个 section 是全宽撞色块：hero 黄 / ticker 蓝 开篇最响；内容 section 用
+   color-mix 调浅的撞色（克制、可读、不与卡片争饱和度）；section 之间用纯撞色
+   divider band（home-band，20px 高 + 上下 3px ink 线）过渡。色块覆盖暖纸网格，
+   首页从「蓝图工作台」转为「贴纸色块 landing」。 */
+.hero { background: var(--sx-sys-color-accent); }
+.entries { background: var(--sx-sys-color-bg-surface); }
+.manifesto { background: color-mix(in srgb, var(--sx-sys-color-coral) 22%, var(--sx-sys-color-bg-surface)); }
+.latest { background: color-mix(in srgb, var(--sx-sys-color-sky) 22%, var(--sx-sys-color-bg-surface)); }
+.projects { background: color-mix(in srgb, var(--sx-sys-color-pop-green) 22%, var(--sx-sys-color-bg-surface)); }
+.tech { background: color-mix(in srgb, var(--sx-sys-color-orange) 22%, var(--sx-sys-color-bg-surface)); }
+
+/* Hero 黄底：次级文字 text-soft/muted 在黄上对比不足（~3:1），改 ink 黑（~13:1）。
+   两层选择器提高特异性，覆盖组件内 scoped 的单层 .hero__lede 等。 */
+.hero .hero__lede,
+.hero .hero__bio,
+.hero .hero__caption { color: var(--sx-sys-color-text-primary); }
+
+/* 撞色 divider band：纯撞色横条，分隔相邻色块（参考 reference.pen 的 Divider Band）。 */
+.home-band {
+  height: 1.25rem;
+  background: var(--sx-sys-color-coral);
+  /* 粗 ink 横线：inset 4px inner stroke（贴参考 Divider Band 的 strokeAlignment inner
+     + strokeWidth 4）——撞色填满 height、ink 线画在内侧不外凸，比外缘 border 更利更粗。 */
+  box-shadow: inset 0 4px 0 var(--sx-sys-color-border), inset 0 -4px 0 var(--sx-sys-color-border);
+}
+.home-band--coral { background: var(--sx-sys-color-coral); }
+.home-band--sky { background: var(--sx-sys-color-sky); }
+.home-band--pop-green { background: var(--sx-sys-color-pop-green); }
+.home-band--orange { background: var(--sx-sys-color-orange); }
+.home-band--lavender { background: var(--sx-sys-color-lavender); }
+
 @media (prefers-reduced-motion: reduce) {
   .geo-arrow-draw,
   .stamp,

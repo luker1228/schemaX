@@ -54,7 +54,6 @@ SchemaX 是我公开的第二大脑：课程、笔记、作品与设计系统共
       <div className="hero__meta">
         <span className="hero__stamp-badge">Schema-Driven</span>
         <GeoMark kind="star" size="sm" className="hero__star" />
-        <GeoMark kind="spark" size="sm" className="hero__spark" />
       </div>
 
       <h1 className="hero__title" id="hero-title">
@@ -76,7 +75,6 @@ SchemaX 是我公开的第二大脑：课程、笔记、作品与设计系统共
       <div className="hero__command" aria-hidden="true">
         <span className="hero__command-label">path</span>
         <code className="hero__command-code">schema → contract → tool call</code>
-        <GeoMark kind="brace" size="sm" className="hero__brace" />
       </div>
 
       <div className="hero__cta">

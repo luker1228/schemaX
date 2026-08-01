@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-07-30T12:00:00Z",
+  "generatedAt": "2026-08-01T00:00:00Z",
   "title": "Design System: SchemaX UI",
   "extensions": {
     "colorMeta": {
@@ -117,6 +117,30 @@
       "description": "浅色设备窗口贴纸：paper 屏 + 墨字 + 黄硬影签名。暗屏已退役为 opt-in。",
       "html": "<div class=\"ds-term\"><div class=\"ds-term__bar\"><span class=\"ds-term__dots\"><i class=\"ds-term__dot ds-term__dot--red\"></i><i class=\"ds-term__dot ds-term__dot--yellow\"></i><i class=\"ds-term__dot ds-term__dot--green\"></i></span><span class=\"ds-term__title\">schemax</span></div><div class=\"ds-term__screen\"><code>pnpm build</code></div></div>",
       "css": ".ds-term { border: 1px solid var(--sx-sys-color-border); box-shadow: 6px 6px 0 var(--sx-sys-color-accent), 6px 6px 0 1px var(--sx-sys-color-border); background: var(--sx-sys-color-bg-surface); overflow: hidden; max-width: 28rem; } .ds-term__bar { display: flex; align-items: center; gap: 0.75rem; padding: 0.45rem 0.75rem; background: var(--sx-sys-color-bg-page); border-bottom: 1px solid var(--sx-sys-color-border); } .ds-term__dots { display: inline-flex; gap: 0.35rem; } .ds-term__dot { display: inline-block; width: 0.7rem; height: 0.7rem; border: 1px solid var(--sx-sys-color-border); border-radius: 50%; } .ds-term__dot--red { background: var(--sx-sys-color-danger); } .ds-term__dot--yellow { background: var(--sx-sys-color-accent); } .ds-term__dot--green { background: var(--sx-sys-color-success); } .ds-term__title { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.8125rem; font-weight: 700; opacity: 0.7; } .ds-term__screen { padding: 0.75rem 1rem; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.8125rem; line-height: 1.65; background: var(--sx-sys-color-bg-page); color: var(--sx-sys-color-text-primary); } .ds-term__screen code { font-family: inherit; }"
+    },
+    {
+      "name": "Divider Band",
+      "kind": "custom",
+      "refersTo": "divider-band",
+      "description": "section 间撞色分割带：纯撞色横条 + 4px ink inner stroke（box-shadow inset）。色块 landing 节奏的过渡件，首页用 5 条串联 6 个色块 section。",
+      "html": "<div class=\"ds-divider-band\"></div>",
+      "css": ".ds-divider-band { height: 1.25rem; background: var(--sx-sys-color-coral); box-shadow: inset 0 4px 0 var(--sx-sys-color-border), inset 0 -4px 0 var(--sx-sys-color-border); }"
+    },
+    {
+      "name": "Clash Hero",
+      "kind": "custom",
+      "refersTo": "clash-hero",
+      "description": "一级路由入口 hero：全宽撞色块（首页黄 / blog 紫，各页不同撞色区分 surface）+ display 大标题 + mono 统计，黑字。底边 4px ink 线接内容。",
+      "html": "<section class=\"ds-clash-hero\"><p class=\"ds-clash-hero__kicker\">/ blog</p><h1 class=\"ds-clash-hero__title\">技术文章与工程思考</h1><p class=\"ds-clash-hero__stat\">22 篇 · 跨 8 个主题</p></section>",
+      "css": ".ds-clash-hero { background: var(--sx-sys-color-lavender); border-bottom: 4px solid var(--sx-sys-color-border); padding: 2.5rem 1.5rem; display: flex; flex-direction: column; gap: 0.5rem; } .ds-clash-hero__kicker { margin: 0; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.8125rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; opacity: 0.7; } .ds-clash-hero__title { margin: 0; font-family: 'Bricolage Grotesque', ui-sans-serif, system-ui, sans-serif; font-size: clamp(2rem, 5vw, 3rem); font-weight: 800; letter-spacing: -0.02em; line-height: 1.02; } .ds-clash-hero__stat { margin: 0; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.8125rem; font-weight: 700; opacity: 0.7; }"
+    },
+    {
+      "name": "Footer",
+      "kind": "custom",
+      "refersTo": "footer",
+      "description": "全站黑底收尾：ink 底 + 白字 + accent 黄 mono 列标题 + color-mix 灰辅助。The Never-Dark Rule 的唯一大面积暗色面例外。",
+      "html": "<footer class=\"ds-footer\"><div class=\"ds-footer__logo\">SchemaX</div><p class=\"ds-footer__tagline\">Structure the Unknown.</p><div class=\"ds-footer__col-h\">Explore</div><a class=\"ds-footer__link\">Blog</a><div class=\"ds-footer__divider\"></div><span class=\"ds-footer__copy\">© 2026 Luke</span></footer>",
+      "css": ".ds-footer { background: var(--sx-sys-color-border); color: var(--sx-sys-color-bg-surface); padding: 2.5rem 1.5rem; } .ds-footer__logo { font-family: 'Bricolage Grotesque', ui-sans-serif, system-ui, sans-serif; font-weight: 800; font-size: 1.5rem; line-height: 1; } .ds-footer__tagline { margin: 0.5rem 0; color: color-mix(in srgb, var(--sx-sys-color-bg-surface) 65%, var(--sx-sys-color-border)); font-size: 0.9rem; } .ds-footer__col-h { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.6875rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--sx-sys-color-accent); } .ds-footer__link { display: block; color: color-mix(in srgb, var(--sx-sys-color-bg-surface) 92%, var(--sx-sys-color-border)); text-decoration: none; font-size: 0.9rem; } .ds-footer__divider { height: 2px; background: color-mix(in srgb, var(--sx-sys-color-bg-surface) 15%, var(--sx-sys-color-border)); margin: 1rem 0; } .ds-footer__copy { font-size: 0.8125rem; color: color-mix(in srgb, var(--sx-sys-color-bg-surface) 65%, var(--sx-sys-color-border)); }"
     }
   ],
   "narrative": {
@@ -137,7 +161,7 @@
       { "name": "The Reading-First Rule", "body": "配色决策先问：会不会伤害长文可读？会——退场。装饰色、大面积 accent、Schema 母题一律让位给段落对比与安静。", "section": "colors" },
       { "name": "The One Stamp Rule", "body": "Accent 黄是整页唯一印泥/马克笔——主操作与激活态，单屏 ≤10%。", "section": "colors" },
       { "name": "The Ink-Does-Triple-Duty Rule", "body": "同一个 #000000 是文字、边框、硬阴影。不为丰富引入第二种黑。", "section": "colors" },
-      { "name": "The Never-Dark Rule", "body": "页面与阅读世界永远明亮，不暗；终端亦为浅色。任何 UI 面不得引入暗色填充（语义红/绿小点除外）。", "section": "colors" },
+      { "name": "The Never-Dark Rule", "body": "页面与阅读世界永远明亮，不暗；终端亦为浅色。任何 UI 面不得引入暗色填充（语义红/绿小点除外）。唯一的大面积暗色面例外是全站 footer（黑底白字收尾）。", "section": "colors" },
       { "name": "The Decorative-Only Rule", "body": "Mint/Lavender/Beige/Gray-light 是页边罕见彩点，只活在品牌区与首页 bento，不进正文，也不作常规强调。", "section": "colors" },
       { "name": "The Display-Is-Rare Rule", "body": "Bricolage 只用于 hero / 页主标题，重磅且稀少。H1–H4 一律 Geist。", "section": "typography" },
       { "name": "The Quiet-Prose Rule", "body": "正文段落用 Geist，行高 1.8，最大阅读宽 46rem。贴纸与批注停在 chrome、壳与组件。", "section": "typography" },
@@ -164,7 +188,11 @@
       "Do 用 --sx-sys-* / --sx-article-* / --sx-comp-*，间距落在 --sx-ref-space-*，微旋走 --sx-rotate-sticker。",
       "Do 按钮按下、卡片抬起——transform + 硬影，120ms，尊重 reduced-motion。",
       "Do 按页面分级：设计系统最吵，博客正文最静。",
-      "Do 设计系统页读取令牌生成产物，不手抄色值。"
+      "Do 设计系统页读取令牌生成产物，不手抄色值。",
+      "Do 做 landing / 列表时用「色块节奏」：section 全宽撞色块（深撞色开篇 + color-mix 浅撞色大面积 + 白）+ Divider Band 撞色横条过渡。",
+      "Do 大面积浅撞色底走 color-mix(clash 22% + bg-surface) 配黑字——既得撞色氛围又留卡片克制空间。",
+      "Do 给每个一级路由一个撞色 hero 入口（不同撞色区分 surface）+ display 大标题 + mono 统计。",
+      "Do 全站 footer 走黑底（border token）+ 白字 + accent 黄 mono 列标题，作为 The Never-Dark Rule 的唯一暗色面例外。"
     ],
     "donts": [
       "Don't 引入暗色面——页面、阅读世界、终端都保持明亮（语义性红/绿小点除外）。",

@@ -173,6 +173,8 @@ SchemaX UI 是一摞**撞色硬边贴纸**，以 [neubrutalism.com](https://neub
 
 撞色配**黑字**（ink）保证对比度 ≥3:1（large/bold text）；仅深色面（action 蓝、ink 黑）配白字。撞色活在首页 / landing / bento / 设计系统，**不进长文段落背景**。
 
+**浅撞色大面积底（color-mix 技法）：** 当撞色要做整段 section / hero 大面积底时，纯撞色过响、且和卡片争饱和度。用 `color-mix(in srgb, var(--sx-sys-color-<clash>) 22%, var(--sx-sys-color-bg-surface))` 把撞色调到 ~22% + 白，得到柔和浅撞色底（粉/蓝/绿/橙的淡调），配黑字对比仍 ≥4.5:1。这是「撞色块节奏」与「卡片克制」共存的关键——**大面浅、点缀纯**。
+
 ### Secondary
 
 - **Danger** (`#F9575C`, `--sx-sys-color-danger`): 危险 / 停用（删除、archived、终端红点）。
@@ -201,7 +203,7 @@ SchemaX UI 是一摞**撞色硬边贴纸**，以 [neubrutalism.com](https://neub
 
 **The Ink-Does-Triple-Duty Rule.** 同一个 `#000000` 是文字、边框、硬阴影。不为「丰富」引入第二种黑。
 
-**The Never-Dark Rule.** 页面与阅读世界永远明亮；终端亦为浅色；任何 UI 面不得引入暗色填充（语义性 danger/success 小点除外）。
+**The Never-Dark Rule.** 页面与阅读世界永远明亮；终端亦为浅色；任何 UI 面不得引入暗色填充（语义性 danger/success 小点除外）。**唯一的大面积暗色面例外是全站 footer**（黑底白字收尾，见 Components/Footer）。
 
 ## Typography
 
@@ -355,6 +357,22 @@ neubrutalism 的形：恒 0 圆角、硬边、3px 黑墨 canonical 笔触。贴�
 
 首页装饰与入口 icon 的几何语系（替代手绘涂鸦）。纯 SSR inline SVG（零 JS），32×32 viewBox，**3px 黑墨描边、hard edges（miter/square）**，局部蓝/黄/撞色实心填充。覆盖：star（四角几何星）/ spark（实心十字）/ arrow（粗几何箭头）/ brace（方括号）/ icon-course|blog|code|db（几何线条 icon）。接口兼容 DoodleMark。
 
+### 撞色 Hero 入口（页面 hero 模式）
+
+每个一级路由的入口 hero 是一张**全宽撞色块**（首页 accent 黄 / blog lavender 紫，各页用不同撞色区分 surface），承载 display 大标题 + 描述 + mono 统计/副标题，黑字（浅撞色配黑）。底边 4px ink 线接后续内容。这是「页面身份」的第一笔——用撞色块立刻区分你到了哪个 surface。注意：hero 撞色不计入「贴纸点缀」的稀少约束，它是页面级氛围底。
+
+### Divider Band（撞色分割带）
+
+section 之间的全宽撞色横条，是「色块 landing 节奏」的过渡件。`height: 1.25rem`，**纯撞色填充**（coral / sky / pop-green / orange / lavender 轮换），上下各一道 **4px ink inner stroke**——用 `box-shadow: inset 0 4px 0 / inset 0 -4px 0 var(--sx-sys-color-border)` 模拟 inner 描边（撞色填满高度、ink 线画在内侧不外凸，比外缘 border 更利更粗）。Nav 底部 `border-bottom: 4px solid border` 是同语系的细分割。首页用 5 条 band 串联 6 个色块 section。**只在 landing / 列表 / 入口页用，不进长文。**
+
+### PostCard + topic 撞色 pill
+
+博客列表卡（白底 3px 黑框 + sm/md 硬影，Read 克制）。签名是 **topic 撞色 pill**：9 个 topic 各分配一色（ai-agent→sky / backend→pop-green / system-design→lavender / modelcraft→coral / reflection→mint / english→orange / tooling→accent / schema→beige / frontend→sky），pill 走 sticker 语系（3px 黑边 + 微旋 + 黑字）。**卡片克制 + pill 撞色点缀** = 索引可读 + 品牌贴纸感；不要把整卡做成撞色（22 篇全撞色 = hierarchy 塌）。
+
+### Footer（黑底全站收尾）
+
+全站 footer 是**黑底**（`--sx-sys-color-border` = ink `#000`）+ 白字的收尾。logo（display）+ tagline + 双列链接（Explore 站内 / Connect 外链），列标题用 **accent 黄 mono**（uppercase），辅助文字用 `color-mix(白 65% + 黑)` 调亮灰，2px 暗灰分割线（`color-mix(白 15% + 黑)`），底部版权 + 黄 mono 装饰 code。黑底白字对比 ~21:1、灰文字 ~7:1，全合规。这是系统里**唯一允许的大面积暗色面**（The Never-Dark Rule 的 footer 例外）。
+
 ### 阅读与课程壳（模式，非单一类名）
 
 - **`.sx-article`:** 阅读感核心——字号 / 行高 / 标题呼吸 / 链接下划线 / blockquote 左边框 / 行内 code 小硬戳。端正不旋。
@@ -377,6 +395,10 @@ neubrutalism 的形：恒 0 圆角、硬边、3px 黑墨 canonical 笔触。贴�
 - **Do** hover 抬起 + 影涨、active 按下贴底——`transform` + 硬影，0.1s，尊重 reduced-motion。
 - **Do** focus 用 3px sky 蓝描边 + offset 3px（不被装饰硬影吞）。
 - **Do** 设计系统页读取令牌生成产物，不手抄色值。
+- **Do** 做 landing / 列表时用「色块节奏」：section 全宽撞色块（深撞色开篇 + `color-mix` 浅撞色大面积 + 白）+ Divider Band 撞色横条过渡，节奏强但不喧宾。
+- **Do** 大面积浅撞色底走 `color-mix(clash 22% + bg-surface)` 配黑字——既得撞色氛围又留卡片克制空间（纯撞色做整段底会与卡片争饱和度）。
+- **Do** 给每个一级路由一个撞色 hero 入口（不同撞色区分 surface）+ display 大标题 + mono 统计，建立页面身份的第一笔。
+- **Do** 全站 footer 走黑底（border token）+ 白字 + accent 黄 mono 列标题，作为 The Never-Dark Rule 的唯一暗色面例外。
 
 ### Don't:
 
