@@ -19,13 +19,6 @@ const posts = (
     (b.data.publishedAt?.getTime() ?? 0) - (a.data.publishedAt?.getTime() ?? 0),
 );
 const recentPosts = posts.slice(0, 4);
-
-// 非归档项目：优先 featured，否则取第一个作为代表作大卡。
-const projects = await getCollection(
-  'projects',
-  ({ data }) => data.status !== 'archived',
-);
-const featuredProject = projects.find((p) => p.data.featured) ?? projects[0];
 ---
 
 <BaseLayout title={site.name} type="profile">
@@ -35,7 +28,7 @@ const featuredProject = projects.find((p) => p.data.featured) ?? projects[0];
     <HomeEntries />
     <HomeManifesto />
     <HomeLatestPosts posts={recentPosts} />
-    <HomeProjects project={featuredProject} />
+    <HomeProjects />
     <HomeTechNote />
   </div>
 </BaseLayout>

@@ -23,5 +23,25 @@
     "id": "system-design",
     "label": "System Design",
     "description": "系统设计与工程取舍。"
+  },
+  {
+    "id": "modelcraft",
+    "label": "ModelCraft",
+    "description": "低代码平台从零搭建的工程实录与架构取舍。"
+  },
+  {
+    "id": "reflection",
+    "label": "Reflection",
+    "description": "随想、寓言与个人成长记录。"
+  },
+  {
+    "id": "english",
+    "label": "English",
+    "description": "英语学习与实践笔记。"
+  },
+  {
+    "id": "tooling",
+    "label": "Tooling",
+    "description": "开发工具、CLI 与工程效率。"
   }
 ]
