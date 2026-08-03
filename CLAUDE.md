@@ -23,7 +23,27 @@ V1 **只使用** Astro + React + MDX + TS + 原生 CSS/Tailwind，单仓库（�
 | **组件底层** | RetroUI / 新粗野主义（`Button` / `Card` / `Badge` / 全局 `.btn` `.card` 等） | 交互控件、容器、边框、硬阴影、排版壳、状态与布局、分割线（`SectionDivider` 平面黑条） | 手绘插画、装饰性线稿、涂鸦图标的「画法」 |
 | **绘制层** | **Rough.js**（`roughjs`，经 `src/lib/doodle/` 封装） | 手绘感图形：星星、箭头、花括号、课程/博客/代码等涂鸦图标、斜线填充等插画（分割线已划归组件底层） | 不替代 Button/Card 等 UI 组件；不把控件外观改成 canvas 手绘；不承担分割线 |
 
-简记：**RetroUI 搭架子；Rough.js 画图。**
+简记：**RetroUI 搭架子；Rough.js 画图；Lucide 填功能图标。**
+
+## 图标体系（三层分工，承重约定）
+
+站点图标分三类，**职责不重叠，勿互相顶替**：
+
+| 层 | 技术 | 管什么 | 规格 |
+|----|------|--------|------|
+| **功能图标** | **Lucide**（`lucide-react` 官方包） | 通用功能性 UI 图标：箭头 / chevron / 网格 / 关闭 / 搜索 / 复制 / 外链 / 菜单等 | 24×24 · `currentColor` · **粗线 `--sx-sys-icon-stroke-width`(2.5px) + 硬边 square/miter**，全局 `svg.lucide` 规则统一（`src/styles/icons.css`） |
+| **品牌图标** | **schemax-icons**（`.agents/skills/schemax-icons`） | 品牌 / Schema 主题符号：花括号、字段名、类型标签、`required` 星号 | 24×24 · 2px · 硬边 · 蓝黄撞色（手绘 inline SVG，落点 `src/components/icons/Icon<Name>.astro`） |
+| **装饰 / 入口 mark** | **GeoMark**（`DESIGN.md` § Components） | 首页装饰与入口几何 mark：star / spark / arrow / brace / icon-course 等 | 32×32 · 3px · 硬边 · 撞色实心填充 |
+
+简记：**Lucide 管功能；schemax-icons 管品牌；GeoMark 管装饰/入口。**
+
+### Lucide 使用约定
+
+- **统一来源**：`.astro` / `.tsx` 直接 `import { ArrowLeft } from 'lucide-react'`，按需单图标 import（tree-shaking）。**禁止为新功能图标手写 inline SVG path**——一律走 Lucide。
+- **零 JS**：Astro 默认把 React 组件 SSR 成静态 `<svg>`，**不加 `client:*` 即零客户端 JS**；静态图标**禁止加 `client:*`**（图标若在已 hydration 的 island 内，如 `LessonBoard`，则随 island 一起 hydrate，无额外成本）。
+- **粗线 + 硬边是全局默认**：`svg.lucide` 规则一次性覆盖 lucide 的 presentation attribute（默认 round/2px），**无需逐图标传 prop**。要改粗细，改 token `--sx-sys-icon-stroke-width`（`tokens/src/semantic.json` → `sys.icon.stroke-width`），不在组件里写死。
+- **颜色走父容器**：lucide 用 `stroke="currentColor"`，由父元素 `color: var(--sx-sys-color-*)` 控制，**禁裸 hex stroke**（§17）。蓝（品牌）/ 黑（克制）由父级决定，同一图标复用两种语境。
+- **尺寸**：由各组件既有 CSS 选择器（如 `.docs-nav__arrow{width:1rem}`）或 lucide 的 `size` prop 控制，不写死像素。
 
 ## 命令（规范 §24 —— 脚手架已实现）
 

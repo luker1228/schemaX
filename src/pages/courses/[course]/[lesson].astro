@@ -136,6 +136,17 @@ const sideGroups: DocSideGroup[] = partOrder
             >
               <Content />
             </div>
+
+            {/* 末尾前后导航：读完一节即可继续翻页，与顶部同款 DocPager */}
+            <div class="lesson-pager lesson-pager--end">
+              <DocPager
+                prev={pagerPrev}
+                next={pagerNext}
+                centerHref="/courses"
+                centerLabel="全部课程"
+                label="课时前后导航"
+              />
+            </div>
           </>
         )
       }
@@ -147,7 +158,7 @@ const sideGroups: DocSideGroup[] = partOrder
   /* —— 页面专属：默认标题 / 正文间距（双栏壳见 layout.css；导航见 DocPager） —— */
 
   .lhead {
-    max-width: var(--sx-article-width-reading);
+    /* 吃满主区宽度（与正文 / hero / pager 对齐），不锁阅读栏 */
     margin-inline: auto;
     margin-block-end: 0.5rem;
     padding-block-end: var(--sx-ref-space-6);
@@ -159,7 +170,6 @@ const sideGroups: DocSideGroup[] = partOrder
      DocPager 自身的 .docs-nav[cid] (0,2,0)。 */
   .lesson-pager {
     width: 100%;
-    max-width: var(--sx-article-width-reading);
     margin-inline: auto;
   }
   .lesson-pager :global(.docs-nav) {
@@ -192,10 +202,9 @@ const sideGroups: DocSideGroup[] = partOrder
     /* 节与节明显换气：编号徽章认节 + 大留白分段 */
     gap: clamp(3rem, 5.5vw, 4rem);
     width: 100%;
-    /* scroll 模式：收成居中阅读栏（参考 fanstudio lab，~46rem measure）。
-       board 模式走 .lesson-body--board（display:contents，无盒），此 max-width
-       不影响分页 slide 自有的 40/56/72rem 宽度。 */
-    max-width: var(--sx-article-width-reading);
+    /* scroll 模式：吃满主区宽度（遵循 .sx-article--lesson 的 max-width:none 本意），
+       不锁阅读栏；行长由 StepSplit 的 .step-split__copy > p{max-width:42rem} 控制。
+       board 模式走 .lesson-body--board（display:contents，无盒），不影响分页 slide 宽度。 */
     margin-inline: auto;
   }
 
@@ -203,6 +212,12 @@ const sideGroups: DocSideGroup[] = partOrder
   .lesson-body--board {
     display: contents;
     gap: 0;
+  }
+
+  /* 纯文字提示块限阅读栏宽（保中文行长可读）；StepSplit 双列 / 卡片 / 代码 / island
+     仍吃满主区（它们自身已有 copy 42rem 等内层限宽）。仅课程页，不影响设计系统页。 */
+  .lesson-body :global(.doc-note) {
+    max-width: var(--sx-article-width-reading);
   }
 
   .lesson-body :global(.step),

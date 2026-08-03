@@ -23,6 +23,7 @@
 @import './layout.css' layer(layout);
 @import './article.css' layer(article);
 @import './components.css' layer(components);
+@import './icons.css' layer(components); /* Lucide 功能图标：粗线 + 硬边全局规则 */
 @import './doc.css' layer(components); /* 文档页 V2 共用展示样式 */
 @import './nb.css' layer(components); /* components 页：neubrutalism 参考视觉对齐 */
 @import './utilities.css' layer(utilities);

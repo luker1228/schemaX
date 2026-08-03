@@ -1,5 +1,6 @@
 
 import type { ReactNode, CSSProperties } from 'react';
+import { ArrowLeft, ArrowRight, LayoutGrid } from 'lucide-react';
 
 interface ReactProps { [key: string]: any; children?: ReactNode }
 const styleValue = (value: string | CSSProperties | undefined): CSSProperties | undefined => {
@@ -47,18 +48,7 @@ const {
         href={prev.href}
         rel="prev"
       >
-        <svg
-          className="docs-nav__arrow"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          aria-hidden="true"
-        >
-          <path d="M19 12H5 M11 6L5 12L11 18" />
-        </svg>
+        <ArrowLeft className="docs-nav__arrow" aria-hidden="true" />
         <span className="docs-nav__title">{prev.title}</span>
       </a>
     ) : (
@@ -70,21 +60,7 @@ const {
   }
 
   <a className="docs-nav__slot docs-nav__slot--center" href={centerHref}>
-    <svg
-      className="docs-nav__index-icon"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      aria-hidden="true"
-    >
-      <rect x="3" y="3" width="7" height="7" rx="1" />
-      <rect x="14" y="3" width="7" height="7" rx="1" />
-      <rect x="3" y="14" width="7" height="7" rx="1" />
-      <rect x="14" y="14" width="7" height="7" rx="1" />
-    </svg>
+    <LayoutGrid className="docs-nav__index-icon" aria-hidden="true" />
     {centerLabel}
   </a>
 
@@ -96,18 +72,7 @@ const {
         rel="next"
       >
         <span className="docs-nav__title">{next.title}</span>
-        <svg
-          className="docs-nav__arrow"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          aria-hidden="true"
-        >
-          <path d="M5 12H19 M13 6L19 12L13 18" />
-        </svg>
+        <ArrowRight className="docs-nav__arrow" aria-hidden="true" />
       </a>
     ) : (
       <span

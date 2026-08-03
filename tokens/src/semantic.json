@@ -70,6 +70,13 @@
         "$description": "Canonical 笔触（neubrutalism border：所有主组件默认边框，单一笔触宽度，border IS ornament）。"
       }
     },
+    "icon": {
+      "stroke-width": {
+        "$type": "dimension",
+        "$value": "2.5px",
+        "$description": "功能性 UI 图标（Lucide）粗线描边宽度。neubrutalism 粗线，介于品牌 schemax-icons(2px) 与装饰 GeoMark(3px) 之间；由全局 svg.lucide 规则消费。"
+      }
+    },
     "radius": {
       "sm": { "$type": "dimension", "$value": "0" },
       "md": { "$type": "dimension", "$value": "0" },
@@ -89,7 +96,7 @@
       "width": {
         "doc": {
           "$type": "dimension",
-          "$value": "87.5rem",
+          "$value": "80rem",
           "$description": "文档/课时双栏布局内容总宽（侧栏 + 主区）。设计系统组件页与课程课时页共用。"
         }
       },
@@ -103,7 +110,7 @@
       "gap": {
         "doc": {
           "$type": "dimension",
-          "$value": "10rem",
+          "$value": "4rem",
           "$description": "文档/课时双栏：侧栏 ↔ 主区间距（目录与白板之间的留白）。"
         },
         "main": {

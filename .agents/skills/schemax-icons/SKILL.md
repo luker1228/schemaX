@@ -1,12 +1,15 @@
 ---
 name: schemax-icons
-description: "Draw SchemaX icons as static inline SVG locked to the real --sx-sys-* design tokens — 24px canvas, 2px currentColor stroke, hard edges. Default brand beat is blue-yellow complementary (blue line + yellow accent panel); black-line for restrained body/nav contexts; red/green for semantic status. Use when creating, re-coloring, or auditing any UI icon in this repo."
+description: "Draw SchemaX BRAND / Schema-themed icons as static inline SVG locked to the real --sx-sys-* design tokens — 24px canvas, 2px currentColor stroke, hard edges. Default brand beat is blue-yellow complementary (blue line + yellow accent panel); black-line for restrained body/nav contexts; red/green for semantic status. Use when creating, re-coloring, or auditing BRAND icons (braces, field names, type labels, required stars). Generic functional UI icons (arrows, chevrons, grid, search…) come from lucide-react instead — see CLAUDE.md「图标体系」; this skill does not cover them."
 ---
 
 # SchemaX icons
 
-Icons are **static inline SVG (Astro, zero JS)**. Draw them by hand on a 24×24
-grid — do not pull in an icon font or a JS icon library. One sentence:
+These **brand / Schema-themed** icons are **static inline SVG (Astro, zero JS)**. Draw
+them by hand on a 24×24 grid. (Generic *functional* UI icons — arrows, chevrons, grid,
+search, copy… — are **not** drawn here; they come from `lucide-react`, see CLAUDE.md
+「图标体系」. The "no icon font / no JS icon library" rule below scopes to *these brand
+glyphs* only.) One sentence:
 
 > 蓝黄撞色是默认品牌节拍：蓝描边 + 黄强调面板。
 > 黑线留给克制场景（正文 / 导航 / 密集行）；红 / 绿只表状态。

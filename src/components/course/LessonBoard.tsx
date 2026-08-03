@@ -1,6 +1,7 @@
 import LessonHero from './LessonHero';
 import { useEffect, useRef } from 'react';
 import type { ReactNode, CSSProperties } from 'react';
+import { ArrowLeft, ArrowRight, ChevronDown } from 'lucide-react';
 
 interface ReactProps { [key: string]: any; children?: ReactNode }
 const styleValue = (value: string | CSSProperties | undefined) => {
@@ -220,19 +221,7 @@ useEffect(() => {
           <span className="lboard__section" data-lboard-section>
             {hasCover ? coverLabel : '…'}
           </span>
-          <svg
-            className="lboard__sec-chevron"
-            viewBox="0 0 24 24"
-            fill="none"
-            aria-hidden="true"
-          >
-            <path
-              d="M6 9l6 6 6-6"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"></path>
-          </svg>
+          <ChevronDown className="lboard__sec-chevron" aria-hidden="true" />
         </summary>
         <div className="lboard__sec-panel" role="listbox" aria-label="本课章节">
           <p className="lboard__sec-hint">跳转到</p>
@@ -280,19 +269,7 @@ useEffect(() => {
     >
       <span className="lboard__nav-end" data-lboard-prev-end>已是第一页</span>
       <span className="lboard__nav-pair" data-lboard-prev-pair hidden>
-        <svg
-          className="lboard__arrow"
-          viewBox="0 0 24 24"
-          fill="none"
-          aria-hidden="true"
-        >
-          <path
-            d="M19 12H5m6-6l-6 6 6 6"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"></path>
-        </svg>
+        <ArrowLeft className="lboard__arrow" aria-hidden="true" />
         <span className="lboard__nav-text">
           <span className="lboard__nav-eyebrow">上一节</span>
           <span className="lboard__nav-title" data-lboard-prev-title></span>
@@ -316,19 +293,7 @@ useEffect(() => {
           <span className="lboard__nav-eyebrow" data-lboard-next-eyebrow>下一节</span>
           <span className="lboard__nav-title" data-lboard-next-title></span>
         </span>
-        <svg
-          className="lboard__arrow"
-          viewBox="0 0 24 24"
-          fill="none"
-          aria-hidden="true"
-        >
-          <path
-            d="M5 12h14m-6-6l6 6-6 6"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"></path>
-        </svg>
+        <ArrowRight className="lboard__arrow" aria-hidden="true" />
       </span>
       <span className="lboard__nav-end" data-lboard-next-end hidden>已是最后一页</span>
     </button>

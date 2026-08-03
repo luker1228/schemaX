@@ -1,0 +1,19 @@
+/* Lucide 功能性 UI 图标全局规则（归入 components 层）。
+   设计语言：粗线（--sx-sys-icon-stroke-width，2.5px）+ 硬边（square/miter），
+   与品牌图标语系统一（GeoMark 32/3px、schemax-icons 24/2px 均 square/miter）。
+
+   原理：lucide-react 的图标根 svg 自带 class="lucide lucide-<name>"，并把
+   stroke-width=2 / stroke-linecap=round / stroke-linejoin=round 作为 presentation
+   attribute 渲染。CSS 属性优先级高于 presentation attribute，因此本规则一次性覆盖
+   全部 lucide 图标，无需在每个 <Icon/> 上传 strokeWidth / strokeLinecap。
+
+   颜色：lucide 用 stroke="currentColor"，由父容器 color 控制 —— 走 var(--sx-sys-color-*)，
+   天然满足 §17（禁裸 hex）。尺寸：由各组件既有 CSS 选择器或 size prop 控制。
+   详见 CLAUDE.md「图标体系（三层分工）」。 */
+@layer components {
+  svg.lucide {
+    stroke-width: var(--sx-sys-icon-stroke-width);
+    stroke-linecap: square;
+    stroke-linejoin: miter;
+  }
+}

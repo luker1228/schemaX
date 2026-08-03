@@ -29,7 +29,7 @@ export default function GeoMark(props: Props) {
  *   - 入口 icon：icon-course（书+书签）/ icon-blog（文档+蓝行）/ icon-code（</>）/
  *     icon-db（圆柱）/ icon-foundations（坐标十字）/ icon-tokens（2×2 调色板）/
  *     icon-components（按钮+卡）/ icon-patterns（节点连接）/
- *     icon-graphql（图查询三角）/ icon-shield（盾牌授权）
+ *     icon-graphql（六芒星）/ icon-shield（盾牌授权）
  *
  * 接口兼容旧 DoodleMark（kind / size / class 透传，span / seed 接受但忽略）。
  */
@@ -76,8 +76,8 @@ const marks: Record<string, string> = {
   'icon-components': `<rect x="5" y="6" width="22" height="11" fill="${YELLOW}" stroke="${INK}" stroke-width="${SW}"/><line x1="11" y1="12" x2="21" y2="12" stroke="${INK}" stroke-width="2.5" stroke-linecap="square"/><rect x="9" y="20" width="14" height="7" fill="${PAPER}" stroke="${INK}" stroke-width="${SW}"/>`,
   // Patterns：节点 + 连线 + 蓝点（组合模式）
   'icon-patterns': `<rect x="4" y="4" width="9" height="9" fill="${PAPER}" stroke="${INK}" stroke-width="${SW}"/><rect x="19" y="6" width="9" height="9" fill="${YELLOW}" stroke="${INK}" stroke-width="${SW}"/><rect x="8" y="19" width="9" height="9" fill="${PAPER}" stroke="${INK}" stroke-width="${SW}"/><line x1="13" y1="9" x2="19" y2="11" stroke="${INK}" stroke-width="2.5" stroke-linecap="square"/><line x1="12" y1="13" x2="12" y2="19" stroke="${INK}" stroke-width="2.5" stroke-linecap="square"/><rect x="20" y="20" width="6" height="6" fill="${BLUE}" stroke="${INK}" stroke-width="2.5"/>`,
-  // GraphQL：倒三角轮廓 + 三顶点黄节点 + 蓝中连线（图查询）
-  'icon-graphql': `<path d="M5 7 L27 7 L16 26 Z" fill="${PAPER}" stroke="${INK}" stroke-width="${SW}" stroke-linejoin="miter"/><line x1="16" y1="7" x2="16" y2="26" stroke="${BLUE}" stroke-width="2.5" stroke-linecap="square"/><rect x="3" y="5" width="4" height="4" fill="${YELLOW}" stroke="${INK}" stroke-width="2.5"/><rect x="25" y="5" width="4" height="4" fill="${YELLOW}" stroke="${INK}" stroke-width="2.5"/><rect x="14" y="24" width="4" height="4" fill="${YELLOW}" stroke="${INK}" stroke-width="2.5"/>`,
+  // GraphQL：六芒星（双三角叠加）+ 六顶点黄节点，上三角蓝边 / 下三角黑边（graph nodes + edges）
+  'icon-graphql': `<path d="M16 5 L25.5 21.5 L6.5 21.5 Z" fill="${PAPER}" stroke="${BLUE}" stroke-width="${SW}" stroke-linejoin="miter"/><path d="M16 27 L25.5 10.5 L6.5 10.5 Z" fill="${PAPER}" stroke="${INK}" stroke-width="${SW}" stroke-linejoin="miter"/><rect x="14" y="3" width="4" height="4" fill="${YELLOW}" stroke="${INK}" stroke-width="2.5"/><rect x="23.5" y="8.5" width="4" height="4" fill="${YELLOW}" stroke="${INK}" stroke-width="2.5"/><rect x="23.5" y="19.5" width="4" height="4" fill="${YELLOW}" stroke="${INK}" stroke-width="2.5"/><rect x="14" y="25" width="4" height="4" fill="${YELLOW}" stroke="${INK}" stroke-width="2.5"/><rect x="4.5" y="19.5" width="4" height="4" fill="${YELLOW}" stroke="${INK}" stroke-width="2.5"/><rect x="4.5" y="8.5" width="4" height="4" fill="${YELLOW}" stroke="${INK}" stroke-width="2.5"/>`,
   // Shield：盾牌轮廓 + 蓝对勾（授权 / 安全）
   'icon-shield': `<path d="M7 5 H25 V14 L22 20 L16 26 L10 20 L7 14 Z" fill="${PAPER}" stroke="${INK}" stroke-width="${SW}" stroke-linejoin="miter"/><polyline points="12,15 15,18 20,12" fill="none" stroke="${BLUE}" stroke-width="2.5" stroke-linejoin="miter" stroke-linecap="square"/>`,
 };
