@@ -22,11 +22,11 @@ export const aboutHero = {
   intro: '你好，我是人类大模型 Luke。',
   copy: '我是 Luke，一名 AI Agent 工程师，全栈工程师。我把 schema、设计系统和个人知识库当作训练语料，记录被模型重塑的学习、表达与创作过程。',
   principles: [
-    { label: 'SCHEMA-FIRST', accent: 'surface' },
-    { label: 'FULL STACK', accent: 'accent' },
-    { label: 'AI AGENT', accent: 'surface' },
-    { label: 'WRITE TO LEARN', accent: 'accent' },
-    { label: 'CLOUD', accent: 'surface' },
+    { label: 'SCHEMA-FIRST', accent: 'accent' },
+    { label: 'FULL STACK', accent: 'mint' },
+    { label: 'AI AGENT', accent: 'lavender' },
+    { label: 'WRITE TO LEARN', accent: 'success' },
+    { label: 'CLOUD', accent: 'beige' },
   ] as const satisfies readonly Principle[],
 };
 
@@ -75,12 +75,32 @@ export interface StackRow {
 }
 
 export const stackRows: StackRow[] = [
-  { label: '语言', accent: 'accent', items: ['TypeScript', 'JavaScript', 'Python', 'Java', 'Go'] },
+  {
+    label: '语言',
+    accent: 'accent',
+    items: ['TypeScript', 'JavaScript', 'Python', 'Java', 'Go'],
+  },
   { label: '部署', accent: 'mint', items: ['Docker', 'k8s', 'CI/CD'] },
-  { label: 'AI / AGENT', accent: 'lavender', items: ['OpenAI', 'Claude', 'Function Calling', 'Embeddings'] },
-  { label: '中间件', accent: 'action', items: ['apisix', 'keycloak', 'mysql', 'redis', 'kafka'] },
-  { label: '框架', accent: 'beige', items: ['SpringBoot', 'Gin', 'PI', 'Expressive Code'] },
-  { label: 'DESIGN', accent: 'success', items: ['Figma', 'Pencil', 'DTCG Tokens', 'Design Systems'] },
+  {
+    label: 'AI / AGENT',
+    accent: 'lavender',
+    items: ['OpenAI', 'Claude', 'Function Calling', 'Embeddings'],
+  },
+  {
+    label: '中间件',
+    accent: 'action',
+    items: ['apisix', 'keycloak', 'mysql', 'redis', 'kafka'],
+  },
+  {
+    label: '框架',
+    accent: 'beige',
+    items: ['SpringBoot', 'Gin', 'PI', 'Expressive Code'],
+  },
+  {
+    label: 'DESIGN',
+    accent: 'success',
+    items: ['Figma', 'Pencil', 'DTCG Tokens', 'Design Systems'],
+  },
 ];
 
 // —— 个人履历 ——

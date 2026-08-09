@@ -40,6 +40,10 @@
   background: var(--sx-sys-color-lavender);
 }
 
+.sx-band--orange {
+  background: var(--sx-sys-color-orange);
+}
+
 .sx-grid {
   display: grid;
   gap: var(--sx-ref-space-8);

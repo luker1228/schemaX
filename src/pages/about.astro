@@ -12,11 +12,17 @@ import AboutContact from '../components/about/AboutContact';
 <BaseLayout title="关于" type="profile">
   <div class="about-page">
     <AboutHero />
+    <div class="sx-band" aria-hidden="true"></div>
     <AboutSkills />
+    <div class="sx-band sx-band--coral" aria-hidden="true"></div>
     <AboutTechStack />
+    <div class="sx-band sx-band--sky" aria-hidden="true"></div>
     <AboutJourney />
+    <div class="sx-band sx-band--pop-green" aria-hidden="true"></div>
     <AboutValues />
+    <div class="sx-band sx-band--lavender" aria-hidden="true"></div>
     <AboutNow />
+    <div class="sx-band sx-band--orange" aria-hidden="true"></div>
     <AboutContact />
   </div>
 </BaseLayout>
@@ -24,7 +30,11 @@ import AboutContact from '../components/about/AboutContact';
 <style>
   /* About 只增加区块撞色，内容与组件行为仍由各自组件负责。 */
   .about-page :global(.hero) {
-    background: var(--sx-sys-color-accent);
+    background: color-mix(
+      in srgb,
+      var(--sx-sys-color-accent) 22%,
+      var(--sx-sys-color-bg-surface)
+    );
   }
 
   .about-page :global(.skills) {
@@ -65,5 +75,57 @@ import AboutContact from '../components/about/AboutContact';
       var(--sx-sys-color-orange) 16%,
       var(--sx-sys-color-bg-page)
     );
+  }
+
+  /* Now 原本是终端深色面；About 页面统一改为浅色 section。 */
+  .about-page :global(.now) {
+    background: color-mix(
+      in srgb,
+      var(--sx-sys-color-orange) 16%,
+      var(--sx-sys-color-bg-page)
+    );
+    border-color: var(--sx-sys-color-border);
+  }
+
+  .about-page :global(.now__title),
+  .about-page :global(.now__prompt-cmd),
+  .about-page :global(.now-card__title) {
+    color: var(--sx-sys-color-text-primary);
+  }
+
+  .about-page :global(.now__sub),
+  .about-page :global(.now-card__desc) {
+    color: var(--sx-sys-color-text-soft);
+  }
+
+  .about-page :global(.now__prompt),
+  .about-page :global(.now-card) {
+    background: var(--sx-sys-color-bg-surface);
+    border-color: var(--sx-sys-color-border);
+  }
+
+  .about-page :global(.now__prompt) {
+    color: var(--sx-sys-color-text-primary);
+  }
+
+  .about-page :global(.now__prompt-dollar) {
+    color: var(--sx-sys-color-action-primary);
+  }
+
+  .about-page :global(.now-card__label) {
+    color: var(--sx-sys-color-action-primary);
+  }
+
+  .about-page :global(.contact__btn:hover),
+  .about-page :global(.contact__btn:active),
+  .about-page :global(.contact__btn:focus-visible),
+  .about-page :global(a.btn[href='/rss.xml']:hover),
+  .about-page :global(a.btn[href='/rss.xml']:active),
+  .about-page :global(a.btn[href='/rss.xml']:focus-visible),
+  .about-page :global(a.btn[href^='https://github.com/']:hover),
+  .about-page :global(a.btn[href^='https://github.com/']:active),
+  .about-page :global(a.btn[href^='https://github.com/']:focus-visible) {
+    transform: translate(3px, 3px) !important;
+    box-shadow: none !important;
   }
 </style>
