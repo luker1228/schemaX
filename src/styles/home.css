@@ -192,7 +192,12 @@
      + strokeWidth 4）——撞色填满 height、ink 线画在内侧不外凸，比外缘 border 更利更粗。 */
   box-shadow: inset 0 4px 0 var(--sx-sys-color-border), inset 0 -4px 0 var(--sx-sys-color-border);
 }
-.home-band--coral { background: var(--sx-sys-color-coral); }
+.home-band--coral {
+  background: var(--sx-sys-color-coral);
+  border-block: var(--sx-sys-border-width-strong) solid var(--sx-sys-color-border);
+  box-shadow: none;
+  box-sizing: border-box;
+}
 .home-band--sky { background: var(--sx-sys-color-sky); }
 .home-band--pop-green { background: var(--sx-sys-color-pop-green); }
 .home-band--orange { background: var(--sx-sys-color-orange); }

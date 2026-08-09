@@ -49,7 +49,7 @@ const entries: Entry[] = [
     desc: 'Reference / Semantic / Article / Component —— 读取生成产物，不手抄文档。',
     href: '/design-system/tokens',
     status: 'live',
-    media: 'var(--sx-sys-color-bg-page)',
+    media: 'var(--sx-sys-color-sky)',
     icon: 'icon-tokens',
   },
   {
@@ -57,7 +57,7 @@ const entries: Entry[] = [
     desc: 'neubrutalism 控件：Button、Card、Badge、Nav、Command……3px 框 + 抬升实体。',
     href: '/design-system/components',
     status: 'live',
-    media: 'var(--sx-sys-color-action-primary)',
+    media: 'var(--sx-sys-color-coral)',
     icon: 'icon-components',
   },
   {
@@ -65,14 +65,14 @@ const entries: Entry[] = [
     desc: 'Markdown / MDX 真实排版：阅读柱、代码块、引用与标注。',
     href: '/design-system/content',
     status: 'live',
-    media: 'var(--sx-sys-color-accent)',
+    media: 'var(--sx-sys-color-pop-green)',
     icon: 'icon-blog',
   },
   {
     title: 'Patterns',
     desc: '文章头、课程目录、项目 Hero、代码对比等组合模式。',
     status: 'planned',
-    media: 'var(--sx-sys-color-beige)',
+    media: 'var(--sx-sys-color-orange)',
     icon: 'icon-patterns',
   },
 ];
@@ -100,10 +100,10 @@ const layers = [
   title="Design System"
   description="SchemaX UI —— Token、组件与内容规范。neubrutalism 贴纸堆（北极星 neubrutalism.com）。"
 >
-  <section class="sx-section ds">
-    <div class="sx-container ds__inner">
-      {/* —— Hero：编辑式左文案 + 右 token 面板 —— */}
-      <header class="ds-hero">
+  <div class="ds">
+    {/* —— Hero：编辑式左文案 + 右 token 面板 —— */}
+    <header class="sx-section ds-hero">
+      <div class="sx-container">
         <div class="ds-hero__copy">
           <Crumb
             items={[{ label: 'Home', href: '/' }, { label: 'Design System' }]}
@@ -170,10 +170,14 @@ const layers = [
             </div>
           </div>
         </div>
-      </header>
+      </div>
+    </header>
 
-      {/* —— 双层架构说明 —— */}
-      <section class="ds-layers" aria-labelledby="ds-layers-title">
+    <div class="sx-band sx-band--coral" aria-hidden="true"></div>
+
+    {/* —— 双层架构说明 —— */}
+    <section class="sx-section ds-layers" aria-labelledby="ds-layers-title">
+      <div class="sx-container">
         <div class="ds-layers__head">
           <h2 class="ds-layers__title" id="ds-layers-title">视觉双层</h2>
           <p class="ds-layers__sub">Structure 搭骨架 · Clash 上撞色</p>
@@ -197,13 +201,17 @@ const layers = [
             ))
           }
         </div>
-      </section>
+      </div>
+    </section>
 
-      {/* —— 入口网格 —— */}
-      <section class="ds-catalog" aria-labelledby="ds-catalog-title">
+    {/* —— 入口网格 —— */}
+    <section class="sx-section ds-catalog" aria-labelledby="ds-catalog-title">
+      <div class="sx-container">
         <div class="ds-catalog__head">
           <h2 class="ds-catalog__title" id="ds-catalog-title">从这里进入</h2>
-          <p class="ds-catalog__sub">按 Foundations → Tokens → Components → Content 阅读</p>
+          <p class="ds-catalog__sub">
+            按 Foundations → Tokens → Components → Content 阅读
+          </p>
         </div>
 
         <div class="ds-cards">
@@ -214,32 +222,30 @@ const layers = [
                 description={c.desc}
                 href={c.status === 'live' ? c.href : undefined}
                 iconBg={c.media}
-                shadowColor={c.status === 'live'
-                  ? 'var(--sx-sys-color-action-primary)'
-                  : 'var(--sx-sys-color-border)'}
+                shadowColor={c.media}
               >
                 <GeoMark kind={c.icon} size="lg" />
               </FeatureCard>
             ))
           }
         </div>
-      </section>
-    </div>
-  </section>
+      </div>
+    </section>
+  </div>
 </BaseLayout>
 
 <style>
-  .ds__inner {
-    display: flex;
-    flex-direction: column;
-    gap: var(--sx-ref-space-16);
-  }
-
   /* —— Hero：居中单栏 + 右侧倾斜 Figma 面板装饰。
-     不设 overflow:hidden —— 旋转面板需向上/下越出 hero 边界正常显示 —— */
+     不设 overflow:hidden —— 旋转面板需向上/下越出 hero 边界正常显示 ——
+     撞色底（coral，区分首页黄 / blog 紫 / courses 天蓝）；仅加色，不改结构 —— */
   .ds-hero {
     position: relative;
     padding-block: var(--sx-ref-space-4) var(--sx-ref-space-12);
+    background-color: color-mix(
+      in srgb,
+      var(--sx-sys-color-coral) 22%,
+      var(--sx-sys-color-bg-surface)
+    );
   }
 
   .ds-hero__copy {
@@ -297,7 +303,8 @@ const layers = [
     margin: 0;
     margin-inline: auto;
     max-width: 40ch;
-    color: var(--sx-sys-color-text-soft);
+    /* 珊瑚底上的长文本必须使用墨黑，暖灰会明显发虚。 */
+    color: var(--sx-sys-color-text-primary);
     font-size: var(--sx-sys-font-size-reading);
     line-height: 1.7;
   }
@@ -316,7 +323,7 @@ const layers = [
     font-family: var(--sx-sys-font-family-mono-system), ui-monospace, monospace;
     font-size: var(--sx-sys-font-size-sm);
     line-height: 1.55;
-    color: var(--sx-sys-color-text-muted);
+    color: var(--sx-sys-color-text-primary);
   }
 
   .ds-hero__pills {
@@ -533,7 +540,7 @@ const layers = [
   .ds-layer:last-child {
     background: color-mix(
       in srgb,
-      var(--sx-sys-color-action-primary) 10%,
+      var(--sx-sys-color-coral) 18%,
       var(--sx-sys-color-bg-surface)
     );
   }
@@ -624,6 +631,22 @@ const layers = [
     grid-template-columns: 1fr;
   }
 
+  /* 目录区承接 Hero 的珊瑚色，入口卡再用撞色媒体条形成连续节奏。 */
+  .ds-catalog {
+    padding: var(--sx-ref-space-8) var(--sx-ref-space-6);
+    border-block: var(--sx-sys-border-width-strong) solid
+      var(--sx-sys-color-border);
+    background: color-mix(
+      in srgb,
+      var(--sx-sys-color-coral) 10%,
+      var(--sx-sys-color-bg-page)
+    );
+  }
+
+  .ds-catalog__sub {
+    color: var(--sx-sys-color-text-primary);
+  }
+
   /* FeatureCard 媒体条几何 icon（GeoMark svg，4rem 由 FeatureCard media :global(svg) 统一） */
   .ds-cards :global(.featurecard__media) {
     overflow: visible;
@@ -657,5 +680,4 @@ const layers = [
       grid-template-columns: 1fr;
     }
   }
-
 </style>

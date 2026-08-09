@@ -10,11 +10,60 @@ import AboutContact from '../components/about/AboutContact';
 ---
 
 <BaseLayout title="关于" type="profile">
-  <AboutHero />
-  <AboutSkills />
-  <AboutTechStack />
-  <AboutJourney />
-  <AboutValues />
-  <AboutNow />
-  <AboutContact />
+  <div class="about-page">
+    <AboutHero />
+    <AboutSkills />
+    <AboutTechStack />
+    <AboutJourney />
+    <AboutValues />
+    <AboutNow />
+    <AboutContact />
+  </div>
 </BaseLayout>
+
+<style>
+  /* About 只增加区块撞色，内容与组件行为仍由各自组件负责。 */
+  .about-page :global(.hero) {
+    background: var(--sx-sys-color-accent);
+  }
+
+  .about-page :global(.skills) {
+    background: color-mix(
+      in srgb,
+      var(--sx-sys-color-coral) 16%,
+      var(--sx-sys-color-bg-page)
+    );
+  }
+
+  .about-page :global(.stack) {
+    background: color-mix(
+      in srgb,
+      var(--sx-sys-color-sky) 16%,
+      var(--sx-sys-color-bg-page)
+    );
+  }
+
+  .about-page :global(.journey) {
+    background: color-mix(
+      in srgb,
+      var(--sx-sys-color-pop-green) 16%,
+      var(--sx-sys-color-bg-page)
+    );
+  }
+
+  .about-page :global(.values) {
+    background: color-mix(
+      in srgb,
+      var(--sx-sys-color-lavender) 20%,
+      var(--sx-sys-color-bg-page)
+    );
+  }
+
+  .about-page :global(.contact) {
+    background: color-mix(
+      in srgb,
+      var(--sx-sys-color-orange) 16%,
+      var(--sx-sys-color-bg-page)
+    );
+  }
+</style>

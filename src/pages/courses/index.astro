@@ -2,7 +2,6 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import CourseCard from '../../components/site/CourseCard';
 import Crumb from '../../components/design-system/Crumb';
-import Doodle from '../../components/design-system/Doodle';
 import { getCollection } from 'astro:content';
 
 const courses = (
@@ -13,136 +12,209 @@ const courses = (
   const d = rank(a.data.status) - rank(b.data.status);
   return d !== 0 ? d : a.data.title.localeCompare(b.data.title, 'zh');
 });
+
+const typeCount = new Set(courses.map((c) => c.data.type)).size;
+
+const courseVars = [
+  {
+    name: 'surface',
+    value: '#FFFFFF',
+    token: 'var(--sx-sys-color-bg-surface)',
+  },
+  { name: 'lesson', value: 'MDX', token: 'var(--sx-sys-color-accent)' },
+  { name: 'preview', value: 'React', token: 'var(--sx-sys-color-coral)' },
+  { name: 'accent', value: '#74B9FF', token: 'var(--sx-sys-color-sky)' },
+  {
+    name: 'action',
+    value: '#2F5BEA',
+    token: 'var(--sx-sys-color-action-primary)',
+  },
+];
 ---
 
 <BaseLayout title="Courses" description="体系化课程、章节与练习。">
-  <section class="sx-section courses">
-    <div class="sx-container courses__inner">
-      {/* —— Hero：居中单栏 + 四角手绘课程涂鸦（装饰）—— */}
-      <header class="courses-hero">
-        {/* 前端战术手册 · layout */}
-        <div class="courses-hero__deco courses-hero__deco--tl">
-          <Doodle kind="icon-pattern" size="lg" />
+  <header class="sx-section courses-hero">
+    <div class="sx-container courses-hero__inner">
+      <div class="courses-hero__copy">
+        <Crumb items={[{ label: 'Home', href: '/' }, { label: 'Courses' }]} />
+        <div class="courses-hero__meta">
+          <span class="courses-stamp">SchemaX Academy</span>
+          <span class="courses-clash" aria-hidden="true">
+            <span class="courses-clash__dot"></span>
+            <span class="courses-clash__dot"></span>
+            <span class="courses-clash__dot"></span>
+          </span>
         </div>
-        {/* AI Agent · Schema {} */}
-        <div class="courses-hero__deco courses-hero__deco--tr">
-          <Doodle kind="brace" size="md" />
+        <h1 class="courses-hero__title">
+          体系化课程
+          <span class="courses-hero__title-hl">与练习</span>
+        </h1>
+        <p class="courses-hero__desc">
+          可验证的学习路径——不是播放列表。从骨架到装修，一步能复现；结构先行，再谈自动化。
+        </p>
+        <ul class="courses-hero__stack" aria-label="课程结构">
+          <li>HTML · CSS · JavaScript · React</li>
+          <li>Schema · Agent · API · Engineering Practice</li>
+        </ul>
+        <div class="courses-hero__pills" aria-label="课程主题">
+          <span class="courses-pill courses-pill--accent">Frontend</span>
+          <span class="courses-pill courses-pill--action">AI Agent</span>
+          <span class="courses-pill">Practice</span>
         </div>
-        {/* 前端战术手册 · CSS / 设计 */}
-        <div class="courses-hero__deco courses-hero__deco--bl">
-          <Doodle kind="icon-palette" size="md" />
-        </div>
-        {/* AI Agent · data / API */}
-        <div class="courses-hero__deco courses-hero__deco--br">
-          <Doodle kind="icon-db" size="lg" />
-        </div>
-
-        <div class="courses-hero__copy">
-          <Crumb
-            items={[{ label: 'Home', href: '/' }, { label: 'Courses' }]}
-          />
-
-          <div class="courses-hero__meta">
-            <span class="courses-stamp">Learn by structure</span>
-            <Doodle kind="icon-course" size="sm" />
+      </div>
+      <div class="courses-vars" aria-hidden="true">
+        <div class="courses-vars__panel">
+          <div class="courses-vars__head">
+            <span class="courses-vars__title">◆ COURSE SYSTEM</span>
+            <span class="courses-vars__add">+</span>
           </div>
-
-          <h1 class="courses-hero__title">
-            课程
-            <span class="courses-hero__title-hl">按结构学</span>
-          </h1>
-
-          <p class="courses-hero__lead">
-            体系化章节与练习——不是播放列表，而是可验证的学习路径。从骨架到装修，一步能复现。
-          </p>
-
-          <ul class="courses-hero__pills" aria-label="课程类型">
-            <li class="courses-pill courses-pill--accent">Handbook</li>
-            <li class="courses-pill courses-pill--action">Guide</li>
-            <li class="courses-pill">Workshop · Series</li>
-          </ul>
+          <span class="courses-vars__divider"></span>
+          <span class="courses-vars__collection">learning / modules</span>
+          {
+            courseVars.map((v) => (
+              <div class="courses-vars__row">
+                <span class="courses-vars__rowleft">
+                  <span
+                    class="courses-vars__chip"
+                    style={`background:${v.token}`}
+                  />
+                  <span class="courses-vars__name">{v.name}</span>
+                </span>
+                <span class="courses-vars__value">{v.value}</span>
+              </div>
+            ))
+          }
+          <span class="courses-vars__divider"></span>
+          <div class="courses-vars__mode">
+            <span class="courses-vars__modeicon">◐</span>
+            <span class="courses-vars__modelabel">Mode · Learn</span>
+          </div>
         </div>
-      </header>
+      </div>
+    </div>
+  </header>
 
-      <section class="courses-catalog" aria-labelledby="courses-catalog-title">
-        <div class="courses-catalog__head">
-          <h2 class="courses-catalog__title" id="courses-catalog-title">
-            全部课程
-          </h2>
-          <p class="courses-catalog__sub">
-            {courses.length} 门 · 点进目录与第一章
-          </p>
-        </div>
+  <div class="sx-band sx-band--sky" aria-hidden="true"></div>
 
-        {
-          courses.length > 0 ? (
-            <div class="courses-grid">
-              {courses.map((c) => (
-                <CourseCard course={c} />
-              ))}
-            </div>
-          ) : (
-            <p class="courses-empty">还没有课程。</p>
-          )
-        }
-      </section>
+  <section
+    class="sx-section courses-catalog"
+    aria-labelledby="courses-catalog-title"
+  >
+    <div class="sx-container">
+      <div class="courses-catalog__head">
+        <h2 class="courses-catalog__title" id="courses-catalog-title">
+          全部课程
+        </h2>
+        <p class="courses-catalog__sub">按当前状态与标题排序</p>
+      </div>
+      {
+        courses.length > 0 ? (
+          <div class="sx-grid">
+            {courses.map((c) => (
+              <CourseCard course={c} />
+            ))}
+          </div>
+        ) : (
+          <p class="empty">还没有课程。</p>
+        )
+      }
     </div>
   </section>
 </BaseLayout>
 
 <style>
-  .courses__inner {
+  /* 撞色 hero（sky 蓝，区分首页黄 / blog 紫）。黑字（天蓝底黑字 ~8:1）。 */
+  .courses-hero {
+    background-color: color-mix(
+      in srgb,
+      var(--sx-sys-color-sky) 22%,
+      var(--sx-sys-color-bg-surface)
+    );
+  }
+  .courses-hero__inner {
+    padding-block: clamp(2.5rem, 6vw, 4.5rem);
     display: flex;
     flex-direction: column;
-    gap: var(--sx-ref-space-16);
+    align-items: flex-start;
+    gap: var(--sx-ref-space-3);
   }
+  .courses-hero__kicker {
+    margin: 0;
+    font-family: var(--sx-sys-font-family-mono-system), ui-monospace, monospace;
+    font-size: var(--sx-sys-font-size-sm);
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--sx-sys-color-text-primary);
+    opacity: 0.7;
+  }
+  .courses-hero__title {
+    margin: 0;
+    font-family: var(--sx-sys-font-family-display), system-ui, sans-serif;
+    font-size: var(--sx-sys-font-display-md);
+    font-weight: 800;
+    line-height: 1.02;
+    letter-spacing: -0.03em;
+    color: var(--sx-sys-color-text-primary);
+  }
+  .courses-hero__desc {
+    margin: 0;
+    max-width: 46rem;
+    font-size: var(--sx-sys-font-size-reading);
+    line-height: 1.55;
+    color: var(--sx-sys-color-text-primary);
+    opacity: 0.85;
+  }
+  .courses-hero__stat {
+    margin: 0;
+    margin-top: var(--sx-ref-space-2);
+    font-family: var(--sx-sys-font-family-mono-system), ui-monospace, monospace;
+    font-size: var(--sx-sys-font-size-sm);
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--sx-sys-color-text-primary);
+    opacity: 0.7;
+  }
+  .courses-catalog__head {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sx-ref-space-2);
+    margin-bottom: var(--sx-ref-space-6);
+  }
+  .courses-catalog__title {
+    margin: 0;
+    font-family: var(--sx-sys-font-family-display), system-ui, sans-serif;
+    font-size: var(--sx-sys-font-display-sm);
+    font-weight: 800;
+    line-height: 1.05;
+    color: var(--sx-sys-color-text-primary);
+  }
+  .courses-catalog__sub {
+    margin: 0;
+    font-family: var(--sx-sys-font-family-mono-system), ui-monospace, monospace;
+    font-size: var(--sx-sys-font-size-sm);
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--sx-sys-color-text-muted);
+  }
+  .empty {
+    border: var(--sx-sys-border-width) dashed var(--sx-sys-color-border);
+    padding: var(--sx-ref-space-8);
+    text-align: center;
+    opacity: 0.7;
+  }
+</style>
 
-  /* —— Hero：相对定位容器，承载四角手绘涂鸦 + 居中文案列 —— */
+<style>
   .courses-hero {
     position: relative;
-    overflow: hidden;
-    padding-block: var(--sx-ref-space-4) var(--sx-ref-space-12);
   }
 
-  /* 四角手绘涂鸦：左侧=前端战术手册（layout · CSS），右侧=AI Agent（Schema · data），纯装饰，≥60rem 显示 */
-  .courses-hero__deco {
-    position: absolute;
-    z-index: 0;
-    display: none;
-    pointer-events: none;
-    opacity: 0.5;
-  }
-  .courses-hero__deco :global(.sx-doodle) {
-    width: 100%;
-    height: 100%;
-  }
-  .courses-hero__deco--tl {
-    top: 0;
-    left: 3%;
-    width: 5rem;
-    height: 5rem;
-    transform: rotate(-8deg);
-  }
-  .courses-hero__deco--tr {
-    top: 10%;
-    right: 4%;
-    width: 3.75rem;
-    height: 3.75rem;
-    transform: rotate(9deg);
-  }
-  .courses-hero__deco--bl {
-    bottom: 8%;
-    left: 9%;
-    width: 3.75rem;
-    height: 3.75rem;
-    transform: rotate(7deg);
-  }
-  .courses-hero__deco--br {
-    bottom: 0;
-    right: 6%;
-    width: 5rem;
-    height: 5rem;
-    transform: rotate(-6deg);
+  .courses-hero__inner {
+    position: relative;
+    padding-block: var(--sx-ref-space-4) var(--sx-ref-space-12);
   }
 
   .courses-hero__copy {
@@ -151,10 +223,10 @@ const courses = (
     display: flex;
     flex-direction: column;
     align-items: center;
-    text-align: center;
     gap: var(--sx-ref-space-6);
     max-width: 46rem;
     margin-inline: auto;
+    text-align: center;
   }
 
   .courses-hero__meta {
@@ -167,7 +239,6 @@ const courses = (
     display: inline-flex;
     padding: 0.4rem 0.7rem;
     border: var(--sx-sys-border-width-strong) solid var(--sx-sys-color-border);
-    border-radius: var(--sx-sys-radius-sm);
     background: var(--sx-sys-color-action-primary);
     color: var(--sx-sys-color-bg-surface);
     font-family: var(--sx-sys-font-family-mono-system), ui-monospace, monospace;
@@ -176,59 +247,63 @@ const courses = (
     letter-spacing: 0.06em;
     text-transform: uppercase;
     box-shadow: var(--sx-sys-shadow-sm);
-    transform: rotate(-1.2deg);
+    transform: rotate(1.2deg);
   }
 
   .courses-hero__title {
-    margin: 0;
-    font-family: var(--sx-sys-font-family-display), system-ui, sans-serif;
     font-size: var(--sx-sys-font-display-lg);
-    font-weight: 800;
-    line-height: 1.02;
-    letter-spacing: -0.02em;
-    color: var(--sx-sys-color-text-primary);
   }
 
   .courses-hero__title-hl {
     display: inline-block;
-    margin-left: 0.12em;
-    background: var(--sx-sys-color-accent);
+    margin-left: 0.15em;
     padding: 0 0.12em;
+    background: var(--sx-sys-color-accent);
   }
 
-  .courses-hero__lead {
-    margin: 0;
-    margin-inline: auto;
-    max-width: 42ch;
-    color: var(--sx-sys-color-text-soft);
-    font-size: var(--sx-sys-font-size-reading);
+  .courses-hero__desc {
+    max-width: 40ch;
     line-height: 1.7;
+    opacity: 1;
   }
 
-  .courses-hero__pills {
+  .courses-hero__stack {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.35rem;
     margin: 0;
     padding: 0;
     list-style: none;
+  }
+
+  .courses-hero__stack li {
+    color: var(--sx-sys-color-text-primary);
+    font-family: var(--sx-sys-font-family-mono-system), ui-monospace, monospace;
+    font-size: var(--sx-sys-font-size-sm);
+    line-height: 1.55;
+  }
+
+  .courses-hero__pills {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     gap: var(--sx-ref-space-3);
   }
 
-  /* 纯展示标签：不可跳转，无 hover 动效 */
   .courses-pill {
     display: inline-flex;
-    padding: 0.4rem 0.7rem;
+    align-items: center;
+    padding: 0.45rem 0.75rem;
     border: var(--sx-sys-border-width-strong) solid var(--sx-sys-color-border);
-    border-radius: var(--sx-sys-radius-sm);
     background: var(--sx-sys-color-bg-surface);
+    color: var(--sx-sys-color-text-primary);
     font-family: var(--sx-sys-font-family-mono-system), ui-monospace, monospace;
     font-size: var(--sx-sys-font-size-sm);
     font-weight: 700;
     letter-spacing: 0.04em;
     text-transform: uppercase;
     box-shadow: var(--sx-sys-shadow-sm);
-    cursor: default;
   }
 
   .courses-pill--accent {
@@ -240,57 +315,122 @@ const courses = (
     color: var(--sx-sys-color-bg-surface);
   }
 
-  /* —— 目录 —— */
-  .courses-catalog__head {
+  .courses-clash {
+    display: inline-flex;
+    gap: 0.25rem;
+  }
+
+  .courses-clash__dot {
+    display: inline-block;
+    width: 0.85rem;
+    height: 0.85rem;
+    border: var(--sx-sys-border-width-strong) solid var(--sx-sys-color-border);
+    background: var(--sx-sys-color-accent);
+  }
+
+  .courses-clash__dot:nth-child(2) {
+    background: var(--sx-sys-color-coral);
+  }
+
+  .courses-clash__dot:nth-child(3) {
+    background: var(--sx-sys-color-action-primary);
+  }
+
+  .courses-vars {
+    position: absolute;
+    top: 0;
+    right: 0;
+    display: none;
+    pointer-events: none;
+  }
+
+  .courses-vars__panel {
     display: flex;
     flex-direction: column;
-    gap: var(--sx-ref-space-2);
-    margin-bottom: var(--sx-ref-space-6);
-  }
-
-  .courses-catalog__title {
-    margin: 0;
-    font-family: var(--sx-sys-font-family-display), system-ui, sans-serif;
-    font-size: var(--sx-sys-font-display-sm);
-    font-weight: 800;
-    letter-spacing: -0.02em;
-  }
-
-  .courses-catalog__sub {
-    margin: 0;
-    font-family: var(--sx-sys-font-family-mono-system), ui-monospace, monospace;
-    font-size: var(--sx-sys-font-size-sm);
-    font-weight: 700;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-    color: var(--sx-sys-color-text-muted);
-  }
-
-  .courses-grid {
-    display: grid;
-    gap: var(--sx-ref-space-6);
-    grid-template-columns: 1fr;
-  }
-
-  .courses-empty {
-    margin: 0;
-    border: var(--sx-sys-border-width-strong) dashed var(--sx-sys-color-border);
-    border-radius: var(--sx-sys-radius-sm);
-    padding: var(--sx-ref-space-8);
-    text-align: center;
-    color: var(--sx-sys-color-text-muted);
+    gap: 0.625rem;
+    width: 13.5rem;
+    padding: 0.75rem;
     background: var(--sx-sys-color-bg-surface);
+    border: var(--sx-sys-border-width-strong) solid var(--sx-sys-color-border);
+    box-shadow: var(--sx-sys-shadow-md);
+    transform: rotate(-8deg);
+    transform-origin: top right;
   }
 
-  @media (min-width: 48rem) {
-    .courses-grid {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
+  .courses-vars__head,
+  .courses-vars__row,
+  .courses-vars__rowleft,
+  .courses-vars__mode {
+    display: flex;
+    align-items: center;
   }
 
-  /* 窄屏不显示四角涂鸦，避免与居中文案重叠 */
-  @media (min-width: 64rem) {
-    .courses-hero__deco {
+  .courses-vars__head,
+  .courses-vars__row {
+    justify-content: space-between;
+  }
+
+  .courses-vars__rowleft {
+    gap: 0.5rem;
+  }
+
+  .courses-vars__title,
+  .courses-vars__collection,
+  .courses-vars__name,
+  .courses-vars__value,
+  .courses-vars__modelabel {
+    font-family: var(--sx-sys-font-family-mono);
+    font-size: var(--sx-sys-font-size-xs);
+  }
+
+  .courses-vars__title,
+  .courses-vars__name,
+  .courses-vars__modelabel {
+    font-weight: 800;
+    color: var(--sx-sys-color-text-primary);
+  }
+
+  .courses-vars__add,
+  .courses-vars__collection,
+  .courses-vars__value,
+  .courses-vars__modeicon {
+    color: var(--sx-sys-color-text-soft);
+  }
+
+  .courses-vars__add {
+    font-family: var(--sx-sys-font-family-mono);
+    font-size: var(--sx-sys-font-size-base);
+    font-weight: 800;
+    line-height: 1;
+  }
+
+  .courses-vars__collection,
+  .courses-vars__modelabel {
+    letter-spacing: 0.04em;
+  }
+
+  .courses-vars__divider {
+    height: 1px;
+    background: var(--sx-sys-color-border);
+  }
+
+  .courses-vars__chip {
+    width: 1rem;
+    height: 1rem;
+    border: var(--sx-sys-border-width) solid var(--sx-sys-color-border);
+  }
+
+  .courses-vars__mode {
+    gap: 0.375rem;
+  }
+
+  .courses-vars__modeicon {
+    font-size: var(--sx-sys-font-size-xs);
+    line-height: 1;
+  }
+
+  @media (min-width: 82rem) {
+    .courses-vars {
       display: block;
     }
   }

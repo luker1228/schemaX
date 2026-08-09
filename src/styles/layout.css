@@ -19,10 +19,34 @@
   padding-block: var(--sx-ref-space-12);
 }
 
+/* 页面区块之间的撞色分隔带：色块 + 上下双黑线。 */
+.sx-band {
+  height: 1.25rem;
+  background: var(--sx-sys-color-accent);
+  box-shadow:
+    inset 0 4px 0 var(--sx-sys-color-border),
+    inset 0 -4px 0 var(--sx-sys-color-border);
+}
+
+.sx-band--coral {
+  background: var(--sx-sys-color-coral);
+}
+
+.sx-band--sky {
+  background: var(--sx-sys-color-sky);
+}
+
+.sx-band--lavender {
+  background: var(--sx-sys-color-lavender);
+}
+
 .sx-grid {
   display: grid;
   gap: var(--sx-ref-space-8);
-  grid-template-columns: repeat(auto-fill, minmax(min(100%, var(--sx-sys-layout-grid-cell-min)), 1fr));
+  grid-template-columns: repeat(
+    auto-fill,
+    minmax(min(100%, var(--sx-sys-layout-grid-cell-min)), 1fr)
+  );
 }
 
 /* ══════════════════════════════════════════════════════════════
@@ -74,7 +98,8 @@
 .sx-doc-layout:has(.lboard) {
   --sx-doc-side-shift: 10rem;
 
-  grid-template-columns: max(
+  grid-template-columns:
+    max(
       0px,
       calc(var(--sx-sys-layout-sidebar-width) - var(--sx-doc-side-shift))
     )
@@ -105,7 +130,8 @@
 .sx-doc-layout:has(.lboard):has(.doc-side__check:not(:checked)) {
   grid-template-columns: 2.75rem minmax(0, 1fr);
 }
-.sx-doc-layout:has(.lboard):has(.doc-side__check:not(:checked)) .sx-doc-side-slot {
+.sx-doc-layout:has(.lboard):has(.doc-side__check:not(:checked))
+  .sx-doc-side-slot {
   width: auto;
   margin-inline-start: 0;
 }
